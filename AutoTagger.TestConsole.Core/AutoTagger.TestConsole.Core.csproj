@@ -9,6 +9,7 @@
     <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.Standard.csproj" />
     <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.Standard.csproj" />
     <ProjectReference Include="..\AutoTagger.Database\AutoTagger.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.Standard.csproj" />
   </ItemGroup>
 
 </Project>

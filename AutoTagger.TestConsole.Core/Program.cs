@@ -6,6 +6,7 @@
     using AutoTagger.Crawler.Standard.V1;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
+    using AutoTagger.ImageDownloader.Standard;
 
     internal class Program
     {
@@ -14,7 +15,8 @@
         {
             Console.WriteLine("" + 
                              "1: Start Crawler\n" +
-                             "2: Start ImageProcessor"
+                             "2: Start Downloader\n" +
+                             "3: Start ImageProcessor"
                              );
             while(true)
             {
@@ -28,6 +30,11 @@
                         break;
 
                     case '2':
+                        Console.WriteLine("Download Images...");
+                        StartImageDownloader();
+                        break;
+
+                    case '3':
                         Console.WriteLine("Start Image Processor...");
                         StartImageProcessor();
                         break;
@@ -51,6 +58,13 @@
                   + "\", \"comments\":\"" + image.Comments + "\", }");
             };
             crawler.DoCrawling(0);
+        }
+
+        private static void StartImageDownloader()
+        {
+            var db = new MysqlImageProcessorStorage();
+            var imageDownloader = new ImageDownloader(db);
+            imageDownloader.Start();
         }
 
         private static void StartImageProcessor()
