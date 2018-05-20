@@ -28,12 +28,11 @@
 
         public static void GetImages()
         {
-            var lastId = 78887;
+            var lastId = 87000;
             while (true)
             {
                 if (downloaderRunning <= QueryImagesAtLessOrEqualImages)
                 {
-                    Console.WriteLine("DB Get Images");
                     var images = storage.GetImagesWithoutMachineTags(lastId, DbSelectImagesAmount);
                     foreach (var image in images)
                     {
@@ -61,17 +60,18 @@
                 {
                     if (e.Message.Contains("403"))
                     {
-                        Console.WriteLine("Download failed with 403 on ID=" + image.Id);
+                        Console.WriteLine("Download failed with 403 at ID=" + image.Id);
                         // 403 is okay..
                     }
                     else if (e.Message.Contains("404"))
                     {
-                        Console.WriteLine("Download failed with 404 on ID=" + image.Id);
+                        Console.WriteLine("Download failed with 404 at ID=" + image.Id);
                         // 403 is okay..
                     }
                     else
                     {
-                        throw;
+                        Console.WriteLine("Crashed at ID=" + image.Id);
+                        Console.WriteLine(e.Message);
                     }
                     System.IO.File.Delete(filename);
                 }
