@@ -27,9 +27,9 @@ namespace AutoTagger.ImageProcessor.Standard
         private static int saveCounter;
         private static readonly Random Random = new Random();
 
-        private static readonly int ConcurrentThreadsLimit = 5;
-        private static readonly int SaveLimit = 1;
-        private static readonly string PathUnused = @"C:\Instagger\Test\";
+        private static readonly int ConcurrentThreadsLimit = 15;
+        private static readonly int SaveLimit = 5;
+        private static readonly string PathUnused = @"C:\Instagger\Unused\";
         private static readonly string PathUsed = @"C:\Instagger\Used\";
         private static readonly string Ext = ".jpg";
 
@@ -53,20 +53,29 @@ namespace AutoTagger.ImageProcessor.Standard
             var files = this.GetImagesFromDisk();
             var images = this.GetImagesWithoutMTags(files);
             images.ForEach(i => queue.Enqueue(i));
-
-            // TODO move the difference
-
+            this.MoveUsedFiles(files, images);
         }
 
         private string[] GetImagesFromDisk()
         {
-            var files = System.IO.Directory.GetFiles(PathUnused, "*"+ Ext);
+            var files = Directory.GetFiles(PathUnused, "*"+ Ext);
             return files.Select(x => x.Replace(PathUnused, "").Replace(Ext, "")).ToArray();
         }
 
         private IEnumerable<IImage> GetImagesWithoutMTags(string[] files)
         {
             return storage.GetImagesWithoutMachineTags(files.ToList());
+        }
+
+        private void MoveUsedFiles(string[] files, IEnumerable<IImage> images)
+        {
+            var usedFiles = files.Where(x => !images.Any(y => y.Shortcode == x)).ToList();
+            foreach (var usedFile in usedFiles)
+            {
+                var path     = PathUnused + usedFile + Ext;
+                var pathUsed = PathUsed + usedFile + Ext;
+                File.Move(path, pathUsed);
+            }
         }
 
         private static void StartTaggerThreads()
