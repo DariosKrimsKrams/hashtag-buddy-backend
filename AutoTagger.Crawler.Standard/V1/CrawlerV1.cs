@@ -2,10 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard.V1;
     using AutoTagger.Crawler.Standard.V1.Crawler;
 
     public class CrawlerV1 : ICrawler
@@ -17,12 +14,16 @@
         private readonly UserCrawler userCrawler;
 
         public event Action<IHumanoidTag> OnHashtagFound;
+        private readonly Dictionary<string, int> conditions;
 
         public CrawlerV1()
         {
+            this.conditions = new Dictionary<string, int>();
+            this.conditions.Add("MinPostsForHashtags", 1 * 1000 * 1000);
+
             this.hashtagQueue = new HashtagQueue<IHumanoidTag>();
             this.randomTagsCrawler      = new RandomTagsCrawler();
-            this.exploreTagsPageCrawler = new ExploreTagsCrawler();
+            this.exploreTagsPageCrawler = new ExploreTagsCrawler(this);
             this.imageDetailPageCrawler = new ImageDetailCrawler();
             this.userCrawler            = new UserCrawler();
         }
@@ -94,6 +95,26 @@
                 image.User = user;
                 yield return image;
             }
+        }
+
+        public bool OverrideCondition(string key, int value)
+        {
+            if (this.conditions.ContainsKey(key))
+            {
+                this.conditions[key] = value;
+                return true;
+            }
+
+            return false;
+        }
+
+        public int GetCondition(string key)
+        {
+            if (this.conditions.ContainsKey(key))
+            {
+                return this.conditions[key];
+            }
+            return 0;
         }
     }
 }
