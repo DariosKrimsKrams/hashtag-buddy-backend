@@ -53,7 +53,7 @@ namespace AutoTagger.ImageProcessor.Standard
             var files = this.GetImagesFromDisk();
             var images = this.GetImagesWithoutMTags(files);
             images.ForEach(i => queue.Enqueue(i));
-            this.MoveUsedFiles(files, images);
+            //this.MoveUsedFiles(files, images);
         }
 
         private string[] GetImagesFromDisk()
