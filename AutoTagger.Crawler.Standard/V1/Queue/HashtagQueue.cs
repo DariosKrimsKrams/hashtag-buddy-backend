@@ -15,6 +15,8 @@
 
         public event Action<T> OnHashtagFound;
 
+        public bool AllowEnqueue = true;
+
         public HashtagQueue()
         {
             this.processed = new HashSet<T>();
@@ -87,18 +89,14 @@
 
         private new void Enqueue(T tag)
         {
-            if (tag == null)
+            if (tag == null
+                || this.IsTagProcessed(tag)
+                || this.Contains(tag)
+                || !this.AllowEnqueue)
             {
                 return;
             }
-            if (this.IsTagProcessed(tag))
-            {
-                return;
-            }
-            if (this.Contains(tag))
-            {
-                return;
-            }
+
             base.Enqueue(tag);
         }
 

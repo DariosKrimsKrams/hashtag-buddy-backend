@@ -61,6 +61,9 @@
             var crawlerDb = new MysqlCrawlerStorage();
             var crawlerEngine = new CrawlerV1();
             crawlerEngine.OverrideCondition("MinPostsForHashtags", 10 * 1000);
+            crawlerEngine.BuildTags(mtagsArr);
+            crawlerEngine.DisableFurtherEnqueue();
+
             var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
             crawler.OnImageSaved += image =>
             {
@@ -70,7 +73,7 @@
                   + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
                   + "\", \"comments\":\"" + image.Comments + "\", }");
             };
-            crawler.DoCrawling(0, mtagsArr);
+            crawler.DoCrawling(0);
         }
 
         private static void StartCrawler()

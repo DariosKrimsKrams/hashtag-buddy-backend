@@ -54,7 +54,7 @@
             this.OnHashtagFound?.Invoke(tag);
         }
 
-        private void BuildTags(string[] customTags)
+        public void BuildTags(string[] customTags)
         {
             var tags = customTags.Length == 0 ? this.randomTagsCrawler.Parse() : customTags;
             var hTags = new List<IHumanoidTag>();
@@ -115,6 +115,11 @@
                 return this.conditions[key];
             }
             return 0;
+        }
+
+        public void DisableFurtherEnqueue()
+        {
+            this.hashtagQueue.AllowEnqueue = false;
         }
     }
 }
