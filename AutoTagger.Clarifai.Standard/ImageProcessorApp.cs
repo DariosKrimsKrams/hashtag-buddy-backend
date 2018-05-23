@@ -27,6 +27,7 @@ namespace AutoTagger.ImageProcessor.Standard
         private static int taggerRunning;
         private static int saveCounter;
         private static readonly Random Random = new Random();
+        private static List<string> processed;
 
         private static readonly int ConcurrentThreadsLimit = 15;
         private static readonly int SaveLimit = 5;
@@ -35,38 +36,52 @@ namespace AutoTagger.ImageProcessor.Standard
         private static readonly string PathDefect = @"C:\Instagger\Defect\";
         private static readonly string Ext = ".jpg";
 
+        enum DbUsage
+        {
+            None,
+            GetEntries,
+            SaveThisFuckingShit
+        }
+        private static DbUsage currentDbUsage;
+
         public ImageProcessorApp(IImageProcessorStorage db, ITaggingProvider taggingProvider)
         {
             storage = db;
             tagger = taggingProvider;
             dbSaveQueue = new ConcurrentQueue<IImage>();
             queue = new ConcurrentQueue<IImage>();
+            processed = new List<string>();
         }
 
         public void Process()
         {
-            this.PrepareImages();
             new Thread(ImageProcessorApp.StartTaggerThreads).Start();
             new Thread(ImageProcessorApp.InsertDb).Start();
         }
 
-        private void PrepareImages()
+        private static void PrepareImages()
         {
-            var files = this.GetImagesFromDisk();
-            var images = this.GetImagesWithoutMTags(files);
-            images.ForEach(i => queue.Enqueue(i));
+            var files = GetImagesFromDisk();
+            var images = GetImagesWithoutMTags(files);
+            images.ForEach(i =>
+            {
+                if (processed.Contains(i.Shortcode))
+                    return;
+                queue.Enqueue(i);
+                processed.Add(i.Shortcode);
+            });
 
             // bad performance -> better would be to run the Query other way
             //this.MoveUsedFiles(files, images);
         }
 
-        private string[] GetImagesFromDisk()
+        private static string[] GetImagesFromDisk()
         {
             var files = Directory.GetFiles(PathUnused, "*"+ Ext);
             return files.Select(x => x.Replace(PathUnused, "").Replace(Ext, "")).ToArray();
         }
 
-        private IEnumerable<IImage> GetImagesWithoutMTags(string[] files)
+        private static IEnumerable<IImage> GetImagesWithoutMTags(string[] files)
         {
             return storage.GetImagesWithoutMachineTags(files.ToList());
         }
@@ -94,6 +109,11 @@ namespace AutoTagger.ImageProcessor.Standard
                     }
                     else
                     {
+                        if (SetDbUsing(DbUsage.GetEntries))
+                        {
+                            PrepareImages();
+                            currentDbUsage = DbUsage.None;
+                        }
                         break;
                     }
                 }
@@ -108,6 +128,13 @@ namespace AutoTagger.ImageProcessor.Standard
             OnLookingForTags?.Invoke(image);
 
             var path = PathUnused + image.Shortcode + Ext;
+
+            if (!File.Exists(path))
+            {
+                Interlocked.Decrement(ref taggerRunning);
+                return;
+            }
+
             var fileBytes = File.ReadAllBytes(path);
             var fileSize = fileBytes.Length;
             if (fileSize == 0)
@@ -156,7 +183,7 @@ namespace AutoTagger.ImageProcessor.Standard
         {
             while (true)
             {
-                if (saveCounter >= SaveLimit)
+                if (saveCounter >= SaveLimit && SetDbUsing(DbUsage.SaveThisFuckingShit))
                 {
                     while (dbSaveQueue.TryDequeue(out IImage image))
                     {
@@ -166,6 +193,7 @@ namespace AutoTagger.ImageProcessor.Standard
                     storage.DoSave();
                     OnDbSaved?.Invoke();
                     saveCounter = 0;
+                    currentDbUsage = DbUsage.None;
                 }
                 else
                 {
@@ -175,5 +203,17 @@ namespace AutoTagger.ImageProcessor.Standard
                 }
             }
         }
+
+        private static bool SetDbUsing(DbUsage newStatus)
+        {
+            if (currentDbUsage == DbUsage.None || currentDbUsage == newStatus)
+            {
+                currentDbUsage = newStatus;
+                if(currentDbUsage == newStatus)
+                    return true;
+            }
+            return false;
+        }
+
     }
 }
