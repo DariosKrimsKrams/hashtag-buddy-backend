@@ -1,32 +1,24 @@
-﻿namespace AutoTagger.Crawler.Standard.V1.Queue
+﻿namespace AutoTagger.Crawler.Standard.V1
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Collections.Concurrent;
     using System.Linq;
+    using System.Reflection;
 
     using AutoTagger.Contract;
 
-    internal class HashtagQueue<T> : ConcurrentQueue<T>
+    class HashtagQueue<T> : ConcurrentQueue<T>
     {
         private readonly HashSet<T> processed;
-
         private readonly ShortcodeQueue<string> shortcodeQueue;
-
-        public HashtagQueue()
-        {
-            this.processed      = new HashSet<T>();
-            this.shortcodeQueue = new ShortcodeQueue<string>();
-        }
 
         public event Action<T> OnHashtagFound;
 
-        public void AddProcessed(IEnumerable<T> tags)
+        public HashtagQueue()
         {
-            foreach (var tag in tags)
-            {
-                this.processed.Add(tag);
-            }
+            this.processed = new HashSet<T>();
+            this.shortcodeQueue = new ShortcodeQueue<string>();
         }
 
         public void Build(IEnumerable<T> hashTags)
@@ -37,12 +29,12 @@
             }
         }
 
-        public IEnumerable<IImage> Process(
-            Func<T, (int, List<string>)> shortcodesCrawling,
-            Func<string, string> imagePageCrawling,
-            Func<string, IEnumerable<IImage>> userPageCrawling)
+        public IEnumerable<IImage> Process(Func<T, (int, List<string>)> shortcodesCrawling,
+                                           Func<string, string> imagePageCrawling,
+                                           Func<string, IEnumerable<IImage>> userPageCrawling
+            )
         {
-            while (this.TryDequeue(out var currentTag))
+            while (this.TryDequeue(out T currentTag))
             {
                 if (this.IsTagProcessed(currentTag))
                 {
@@ -67,14 +59,11 @@
                         yield break;
                     }
 
-                    var humanoidTags = image.HumanoidTags;
-                    foreach (var humanoidTagname in humanoidTags)
+                    var hTagNames = image.HumanoidTags;
+                    foreach (var hTagname in hTagNames)
                     {
-                        var newHTag = new HumanoidTag
-                        {
-                            Name = humanoidTagname
-                        };
-
+                        var newHTag = new HumanoidTag();
+                        newHTag.Name = hTagname;
                         var newHTagAsT = (T)Convert.ChangeType(newHTag, typeof(HumanoidTag));
                         this.Enqueue(newHTagAsT);
                     }
@@ -84,29 +73,16 @@
             }
         }
 
-        public void SetLimit(int limit)
+        private void HashtagFound(T tag)
         {
-            this.shortcodeQueue.SetLimit(limit);
+            this.OnHashtagFound?.Invoke(tag);
         }
 
         private static void SetAmountOfPosts(T currentTag, int amountPosts)
         {
-            var humanoidTagType = currentTag.GetType();
-            var pinfo    = humanoidTagType.GetProperty("Posts");
+            Type         hTagType = currentTag.GetType();
+            PropertyInfo pinfo    = hTagType.GetProperty("Posts");
             pinfo.SetValue(currentTag, amountPosts, null);
-        }
-
-        private void AddProcessed(T tag)
-        {
-            this.processed.Add(tag);
-        }
-
-        private bool Contains(T checkingTag)
-        {
-            var checkingHTag = (HumanoidTag)Convert.ChangeType(checkingTag, typeof(HumanoidTag));
-            var exists = this.FirstOrDefault(
-                htag => ((HumanoidTag)Convert.ChangeType(htag, typeof(HumanoidTag))).Name == checkingHTag.Name);
-            return exists != null;
         }
 
         private new void Enqueue(T tag)
@@ -115,23 +91,15 @@
             {
                 return;
             }
-
             if (this.IsTagProcessed(tag))
             {
                 return;
             }
-
             if (this.Contains(tag))
             {
                 return;
             }
-
             base.Enqueue(tag);
-        }
-
-        private void HashtagFound(T tag)
-        {
-            this.OnHashtagFound?.Invoke(tag);
         }
 
         private bool IsTagProcessed(T checkingTag)
@@ -139,14 +107,39 @@
             var checkingHTag = (HumanoidTag)Convert.ChangeType(checkingTag, typeof(HumanoidTag));
             foreach (var htag in this.processed)
             {
-                var newHTag = (HumanoidTag)Convert.ChangeType(htag, typeof(HumanoidTag));
+                var newHTag = ((HumanoidTag) Convert.ChangeType(htag, typeof(HumanoidTag)));
                 if (newHTag.Name == checkingHTag.Name && newHTag.Posts != 0)
                 {
                     return true;
                 }
             }
-
             return false;
         }
+
+        private bool Contains(T checkingTag)
+        {
+            var checkingHTag = (HumanoidTag)Convert.ChangeType(checkingTag, typeof(HumanoidTag));
+            var exists = this.FirstOrDefault(htag => ((HumanoidTag)Convert.ChangeType(htag, typeof(HumanoidTag))).Name == checkingHTag.Name);
+            return exists != null;
+        }
+
+        public void AddProcessed(IEnumerable<T> tags)
+        {
+            foreach (var tag in tags)
+            {
+                this.processed.Add(tag);
+            }
+        }
+
+        private void AddProcessed(T tag)
+        {
+            this.processed.Add(tag);
+        }
+
+        public void SetLimit(int limit)
+        {
+            this.shortcodeQueue.SetLimit(limit);
+        }
+
     }
 }

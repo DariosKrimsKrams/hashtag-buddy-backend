@@ -1,9 +1,10 @@
-﻿namespace AutoTagger.Crawler.Standard.V1.Crawler
-{
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-    using AutoTagger.Crawler.Standard.Helper;
+namespace AutoTagger.Crawler.Standard.V1.Crawler
+{
+    using System.Linq;
 
     public class RandomTagsCrawler : HttpCrawler
     {

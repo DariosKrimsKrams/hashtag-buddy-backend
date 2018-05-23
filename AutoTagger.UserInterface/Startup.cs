@@ -47,7 +47,8 @@
                 });
 
             app.UseCors(
-                options => options.WithOrigins("http://localhost").AllowAnyMethod());
+                options => options.WithOrigins("http://localhost").AllowAnyMethod()
+            );
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -65,7 +66,7 @@
             services.AddCors();
 
             services.AddTransient<IAutoTaggerStorage, MysqlUIStorage>();
-            services.AddTransient<ITaggingProvider, GcpVision>();
+            services.AddTransient<ITaggingProvider, GCPVision>();
 
             services.AddSwaggerGen(
                 c =>

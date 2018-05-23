@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.Standard.V2
+﻿namespace AutoTagger.Crawler.Standard
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@
     using System.Text.RegularExpressions;
 
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard.Helper;
 
     using Newtonsoft.Json;
 

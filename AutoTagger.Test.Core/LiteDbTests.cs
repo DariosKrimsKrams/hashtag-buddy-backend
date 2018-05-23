@@ -6,8 +6,6 @@ namespace AutoTagger.Test.Core
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Database.Storage.AutoTagger;
-    using AutoTagger.Database.Storage.LiteDb;
-
     using LiteDB;
     using Xunit;
 

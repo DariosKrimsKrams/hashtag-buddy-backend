@@ -1,15 +1,14 @@
-﻿namespace AutoTagger.Contract
-{
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
+namespace AutoTagger.Contract
+{
     public interface IImageProcessorStorage
     {
-        void DoSave();
-
         IEnumerable<IImage> GetImagesWithoutMachineTags(int limit);
-
         IEnumerable<IImage> GetImagesWithoutMachineTags(int idLargerThan, int limit);
-
         void InsertMachineTagsWithoutSaving(IImage image);
+        void DoSave();
     }
 }

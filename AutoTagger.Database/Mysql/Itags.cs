@@ -1,19 +1,19 @@
-﻿namespace AutoTagger.Database.Mysql
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
-    public class Itags
+namespace AutoTagger.Database.Mysql
+{
+    public partial class Itags
     {
         public Itags()
         {
-            this.PhotoItagRel = new HashSet<PhotoItagRel>();
+            PhotoItagRel = new HashSet<PhotoItagRel>();
         }
 
         public int Id { get; set; }
-
         public string Name { get; set; }
+        public int Posts { get; set; }
+        public DateTimeOffset Updated { get; set; }
 
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }
 
@@ -21,12 +21,11 @@
         {
             get
             {
-                return this.PhotoItagRel.Select(photoItagRel => photoItagRel.Photo);
+                foreach (var photoItagRel in PhotoItagRel)
+                {
+                    yield return photoItagRel.Photo;
+                }
             }
         }
-
-        public int Posts { get; set; }
-
-        public DateTimeOffset Updated { get; set; }
     }
 }

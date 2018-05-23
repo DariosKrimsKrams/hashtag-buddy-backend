@@ -5,30 +5,18 @@
 
     public interface IImage
     {
-        int Comments { get; set; }
-
-        int Follower { get; set; }
-
-        int Following { get; set; }
-
-        IEnumerable<string> HumanoidTags { get; set; }
-
-        int Id { get; set; }
-
-        string LargeUrl { get; set; }
-
-        int Likes { get; set; }
-
         IEnumerable<IMTag> MachineTags { get; set; }
-
-        int Posts { get; set; }
-
+        IEnumerable<string> HumanoidTags { get; set; }
+        int Id { get; set; }
         string Shortcode { get; set; }
-
+        string LargeUrl { get; set; }
         string ThumbUrl { get; set; }
-
-        DateTime Uploaded { get; set; }
-
+        int Likes { get; set; }
+        int Comments { get; set; }
         string User { get; set; }
+        int Follower { get; set; }
+        int Following { get; set; }
+        int Posts { get; set; }
+        DateTime Uploaded { get; set; }
     }
 }

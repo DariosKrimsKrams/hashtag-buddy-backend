@@ -1,6 +1,9 @@
-﻿namespace AutoTagger.Crawler.Standard.Helper
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace AutoTagger.Crawler.Standard
 {
-    using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -18,28 +21,16 @@
 
         private static HttpClient httpClient;
 
-        protected static HttpClient HttpClient 
-            => httpClient 
-            ?? (httpClient = new HttpClient());
-
-        protected dynamic GetScriptNodeData(HtmlNode document)
+        protected static HttpClient HttpClient
         {
-            var scriptNode = document?.SelectNodes("//script")
-                ?.FirstOrDefault(n => n.InnerText.Contains("window._sharedData = "));
-
-            if (scriptNode == null)
+            get
             {
-                return null;
+                if (httpClient == null)
+                {
+                    httpClient = new HttpClient();
+                }
+                return httpClient;
             }
-
-            var match = FindJson.Match(scriptNode.InnerText);
-            if (!match.Success || !match.Groups[1].Success)
-            {
-                return null;
-            }
-
-            var json = match.Groups[1].Value;
-            return JsonConvert.DeserializeObject(json);
         }
 
         protected HtmlNode FetchDocument(string url)
@@ -63,6 +54,26 @@
             var document = new HtmlDocument();
             document.Load(result.Content.ReadAsStreamAsync().Result);
             return document.DocumentNode;
+        }
+
+        protected static dynamic GetScriptNodeData(HtmlNode document)
+        {
+            var scriptNode = document?.SelectNodes("//script")
+                ?.FirstOrDefault(n => n.InnerText.Contains("window._sharedData = "));
+
+            if (scriptNode == null)
+            {
+                return null;
+            }
+
+            var match = FindJson.Match(scriptNode.InnerText);
+            if (!match.Success || !match.Groups[1].Success)
+            {
+                return null;
+            }
+
+            var json = match.Groups[1].Value;
+            return JsonConvert.DeserializeObject(json);
         }
     }
 }

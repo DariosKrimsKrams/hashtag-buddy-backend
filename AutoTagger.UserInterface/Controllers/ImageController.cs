@@ -90,8 +90,8 @@
 
         private Dictionary<string, object> FindTags(List<IMTag> machineTags)
         {
-            var(query, instagramTags) = this.storage.FindHumanoidTags(machineTags);
-            var ip = this.GetIpAddress();
+            var (query, instagramTags) = this.storage.FindHumanoidTags(machineTags);
+            var ip = this.GetIPAddress();
 
             var data = new Dictionary<string, object>
             {
@@ -104,7 +104,7 @@
             return data;
         }
 
-        private string GetIpAddress()
+        private string GetIPAddress()
         {
             return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString();
         }
