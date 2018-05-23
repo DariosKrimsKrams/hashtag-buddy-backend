@@ -14,6 +14,7 @@
         private static readonly int QueryImagesAtLessOrEqualImages = 20;
         private static readonly int DbSelectImagesAmount = 100;
         private static readonly string Path = @"C:\Instagger\Unused\";
+        private static int lastId = 0;
 
         public ImageDownloader(IImageProcessorStorage db)
         {
@@ -23,12 +24,12 @@
 
         public void Start()
         {
+            lastId = storage.GetLargestPhotoIdForPhotoWithMTag();
             new Thread(ImageDownloader.GetImages).Start();
         }
 
         public static void GetImages()
         {
-            var lastId = 139823;
             while (true)
             {
                 if (downloaderRunning <= QueryImagesAtLessOrEqualImages)

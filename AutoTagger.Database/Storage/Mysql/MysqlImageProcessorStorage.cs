@@ -49,5 +49,10 @@
         {
             this.Save();
         }
+
+        public int GetLargestPhotoIdForPhotoWithMTag()
+        {
+            return this.db.Mtags.Max(m => m.PhotoId);
+        }
     }
 }

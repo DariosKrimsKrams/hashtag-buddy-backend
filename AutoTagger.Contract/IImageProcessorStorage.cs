@@ -11,5 +11,6 @@ namespace AutoTagger.Contract
         IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes);
         void InsertMachineTagsWithoutSaving(IImage image);
         void DoSave();
+        int GetLargestPhotoIdForPhotoWithMTag();
     }
 }
