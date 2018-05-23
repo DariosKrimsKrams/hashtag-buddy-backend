@@ -18,14 +18,35 @@
             this.client = ImageAnnotatorClient.Create();
         }
 
+        public IEnumerable<IMTag> GetTagsForFile(string filename)
+        {
+            Image image = null;
+            try
+            {
+                image = Image.FromFile(filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                if (e.Message.Contains("Could not find file"))
+                {
+                    yield break;
+                }
+            }
+
+            var mTags = this.Detect(image);
+            foreach (var mTag in mTags)
+            {
+                yield return mTag;
+            }
+        }
+
         public IEnumerable<IMTag> GetTagsForImageBytes(byte[] bytes)
         {
             var image = Image.FromBytes(bytes);
 
-            var labels   = this.client.DetectLabels(image);
-            var webInfos = this.client.DetectWebInformation(image);
-
-            foreach (var mTag in ToMTags(labels, webInfos))
+            var mTags = this.Detect(image);
+            foreach (var mTag in mTags)
             {
                 yield return mTag;
             }
@@ -34,6 +55,16 @@
         public IEnumerable<IMTag> GetTagsForImageUrl(string imageUrl)
         {
             var image = Image.FromUri(imageUrl);
+
+            var mTags = this.Detect(image);
+            foreach (var mTag in mTags)
+            {
+                yield return mTag;
+            }
+        }
+
+        private IEnumerable<IMTag> Detect(Image image)
+        {
             IReadOnlyList<EntityAnnotation> labels = null;
             WebDetection webInfos = null;
 
@@ -42,21 +73,17 @@
                 labels   = this.client.DetectLabels(image);
                 webInfos = this.client.DetectWebInformation(image);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (e.Message.Contains("The URL does not appear to be accessible by us.")
-                    || e.Message.Contains("We can not access the URL currently.")
-                )
+                 || e.Message.Contains("We can not access the URL currently."))
                 {
                     yield break;
                 }
-                else
-                {
-                    Console.WriteLine(e);
-                }
+                Console.WriteLine(e);
             }
 
-            if(labels == null || webInfos == null)
+            if (labels == null || webInfos == null)
                 yield break;
 
             foreach (var mTag in ToMTags(labels, webInfos))

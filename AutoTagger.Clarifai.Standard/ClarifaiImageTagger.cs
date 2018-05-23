@@ -20,6 +20,11 @@
             this.client = new ClarifaiClient(clarifaiApiKey);
         }
 
+        public IEnumerable<IMTag> GetTagsForFile(string filename)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<IMTag> GetTagsForImageBytes(byte[] bytes)
         {
             var clarifaiInput = new ClarifaiFileImage(bytes);

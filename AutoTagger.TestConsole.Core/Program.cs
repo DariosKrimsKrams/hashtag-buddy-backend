@@ -4,8 +4,10 @@
     using System.Linq;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.Standard.V1;
+    using AutoTagger.Database.Storage.AutoTagger;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
+    using AutoTagger.ImageDownloader.Standard;
 
     internal class Program
     {
@@ -14,7 +16,10 @@
         {
             Console.WriteLine("" + 
                              "1: Start Crawler\n" +
-                             "2: Start ImageProcessor"
+                             "2: Start Downloader\n" +
+                             "3: Start ImageProcessor\n" +
+                             "4: Crawl Mtags with HighScore\n" +
+                             ""
                              );
             while(true)
             {
@@ -28,13 +33,47 @@
                         break;
 
                     case '2':
+                        Console.WriteLine("Download Images...");
+                        StartImageDownloader();
+                        break;
+
+                    case '3':
                         Console.WriteLine("Start Image Processor...");
                         StartImageProcessor();
+                        break;
+
+                    case '4':
+                        Console.WriteLine("Start CrawlMtagsWithHighScore...");
+                        CrawlMtagsWithHighScore();
                         break;
                 }
                 Console.WriteLine("------------");
             }
             
+        }
+
+        private static void CrawlMtagsWithHighScore()
+        {
+            var uiDb = new MysqlUIStorage();
+            var mtags = uiDb.GetMtagsWithHighScore();
+            var mtagsArr = mtags.Select(m => m.Replace(" ", "").ToLower()).ToArray();
+
+            var crawlerDb = new MysqlCrawlerStorage();
+            var crawlerEngine = new CrawlerV1();
+            crawlerEngine.OverrideCondition("MinPostsForHashtags", 10 * 1000);
+            crawlerEngine.BuildTags(mtagsArr);
+            crawlerEngine.DisableFurtherEnqueue();
+
+            var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
+            crawler.OnImageSaved += image =>
+            {
+                Console.WriteLine(
+                    "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
+                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
+                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
+                  + "\", \"comments\":\"" + image.Comments + "\", }");
+            };
+            crawler.DoCrawling(0);
         }
 
         private static void StartCrawler()
@@ -51,6 +90,13 @@
                   + "\", \"comments\":\"" + image.Comments + "\", }");
             };
             crawler.DoCrawling(0);
+        }
+
+        private static void StartImageDownloader()
+        {
+            var db = new MysqlImageProcessorStorage();
+            var imageDownloader = new ImageDownloader(db);
+            imageDownloader.Start();
         }
 
         private static void StartImageProcessor()

@@ -16,15 +16,6 @@
             this.random = new Random();
         }
 
-        public IEnumerable<IImage> GetImagesWithoutMachineTags(int limit)
-        {
-            var query = (from p in this.db.Photos
-                         where p.Mtags.Count == 0
-                         && p.Id > this.GetRandomId()
-                         select p).Take(limit);
-            return query.ToList().Select(x => x.ToImage());
-        }
-
         public IEnumerable<IImage> GetImagesWithoutMachineTags(int idLargerThan, int limit)
         {
             var query = (from p in this.db.Photos
@@ -34,15 +25,10 @@
             return query.ToList().Select(x => x.ToImage());
         }
 
-        private int GetRandomId()
+        public IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes)
         {
-            var largestId = this.GetLargestId();
-            return this.random.Next(1, largestId);
-        }
-
-        private int GetLargestId()
-        {
-            return this.db.Photos.OrderByDescending(p => p.Id).FirstOrDefault().Id;
+            var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
+            return query.ToList().Select(x => x.ToImage());
         }
 
         public void InsertMachineTagsWithoutSaving(IImage image)

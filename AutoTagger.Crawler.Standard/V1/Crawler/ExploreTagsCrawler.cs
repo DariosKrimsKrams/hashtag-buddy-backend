@@ -8,21 +8,19 @@
 
     class ExploreTagsCrawler : ImageCrawler
     {
-        private const int MinPostsForHashtags = 1 * 1000 * 1000;
-        //public Dictionary<string, int> Data;
-
-        public ExploreTagsCrawler()
+        private ICrawler crawler;
+        public ExploreTagsCrawler(ICrawler crawler)
         {
+            this.crawler = crawler;
             this.MinHashTagCount = 0;
             this.MinLikes        = 100;
-            //this.Data = new Dictionary<string, int>();
         }
 
         public (int, List<IImage>) Parse(string url)
         {
             var data = this.GetData(url);
             var amountPosts = GetAmountOfPosts(data);
-            if (amountPosts < MinPostsForHashtags)
+            if (amountPosts < this.crawler.GetCondition("MinPostsForHashtags"))
             {
                 return (amountPosts, null);
             }

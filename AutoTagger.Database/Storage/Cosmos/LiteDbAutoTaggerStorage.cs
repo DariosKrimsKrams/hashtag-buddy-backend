@@ -48,6 +48,11 @@ namespace AutoTagger.Database.Storage.AutoTagger
             throw new System.NotImplementedException();
         }
 
+        public IEnumerable<string> GetMtagsWithHighScore()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void InsertOrUpdate(string imageId, IEnumerable<string> machineTags, IEnumerable<string> humanoidTags)
         {
             this.images.Upsert(this.Bson(imageId, machineTags, humanoidTags));

@@ -8,6 +8,10 @@
     using global::AutoTagger.Database.Storage;
     using global::AutoTagger.Database.Mysql;
 
+    using Gremlin.Net.Process.Traversal;
+
+    using Remotion.Linq.Clauses;
+
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {
         private List<Itags> allITags;

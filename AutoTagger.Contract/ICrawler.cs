@@ -7,5 +7,8 @@
     {
         IEnumerable<IImage> DoCrawling(int limit, params string[] customTags);
         event Action<IHumanoidTag> OnHashtagFound;
+        bool OverrideCondition(string key, int value);
+        int GetCondition(string key);
+        void BuildTags(string[] customTags);
     }
 }
