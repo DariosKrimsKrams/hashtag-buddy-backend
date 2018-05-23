@@ -80,7 +80,11 @@
                 {
                     yield break;
                 }
-                Console.WriteLine(e);
+                if (!e.Message.Contains("Bad image data"))
+                {
+                    Console.WriteLine(e);
+                }
+                throw;
             }
 
             if (labels == null || webInfos == null)

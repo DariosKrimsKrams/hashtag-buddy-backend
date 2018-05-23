@@ -13,7 +13,7 @@
 
         private static readonly int QueryImagesAtLessOrEqualImages = 20;
         private static readonly int DbSelectImagesAmount = 100;
-        private static readonly string Path = @"C:\Instagger\";
+        private static readonly string Path = @"C:\Instagger\Unused\";
 
         public ImageDownloader(IImageProcessorStorage db)
         {

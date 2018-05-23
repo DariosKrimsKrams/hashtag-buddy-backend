@@ -15,9 +15,9 @@
         private static void Main(string[] args)
         {
             Console.WriteLine("" + 
-                             "1: Start Crawler\n" +
-                             "2: Start Downloader\n" +
-                             "3: Start ImageProcessor\n" +
+                             "1: Start Crawler (CrawlerEngine V1)\n" +
+                             "2: Start Image Downloader\n" +
+                             "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
                              ""
                              );
@@ -107,15 +107,15 @@
             var imageProcessor = new ImageProcessorApp(db, tagger);
             ImageProcessorApp.OnLookingForTags += image =>
             {
-                Console.WriteLine("Crawling for " + image.Id);
+                Console.WriteLine("Sending to GCP for " + image.Shortcode + "(" + image.Id + ")");
             };
             ImageProcessorApp.OnFoundTags += image =>
             {
-                Console.WriteLine("Tags found for " + image.Id);
+                Console.WriteLine("Tags found for " + image.Shortcode + "(" + image.Id + ")");
             };
             ImageProcessorApp.OnDbInserted += image =>
             {
-                Console.WriteLine("DB Insert for " + image.Id);
+                Console.WriteLine("DB Insert for " + image.Shortcode +"("+image.Id+")");
             };
             ImageProcessorApp.OnDbSaved += () =>
             {

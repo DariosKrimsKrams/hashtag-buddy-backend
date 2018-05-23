@@ -9,6 +9,7 @@ namespace AutoTagger.ImageProcessor.Standard
     using System.Threading;
 
     using AutoTagger.Contract;
+    using AutoTagger.Crawler.Standard;
 
     using Google.Cloud.Vision.V1;
 
@@ -31,6 +32,7 @@ namespace AutoTagger.ImageProcessor.Standard
         private static readonly int SaveLimit = 5;
         private static readonly string PathUnused = @"C:\Instagger\Unused\";
         private static readonly string PathUsed = @"C:\Instagger\Used\";
+        private static readonly string PathDefect = @"C:\Instagger\Defect\";
         private static readonly string Ext = ".jpg";
 
         public ImageProcessorApp(IImageProcessorStorage db, ITaggingProvider taggingProvider)
@@ -53,6 +55,8 @@ namespace AutoTagger.ImageProcessor.Standard
             var files = this.GetImagesFromDisk();
             var images = this.GetImagesWithoutMTags(files);
             images.ForEach(i => queue.Enqueue(i));
+
+            // bad performance -> better would be to run the Query other way
             //this.MoveUsedFiles(files, images);
         }
 
@@ -67,16 +71,16 @@ namespace AutoTagger.ImageProcessor.Standard
             return storage.GetImagesWithoutMachineTags(files.ToList());
         }
 
-        private void MoveUsedFiles(string[] files, IEnumerable<IImage> images)
-        {
-            var usedFiles = files.Where(x => !images.Any(y => y.Shortcode == x)).ToList();
-            foreach (var usedFile in usedFiles)
-            {
-                var path     = PathUnused + usedFile + Ext;
-                var pathUsed = PathUsed + usedFile + Ext;
-                File.Move(path, pathUsed);
-            }
-        }
+        //private void MoveUsedFiles(string[] files, IEnumerable<IImage> images)
+        //{
+        //    var usedFiles = files.Where(x => !images.Any(y => y.Shortcode == x)).ToList();
+        //    foreach (var usedFile in usedFiles)
+        //    {
+        //        var path     = PathUnused + usedFile + Ext;
+        //        var pathUsed = PathUsed + usedFile + Ext;
+        //        File.Move(path, pathUsed);
+        //    }
+        //}
 
         private static void StartTaggerThreads()
         {
@@ -104,18 +108,48 @@ namespace AutoTagger.ImageProcessor.Standard
             OnLookingForTags?.Invoke(image);
 
             var path = PathUnused + image.Shortcode + Ext;
-            var mTags = tagger.GetTagsForFile(path).ToList();
-
-            Interlocked.Decrement(ref taggerRunning);
-            if (mTags.Count == 0)
+            var fileBytes = File.ReadAllBytes(path);
+            var fileSize = fileBytes.Length;
+            if (fileSize == 0)
+            {
+                Interlocked.Decrement(ref taggerRunning);
+                Console.WriteLine("Defect file (Size: 0 Bytes): " + image.Shortcode);
+                File.Move(path, PathDefect+image.Shortcode+Ext);
                 return;
-            image.MachineTags = mTags;
-            dbSaveQueue.Enqueue(image);
-            Interlocked.Increment(ref saveCounter);
-            OnFoundTags?.Invoke(image);
+            }
 
-            var pathUsed = PathUsed + image.Shortcode + Ext;
-            File.Move(path, pathUsed);
+            try
+            {
+                var mTags = tagger.GetTagsForFile(path).ToList();
+                Interlocked.Decrement(ref taggerRunning);
+                if (!mTags.Any())
+                {
+                    Console.WriteLine("Image not detectable: " + image.Shortcode);
+                    File.Delete(path);
+                    return;
+                }
+                image.MachineTags = mTags;
+                dbSaveQueue.Enqueue(image);
+                Interlocked.Increment(ref saveCounter);
+                OnFoundTags?.Invoke(image);
+
+                var pathUsed = PathUsed + image.Shortcode + Ext;
+                File.Move(path, pathUsed);
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("Bad image data"))
+                {
+                    File.Move(path, PathDefect+image.Shortcode+Ext);
+                    Console.WriteLine("Defect file (Bad image data): " + image.Shortcode);
+                    Interlocked.Decrement(ref taggerRunning);
+                }
+                else
+                {
+                    Console.WriteLine("Unknown Error");
+
+                }
+            }
         }
 
         public static void InsertDb()
