@@ -4,14 +4,11 @@ namespace AutoTagger.ImageProcessor.Standard
 {
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading;
-
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
-
-    using Google.Cloud.Vision.V1;
+    using AutoTagger.Contract.Standard;
+    using AutoTagger.FileHandling.Standard;
 
     public class ImageProcessorApp
     {
@@ -31,10 +28,8 @@ namespace AutoTagger.ImageProcessor.Standard
 
         private static readonly int ConcurrentThreadsLimit = 15;
         private static readonly int SaveLimit = 5;
-        private static readonly string PathUnused = @"C:\Instagger\Unused\";
-        private static readonly string PathUsed = @"C:\Instagger\Used\";
-        private static readonly string PathDefect = @"C:\Instagger\Defect\";
-        private static readonly string Ext = ".jpg";
+
+        private static IFileHandler fileHandler;
 
         enum DbUsage
         {
@@ -51,6 +46,7 @@ namespace AutoTagger.ImageProcessor.Standard
             dbSaveQueue = new ConcurrentQueue<IImage>();
             queue = new ConcurrentQueue<IImage>();
             processed = new List<string>();
+            fileHandler = new DiskFileHander();
         }
 
         public void Process()
@@ -61,7 +57,7 @@ namespace AutoTagger.ImageProcessor.Standard
 
         private static void PrepareImages()
         {
-            var files = GetImagesFromDisk();
+            var files = fileHandler.GetAllUnusedImages();
             var images = GetImagesWithoutMTags(files);
             images.ForEach(i =>
             {
@@ -75,15 +71,9 @@ namespace AutoTagger.ImageProcessor.Standard
             //this.MoveUsedFiles(files, images);
         }
 
-        private static string[] GetImagesFromDisk()
+        private static IEnumerable<IImage> GetImagesWithoutMTags(IList<string> files)
         {
-            var files = Directory.GetFiles(PathUnused, "*"+ Ext);
-            return files.Select(x => x.Replace(PathUnused, "").Replace(Ext, "")).ToArray();
-        }
-
-        private static IEnumerable<IImage> GetImagesWithoutMTags(string[] files)
-        {
-            return storage.GetImagesWithoutMachineTags(files.ToList());
+            return storage.GetImagesWithoutMachineTags(files);
         }
 
         //private void MoveUsedFiles(string[] files, IEnumerable<IImage> images)
@@ -127,32 +117,29 @@ namespace AutoTagger.ImageProcessor.Standard
             Interlocked.Increment(ref taggerRunning);
             OnLookingForTags?.Invoke(image);
 
-            var path = PathUnused + image.Shortcode + Ext;
+            //if (!fileHandler.FileExists(image.Shortcode))
+            //{
+            //    Interlocked.Decrement(ref taggerRunning);
+            //    return;
+            //}
 
-            if (!File.Exists(path))
-            {
-                Interlocked.Decrement(ref taggerRunning);
-                return;
-            }
-
-            var fileBytes = File.ReadAllBytes(path);
-            var fileSize = fileBytes.Length;
-            if (fileSize == 0)
+            if (fileHandler.GetFileSize(image.Shortcode) == 0)
             {
                 Interlocked.Decrement(ref taggerRunning);
                 Console.WriteLine("Defect file (Size: 0 Bytes): " + image.Shortcode);
-                File.Move(path, PathDefect+image.Shortcode+Ext);
+                fileHandler.FlagAsDefect(image.Shortcode);
                 return;
             }
 
             try
             {
+                var path = fileHandler.GetFullPath(image.Shortcode);
                 var mTags = tagger.GetTagsForFile(path).ToList();
                 Interlocked.Decrement(ref taggerRunning);
                 if (!mTags.Any())
                 {
                     Console.WriteLine("Image not detectable: " + image.Shortcode);
-                    File.Delete(path);
+                    fileHandler.Delete(image.Shortcode);
                     return;
                 }
                 image.MachineTags = mTags;
@@ -160,14 +147,13 @@ namespace AutoTagger.ImageProcessor.Standard
                 Interlocked.Increment(ref saveCounter);
                 OnFoundTags?.Invoke(image);
 
-                var pathUsed = PathUsed + image.Shortcode + Ext;
-                File.Move(path, pathUsed);
+                fileHandler.FlagAsUsed(image.Shortcode);
             }
             catch (Exception e)
             {
                 if (e.Message.Contains("Bad image data"))
                 {
-                    File.Move(path, PathDefect+image.Shortcode+Ext);
+                    fileHandler.FlagAsDefect(image.Shortcode);
                     Console.WriteLine("Defect file (Bad image data): " + image.Shortcode);
                     Interlocked.Decrement(ref taggerRunning);
                 }
