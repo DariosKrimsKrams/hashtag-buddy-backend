@@ -1,10 +1,13 @@
 ﻿namespace AutoTagger.ImageDownloader.Standard
 {
     using System;
-    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Threading;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Standard;
+    using AutoTagger.FileHandling.Standard;
 
     public class ImageDownloader
     {
@@ -13,17 +16,19 @@
 
         private static readonly int QueryImagesAtLessOrEqualImages = 20;
         private static readonly int DbSelectImagesAmount = 100;
-        private static readonly string Path = @"C:\Instagger\Unused\";
         private static int lastId = 0;
+        private static IFileHandler fileHandler;
+        private static List<string> files;
 
         public ImageDownloader(IImageProcessorStorage db)
         {
             storage = db;
-            System.IO.Directory.CreateDirectory(Path);
+            fileHandler = new DiskFileHander();
         }
 
         public void Start()
         {
+            files = fileHandler.GetAllUnusedImages().ToList();
             lastId = storage.GetLargestPhotoIdForPhotoWithMTag();
             new Thread(ImageDownloader.GetImages).Start();
         }
@@ -37,6 +42,8 @@
                     var images = storage.GetImagesWithoutMachineTags(lastId, DbSelectImagesAmount);
                     foreach (var image in images)
                     {
+                        if (files.Contains(image.Shortcode))
+                            continue;
                         Interlocked.Increment(ref downloaderRunning);
                         new Thread(() => ImageDownloader.Download(image)).Start();
                         lastId = image.Id;
@@ -51,11 +58,11 @@
             using (var client = new WebClient())
             {
                 var url = image.LargeUrl;
-                var filename = Path + image.Shortcode + ".jpg";
+                var fullPath = fileHandler.GetFullPath(image.Shortcode);
                 try
                 {
-                    client.DownloadFile(new Uri(url), filename);
-                    Console.WriteLine("successful downloaded: " + filename);
+                    client.DownloadFile(new Uri(url), fullPath);
+                    Console.WriteLine("successful downloaded: " + image.Shortcode);
                 }
                 catch (WebException e)
                 {
@@ -74,7 +81,7 @@
                         Console.WriteLine("Crashed at ID=" + image.Id);
                         Console.WriteLine(e.Message);
                     }
-                    System.IO.File.Delete(filename);
+                    fileHandler.Delete(image.Shortcode);
                 }
                 finally
                 {
