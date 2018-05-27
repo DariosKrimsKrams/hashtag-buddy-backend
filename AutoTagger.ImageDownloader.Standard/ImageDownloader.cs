@@ -36,14 +36,17 @@
 
         public static void GetImages()
         {
+            var delay = 30;
             while (true)
             {
                 if (downloaderRunning <= QueryImagesAtLessOrEqualImages)
                 {
+                    delay = 500;
                     Console.WriteLine("Check DB for ID=" + lastId);
                     var images = storage.GetImagesWithoutMachineTags(lastId, DbSelectImagesAmount);
                     foreach (var image in images)
                     {
+                        delay = 30;
                         lastId = image.Id;
                         if (files.Contains(image.Shortcode))
                             continue;
@@ -53,7 +56,7 @@
                         new Thread(() => ImageDownloader.Download(image)).Start();
                     }
                 }
-                Thread.Sleep(20);
+                Thread.Sleep(delay);
             }
         }
 
@@ -73,12 +76,10 @@
                     if (e.Message.Contains("403"))
                     {
                         Console.WriteLine("Download failed with 403 at ID=" + image.Id);
-                        // 403 is okay..
                     }
                     else if (e.Message.Contains("404"))
                     {
                         Console.WriteLine("Download failed with 404 at ID=" + image.Id);
-                        // 403 is okay..
                     }
                     else
                     {
