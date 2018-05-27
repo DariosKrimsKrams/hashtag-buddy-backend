@@ -21,7 +21,7 @@
             var query = (from p in this.db.Photos
                          where p.Mtags.Count == 0
                             && p.Id > idLargerThan
-                         select p).Take(limit);
+                         select p).Take(limit).OrderBy(x => x.Id);
             return query.ToList().Select(x => x.ToImage());
         }
 

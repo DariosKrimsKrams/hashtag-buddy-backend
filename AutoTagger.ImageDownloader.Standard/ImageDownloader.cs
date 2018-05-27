@@ -15,7 +15,8 @@
         private static int downloaderRunning;
 
         private static readonly int QueryImagesAtLessOrEqualImages = 20;
-        private static readonly int DbSelectImagesAmount = 100;
+        private static readonly int DbSelectImagesAmount = 500;
+        private static readonly int ParallelThreads = 100;
         private static int lastId = 0;
         private static IFileHandler fileHandler;
         private static List<string> files;
@@ -39,17 +40,20 @@
             {
                 if (downloaderRunning <= QueryImagesAtLessOrEqualImages)
                 {
+                    Console.WriteLine("Check DB for ID=" + lastId);
                     var images = storage.GetImagesWithoutMachineTags(lastId, DbSelectImagesAmount);
                     foreach (var image in images)
                     {
+                        lastId = image.Id;
                         if (files.Contains(image.Shortcode))
                             continue;
+                        if (downloaderRunning >= ParallelThreads)
+                            break;
                         Interlocked.Increment(ref downloaderRunning);
                         new Thread(() => ImageDownloader.Download(image)).Start();
-                        lastId = image.Id;
                     }
                 }
-                Thread.Sleep(30);
+                Thread.Sleep(20);
             }
         }
 
