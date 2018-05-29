@@ -17,7 +17,8 @@ Set following Environment Variables
 - instatagger_mysql_user
 - instatagger_mysql_pw
 - instatagger_mysql_db
-- instatagger_clarifai_key
+- instatagger_gcpvision_key1
+- instatagger_gcpvision_key2
 
 ## Links
   * [Frontend](http://instatagger.do-epic-sh.it/)

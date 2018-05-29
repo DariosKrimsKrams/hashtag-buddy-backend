@@ -4,7 +4,13 @@
     using System.Collections.Generic;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
+
+    using Google.Apis.Auth.OAuth2;
     using Google.Cloud.Vision.V1;
+
+    using Grpc.Auth;
+    using Grpc.Core;
+
     using Image = Google.Cloud.Vision.V1.Image;
 
     public class GCPVision : ITaggingProvider
@@ -15,7 +21,25 @@
 
         public GCPVision()
         {
-            this.client = ImageAnnotatorClient.Create();
+            this.client = this.Create();
+        }
+
+        /**
+         * https://googlecloudplatform.github.io/google-cloud-dotnet/docs/faq.html#how-can-i-use-non-default-credentials-for-grpc-based-apis
+         * https://github.com/GoogleCloudPlatform/google-cloud-dotnet/issues/1966
+         */
+        public ImageAnnotatorClient Create()
+        {
+            var key1 = Environment.GetEnvironmentVariable("instatagger_gcpvision_key1");
+            var key2 = Environment.GetEnvironmentVariable("instatagger_gcpvision_key2");
+            var json = key1 + key2;
+
+            var credential = GoogleCredential
+                .FromJson(json)
+                .CreateScoped(ImageAnnotatorClient.DefaultScopes);
+            var channel = new Channel(ImageAnnotatorClient.DefaultEndpoint.ToString(),
+                credential.ToChannelCredentials());
+            return ImageAnnotatorClient.Create(channel);
         }
 
         public IEnumerable<IMTag> GetTagsForFile(string filename)
