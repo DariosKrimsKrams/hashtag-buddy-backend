@@ -9,7 +9,10 @@ using Newtonsoft.Json;
 
 namespace AutoTagger.AzureFunctions
 {
+    using System.Linq;
     using System.Threading.Tasks;
+
+    using AutoTagger.ImageProcessor.Standard;
 
     public static class Function1
     {
@@ -24,7 +27,8 @@ namespace AutoTagger.AzureFunctions
             }
 
             var body = req.Body;
-            if (body == null || body.Length == 0 || req.ContentLength == 0)
+            var files = req.Form.Files;
+            if (body == null || body.Length == 0 || req.ContentLength == 0 || files.Count != 1)
             {
                 return new BadRequestObjectResult("No File uploaded");
             }
@@ -32,18 +36,19 @@ namespace AutoTagger.AzureFunctions
             //var storage = new MysqlUIStorage();
             //services.AddTransient<, MysqlUIStorage>();
             //services.AddTransient<ITaggingProvider, GCPVision>();
+            var taggingProvider = new GCPVision();
 
             using (var stream = new MemoryStream())
             {
-                await body.CopyToAsync(stream);
+                await files[0].CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                //var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                var machineTags = taggingProvider.GetTagsForImageBytes(bytes).ToList();
 
-                //if (!machineTags.Any())
-                //{
-                //    return this.BadRequest("No MachineTags found :'(");
-                //}
+                if (!machineTags.Any())
+                {
+                    return new BadRequestObjectResult("No MachineTags found");
+                }
 
                 //var content = this.FindTags(machineTags);
                 //var json = this.Json(content);
