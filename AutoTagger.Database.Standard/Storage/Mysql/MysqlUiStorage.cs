@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Database.Storage.AutoTagger
+﻿namespace AutoTagger.Database.Standard.Storage.Mysql
 {
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
 
     using global::AutoTagger.Contract;
-    using global::AutoTagger.Database.Mysql;
+    using global::AutoTagger.Database.Standard.Mysql;
 
     using Microsoft.EntityFrameworkCore;
 

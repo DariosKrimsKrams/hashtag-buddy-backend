@@ -1,16 +1,11 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace AutoTagger.Database.Standard.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using global::AutoTagger.Contract;
-    using global::AutoTagger.Crawler.Standard;
-    using global::AutoTagger.Database.Storage;
-    using global::AutoTagger.Database.Mysql;
-
-    using Gremlin.Net.Process.Traversal;
-
-    using Remotion.Linq.Clauses;
+    using global::AutoTagger.Database.Standard.Storage;
+    using global::AutoTagger.Database.Standard.Mysql;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {
@@ -64,10 +59,10 @@
         public IEnumerable<IHumanoidTag> GetAllHumanoidTags()
         {
             this.allITags = this.db.Itags.ToList();
-            var hTags = new List<HumanoidTag>();
+            var hTags = new List<IHumanoidTag>();
             foreach (var iTag in this.allITags)
             {
-                hTags.Add(new HumanoidTag{Name = iTag.Name, Posts = iTag.Posts});
+                //hTags.Add(new HumanoidTag{Name = iTag.Name, Posts = iTag.Posts});
             }
             return hTags;
         }

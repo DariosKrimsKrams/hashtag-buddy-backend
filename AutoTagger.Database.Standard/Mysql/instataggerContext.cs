@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace AutoTagger.Database.Mysql
+namespace AutoTagger.Database.Standard.Mysql
 {
     public partial class InstataggerContext : DbContext
     {

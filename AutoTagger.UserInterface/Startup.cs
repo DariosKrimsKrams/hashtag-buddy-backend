@@ -1,7 +1,7 @@
 ﻿namespace AutoTagger.UserInterface
 {
     using AutoTagger.Contract;
-    using AutoTagger.Database.Storage.AutoTagger;
+    using AutoTagger.Database.Standard.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.UserInterface.Controllers.FIlter;
     using Microsoft.AspNetCore.Builder;

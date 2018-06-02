@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AutoTagger.Database.Mysql
+namespace AutoTagger.Database.Standard.Mysql
 {
     using System.Linq;
 

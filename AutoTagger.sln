@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler.Standard
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Test.Core", "AutoTagger.Test.Core\AutoTagger.Test.Core.csproj", "{40034217-4CFC-4E99-9352-BE14DE48D9CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database", "AutoTagger.Database\AutoTagger.Database.csproj", "{9A7227B2-6F35-4E29-AD26-803031890B63}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Objects", "AutoTagger.Objects\AutoTagger.Objects.csproj", "{F86E22A3-996A-485C-9172-65545C3C92A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader.Standard", "AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.Standard.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
@@ -24,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling.Standard", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.Standard.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.AzureFunctions", "AutoTagger.AzureFunctions\AutoTagger.AzureFunctions.csproj", "{6A9997DE-A30E-45E6-B5DF-11454342CA0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.Database.Standard", "AutoTagger.Database.Standard\AutoTagger.Database.Standard.csproj", "{8D0426E4-07B0-4845-80A0-67CFBBC962C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +55,6 @@ Global
 		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A7227B2-6F35-4E29-AD26-803031890B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A7227B2-6F35-4E29-AD26-803031890B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A7227B2-6F35-4E29-AD26-803031890B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A7227B2-6F35-4E29-AD26-803031890B63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F86E22A3-996A-485C-9172-65545C3C92A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F86E22A3-996A-485C-9172-65545C3C92A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86E22A3-996A-485C-9172-65545C3C92A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,10 @@ Global
 		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
