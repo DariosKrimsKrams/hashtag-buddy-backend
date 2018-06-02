@@ -46,7 +46,7 @@
                     continue;
                 if (string.IsNullOrEmpty(machineTag.Name))
                     continue;
-                whereCondition += $"`m`.`name` = '{machineTag.Name}' OR ";
+                whereCondition += $"`m`.`name` = '{machineTag.Name.Replace("'", "\\'")}' OR ";
             }
 
             char[] charsToTrim = { ' ', 'O', 'R' };
