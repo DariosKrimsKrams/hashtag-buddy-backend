@@ -1,27 +1,31 @@
-
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs.Host;
-using Newtonsoft.Json;
-
 namespace AutoTagger.AzureFunctions
 {
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using AutoTagger.Contract;
+    using AutoTagger.Database.Standard.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
+
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Azure.WebJobs;
+    using Microsoft.Azure.WebJobs.Extensions.Http;
+    using Microsoft.Azure.WebJobs.Host;
+
+    //using Newtonsoft.Json;
 
     public static class Function1
     {
         [FunctionName("Function1")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequest req, TraceWriter log)
+        public static async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
+            HttpRequest req,
+            TraceWriter log)
         {
-
-            if (req.ContentType == null ||
-                !req.ContentType.Contains("multipart/form-data; boundary"))
+            if (req.ContentType == null || !req.ContentType.Contains("multipart/form-data; boundary"))
             {
                 return new BadRequestObjectResult("Wrong ContentType");
             }
@@ -33,9 +37,7 @@ namespace AutoTagger.AzureFunctions
                 return new BadRequestObjectResult("No File uploaded");
             }
 
-            //var storage = new MysqlUIStorage();
-            //services.AddTransient<, MysqlUIStorage>();
-            //services.AddTransient<ITaggingProvider, GCPVision>();
+            var storage = new MysqlUIStorage();
             var taggingProvider = new GCPVision();
 
             using (var stream = new MemoryStream())
@@ -50,16 +52,36 @@ namespace AutoTagger.AzureFunctions
                     return new BadRequestObjectResult("No MachineTags found");
                 }
 
-                //var content = this.FindTags(machineTags);
-                //var json = this.Json(content);
+                var content = FindTags(machineTags, req, storage);
+                //var json    = JsonConvert.SerializeObject(content);
+                var json = new JsonResult(content);
 
-                //var debug = content;
+                var debug = content;
                 //var debugStr = JsonConvert.SerializeObject(debug);
-                //this.storage.Log("web_image", debugStr);
+                //storage.Log("web_image", debugStr);
 
-                //return json;
-                return (ActionResult)new OkObjectResult($"Hello, WORKS :D");
+                return new JsonResult(content);
+                //return (ActionResult)new OkObjectResult($"Hello, WORKS :D");
             }
+        }
+
+        private static Dictionary<string, object> FindTags(
+            List<IMTag> machineTags,
+            HttpRequest req,
+            IAutoTaggerStorage storage)
+        {
+            var (query, instagramTags) = storage.FindHumanoidTags(machineTags);
+            var ip = req.HttpContext.Connection?.RemoteIpAddress?.ToString();
+
+            var data = new Dictionary<string, object>
+            {
+                { "machineTags", machineTags },
+                { "instagramTags", instagramTags },
+                { "query", query },
+                { "ip", ip }
+            };
+
+            return data;
         }
     }
 }
