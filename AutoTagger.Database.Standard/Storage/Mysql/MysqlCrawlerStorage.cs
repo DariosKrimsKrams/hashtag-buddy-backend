@@ -56,13 +56,16 @@
             this.Save();
         }
 
-        public IEnumerable<IHumanoidTag> GetAllHumanoidTags()
+        public IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag
         {
             this.allITags = this.db.Itags.ToList();
             var hTags = new List<IHumanoidTag>();
             foreach (var iTag in this.allITags)
             {
-                //hTags.Add(new HumanoidTag{Name = iTag.Name, Posts = iTag.Posts});
+                var t = (T)Activator.CreateInstance(typeof(T));
+                t.Name = iTag.Name;
+                t.Posts = iTag.Posts;
+                hTags.Add(t);
             }
             return hTags;
         }

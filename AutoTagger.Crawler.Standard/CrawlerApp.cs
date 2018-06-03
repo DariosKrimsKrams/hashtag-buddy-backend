@@ -15,7 +15,7 @@
         {
             this.db                     =  db;
             this.crawler                =  crawler;
-            this.allHTags               =  db.GetAllHumanoidTags().ToList();
+            this.allHTags               =  db.GetAllHumanoidTags<HumanoidTag>().ToList();
             this.crawler.OnHashtagFound += this.HashtagFound;
         }
 

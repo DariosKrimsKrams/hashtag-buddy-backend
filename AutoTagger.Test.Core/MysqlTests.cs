@@ -15,7 +15,7 @@
         {
             // Arrange
             var crawlerDb = new MysqlCrawlerStorage();
-            crawlerDb.GetAllHumanoidTags();
+            crawlerDb.GetAllHumanoidTags<HumanoidTag>();
             var image = new Image
             {
                 Comments = 10,
@@ -45,7 +45,7 @@
         {
             // Arrange
             var crawlerDb = new MysqlCrawlerStorage();
-            crawlerDb.GetAllHumanoidTags();
+            crawlerDb.GetAllHumanoidTags<HumanoidTag>();
             var name = "Altona";
             var posts = 14;
             var humanoidTag = new HumanoidTag {Name = name, Posts = posts};
