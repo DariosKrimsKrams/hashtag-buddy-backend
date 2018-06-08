@@ -6,7 +6,7 @@
 	
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>InstaTagger</title>
+    <title>Instaq</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -62,11 +62,8 @@
             <h2>Upload a photo</h2>
             <input class="btn btn-file form-control-file form-control" type="file" name="file" id="file" accept="image/*">
 			<hr />
-			<p>Or insert a link</p>
-            <input class="form-control" type="text" name="link" style="margin-bottom: 5px" placeholder="http://..." />
-			<hr />
             <input id="submitBtn" class="btn btn-default" style="width: 100%" type="submit"/>
-			<p id="loadingIndicator" class="hidden">Finding out hashtags...</p>
+			<p id="loadingIndicator" class="hidden">Finding hashtags...</p>
         </form>
     </div>
 	
@@ -113,10 +110,10 @@
 			
 			var hasFile = $('#file').val() != '';
 			
-			var host = 'http://instataggerui.azurewebsites.net/';
+			var host = 'https://instaq.azurewebsites.net/api/Upload?code=Ss0jXxCayEFaqhTtFcyPXlN0WBPuc61Xg8IEY8aopRpH40yoH7paAg==';
 			
 			if(hasFile) {
-				var url = host+'image/file';
+				var url = host;
 				var data = new FormData();
 				var file = $('#file')[0].files[0];
 				data.append("file", file, file.name);
@@ -128,17 +125,6 @@
 					contentType: false,
 					enctype: 'multipart/form-data',
 					processData: false,
-					data: data,
-					success: success,
-					error: error
-				});
-			} else {
-				var url = host+'image/link';
-				data = $(this).serialize();
-				
-				var jqxhr = $.ajax({
-					type: 'POST',
-					url: url,
 					data: data,
 					success: success,
 					error: error
