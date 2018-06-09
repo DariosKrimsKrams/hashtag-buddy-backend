@@ -8,6 +8,7 @@ namespace AutoTagger.Evaluation.Standard
     using System.Runtime.Serialization.Json;
 
     using AutoTagger.Contract;
+    using AutoTagger.Evaluation.Standard.PostProcessor;
 
     public class Evaluation : IEvaluation
     {
@@ -16,6 +17,8 @@ namespace AutoTagger.Evaluation.Standard
             var (query, instagramTags) = storage.FindHumanoidTags(mTags);
             var result = new Dictionary<string, object> { { "instagramTags", instagramTags } };
             //SaveDebugInfos(req, machineTags, instagramTags, query, storage);
+
+            instagramTags = new OrderByAmountOfPosts().Do(instagramTags);
 
             var iTags = new List<string>();
             foreach (var instagramTag in instagramTags)
