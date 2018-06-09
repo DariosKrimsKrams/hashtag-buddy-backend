@@ -17,8 +17,13 @@ namespace AutoTagger.Evaluation.Standard
             var result = new Dictionary<string, object> { { "instagramTags", instagramTags } };
             //SaveDebugInfos(req, machineTags, instagramTags, query, storage);
 
+            var iTags = new List<string>();
+            foreach (var instagramTag in instagramTags)
+            {
+                iTags.Add(instagramTag.FirstOrDefault());
+            }
 
-            return instagramTags;
+            return iTags;
         }
 
 

@@ -11,7 +11,7 @@
 
     public class MysqlUIStorage : MysqlBaseStorage, IAutoTaggerStorage
     {
-        public (string debug, IEnumerable<string> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
+        public (string debug, IEnumerable<IEnumerable<string>> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
         {
             var query = BuildQuery(machineTags);
             var htags = this.ExecuteCustomQuery(query);
@@ -25,7 +25,7 @@
             var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
             var whereConditionWeb = BuildWhereCondition(machineTags, "GCPVision_Web");
 
-            var query = $"SELECT i.name "
+            var query = $"SELECT i.name, i.posts "
                         + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "
                         + $"LEFT JOIN (SELECT p.id, count(m.name) as matches FROM photos as p "
                         + $"LEFT JOIN mtags as m ON m.photoId = p.id "
@@ -61,7 +61,7 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<string> GetMtagsWithHighScore()
+        public IEnumerable<IEnumerable<string>> GetMtagsWithHighScore()
         {
             var query = "SELECT m.name, MAX(m.score), count(m.name) "
                       + "FROM mtags as m "

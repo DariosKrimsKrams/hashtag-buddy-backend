@@ -44,9 +44,9 @@
             }
         }
 
-        protected IEnumerable<string> ExecuteCustomQuery(string query)
+        protected IEnumerable<IEnumerable<string>> ExecuteCustomQuery(string query)
         {
-            var entries = new List<string>();
+            var entries = new List<IEnumerable<string>>();
             using (var command = this.db.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText = query;
@@ -57,8 +57,12 @@
                 {
                     while (reader.Read())
                     {
-                        var htag = reader.GetValue(0).ToString();
-                        entries.Add(htag);
+                        var entry = new List<string>();
+                        for (var i = 0; i < reader.FieldCount; i++)
+                        {
+                            entry.Add(reader.GetValue(i).ToString());
+                        }
+                        entries.Add(entry);
                     }
                 }
                 this.db.Database.CloseConnection();
