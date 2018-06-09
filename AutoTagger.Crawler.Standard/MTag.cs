@@ -13,5 +13,12 @@ namespace AutoTagger.Crawler.Standard
         public float Score { get; set; }
 
         public string Source { get; set; }
+
+        public MTag(string name, float score, string source)
+        {
+            this.Name = name;
+            this.Score = score;
+            this.Source = source;
+        }
     }
 }

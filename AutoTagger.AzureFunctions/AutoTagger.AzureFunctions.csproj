@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.Standard.csproj" />
     <ProjectReference Include="..\AutoTagger.Database.Standard\AutoTagger.Database.Standard.csproj" />
+    <ProjectReference Include="..\AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.Standard.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

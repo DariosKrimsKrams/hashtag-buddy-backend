@@ -11,7 +11,7 @@
 
     public class MysqlUIStorage : MysqlBaseStorage, IAutoTaggerStorage
     {
-        public (string debug, IEnumerable<string> htags) FindHumanoidTags(List<IMTag> machineTags)
+        public (string debug, IEnumerable<string> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
         {
             var query = BuildQuery(machineTags);
             var htags = this.ExecuteCustomQuery(query);

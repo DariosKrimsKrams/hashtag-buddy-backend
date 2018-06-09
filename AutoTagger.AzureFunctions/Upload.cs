@@ -7,7 +7,9 @@
     using System.Threading.Tasks;
 
     using AutoTagger.Contract;
+    using AutoTagger.Crawler.Standard;
     using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Evaluation.Standard;
     using AutoTagger.ImageProcessor.Standard;
 
     using Microsoft.AspNetCore.Http;
@@ -38,62 +40,49 @@
 
             var storage         = new MysqlUIStorage();
             var taggingProvider = new GCPVision();
+            var evaluation = new Evaluation();
 
             using (var stream = new MemoryStream())
             {
                 await files[0].CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                var machineTags = taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                //var machineTags = taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                var machineTags = new List<IMTag>
+                {
+                    new MTag("metropolitan area", 0.9740945f, "GCPVision_Label"),
+                    new MTag("urban area", 0.973557353f, "GCPVision_Label"),
+                    new MTag("city", 0.9734007f, "GCPVision_Label"),
+                    new MTag("cityscape", 0.938783467f, "GCPVision_Label"),
+                    new MTag("metropolis", 0.9214143f, "GCPVision_Label"),
+                    new MTag("landmark", 0.9191347f, "GCPVision_Label"),
+                    new MTag("sky", 0.916840732f, "GCPVision_Label"),
+                    new MTag("skyline", 0.905290544f, "GCPVision_Label"),
+                    new MTag("skyscraper", 0.884226561f, "GCPVision_Label"),
+                    new MTag("daytime", 0.851576f, "GCPVision_Label"),
+                    new MTag("Skyscraper", 0.9230419f, "GCPVision_Web"),
+                    new MTag("Metropolitan area", 0.7284566f, "GCPVision_Web"),
+                    new MTag("Bird's-eye view", 0.6971554f, "GCPVision_Web"),
+                    new MTag("Aerial photography", 0.659547f, "GCPVision_Web"),
+                    new MTag("Skyline", 0.6276192f, "GCPVision_Web"),
+                    new MTag("Tower", 0.627348959f, "GCPVision_Web"),
+                    new MTag("Cityscape", 0.5896153f, "GCPVision_Web"),
+                    new MTag("High-rise building", 0.56301415f, "GCPVision_Web"),
+                    new MTag("Urban area", 0.5345906f, "GCPVision_Web"),
+                    new MTag("Photography", 0.522f, "GCPVision_Web")
+                };
 
                 if (!machineTags.Any())
                 {
                     return new BadRequestObjectResult("No MachineTags found");
                 }
 
-                var (query, instagramTags) = storage.FindHumanoidTags(machineTags);
+                var instagramTags = evaluation.GetHumanoidTags(storage, machineTags);
                 var result = new Dictionary<string, object> { { "instagramTags", instagramTags } };
-
-                SaveDebugInfos(req, machineTags, instagramTags, query, storage);
 
                 return new JsonResult(result);
             }
         }
 
-        private static void SaveDebugInfos(
-            HttpRequest req,
-            List<IMTag> machineTags,
-            IEnumerable<string> instagramTags,
-            string query,
-            MysqlUIStorage storage)
-        {
-            var mTags = new List<string>();
-            foreach (var mTag in machineTags)
-            {
-                mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
-            }
-
-            var ip = req.HttpContext.Connection?.RemoteIpAddress?.ToString();
-            var debugInfos = new Dictionary<string, List<string>>
-            {
-                { "machineTags", mTags },
-                { "instagramTags", instagramTags.ToList() },
-                { "query", new List<string> { query } },
-                { "ip", new List<string> { ip } },
-                { "backend_version", new List<string> { "0.2" } },
-            };
-            var json = SerializeJson(debugInfos);
-            storage.Log("web_image", json);
-        }
-
-        private static string SerializeJson(Dictionary<string, List<string>> dict)
-        {
-            var stream = new MemoryStream();
-            var ser    = new DataContractJsonSerializer(typeof(Dictionary<string, List<string>>));
-            ser.WriteObject(stream, dict);
-            stream.Position = 0;
-            var sr = new StreamReader(stream);
-            return sr.ReadToEnd();
-        }
     }
 }
