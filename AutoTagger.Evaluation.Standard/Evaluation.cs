@@ -12,59 +12,65 @@ namespace AutoTagger.Evaluation.Standard
 
     public class Evaluation : IEvaluation
     {
+        private Dictionary<string, IEnumerable<string>> debugInfos;
+
+        public Evaluation()
+        {
+            this.debugInfos = new Dictionary<string, IEnumerable<string>>();
+        }
+
+        public void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos)
+        {
+            moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
+        }
+
         public IEnumerable<string> GetHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags)
         {
-            var (query, instagramTags) = storage.FindHumanoidTags(mTags);
-            var result = new Dictionary<string, object> { { "instagramTags", instagramTags } };
-            //SaveDebugInfos(req, machineTags, instagramTags, query, storage);
+            var (query, hTags) = storage.FindHumanoidTags(mTags);
 
-            instagramTags = new OrderByAmountOfPosts().Do(instagramTags);
+            hTags = new OrderByAmountOfPosts().Do(hTags);
 
             var iTags = new List<string>();
-            foreach (var instagramTag in instagramTags)
+            foreach (var instagramTag in hTags)
             {
                 iTags.Add(instagramTag.FirstOrDefault());
             }
+
+            SaveDebugInfos(mTags, iTags, query, storage);
 
             return iTags;
         }
 
 
-        //private static void SaveDebugInfos(
-        //    HttpRequest req,
-        //    List<IMTag> machineTags,
-        //    IEnumerable<string> instagramTags,
-        //    string query,
-        //    IAutoTaggerStorage storage)
-        //{
-        //    var mTags = new List<string>();
-        //    foreach (var mTag in machineTags)
-        //    {
-        //        mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
-        //    }
+        private void SaveDebugInfos(
+            IEnumerable<IMTag> machineTags,
+            IEnumerable<string> instagramTags,
+            string query,
+            IAutoTaggerStorage storage)
+        {
+            var mTags = new List<string>();
+            foreach (var mTag in machineTags)
+            {
+                mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
+            }
 
-        //    var ip = req.HttpContext.Connection?.RemoteIpAddress?.ToString();
-        //    var debugInfos = new Dictionary<string, List<string>>
-        //    {
-        //        { "machineTags", mTags },
-        //        { "instagramTags", instagramTags.ToList() },
-        //        { "query", new List<string> { query } },
-        //        { "ip", new List<string> { ip } },
-        //        { "backend_version", new List<string> { "0.2" } },
-        //    };
-        //    var json = SerializeJson(debugInfos);
-        //    storage.Log("web_image", json);
-        //}
+            this.debugInfos.Add("machineTags", mTags);
+            this.debugInfos.Add("instagramTags", instagramTags);
+            this.debugInfos.Add("query", new List<string> { query });
 
-        //private static string SerializeJson(Dictionary<string, List<string>> dict)
-        //{
-        //    var stream = new MemoryStream();
-        //    var ser    = new DataContractJsonSerializer(typeof(Dictionary<string, List<string>>));
-        //    ser.WriteObject(stream, dict);
-        //    stream.Position = 0;
-        //    var sr = new StreamReader(stream);
-        //    return sr.ReadToEnd();
-        //}
+            var json = SerializeJson(this.debugInfos);
+            storage.Log("web_image", json);
+        }
+
+        private static string SerializeJson(Dictionary<string, IEnumerable<string>> dict)
+        {
+            var stream = new MemoryStream();
+            var ser = new DataContractJsonSerializer(typeof(Dictionary<string, List<string>>));
+            ser.WriteObject(stream, dict);
+            stream.Position = 0;
+            var sr = new StreamReader(stream);
+            return sr.ReadToEnd();
+        }
 
     }
 }
