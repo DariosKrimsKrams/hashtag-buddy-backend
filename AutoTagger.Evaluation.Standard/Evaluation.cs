@@ -28,6 +28,8 @@ namespace AutoTagger.Evaluation.Standard
         {
             var (query, hTags) = storage.FindHumanoidTags(mTags);
 
+            SaveDebugInfos(mTags, hTags, query, storage);
+
             hTags = new OrderByAmountOfPosts().Do(hTags);
 
             var iTags = new List<string>();
@@ -36,15 +38,13 @@ namespace AutoTagger.Evaluation.Standard
                 iTags.Add(instagramTag.FirstOrDefault());
             }
 
-            SaveDebugInfos(mTags, iTags, query, storage);
-
             return iTags;
         }
 
 
         private void SaveDebugInfos(
             IEnumerable<IMTag> machineTags,
-            IEnumerable<string> instagramTags,
+            IEnumerable<IEnumerable<string>> instagramTags,
             string query,
             IAutoTaggerStorage storage)
         {
@@ -54,8 +54,21 @@ namespace AutoTagger.Evaluation.Standard
                 mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
             }
 
+            var iTags = new List<string>();
+            foreach (var instagramTag in instagramTags)
+            {
+                var str = "";
+                var instagramTag2 = instagramTag.ToList();
+                for (int i = 0; i < instagramTag2.Count; i++)
+                {
+                    var val = instagramTag2[i];
+                    str += $"\"{i}\":\"{val}\",";
+                }
+                iTags.Add($"{{{str.TrimEnd(',')}}}");
+            }
+
             this.debugInfos.Add("machineTags", mTags.ToList());
-            this.debugInfos.Add("instagramTags", instagramTags.ToList());
+            this.debugInfos.Add("instagramTags", iTags.ToList());
             this.debugInfos.Add("query", new List<string> { query });
 
             var json = SerializeJson(this.debugInfos);
