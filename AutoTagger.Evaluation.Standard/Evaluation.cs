@@ -12,11 +12,11 @@ namespace AutoTagger.Evaluation.Standard
 
     public class Evaluation : IEvaluation
     {
-        private Dictionary<string, IEnumerable<string>> debugInfos;
+        private Dictionary<string, List<string>> debugInfos;
 
         public Evaluation()
         {
-            this.debugInfos = new Dictionary<string, IEnumerable<string>>();
+            this.debugInfos = new Dictionary<string, List<string>>();
         }
 
         public void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos)
@@ -54,15 +54,15 @@ namespace AutoTagger.Evaluation.Standard
                 mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
             }
 
-            this.debugInfos.Add("machineTags", mTags);
-            this.debugInfos.Add("instagramTags", instagramTags);
+            this.debugInfos.Add("machineTags", mTags.ToList());
+            this.debugInfos.Add("instagramTags", instagramTags.ToList());
             this.debugInfos.Add("query", new List<string> { query });
 
             var json = SerializeJson(this.debugInfos);
             storage.Log("web_image", json);
         }
 
-        private static string SerializeJson(Dictionary<string, IEnumerable<string>> dict)
+        private static string SerializeJson(Dictionary<string, List<string>> dict)
         {
             var stream = new MemoryStream();
             var ser = new DataContractJsonSerializer(typeof(Dictionary<string, List<string>>));
