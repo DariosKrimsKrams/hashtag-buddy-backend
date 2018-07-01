@@ -42,7 +42,7 @@
             return ImageAnnotatorClient.Create(channel);
         }
 
-        public IEnumerable<IMTag> GetTagsForFile(string filename)
+        public IEnumerable<IMachineTag> GetTagsForFile(string filename)
         {
             Image image = null;
             try
@@ -65,7 +65,7 @@
             }
         }
 
-        public IEnumerable<IMTag> GetTagsForImageBytes(byte[] bytes)
+        public IEnumerable<IMachineTag> GetTagsForImageBytes(byte[] bytes)
         {
             var image = Image.FromBytes(bytes);
 
@@ -76,7 +76,7 @@
             }
         }
 
-        public IEnumerable<IMTag> GetTagsForImageUrl(string imageUrl)
+        public IEnumerable<IMachineTag> GetTagsForImageUrl(string imageUrl)
         {
             var image = Image.FromUri(imageUrl);
 
@@ -87,7 +87,7 @@
             }
         }
 
-        private IEnumerable<IMTag> Detect(Image image)
+        private IEnumerable<IMachineTag> Detect(Image image)
         {
             IReadOnlyList<EntityAnnotation> labels = null;
             WebDetection webInfos = null;
@@ -120,13 +120,13 @@
             }
         }
 
-        private static IEnumerable<IMTag> ToMTags(IReadOnlyList<EntityAnnotation> labels, WebDetection webInfos)
+        private static IEnumerable<IMachineTag> ToMTags(IReadOnlyList<EntityAnnotation> labels, WebDetection webInfos)
         {
             foreach (var x in labels)
             {
                 if (String.IsNullOrEmpty(x.Description))
                     continue;
-                var mtag = new MTag { Name = x.Description, Score = x.Score, Source = keyLabel };
+                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = keyLabel };
                 yield return mtag;
             }
 
@@ -134,7 +134,7 @@
             {
                 if (String.IsNullOrEmpty(x.Description))
                     continue;
-                var mtag = new MTag { Name = x.Description, Score = x.Score, Source = keyWeb };
+                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = keyWeb };
                 yield return mtag;
             }
         }

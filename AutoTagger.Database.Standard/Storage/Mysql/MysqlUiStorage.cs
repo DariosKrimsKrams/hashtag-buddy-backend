@@ -10,28 +10,28 @@
         const int limitTopPhotos = 200;
         const int countTagsToReturn = 30;
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags(IEnumerable<IMachineTag> machineTags)
         {
             var query = BuildQueryWithUserRelevance(machineTags);
             var htags = this.ExecuteHTagsQuery(query);
             return (query, htags);
         }
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMTag> machineTags)
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMachineTag> machineTags)
         {
             var queryTrending = BuildQueryJustFrequency(machineTags);
             var htagsTrending = this.ExecuteHTagsQuery(queryTrending);
             return (queryTrending, htagsTrending);
         }
 
-        private static (string, string) BuildWhereConditions(IEnumerable<IMTag> machineTags)
+        private static (string, string) BuildWhereConditions(IEnumerable<IMachineTag> machineTags)
         {
             var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
             var whereConditionWeb   = BuildWhereCondition(machineTags, "GCPVision_Web");
             return (whereConditionLabel, whereConditionWeb);
         }
 
-        private string BuildQueryWithUserRelevance(IEnumerable<IMTag> machineTags)
+        private string BuildQueryWithUserRelevance(IEnumerable<IMachineTag> machineTags)
         {
             var countInsertTags   = machineTags.Count();
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
@@ -52,7 +52,7 @@
             return query;
         }
 
-        private string BuildQueryJustFrequency(IEnumerable<IMTag> machineTags)
+        private string BuildQueryJustFrequency(IEnumerable<IMachineTag> machineTags)
         {
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
 
@@ -69,7 +69,7 @@
             return query;
         }
 
-        private static string BuildWhereCondition(IEnumerable<IMTag> machineTags, string source)
+        private static string BuildWhereCondition(IEnumerable<IMachineTag> machineTags, string source)
         {
             var whereCondition = "";
             foreach (var machineTag in machineTags)

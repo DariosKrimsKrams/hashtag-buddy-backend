@@ -64,7 +64,7 @@
             var mysql = new MysqlUIStorage();
 
             // Act
-            var machineTags = new List<IMTag> { new MTag {Name = "beach" }, new MTag {Name = "water" } };
+            var machineTags = new List<IMachineTag> { new MachineTag {Name = "beach" }, new MachineTag {Name = "water" } };
             var (debug, htags) = mysql.FindHumanoidTags(machineTags);
 
             // Assert
@@ -78,9 +78,9 @@
             // Arrange
             var db = new MysqlImageProcessorStorage();
             var image = new Image();
-            var mtags = new List<IMTag>
+            var mtags = new List<IMachineTag>
             {
-                new MTag { Name = "test", Score = 1.337f, Source = "Testcase_Test-Hamburg4ever" }
+                new MachineTag { Name = "test", Score = 1.337f, Source = "Testcase_Test-Hamburg4ever" }
             };
             image.MachineTags = mtags;
             image.Id = 1;

@@ -24,7 +24,7 @@ namespace AutoTagger.Evaluation.Standard
             moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
         }
 
-        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags)
+        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags)
         {
             var (query, hTags) = storage.FindHumanoidTags(mTags);
 
@@ -34,7 +34,7 @@ namespace AutoTagger.Evaluation.Standard
             return hTags;
         }
 
-        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
+        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
             var (queryTrending, hTagsTrending) = storage.FindTrendingHumanoidTags(mTags);
             var hTagsTrendingList = hTagsTrending.ToList();
@@ -51,7 +51,7 @@ namespace AutoTagger.Evaluation.Standard
         }
 
         private void SaveDebugInfos(
-            IEnumerable<IMTag> machineTags,
+            IEnumerable<IMachineTag> machineTags,
             IEnumerable<IHumanoidTag> instagramTags,
             string query,
             IAutoTaggerStorage storage)
@@ -96,6 +96,5 @@ namespace AutoTagger.Evaluation.Standard
             var sr = new StreamReader(stream);
             return sr.ReadToEnd();
         }
-
     }
 }

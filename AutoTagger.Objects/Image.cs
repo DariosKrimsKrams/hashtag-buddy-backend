@@ -7,7 +7,7 @@
 
     public class Image : IImage
     {
-        public IEnumerable<IMTag> MachineTags { get; set; }
+        public IEnumerable<IMachineTag> MachineTags { get; set; }
         public IEnumerable<string> HumanoidTags { get; set; }
         public int Id { get; set; }
         public string Shortcode { get; set; }
