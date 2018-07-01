@@ -6,7 +6,7 @@ namespace AutoTagger.Crawler.Standard
 {
     using AutoTagger.Contract;
 
-    public class MTag : IMTag
+    public class MachineTag : IMachineTag
     {
         public string Name { get; set; }
 
@@ -14,12 +14,12 @@ namespace AutoTagger.Crawler.Standard
 
         public string Source { get; set; }
 
-        public MTag()
+        public MachineTag()
         {
 
         }
 
-        public MTag(string name, float score, string source)
+        public MachineTag(string name, float score, string source)
         {
             this.Name = name;
             this.Score = score;

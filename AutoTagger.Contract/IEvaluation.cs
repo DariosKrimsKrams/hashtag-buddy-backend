@@ -6,6 +6,10 @@ namespace AutoTagger.Contract
 {
     public interface IEvaluation
     {
-        IEnumerable<string> GetHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags);
+        IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags);
+
+        IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags);
+
+        void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos);
     }
 }

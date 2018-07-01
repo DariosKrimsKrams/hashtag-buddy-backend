@@ -40,7 +40,7 @@
 
             var storage         = new MysqlUIStorage();
             var taggingProvider = new GCPVision();
-            var evaluation = new Evaluation();
+            IEvaluation evaluation = new Evaluation();
             var debugInfos = new Dictionary<string, List<string>>
             {
                 { "ip", new List<string> { req.HttpContext.Connection?.RemoteIpAddress?.ToString() } },
@@ -54,7 +54,7 @@
                 await files[0].CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                var machineTags = taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                //var machineTags = taggingProvider.GetTagsForImageBytes(bytes).ToList();
 
                 // photo of Hamburg
                 //var machineTags = new List<IMTag>
@@ -81,32 +81,32 @@
                 //    new MTag("Photography", 0.522f, "GCPVision_Web")
                 //};
 
-                // photo of Meat vs Vegan
-                //var machineTags = new List<IMTag>
-                //{
-                //    new MTag("fried food", 1.0f, "GCPVision_Label"),
-                //    new MTag("dish", 1.0f, "GCPVision_Label"),
-                //    new MTag("junk food", 1.0f, "GCPVision_Label"),
-                //    new MTag("kids meal", 1.0f, "GCPVision_Label"),
-                //    new MTag("food", 1.0f, "GCPVision_Label"),
-                //    new MTag("cuisine", 1.0f, "GCPVision_Label"),
-                //    new MTag("cuisine", 1.0f, "GCPVision_Label"),
-                //    new MTag("fast food", 1.0f, "GCPVision_Label"),
-                //    new MTag("side dish", 1.0f, "GCPVision_Label"),
-                //    new MTag("french fries", 1.0f, "GCPVision_Label"),
-                //    new MTag("french fries", 1.0f, "GCPVision_Label"),
-                //    new MTag("animal source foods", 1.0f, "GCPVision_Label"),
-                //    new MTag("French fries", 1.0f, "GCPVision_Web"),
-                //    new MTag("Full breakfast", 1.0f, "GCPVision_Web"),
-                //    new MTag("Fish and chips", 1.0f, "GCPVision_Web"),
-                //    new MTag("Chicken and chips", 1.0f, "GCPVision_Web"),
-                //    new MTag("Junk food", 1.0f, "GCPVision_Web"),
-                //    new MTag("German cuisine", 1.0f, "GCPVision_Web"),
-                //    new MTag("Breakfast", 1.0f, "GCPVision_Web"),
-                //    new MTag("Chicken as food", 1.0f, "GCPVision_Web"),
-                //    new MTag("Kids' meal", 1.0f, "GCPVision_Web"),
-                //    new MTag("Food", 1.0f, "GCPVision_Web"),
-                //};
+               // photo of Meat vs Vegan
+               var machineTags = new List<IMTag>
+               {
+                    new MTag("fried food", 1.0f, "GCPVision_Label"),
+                    new MTag("dish", 1.0f, "GCPVision_Label"),
+                    new MTag("junk food", 1.0f, "GCPVision_Label"),
+                    new MTag("kids meal", 1.0f, "GCPVision_Label"),
+                    new MTag("food", 1.0f, "GCPVision_Label"),
+                    new MTag("cuisine", 1.0f, "GCPVision_Label"),
+                    new MTag("cuisine", 1.0f, "GCPVision_Label"),
+                    new MTag("fast food", 1.0f, "GCPVision_Label"),
+                    new MTag("side dish", 1.0f, "GCPVision_Label"),
+                    new MTag("french fries", 1.0f, "GCPVision_Label"),
+                    new MTag("french fries", 1.0f, "GCPVision_Label"),
+                    new MTag("animal source foods", 1.0f, "GCPVision_Label"),
+                    new MTag("French fries", 1.0f, "GCPVision_Web"),
+                    new MTag("Full breakfast", 1.0f, "GCPVision_Web"),
+                    new MTag("Fish and chips", 1.0f, "GCPVision_Web"),
+                    new MTag("Chicken and chips", 1.0f, "GCPVision_Web"),
+                    new MTag("Junk food", 1.0f, "GCPVision_Web"),
+                    new MTag("German cuisine", 1.0f, "GCPVision_Web"),
+                    new MTag("Breakfast", 1.0f, "GCPVision_Web"),
+                    new MTag("Chicken as food", 1.0f, "GCPVision_Web"),
+                    new MTag("Kids' meal", 1.0f, "GCPVision_Web"),
+                    new MTag("Food", 1.0f, "GCPVision_Web"),
+               };
 
 
                 if (!machineTags.Any())
@@ -114,8 +114,13 @@
                     return new BadRequestObjectResult("No MachineTags found");
                 }
 
-                var humanoidTags = evaluation.GetHumanoidTags(storage, machineTags);
-                var result = new Dictionary<string, object> { { "instagramTags", humanoidTags } };
+                var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
+                var trendingHTags = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);
+                var result = new Dictionary<string, object>
+                {
+                    { "mostRelevantHTags", mostRelevantHTags },
+                    { "trendingHTags", trendingHTags }
+                };
 
                 return new JsonResult(result);
             }

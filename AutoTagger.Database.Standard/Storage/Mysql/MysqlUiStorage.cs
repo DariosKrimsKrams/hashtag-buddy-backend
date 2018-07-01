@@ -1,30 +1,40 @@
 ﻿namespace AutoTagger.Database.Standard.Storage.Mysql
 {
     using System.Collections.Generic;
-    using System.Data;
     using System.Linq;
-
     using global::AutoTagger.Contract;
     using global::AutoTagger.Database.Standard.Mysql;
 
-    using Microsoft.EntityFrameworkCore;
-
     public class MysqlUIStorage : MysqlBaseStorage, IAutoTaggerStorage
     {
-        public (string debug, IEnumerable<IEnumerable<string>> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
+        const int limitTopPhotos = 200;
+        const int countTagsToReturn = 30;
+
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags(IEnumerable<IMTag> machineTags)
         {
-            var query = BuildQuery(machineTags);
-            var htags = this.ExecuteCustomQuery(query);
+            var query = BuildQueryWithUserRelevance(machineTags);
+            var htags = this.ExecuteHTagsQuery(query);
             return (query, htags);
         }
 
-        private string BuildQuery(IEnumerable<IMTag> machineTags)
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMTag> machineTags)
+        {
+            var queryTrending = BuildQueryJustFrequency(machineTags);
+            var htagsTrending = this.ExecuteHTagsQuery(queryTrending);
+            return (queryTrending, htagsTrending);
+        }
+
+        private static (string, string) BuildWhereConditions(IEnumerable<IMTag> machineTags)
+        {
+            var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
+            var whereConditionWeb   = BuildWhereCondition(machineTags, "GCPVision_Web");
+            return (whereConditionLabel, whereConditionWeb);
+        }
+
+        private string BuildQueryWithUserRelevance(IEnumerable<IMTag> machineTags)
         {
             var countInsertTags   = machineTags.Count();
-            var limitTopPhotos    = 200;
-            var countTagsToReturn = 30;
-            var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
-            var whereConditionWeb = BuildWhereCondition(machineTags, "GCPVision_Web");
+            var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
 
             string query = $"SELECT i.name, i.posts "
                          + $"FROM itags AS i LEFT JOIN photo_itag_rel AS rel ON rel.itagId = i.id LEFT JOIN "
@@ -38,6 +48,23 @@
                          + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id WHERE sub1.id IS NOT NULL "
                          + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = rel.photoId "
                          + $"WHERE sub2.id IS NOT NULL GROUP by i.name ORDER by count(i.name) DESC, relationQuality DESC LIMIT {countTagsToReturn}";
+
+            return query;
+        }
+
+        private string BuildQueryJustFrequency(IEnumerable<IMTag> machineTags)
+        {
+            var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
+
+            var query = $"SELECT i.name, i.posts "
+                      + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "
+                      + $"LEFT JOIN (SELECT p.id, count(m.name) as matches FROM photos as p "
+                      + $"LEFT JOIN mtags as m ON m.photoId = p.id "
+                      + $"WHERE (({whereConditionLabel}) AND m.source='GCPVision_Label')"
+                      + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web')"
+                      + $" GROUP BY p.id ORDER BY matches DESC LIMIT {limitTopPhotos} "
+                      + $") as sub2 ON sub2.id = rel.photoId WHERE sub2.id IS NOT NULL "
+                      + $"GROUP BY i.name ORDER by sum(matches) DESC LIMIT {countTagsToReturn}";
 
             return query;
         }

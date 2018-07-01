@@ -24,27 +24,35 @@ namespace AutoTagger.Evaluation.Standard
             moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
         }
 
-        public IEnumerable<string> GetHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags)
+        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags)
         {
             var (query, hTags) = storage.FindHumanoidTags(mTags);
 
-            SaveDebugInfos(mTags, hTags, query, storage);
+            //SaveDebugInfos(mTags, hTags, query, storage);
 
             hTags = new OrderByAmountOfPosts().Do(hTags);
-
-            var iTags = new List<string>();
-            foreach (var instagramTag in hTags)
-            {
-                iTags.Add(instagramTag.FirstOrDefault());
-            }
-
-            return iTags;
+            return hTags;
         }
 
+        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
+        {
+            var (queryTrending, hTagsTrending) = storage.FindTrendingHumanoidTags(mTags);
+            var hTagsTrendingList = hTagsTrending.ToList();
+
+            for (var i = hTagsTrendingList.Count - 1; i >= 0; i--)
+            {
+                var htagTrending = hTagsTrendingList[i];
+                var exists       = mostRelevantHTags.FirstOrDefault(x => x.Name == htagTrending.Name);
+                if (exists != null)
+                    hTagsTrendingList.RemoveAt(i);
+            }
+
+            return hTagsTrendingList;
+        }
 
         private void SaveDebugInfos(
             IEnumerable<IMTag> machineTags,
-            IEnumerable<IEnumerable<string>> instagramTags,
+            IEnumerable<IHumanoidTag> instagramTags,
             string query,
             IAutoTaggerStorage storage)
         {
@@ -58,8 +66,12 @@ namespace AutoTagger.Evaluation.Standard
             foreach (var instagramTag in instagramTags)
             {
                 var str = "";
-                var instagramTag2 = instagramTag.ToList();
-                for (int i = 0; i < instagramTag2.Count; i++)
+                var instagramTag2 = new List<string>()
+                {
+                    instagramTag.Name,
+                    instagramTag.Posts.ToString()
+                };
+                for (var i = 0; i < instagramTag2.Count; i++)
                 {
                     var val = instagramTag2[i];
                     str += $"\"{i}\":\"{val}\",";
