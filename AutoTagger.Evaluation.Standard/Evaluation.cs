@@ -28,7 +28,7 @@ namespace AutoTagger.Evaluation.Standard
         {
             var (query, hTags) = storage.FindHumanoidTags(mTags);
 
-            //SaveDebugInfos(mTags, hTags, query, storage);
+            SaveDebugInfos(mTags, hTags, query, storage);
 
             hTags = new OrderByAmountOfPosts().Do(hTags);
             return hTags;

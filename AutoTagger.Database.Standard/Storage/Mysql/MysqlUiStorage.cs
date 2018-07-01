@@ -7,8 +7,6 @@
 
     public class MysqlUIStorage : MysqlBaseStorage, IAutoTaggerStorage
     {
-        const int limitTopPhotos = 200;
-        const int countTagsToReturn = 30;
 
         public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags(IEnumerable<IMachineTag> machineTags)
         {
@@ -19,7 +17,7 @@
 
         public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMachineTag> machineTags)
         {
-            var queryTrending = BuildQueryJustFrequency(machineTags);
+            var queryTrending = this.BuildQueryTrending(machineTags);
             var htagsTrending = this.ExecuteHTagsQuery(queryTrending);
             return (queryTrending, htagsTrending);
         }
@@ -33,6 +31,8 @@
 
         private string BuildQueryWithUserRelevance(IEnumerable<IMachineTag> machineTags)
         {
+            const int limitTopPhotos    = 200;
+            const int countTagsToReturn = 30;
             var countInsertTags   = machineTags.Count();
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
 
@@ -52,8 +52,10 @@
             return query;
         }
 
-        private string BuildQueryJustFrequency(IEnumerable<IMachineTag> machineTags)
+        private string BuildQueryTrending(IEnumerable<IMachineTag> machineTags)
         {
+            const int limitTopPhotos    = 50;
+            const int countTagsToReturn = 30;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
 
             var query = $"SELECT i.name, i.posts "
