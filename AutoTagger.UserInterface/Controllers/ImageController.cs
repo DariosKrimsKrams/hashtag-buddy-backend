@@ -90,7 +90,7 @@
 
         private Dictionary<string, object> FindTags(List<IMachineTag> machineTags)
         {
-            var (query, instagramTags) = this.storage.FindHumanoidTags(machineTags);
+            var (query, instagramTags) = this.storage.FindHumanoidTags<IFindHumanoidTagsMostRelevantQuery>(machineTags);
             var ip = this.GetIPAddress();
 
             var data = new Dictionary<string, object>

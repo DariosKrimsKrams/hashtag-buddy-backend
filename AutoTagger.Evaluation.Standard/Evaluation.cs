@@ -1,14 +1,10 @@
-﻿using System;
-
-namespace AutoTagger.Evaluation.Standard
+﻿namespace AutoTagger.Evaluation.Standard
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization.Json;
-
     using AutoTagger.Contract;
-    using AutoTagger.Evaluation.Standard.PostProcessor;
 
     public class Evaluation : IEvaluation
     {
@@ -26,11 +22,12 @@ namespace AutoTagger.Evaluation.Standard
 
         public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags)
         {
-            var (query, hTags) = storage.FindHumanoidTags(mTags);
+            var (query, hTags) = storage.FindMostRelevantHumanoidTags(mTags);
 
             SaveDebugInfos(mTags, hTags, query, storage);
 
-            hTags = new OrderByAmountOfPosts().Do(hTags);
+            //hTags = new OrderByAmountOfPosts().Do(hTags);
+
             return hTags;
         }
 
@@ -46,6 +43,8 @@ namespace AutoTagger.Evaluation.Standard
                 if (exists != null)
                     hTagsTrendingList.RemoveAt(i);
             }
+
+            //SaveDebugInfos(mTags, hTags, query, storage);
 
             return hTagsTrendingList;
         }

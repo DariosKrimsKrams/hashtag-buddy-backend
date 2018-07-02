@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoTagger.Common.Standard\AutoTagger.Common.Standard.csproj" />
     <ProjectReference Include="..\AutoTagger.Contract\AutoTagger.Contract.csproj" />
   </ItemGroup>
 

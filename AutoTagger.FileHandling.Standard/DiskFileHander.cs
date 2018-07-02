@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using AutoTagger.Contract.Standard;
+
+    using AutoTagger.Contract;
 
     public class DiskFileHander : IFileHandler
     {

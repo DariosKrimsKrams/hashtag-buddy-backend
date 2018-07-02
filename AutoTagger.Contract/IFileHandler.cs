@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace AutoTagger.Contract.Standard
+namespace AutoTagger.Contract
 {
     public interface IFileHandler
     {

@@ -11,28 +11,28 @@
     {
         private List<Itags> allITags;
 
-        public void InsertOrUpdate(IImage image)
+        public void Upsert(IImage image)
         {
             var photo = Photos.FromImage(image);
 
-            if (this.TryUpdate(photo))
-                return;
-
-            this.Insert(image, photo);
+            try
+            {
+                var existingPhoto = this.GetExistingPhoto(photo);
+                existingPhoto.Likes     = photo.Likes;
+                existingPhoto.Comments  = photo.Comments;
+                existingPhoto.Following = photo.Following;
+                existingPhoto.Posts     = photo.Posts;
+            }
+            catch
+            {
+                this.Insert(image, photo);
+            }
+            this.Save();
         }
 
-        private bool TryUpdate(Photos photo)
+        private Photos GetExistingPhoto(Photos photo)
         {
-            var existingPhoto = this.db.Photos.FirstOrDefault(x => x.Shortcode == photo.Shortcode);
-            if (existingPhoto == null)
-                return false;
-
-            existingPhoto.Likes = photo.Likes;
-            existingPhoto.Comments = photo.Comments;
-            existingPhoto.Following = photo.Following;
-            existingPhoto.Posts = photo.Posts;
-            this.Save();
-            return true;
+            return this.db.Photos.First(x => x.Shortcode == photo.Shortcode);
         }
 
         private void Insert(IImage image, Photos photo)
@@ -53,7 +53,6 @@
             }
 
             this.db.Photos.Add(photo);
-            this.Save();
         }
 
         public IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag
@@ -70,7 +69,7 @@
             return hTags;
         }
 
-        public void InsertOrUpdateHumaniodTag(IHumanoidTag hTag)
+        public void InsertOrUpdateHumanoidTag(IHumanoidTag hTag)
         {
             hTag.Name = hTag.Name.ToLower();
 

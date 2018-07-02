@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Threading;
     using AutoTagger.Contract;
-    using AutoTagger.Contract.Standard;
     using AutoTagger.FileHandling.Standard;
 
     public class ImageProcessorApp

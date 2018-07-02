@@ -7,6 +7,7 @@
     using System.Reflection;
 
     using AutoTagger.Contract;
+    using AutoTagger.Database.Standard;
 
     class HashtagQueue<T> : ConcurrentQueue<T>
     {
@@ -102,10 +103,10 @@
 
         private bool IsTagProcessed(T checkingTag)
         {
-            var checkingHTag = (HumanoidTag)Convert.ChangeType(checkingTag, typeof(HumanoidTag));
+            var checkingHTag = (HumanoidTag) Convert.ChangeType(checkingTag, typeof(HumanoidTag));
             foreach (var htag in this.processed)
             {
-                var newHTag = ((HumanoidTag) Convert.ChangeType(htag, typeof(HumanoidTag)));
+                var newHTag = (HumanoidTag) Convert.ChangeType(htag, typeof(HumanoidTag));
                 if (newHTag.Name == checkingHTag.Name && newHTag.Posts != 0)
                 {
                     return true;

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
+    using AutoTagger.Database.Standard;
 
     public class CrawlerApp
     {
@@ -33,18 +34,18 @@
                     if (exists != null)
                         continue;
                     var newHTag = new HumanoidTag { Name = hTagName };
-                    this.db.InsertOrUpdateHumaniodTag(newHTag);
+                    this.db.InsertOrUpdateHumanoidTag(newHTag);
                     this.allHTags.Add(newHTag);
                 }
 
-                this.db.InsertOrUpdate(image);
+                this.db.Upsert(image);
                 this.ImageFound(image);
             }
         }
 
         private void HashtagFound(IHumanoidTag hTag)
         {
-            this.db.InsertOrUpdateHumaniodTag(hTag);
+            this.db.InsertOrUpdateHumanoidTag(hTag);
             var exists = this.allHTags.FirstOrDefault(htag => htag.Name == hTag.Name);
             if (exists == null)
                 this.allHTags.Add(hTag);

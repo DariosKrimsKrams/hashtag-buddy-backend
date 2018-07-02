@@ -5,8 +5,8 @@
 
     public interface ICrawlerStorage
     {
-        void InsertOrUpdate(IImage image);
+        void Upsert(IImage image);
         IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag;
-        void InsertOrUpdateHumaniodTag(IHumanoidTag hTag);
+        void InsertOrUpdateHumanoidTag(IHumanoidTag hTag);
     }
 }

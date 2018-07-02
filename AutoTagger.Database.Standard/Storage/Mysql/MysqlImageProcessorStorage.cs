@@ -40,7 +40,6 @@
                     Score = mTag.Score,
                     Source = mTag.Source,
                     PhotoId = image.Id
-
                 });
             }
         }

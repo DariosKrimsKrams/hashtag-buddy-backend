@@ -5,6 +5,7 @@
 
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
+    using AutoTagger.Database.Standard;
     using AutoTagger.Database.Standard.Storage.Mysql;
     using Xunit;
 
@@ -34,7 +35,7 @@
 
             // Act
 
-            crawlerDb.InsertOrUpdate(image);
+            crawlerDb.Upsert(image);
 
             // Assert
             Assert.NotEmpty(image.Shortcode);
@@ -51,7 +52,7 @@
             var humanoidTag = new HumanoidTag {Name = name, Posts = posts};
 
             // Act
-            crawlerDb.InsertOrUpdateHumaniodTag(humanoidTag);
+            crawlerDb.InsertOrUpdateHumanoidTag(humanoidTag);
 
             // Assert
             Assert.True(true);
@@ -65,7 +66,7 @@
 
             // Act
             var machineTags = new List<IMachineTag> { new MachineTag {Name = "beach" }, new MachineTag {Name = "water" } };
-            var (debug, htags) = mysql.FindHumanoidTags(machineTags);
+            var (debug, htags) = mysql.FindHumanoidTags<IFindHumanoidTagsMostRelevantQuery>(machineTags);
 
             // Assert
             Assert.NotEmpty(debug);
