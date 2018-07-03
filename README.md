@@ -22,9 +22,10 @@ Need .Net Core 2.0 Framework, and a MySQL database. Set following Environment Va
 - instatagger_mysql_user
 - instatagger_mysql_pw
 - instatagger_mysql_db
-- instatagger_gcpvision_key1 *
-- instatagger_gcpvision_key2 *
-* Split the content of the key-file into two parts
+- instatagger_gcpvision_key1 ¹
+- instatagger_gcpvision_key2 ¹
+
+¹ Split the content of the key-file into two parts
 
 ## Links
   * [Frontend](http://instatagger.do-epic-sh.it/)
