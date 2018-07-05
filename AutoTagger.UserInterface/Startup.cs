@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
     using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup

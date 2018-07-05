@@ -8,7 +8,6 @@
     using AutoTagger.UserInterface.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.CodeAnalysis.Emit;
     using Newtonsoft.Json;
 
     [Route("[controller]")]
