@@ -1,5 +1,5 @@
 # AutoTagger
-Find the best Instagram Hashtags for a specific Photo - Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
+Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018.
 
 ## Architecture
 ![](https://github.com/Vittel/AutoTagger/raw/master/doc/architecture2.png)
@@ -7,25 +7,28 @@ Find the best Instagram Hashtags for a specific Photo - Proof of Concept started
 ## How it works
   * [crawler](https://github.com/DarioDomiDE/Instagger/blob/master/doc/quality_improvement_2_crawler.md)
   * [database](https://github.com/DarioDomiDE/Instagger/blob/master/doc/quality_improvement_1_better_database.md)
-  * [query for relational db](https://github.com/DarioDomiDE/Instagger/blob/master/doc/relational-query.md)
+  * [DB Query](https://github.com/DarioDomiDE/Instagger/blob/master/doc/relational-query.md)
+  * Evaluation (comign soon)
   
-### Hashtags Rules
+## Hashtags Rules
   * [Meat vs Vegan](https://github.com/DarioDomiDE/Instagger/blob/master/doc/quality_improvement_3_meat_vs_vegan.txt)
+  * Too generic hashtags
   * Famous persons (coming soon)
   * Cities (coming soon)
   
 ## Setup
-Set following Environment Variables
+Need .Net Core 2.0 Framework, and a MySQL database. Set following Environment Variables. As well as a 'Google Cloud Provider' Account with Vision API enabled. Currently able to host as standalone (UserInterface project) or as an Azure Functions App (AzureFunctions project).
 - instatagger_mysql_ip
 - instatagger_mysql_user
 - instatagger_mysql_pw
 - instatagger_mysql_db
-- instatagger_gcpvision_key1
-- instatagger_gcpvision_key2
+- instatagger_gcpvision_key1 ¹
+- instatagger_gcpvision_key2 ¹
+
+¹ Split the content of the key-file into two parts
 
 ## Links
   * [Frontend](http://instatagger.do-epic-sh.it/)
-  * [Slack](https://dnughh.slack.com/messages/C9VD9KUTV/team/U7EU90J4S/)
 
-## Contributors:
-![Dario D. Müller](https://avatars1.githubusercontent.com/u/2358139?s=50) [Dario D. Müller](https://github.com/DarioDomiDE)
+## About:
+[Blog](http://darionot.es/)
