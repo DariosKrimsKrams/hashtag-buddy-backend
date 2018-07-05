@@ -3,11 +3,9 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Json;
     using System.Threading.Tasks;
 
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
     using AutoTagger.Database.Standard.Storage.Mysql;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.ImageProcessor.Standard;
@@ -38,16 +36,15 @@
                 return new BadRequestObjectResult("No File uploaded");
             }
 
-            var storage         = new MysqlUIStorage();
-            var taggingProvider = new GCPVision();
-            IEvaluation evaluation = new Evaluation();
+            var         storage         = new MysqlUiStorage();
+            var         taggingProvider = new GcpVision();
+            IEvaluation evaluation      = new Evaluation();
             var debugInfos = new Dictionary<string, List<string>>
             {
                 { "ip", new List<string> { req.HttpContext.Connection?.RemoteIpAddress?.ToString() } },
                 { "backend_version", new List<string> { "0.2" } },
             };
             evaluation.AddDebugInfos(debugInfos);
-
 
             using (var stream = new MemoryStream())
             {
@@ -108,14 +105,13 @@
                 //     new MachineTag("Food", 1.0f, "GCPVision_Web"),
                 //};
 
-
                 if (!machineTags.Any())
                 {
                     return new BadRequestObjectResult("No MachineTags found");
                 }
 
                 var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
-                var trendingHTags = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);
+                var trendingHTags     = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);
                 var result = new Dictionary<string, object>
                 {
                     { "mostRelevantHTags", mostRelevantHTags },
@@ -125,6 +121,5 @@
                 return new JsonResult(result);
             }
         }
-
     }
 }

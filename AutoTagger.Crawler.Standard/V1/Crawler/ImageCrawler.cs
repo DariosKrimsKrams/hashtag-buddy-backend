@@ -50,11 +50,11 @@
                 string text  = edges[0]?.node?.text;
                 text         = text?.Replace("\\n", "\n");
                 text         = System.Web.HttpUtility.HtmlDecode(text);
-                var hashTags = ParseHashTags(text).ToList();
+                var hashtags = ParseHashTags(text).ToList();
 
                 var innerNode     = node.node;
                 int likes         = innerNode.edge_liked_by?.count;
-                var hashTagsCount = hashTags.Count;
+                var hashTagsCount = hashtags.Count;
                 var commentsCount = innerNode?.edge_media_to_comment?.count;
 
                 if (hashTagsCount < this.MinHashTagCount || likes < this.MinLikes
@@ -69,7 +69,7 @@
                     Likes        = likes,
                     Comments     = commentsCount,
                     Shortcode    = innerNode?.shortcode,
-                    HumanoidTags = hashTags,
+                    HumanoidTags = hashtags,
                     LargeUrl     = innerNode?.display_url,
                     ThumbUrl     = innerNode?.thumbnail_src,
                     Uploaded     = takenDate
@@ -86,7 +86,7 @@
                 && !IsDigitsOnly(value);
         }
 
-        static bool IsDigitsOnly(string str)
+        private static bool IsDigitsOnly(string str)
         {
             foreach (var c in str)
             {

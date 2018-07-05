@@ -2,12 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
-    using AutoTagger.Database.Standard;
     using AutoTagger.Database.Standard.Storage.Mysql;
     using Xunit;
+    using Image = Crawler.Standard.Image;
 
     public class MysqlTests
     {
@@ -62,11 +61,11 @@
         public void WhenGettingAllPhotos()
         {
             // Arrange
-            var mysql = new MysqlUIStorage();
+            var mysql = new MysqlUiStorage();
 
             // Act
             var machineTags = new List<IMachineTag> { new MachineTag {Name = "beach" }, new MachineTag {Name = "water" } };
-            var (debug, htags) = mysql.FindHumanoidTags<IFindHumanoidTagsMostRelevantQuery>(machineTags);
+            var (debug, htags) = mysql.FindMostRelevantHumanoidTags(machineTags);
 
             // Assert
             Assert.NotEmpty(debug);
@@ -88,7 +87,7 @@
 
             // Act
             db.InsertMachineTagsWithoutSaving(image);
-            db.DoSave();
+            db.Save();
 
             // Assert
             Assert.True(true);

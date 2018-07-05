@@ -65,8 +65,8 @@
             services.AddMvc();
             services.AddCors();
 
-            services.AddTransient<IAutoTaggerStorage, MysqlUIStorage>();
-            services.AddTransient<ITaggingProvider, GCPVision>();
+            services.AddTransient<IUiStorage, MysqlUiStorage>();
+            services.AddTransient<ITaggingProvider, GcpVision>();
 
             services.AddSwaggerGen(
                 c =>

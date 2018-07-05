@@ -53,9 +53,9 @@
 
         private static void CrawlMtagsWithHighScore()
         {
-            var uiDb = new MysqlUIStorage();
+            var uiDb = new MysqlUiStorage();
             var mtags = uiDb.GetMtagsWithHighScore();
-            var mtagsArr = mtags.Select(m => m.Replace(" ", "").ToLower()).ToArray();
+            var mtagsArr = mtags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 
             var crawlerDb = new MysqlCrawlerStorage();
             var crawlerEngine = new CrawlerV1();
@@ -101,7 +101,7 @@
         private static void StartImageProcessor()
         {
             var db = new MysqlImageProcessorStorage();
-            var tagger = new GCPVision();
+            var tagger = new GcpVision();
 
             var imageProcessor = new ImageProcessorApp(db, tagger);
             ImageProcessorApp.OnLookingForTags += image =>

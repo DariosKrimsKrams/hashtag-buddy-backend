@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using AutoTagger.Contract;
     using AutoTagger.Database.Standard.Mysql;
+    using AutoTagger.Database.Standard.Storage.Mysql.Query;
 
-    public class MysqlUIStorage : MysqlBaseStorage, IAutoTaggerStorage
+    public class MysqlUiStorage : MysqlBaseStorage, IUiStorage
     {
 
         public (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IEnumerable<IMachineTag> machineTags)

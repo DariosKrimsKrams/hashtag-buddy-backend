@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
 
@@ -13,13 +15,13 @@
 
     using Image = Google.Cloud.Vision.V1.Image;
 
-    public class GCPVision : ITaggingProvider
+    public class GcpVision : ITaggingProvider
     {
-        private const string keyLabel = "GCPVision_Label";
-        private const string keyWeb = "GCPVision_Web";
+        private const string KeyLabel = "GCPVision_Label";
+        private const string KeyWeb = "GCPVision_Web";
         private readonly ImageAnnotatorClient client;
 
-        public GCPVision()
+        public GcpVision()
         {
             this.client = this.Create();
         }
@@ -126,7 +128,7 @@
             {
                 if (String.IsNullOrEmpty(x.Description))
                     continue;
-                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = keyLabel };
+                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = KeyLabel };
                 yield return mtag;
             }
 
@@ -134,7 +136,7 @@
             {
                 if (String.IsNullOrEmpty(x.Description))
                     continue;
-                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = keyWeb };
+                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = KeyWeb };
                 yield return mtag;
             }
         }

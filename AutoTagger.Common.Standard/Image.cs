@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Objects
+﻿namespace AutoTagger.Common
 {
     using System;
     using System.Collections.Generic;
@@ -7,19 +7,31 @@
 
     public class Image : IImage
     {
-        public IEnumerable<IMachineTag> MachineTags { get; set; }
-        public IEnumerable<string> HumanoidTags { get; set; }
-        public int Id { get; set; }
-        public string Shortcode { get; set; }
-        public string LargeUrl { get; set; }
-        public string ThumbUrl { get; set; }
-        public int Likes { get; set; }
         public int Comments { get; set; }
-        public string User { get; set; }
+
         public int Follower { get; set; }
+
         public int Following { get; set; }
+
+        public IEnumerable<string> HumanoidTags { get; set; }
+
+        public int Id { get; set; }
+
+        public string LargeUrl { get; set; }
+
+        public int Likes { get; set; }
+
+        public IEnumerable<IMachineTag> MachineTags { get; set; }
+
         public int Posts { get; set; }
+
+        public string Shortcode { get; set; }
+
+        public string ThumbUrl { get; set; }
+
         public DateTime Uploaded { get; set; }
+
+        public string User { get; set; }
 
         public override string ToString()
         {

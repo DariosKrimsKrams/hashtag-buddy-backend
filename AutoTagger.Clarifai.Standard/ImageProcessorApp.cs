@@ -57,9 +57,7 @@
         enum DbUsage
         {
             None,
-
             GetEntries,
-
             SaveThisFuckingShit
         }
 
@@ -129,7 +127,7 @@
                         OnDbInserted?.Invoke(image);
                     }
 
-                    storage.DoSave();
+                    storage.Save();
                     OnDbSaved?.Invoke();
                     saveCounter    = 0;
                     currentDbUsage = DbUsage.None;

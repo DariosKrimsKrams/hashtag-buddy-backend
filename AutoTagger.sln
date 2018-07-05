@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database.Standar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Evaluation.Standard", "AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.Standard.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.Common.Standard", "AutoTagger.Common.Standard\AutoTagger.Common.Standard.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.Common", "AutoTagger.Common.Standard\AutoTagger.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

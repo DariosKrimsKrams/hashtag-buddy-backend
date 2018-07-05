@@ -14,11 +14,11 @@
     [Route("[controller]")]
     public class ImageController : Controller
     {
-        private readonly IAutoTaggerStorage storage;
+        private readonly IUiStorage storage;
 
         private readonly ITaggingProvider taggingProvider;
 
-        public ImageController(IAutoTaggerStorage storage, ITaggingProvider taggingProvider)
+        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider)
         {
             this.storage      = storage;
             this.taggingProvider = taggingProvider;
@@ -90,7 +90,7 @@
 
         private Dictionary<string, object> FindTags(List<IMachineTag> machineTags)
         {
-            var (query, instagramTags) = this.storage.FindHumanoidTags<IFindHumanoidTagsMostRelevantQuery>(machineTags);
+            var (query, instagramTags) = this.storage.FindMostRelevantHumanoidTags(machineTags);
             var ip = this.GetIPAddress();
 
             var data = new Dictionary<string, object>

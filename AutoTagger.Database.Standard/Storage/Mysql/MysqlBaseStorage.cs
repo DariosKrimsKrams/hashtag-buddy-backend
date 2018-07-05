@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
 
+    using AutoTagger.Common;
     using AutoTagger.Contract;
 
     using global::AutoTagger.Database.Standard.Mysql;
@@ -45,6 +46,8 @@
                 }
             }
         }
+
+        // TODO refactoring
 
         protected IEnumerable<IEnumerable<string>> ExecuteCustomQuery(string query)
         {

@@ -5,10 +5,14 @@
 
     public interface ICrawler
     {
-        IEnumerable<IImage> DoCrawling(int limit, params string[] customTags);
         event Action<IHumanoidTag> OnHashtagFound;
-        bool OverrideCondition(string key, int value);
-        int GetCondition(string key);
+
         void BuildTags(string[] customTags);
+
+        IEnumerable<IImage> DoCrawling(int limit, params string[] customTags);
+
+        int GetCondition(string key);
+
+        bool OverrideCondition(string key, int value);
     }
 }

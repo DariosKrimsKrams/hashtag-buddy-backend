@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿namespace AutoTagger.Database.Standard.Storage.Mysql.Query
 {
+    using System.Collections.Generic;
     using AutoTagger.Contract;
 
     public class FindHumanoidTagsTrendingQuery : FindHumanoidTagsQueryBase
     {
         public override string GetQuery(IEnumerable<IMachineTag> machineTags)
         {
-            const int limitTopPhotos = 50;
+            const int limitTopPhotos    = 50;
             const int countTagsToReturn = 30;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
 
@@ -26,6 +23,5 @@ namespace AutoTagger.Database.Standard.Storage.Mysql
 
             return query;
         }
-
     }
 }

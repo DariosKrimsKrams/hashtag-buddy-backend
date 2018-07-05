@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract
 {
+    using System.Collections.Generic;
+
     public interface IEvaluation
     {
-        IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags);
-
-        IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags);
-
         void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos);
+
+        IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags);
+
+        IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
+            IUiStorage storage,
+            IEnumerable<IMachineTag> mTags,
+            IEnumerable<IHumanoidTag> mostRelevantHTags);
     }
 }

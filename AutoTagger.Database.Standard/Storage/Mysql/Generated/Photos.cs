@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace AutoTagger.Database.Standard.Mysql
 {
     using System.Linq;
-
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
 
@@ -64,7 +64,7 @@ namespace AutoTagger.Database.Standard.Mysql
 
         public IImage ToImage()
         {
-            var image = new Image
+            var image = new Crawler.Standard.Image
             {
                 Id = this.Id,
                 LargeUrl  = this.LargeUrl,

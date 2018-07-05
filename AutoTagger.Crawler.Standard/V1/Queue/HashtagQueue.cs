@@ -6,8 +6,8 @@
     using System.Linq;
     using System.Reflection;
 
+    using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Database.Standard;
 
     class HashtagQueue<T> : ConcurrentQueue<T>
     {

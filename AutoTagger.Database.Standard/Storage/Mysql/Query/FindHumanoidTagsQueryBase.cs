@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿
+namespace AutoTagger.Database.Standard.Storage.Mysql.Query
 {
+    using System.Collections.Generic;
     using AutoTagger.Contract;
 
     public abstract class FindHumanoidTagsQueryBase : IFindHumanoidTagsQuery
@@ -19,17 +17,17 @@ namespace AutoTagger.Database.Standard.Storage.Mysql
 
         private static string BuildWhereCondition(IEnumerable<IMachineTag> machineTags, string source)
         {
-            var whereCondition = "";
+            var where = "";
             foreach (var machineTag in machineTags)
             {
                 if (machineTag.Source != source)
                     continue;
                 if (string.IsNullOrEmpty(machineTag.Name))
                     continue;
-                whereCondition += $"`m`.`name` = '{machineTag.Name.Replace("'", "\\'")}' OR ";
+                where += $"`m`.`name` = '{machineTag.Name.Replace("'", "\\'")}' OR ";
             }
             char[] charsToTrim = { ' ', 'O', 'R' };
-            return whereCondition.Trim(charsToTrim);
+            return where.Trim(charsToTrim);
         }
     }
 }

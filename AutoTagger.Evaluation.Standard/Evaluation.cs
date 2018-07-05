@@ -20,7 +20,7 @@
             moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
         }
 
-        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags)
+        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags)
         {
             var (query, hTags) = storage.FindMostRelevantHumanoidTags(mTags);
 
@@ -31,7 +31,7 @@
             return hTags;
         }
 
-        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IAutoTaggerStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
+        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
             var (queryTrending, hTagsTrending) = storage.FindTrendingHumanoidTags(mTags);
             var hTagsTrendingList = hTagsTrending.ToList();
@@ -53,7 +53,7 @@
             IEnumerable<IMachineTag> machineTags,
             IEnumerable<IHumanoidTag> instagramTags,
             string query,
-            IAutoTaggerStorage storage)
+            IUiStorage storage)
         {
             var mTags = new List<string>();
             foreach (var mTag in machineTags)
@@ -61,7 +61,7 @@
                 mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
             }
 
-            var iTags = new List<string>();
+            var hTags = new List<string>();
             foreach (var instagramTag in instagramTags)
             {
                 var str = "";
@@ -75,11 +75,11 @@
                     var val = instagramTag2[i];
                     str += $"\"{i}\":\"{val}\",";
                 }
-                iTags.Add($"{{{str.TrimEnd(',')}}}");
+                hTags.Add($"{{{str.TrimEnd(',')}}}");
             }
 
             this.debugInfos.Add("machineTags", mTags.ToList());
-            this.debugInfos.Add("instagramTags", iTags.ToList());
+            this.debugInfos.Add("instagramTags", hTags.ToList());
             this.debugInfos.Add("query", new List<string> { query });
 
             var json = SerializeJson(this.debugInfos);
