@@ -1,43 +1,45 @@
 ﻿namespace AutoTagger.Evaluation.Standard
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Runtime.Serialization.Json;
     using AutoTagger.Contract;
-
     using Newtonsoft.Json;
 
     public class Evaluation : IEvaluation
     {
-        private Dictionary<string, object> debugInfos;
+        private readonly Dictionary<string, object> debugInfos;
 
         public Evaluation()
         {
             this.debugInfos = new Dictionary<string, object>();
-
         }
 
-        public void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos)
+        public void AddDebugInfos(string key, object value)
         {
-            moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
+            this.debugInfos.Add(key, value);
         }
 
-        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> machineTags)
+        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(
+            IUiStorage storage,
+            IEnumerable<IMachineTag> machineTags)
         {
             var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
 
             this.debugInfos.Add("machineTags", machineTags);
+            this.AddDebugInfos("backend_version", "0.2");
             this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
             this.debugInfos.Add("queryMostRelevant", query);
-            SaveDebugInfos(storage);
+            this.SaveDebugInfos(storage);
 
             //hTags = new OrderByAmountOfPosts().Do(hTags);
 
             return humanoidTags;
         }
 
-        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
+        public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
+            IUiStorage storage,
+            IEnumerable<IMachineTag> mTags,
+            IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
             var (query, humanoidTags) = storage.FindTrendingHumanoidTags(mTags);
             var hTagsTrendingList = humanoidTags.ToList();

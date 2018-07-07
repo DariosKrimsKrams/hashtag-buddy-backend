@@ -10,7 +10,7 @@ namespace AutoTagger.UserInterface.Controllers
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult Index()
         {
-            var version = "v0.1";
+            var version = "v0.2";
 
             var list = new Dictionary<string, string>();
             list.Add("version", version);

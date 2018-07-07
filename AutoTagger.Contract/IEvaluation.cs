@@ -4,7 +4,7 @@
 
     public interface IEvaluation
     {
-        void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos);
+        void AddDebugInfos(string key, object value);
 
         IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags);
 
