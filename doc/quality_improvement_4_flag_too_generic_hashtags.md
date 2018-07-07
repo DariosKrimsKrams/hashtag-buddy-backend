@@ -5,7 +5,14 @@ like instagram, instagood, photooftheday, picoftheday, like4like, style, selfie,
 
 Vorgehen:
 - Query Gib alle Hashtags [instagram, instagood, ...]
+
+	SELECT * from itags ORDER BY id ASC LIMIT {lastId}, 100 
+
 - C# foreach hashtags
+
+	Project "TooGeneric" als .Net Standard Class Library
+	Über ConsoleTest Proj. manuell aufrufbar
+
 - Query: Gib alle Photos, die Hashtag=instagram nutzen.
 
 	SELECT photoId
@@ -47,3 +54,5 @@ Vorgehen:
 	) final
 
 - Statt zu flaggen (boolean), die Anzahl der AmountOfUsageInOtherHashtags speichern
+
+	Ergänze DB Row in ITags "UsageInOtherITags" int32 (11)
