@@ -6,13 +6,16 @@
     using System.Runtime.Serialization.Json;
     using AutoTagger.Contract;
 
+    using Newtonsoft.Json;
+
     public class Evaluation : IEvaluation
     {
-        private Dictionary<string, List<string>> debugInfos;
+        private Dictionary<string, object> debugInfos;
 
         public Evaluation()
         {
-            this.debugInfos = new Dictionary<string, List<string>>();
+            this.debugInfos = new Dictionary<string, object>();
+
         }
 
         public void AddDebugInfos(Dictionary<string, List<string>> moreDebugInfos)
@@ -20,21 +23,24 @@
             moreDebugInfos.ToList().ForEach(x => this.debugInfos.Add(x.Key, x.Value));
         }
 
-        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags)
+        public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> machineTags)
         {
-            var (query, hTags) = storage.FindMostRelevantHumanoidTags(mTags);
+            var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
 
-            SaveDebugInfos(mTags, hTags, query, storage);
+            this.debugInfos.Add("machineTags", machineTags);
+            this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
+            this.debugInfos.Add("queryMostRelevant", query);
+            SaveDebugInfos(storage);
 
             //hTags = new OrderByAmountOfPosts().Do(hTags);
 
-            return hTags;
+            return humanoidTags;
         }
 
         public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags, IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
-            var (queryTrending, hTagsTrending) = storage.FindTrendingHumanoidTags(mTags);
-            var hTagsTrendingList = hTagsTrending.ToList();
+            var (query, humanoidTags) = storage.FindTrendingHumanoidTags(mTags);
+            var hTagsTrendingList = humanoidTags.ToList();
 
             for (var i = hTagsTrendingList.Count - 1; i >= 0; i--)
             {
@@ -44,56 +50,16 @@
                     hTagsTrendingList.RemoveAt(i);
             }
 
-            //SaveDebugInfos(mTags, hTags, query, storage);
+            this.debugInfos.Add("humanoidTagsTrending", hTagsTrendingList);
+            this.debugInfos.Add("queryTrending", query);
 
             return hTagsTrendingList;
         }
 
-        private void SaveDebugInfos(
-            IEnumerable<IMachineTag> machineTags,
-            IEnumerable<IHumanoidTag> instagramTags,
-            string query,
-            IUiStorage storage)
+        private void SaveDebugInfos(IUiStorage storage)
         {
-            var mTags = new List<string>();
-            foreach (var mTag in machineTags)
-            {
-                mTags.Add($"{{\"Name\":\"{mTag.Name}\",\"Score\":{mTag.Score},\"Source\":\"{mTag.Source}\"}}");
-            }
-
-            var hTags = new List<string>();
-            foreach (var instagramTag in instagramTags)
-            {
-                var str = "";
-                var instagramTag2 = new List<string>()
-                {
-                    instagramTag.Name,
-                    instagramTag.Posts.ToString()
-                };
-                for (var i = 0; i < instagramTag2.Count; i++)
-                {
-                    var val = instagramTag2[i];
-                    str += $"\"{i}\":\"{val}\",";
-                }
-                hTags.Add($"{{{str.TrimEnd(',')}}}");
-            }
-
-            this.debugInfos.Add("machineTags", mTags.ToList());
-            this.debugInfos.Add("instagramTags", hTags.ToList());
-            this.debugInfos.Add("query", new List<string> { query });
-
-            var json = SerializeJson(this.debugInfos);
+            var json = JsonConvert.SerializeObject(this.debugInfos);
             storage.Log("web_image", json);
-        }
-
-        private static string SerializeJson(Dictionary<string, List<string>> dict)
-        {
-            var stream = new MemoryStream();
-            var ser = new DataContractJsonSerializer(typeof(Dictionary<string, List<string>>));
-            ser.WriteObject(stream, dict);
-            stream.Position = 0;
-            var sr = new StreamReader(stream);
-            return sr.ReadToEnd();
         }
     }
 }
