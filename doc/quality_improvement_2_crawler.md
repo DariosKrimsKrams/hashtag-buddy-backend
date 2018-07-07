@@ -20,7 +20,11 @@
 (4)
   * Crawl user-page
   * Get all 12 images
-  * insert to hashtags to Queue of Step 1
+  * for each image -> step 5
+  
+(5)
+  * start request on instagram detailpage for this image-id
+  * get hashtags and insert them to Queue of Step 1
   * check Conditions MinLikes, MinHashtagsCount, MinFollowerCount
   * get imageLink with likes and commentCount from userpage
   * instagram hashtags toLower()
