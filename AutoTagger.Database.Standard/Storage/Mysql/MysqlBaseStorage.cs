@@ -97,6 +97,8 @@
                                 htag.Posts = Convert.ToInt32(value);
                             else if(i == 2)
                                 htag.Id = Convert.ToInt32(value);
+                            else if(i == 3)
+                                htag.AmountOfUsageWithOtherHumanoidTags = Convert.ToInt32(value);
                         }
                         entries.Add(htag);
                     }
