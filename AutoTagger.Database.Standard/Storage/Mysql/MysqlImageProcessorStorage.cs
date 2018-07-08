@@ -1,9 +1,9 @@
-﻿namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿namespace AutoTagger.Database.Storage.Mysql
 {
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
-    using AutoTagger.Database.Standard.Mysql;
+    using AutoTagger.Database.Storage.Mysql.Generated;
 
     public class MysqlImageProcessorStorage : MysqlBaseStorage, IImageProcessorStorage
     {

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Database.Storage.Mysql;
     using Xunit;
     using Image = Crawler.Standard.Image;
 

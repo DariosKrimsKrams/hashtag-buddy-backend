@@ -1,5 +1,5 @@
 ﻿
-namespace AutoTagger.Database.Standard.Storage.Mysql.Query
+namespace AutoTagger.Database.Storage.Mysql.Query
 {
     using System.Collections.Generic;
     using AutoTagger.Contract;

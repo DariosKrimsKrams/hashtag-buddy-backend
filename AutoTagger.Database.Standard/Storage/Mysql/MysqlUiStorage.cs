@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿namespace AutoTagger.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using AutoTagger.Contract;
-    using AutoTagger.Database.Standard.Mysql;
-    using AutoTagger.Database.Standard.Storage.Mysql.Query;
+    using AutoTagger.Database.Storage.Mysql.Generated;
+    using AutoTagger.Database.Storage.Mysql.Query;
 
     public class MysqlUiStorage : MysqlBaseStorage, IUiStorage
     {

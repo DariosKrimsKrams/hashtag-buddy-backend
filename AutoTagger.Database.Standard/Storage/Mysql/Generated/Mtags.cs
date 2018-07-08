@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AutoTagger.Database.Standard.Mysql
+namespace AutoTagger.Database.Storage.Mysql.Generated
 {
     public partial class Mtags
     {

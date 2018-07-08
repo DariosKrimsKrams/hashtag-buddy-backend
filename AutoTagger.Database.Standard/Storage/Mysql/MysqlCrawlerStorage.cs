@@ -1,11 +1,12 @@
-﻿namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿namespace AutoTagger.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using AutoTagger.Database.Storage.Mysql.Generated;
+
     using global::AutoTagger.Contract;
-    using global::AutoTagger.Database.Standard.Storage;
-    using global::AutoTagger.Database.Standard.Mysql;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {

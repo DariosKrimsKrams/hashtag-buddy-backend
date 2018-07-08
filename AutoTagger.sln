@@ -5,27 +5,29 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Contract", "AutoTagger.Contract\AutoTagger.Contract.csproj", "{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageProcessor.Standard", "AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.Standard.csproj", "{B4A4A168-DB3C-4172-A2C9-3F8ECC36DDCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageProcessor", "AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.csproj", "{B4A4A168-DB3C-4172-A2C9-3F8ECC36DDCE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.TestConsole.Core", "AutoTagger.TestConsole.Core\AutoTagger.TestConsole.Core.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.TestConsole", "AutoTagger.TestConsole.Core\AutoTagger.TestConsole.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.UserInterface", "AutoTagger.UserInterface\AutoTagger.UserInterface.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler.Standard", "AutoTagger.Crawler.Standard\AutoTagger.Crawler.Standard.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler", "AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Test.Core", "AutoTagger.Test.Core\AutoTagger.Test.Core.csproj", "{40034217-4CFC-4E99-9352-BE14DE48D9CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Test", "AutoTagger.Test.Core\AutoTagger.Test.csproj", "{40034217-4CFC-4E99-9352-BE14DE48D9CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader.Standard", "AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.Standard.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader", "AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling.Standard", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.Standard.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.AzureFunctions", "AutoTagger.AzureFunctions\AutoTagger.AzureFunctions.csproj", "{6A9997DE-A30E-45E6-B5DF-11454342CA0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database.Standard", "AutoTagger.Database.Standard\AutoTagger.Database.Standard.csproj", "{8D0426E4-07B0-4845-80A0-67CFBBC962C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database", "AutoTagger.Database.Standard\AutoTagger.Database.csproj", "{8D0426E4-07B0-4845-80A0-67CFBBC962C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Evaluation.Standard", "AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.Standard.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Evaluation", "AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.Common", "AutoTagger.Common.Standard\AutoTagger.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Common", "AutoTagger.Common.Standard\AutoTagger.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TooGenericProcessor", "Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj", "{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

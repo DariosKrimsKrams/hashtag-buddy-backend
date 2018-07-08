@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     using AutoTagger.Contract;
-    using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.ImageProcessor.Standard;
 
@@ -39,12 +39,12 @@
             var         storage         = new MysqlUiStorage();
             var         taggingProvider = new GcpVision();
             IEvaluation evaluation      = new Evaluation();
-            var debugInfos = new Dictionary<string, List<string>>
-            {
-                { "ip", new List<string> { req.HttpContext.Connection?.RemoteIpAddress?.ToString() } },
-                { "backend_version", new List<string> { "0.2" } },
-            };
-            evaluation.AddDebugInfos(debugInfos);
+            //var debugInfos = new Dictionary<string, List<string>>
+            //{
+            //    { "ip", new List<string> { req.HttpContext.Connection?.RemoteIpAddress?.ToString() } },
+            //    { "backend_version", new List<string> { "0.2" } },
+            //};
+            //evaluation.AddDebugInfos(debugInfos);
 
             using (var stream = new MemoryStream())
             {

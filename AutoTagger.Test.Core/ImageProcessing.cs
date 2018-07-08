@@ -5,7 +5,7 @@ using System.Text;
 namespace AutoTagger.Test.Core
 {
     using AutoTagger.Crawler.Standard;
-    using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
 
     using Xunit;

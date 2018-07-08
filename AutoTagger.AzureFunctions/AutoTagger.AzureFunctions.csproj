@@ -8,9 +8,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.Standard.csproj" />
-    <ProjectReference Include="..\AutoTagger.Database.Standard\AutoTagger.Database.Standard.csproj" />
-    <ProjectReference Include="..\AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.Standard.csproj" />
+    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.csproj" />
+    <ProjectReference Include="..\AutoTagger.Database.Standard\AutoTagger.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

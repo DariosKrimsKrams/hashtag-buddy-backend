@@ -6,7 +6,7 @@
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.Standard.V1;
     using AutoTagger.Crawler.Standard.V1.Crawler;
-    using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Database.Storage.Mysql;
     using Xunit;
     using Xunit.Abstractions;
 

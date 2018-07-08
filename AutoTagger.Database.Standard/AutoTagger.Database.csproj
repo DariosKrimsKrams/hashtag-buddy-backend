@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoTagger.Contract\AutoTagger.Contract.csproj" />
-    <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.Standard.csproj" />
+    <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj" />
   </ItemGroup>
 
 </Project>

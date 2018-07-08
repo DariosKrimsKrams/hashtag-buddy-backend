@@ -2,6 +2,8 @@
 {
     public interface IHumanoidTag
     {
+        int Id { get; set; }
+
         string Name { get; set; }
 
         int Posts { get; set; }

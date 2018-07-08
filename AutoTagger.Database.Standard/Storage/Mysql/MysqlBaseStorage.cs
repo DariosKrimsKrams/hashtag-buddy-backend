@@ -1,13 +1,11 @@
-﻿namespace AutoTagger.Database.Standard.Storage.Mysql
+﻿namespace AutoTagger.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
-
-    using global::AutoTagger.Database.Standard.Mysql;
+    using AutoTagger.Database.Storage.Mysql.Generated;
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;
 
@@ -92,10 +90,13 @@
                         for (var i = 0; i < reader.FieldCount; i++)
                         {
                             var value = reader.GetValue(i).ToString();
+                            // TODO use keys instead of i
                             if (i == 0)
                                 htag.Name = value;
-                            else
+                            else if(i == 1)
                                 htag.Posts = Convert.ToInt32(value);
+                            else if(i == 2)
+                                htag.Id = Convert.ToInt32(value);
                         }
                         entries.Add(htag);
                     }

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.csproj" />
+    <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj" />
+    <ProjectReference Include="..\AutoTagger.Database.Standard\AutoTagger.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.csproj" />
+  </ItemGroup>
+
+</Project>

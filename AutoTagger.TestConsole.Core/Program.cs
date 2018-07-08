@@ -4,7 +4,7 @@
     using System.Linq;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.Standard.V1;
-    using AutoTagger.Database.Standard.Storage.Mysql;
+    using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.ImageDownloader.Standard;
 
