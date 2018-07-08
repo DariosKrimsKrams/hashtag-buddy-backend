@@ -1,7 +1,10 @@
 # Dont use hashtags that are "too generic" in Query
 
-like instagram, instagood, photooftheday, picoftheday, like4like, style, selfie, happy
+Es geht darum, herauszufinden, welche Hashtags sehr oft mit anderen Hashtags  in Verbindung benutzt werden. Dabei ist aber weniger die genaue Auflistung wichtig, sondern nur die Anzahl, mit wie viele verschiedenen Hashtags ein bestimmter Hashtag benutzt wird.
 
+Besonders oft benutzte Hashtags sollen dem User nicht angezeigt werden, weil davon ausgegangen werden kann, dass diese zu generisch und zu allgemein gehalten sind. Zumal oft als "Lückenfüller" verwendet, aber fraglich ist, wie oft danach gesucht wird.
+
+z.B. instagram, instagood=35.000x, photooftheday=, photooftheday=29.000x, beautiful=23000x, style, selfie, happy=20.000x etc.
 
 Vorgehen:
 - Query Gib alle Hashtags [instagram, instagood, ...]
