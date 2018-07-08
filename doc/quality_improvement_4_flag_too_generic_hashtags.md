@@ -53,6 +53,6 @@ Vorgehen:
 		GROUP by rel2.itagId
 	) final
 
-- Statt zu flaggen (boolean), die Anzahl der AmountOfUsageInOtherHashtags speichern
+- Statt zu flaggen (boolean), die Anzahl der AmountOfUsageInTHashtags speichern
 
-	Ergänze DB Row in ITags "UsageInOtherITags" int32 (11)
+	Ergänze DB Row in ITags "AmountOfUsageInTHashtags" int32 (11)
