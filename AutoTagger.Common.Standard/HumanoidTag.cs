@@ -9,5 +9,7 @@
         public string Name { get; set; }
 
         public int Posts { get; set; }
+
+        public int AmountOfUsageWithOtherHumanoidTags { get; set; }
     }
 }

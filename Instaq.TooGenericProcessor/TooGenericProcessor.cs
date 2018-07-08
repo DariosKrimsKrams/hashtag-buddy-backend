@@ -1,24 +1,36 @@
-﻿using System;
-
-namespace Instaq.TooGenericProcessor
+﻿namespace Instaq.TooGenericProcessor
 {
+    using System;
     using AutoTagger.Contract;
 
     public class TooGenericProcessor
     {
-        private ITooGenericStorage storage;
+        private GetHumanoidTagsProvider provider;
 
-        private HashtagProvider provider;
+        private ITooGenericStorage storage;
 
         public TooGenericProcessor(ITooGenericStorage storage)
         {
-            this.storage = storage;
-            provider = new HashtagProvider(storage);
+            this.storage  = storage;
+            this.provider = new GetHumanoidTagsProvider(storage);
         }
 
         public void Start()
         {
-            var hTag = this.provider.GetNextHumanoidTag();
+            while (true)
+            {
+                var hTag = this.provider.GetNextHumanoidTag();
+                if (hTag == null)
+                {
+                    Console.WriteLine("Exit");
+                    break;
+                }
+
+                var count = this.storage.CountHumanoidTagsForHumanoidTag(hTag.Name);
+                hTag.AmountOfUsageWithOtherHumanoidTags = count;
+                Console.WriteLine(hTag.Name + "("+ hTag.Id + ") -> " + count);
+                this.storage.UpdateAmountOfUsageWithOtherHumanoidTags(hTag);
+            }
         }
     }
 }

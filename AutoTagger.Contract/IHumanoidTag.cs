@@ -7,5 +7,7 @@
         string Name { get; set; }
 
         int Posts { get; set; }
+
+        int AmountOfUsageWithOtherHumanoidTags { get; set; }
     }
 }

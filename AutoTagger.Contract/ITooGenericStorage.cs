@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract
 {
+    using System.Collections.Generic;
+
     public interface ITooGenericStorage
     {
         IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0);
+
+        int CountHumanoidTagsForHumanoidTag(string name);
+
+        void UpdateAmountOfUsageWithOtherHumanoidTags(IHumanoidTag humanoidTag);
     }
 }

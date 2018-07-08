@@ -8,6 +8,8 @@
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.ImageDownloader.Standard;
 
+    using Instaq.TooGenericProcessor;
+
     internal class Program
     {
 
@@ -18,6 +20,7 @@
                              "2: Start Image Downloader\n" +
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
+                             "5: Run Too Generic Processor\n" +
                              ""
                              );
             while(true)
@@ -45,10 +48,22 @@
                         Console.WriteLine("Start CrawlMtagsWithHighScore...");
                         CrawlMtagsWithHighScore();
                         break;
+
+                    case '5':
+                        Console.WriteLine("Run Too Generic Processor...");
+                        RunTooGenericProcessor();
+                        break;
                 }
                 Console.WriteLine("------------");
             }
             
+        }
+
+        private static void RunTooGenericProcessor()
+        {
+            var db = new MysqlTooGenericStorage();
+            var processor = new TooGenericProcessor(db);
+            processor.Start();
         }
 
         private static void CrawlMtagsWithHighScore()
