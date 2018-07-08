@@ -1,4 +1,4 @@
-# save count hashtags that are "too generic"
+# dont use hashtags that are "too generic"
 
 like instagram, instagood, photooftheday, picoftheday, like4like, style, selfie, happy
 
@@ -56,3 +56,5 @@ Vorgehen:
 - den Count speichern (nicht flaggen)
 
 	Ergänze DB Row in ITags "amountOfUsageWithOtherITags" int32 (11)
+	
+- In MostRelevant/Trending Query dies mit berücksichtigen
