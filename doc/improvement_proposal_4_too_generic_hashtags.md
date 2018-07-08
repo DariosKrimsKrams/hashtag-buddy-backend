@@ -1,11 +1,18 @@
-# Flag hashtags that are "too generic"
+# dont use hashtags that are "too generic"
 
 like instagram, instagood, photooftheday, picoftheday, like4like, style, selfie, happy
 
 
 Vorgehen:
 - Query Gib alle Hashtags [instagram, instagood, ...]
+
+	SELECT * from itags ORDER BY id ASC LIMIT {lastId}, 100 
+
 - C# foreach hashtags
+
+	Project "TooGeneric" als .Net Standard Class Library
+	Über ConsoleTest Proj. manuell aufrufbar
+
 - Query: Gib alle Photos, die Hashtag=instagram nutzen.
 
 	SELECT photoId
@@ -46,4 +53,8 @@ Vorgehen:
 		GROUP by rel2.itagId
 	) final
 
-- Statt zu flaggen (boolean), die Anzahl der AmountOfUsageInOtherHashtags speichern
+- den Count speichern (nicht flaggen)
+
+	Ergänze DB Row in ITags "amountOfUsageWithOtherITags" int32 (11)
+	
+- In MostRelevant/Trending Query dies mit berücksichtigen
