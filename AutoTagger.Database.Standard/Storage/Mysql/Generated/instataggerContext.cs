@@ -85,6 +85,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnType("timestamp")
                     .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
                     .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.AmountOfUsageWithOtherITags)
+                    .HasColumnName("amountOfUsageWithOtherITags")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Mtags>(entity =>
