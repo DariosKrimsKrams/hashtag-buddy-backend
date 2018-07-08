@@ -1,4 +1,4 @@
-# Flag hashtags that are "too generic"
+# save count hashtags that are "too generic"
 
 like instagram, instagood, photooftheday, picoftheday, like4like, style, selfie, happy
 
@@ -53,6 +53,6 @@ Vorgehen:
 		GROUP by rel2.itagId
 	) final
 
-- Statt zu flaggen (boolean), die Anzahl der AmountOfUsageInTHashtags speichern
+- den Count speichern (nicht flaggen)
 
-	Ergänze DB Row in ITags "AmountOfUsageInTHashtags" int32 (11)
+	Ergänze DB Row in ITags "amountOfUsageWithOtherITags" int32 (11)
