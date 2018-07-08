@@ -4,38 +4,21 @@ Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of
 ## Architecture
 ![](/doc/architecture2.png)
 
-## Services
-  * Crawler
-  * UserInterface
-
 ## How it works
-  * [crawler](/doc/quality_improvement_2_crawler.md)
-  * [database](/doc/quality_improvement_1_better_database.md)
+  * [#1 Database](/doc/ip1_better_database.md)
+  * [#2 Crawler](/doc/ip2_crawler.md)
   * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
   * [Query for Trending Hashtags](/doc/relational-query-for-trending.md)
-  * Evaluation (coming soon)
   
 ## Improvement Proposals
-  * #3 [Meat vs Vegan](/doc/quality_improvement_3_meat_vs_vegan.txt)
-  * #4 [Too generic hashtags](/doc/quality_improvement_4_flag_too_generic_hashtags.md)
-  * Famous persons (coming soon)
-  * Cities (coming soon)
-  * #5 LocalTrends
+  * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.txt)
+  * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
+  * [#5 Famous persons (coming soon)](/doc/ip5_famous_persons.md)
+  * [#6 Cities (coming soon)](/doc/ip6_cities.md)
+  * [#7 LocalTrends (coming maybe sometimes)](/doc/ip7_local_trends.md)
 
 ## Setup
-### Requirements
-  * .Net Core 2.0 Framework
-  * MySQL Database
-  * Google Vision API
-
-### Environment Variables
-  * instatagger_mysql_ip
-  * instatagger_mysql_user
-  * instatagger_mysql_pw
-  * instatagger_mysql_db
-  * instatagger_gcpvision_key1 ¹
-  * instatagger_gcpvision_key2 ¹
-¹ Split the content of the key-file into two parts
+  * [Setup](/doc/setup.md)
 
 ## Links
   * [Frontend](http://instatagger.do-epic-sh.it/)
