@@ -11,7 +11,7 @@ Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of
   * [Query for Trending Hashtags](/doc/relational-query-for-trending.md)
   
 ## Improvement Proposals
-  * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.txt)
+  * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.md)
   * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
   * [#5 Famous persons (coming soon)](/doc/ip5_famous_persons.md)
   * [#6 Cities (coming soon)](/doc/ip6_cities.md)
@@ -22,6 +22,4 @@ Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of
 
 ## Links
   * [Frontend](http://instatagger.do-epic-sh.it/)
-
-## About:
-  * [Blog](http://darionot.es/)
+  * [About](http://darionot.es/)
