@@ -54,6 +54,7 @@
             {
                 command.CommandText = query;
                 command.CommandType = CommandType.Text;
+                command.CommandTimeout = 600;
 
                 this.db.Database.OpenConnection();
                 using (var reader = command.ExecuteReader())
@@ -80,6 +81,7 @@
             {
                 command.CommandText = query;
                 command.CommandType = CommandType.Text;
+                command.CommandTimeout = 600;
 
                 this.db.Database.OpenConnection();
                 using (var reader = command.ExecuteReader())
@@ -87,6 +89,7 @@
                     while (reader.Read())
                     {
                         var htag = new HumanoidTag();
+
                         for (var i = 0; i < reader.FieldCount; i++)
                         {
                             var value = reader.GetValue(i).ToString();
