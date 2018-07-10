@@ -5,11 +5,8 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
-
     using Google.Apis.Auth.OAuth2;
     using Google.Cloud.Vision.V1;
-
     using Grpc.Auth;
     using Grpc.Core;
 

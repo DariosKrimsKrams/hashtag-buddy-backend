@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Test.Core
+﻿namespace AutoTagger.Test.Core
 {
-    using AutoTagger.Crawler.Standard;
+    using AutoTagger.Common;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
 
