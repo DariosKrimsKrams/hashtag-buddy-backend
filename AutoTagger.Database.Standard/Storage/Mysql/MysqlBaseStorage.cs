@@ -45,6 +45,26 @@
             }
         }
 
+        protected void OpenConnection()
+        {
+            try
+            {
+                this.db.Database.OpenConnection();
+            }
+            catch (MySqlException e)
+            {
+                if (e.Message.Contains("Timeout"))
+                {
+                    this.db.Database.OpenConnection();
+                }
+                else
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
+
         // TODO refactoring
 
         protected IEnumerable<IEnumerable<string>> ExecuteCustomQuery(string query)
@@ -56,7 +76,7 @@
                 command.CommandType = CommandType.Text;
                 command.CommandTimeout = 600;
 
-                this.db.Database.OpenConnection();
+                this.OpenConnection();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -83,7 +103,7 @@
                 command.CommandType = CommandType.Text;
                 command.CommandTimeout = 600;
 
-                this.db.Database.OpenConnection();
+                this.OpenConnection();
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
