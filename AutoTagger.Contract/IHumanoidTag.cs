@@ -8,6 +8,6 @@
 
         int Posts { get; set; }
 
-        int AmountOfUsageWithOtherHumanoidTags { get; set; }
+        int RefCount { get; set; }
     }
 }

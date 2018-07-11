@@ -14,7 +14,7 @@
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
             var usageITagsLimit = 10 * 1000;
 
-            string query = $"SELECT i.name, i.posts, i.id, i.refCount "
+            string query = $"SELECT i.name, i.posts, i.refCount "
                          + $"FROM itags AS i LEFT JOIN photo_itag_rel AS rel ON rel.itagId = i.id LEFT JOIN "
                          + $"( SELECT p.id, ((count(m.name)-2 * matches + {countInsertTags}) / (count(m.name) "
                          + $"+ {countInsertTags} - matches)) *popularity as relationQuality "

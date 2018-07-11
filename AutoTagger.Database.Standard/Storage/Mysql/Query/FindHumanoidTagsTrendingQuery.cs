@@ -12,7 +12,7 @@
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
             var usageITagsLimit = 10 * 1000;
 
-            var query = $"SELECT i.name, i.posts, i.id, i.refCount "
+            var query = $"SELECT i.name, i.posts, i.refCount "
                       + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "
                       + $"LEFT JOIN (SELECT p.id, count(m.name) as matches FROM photos as p "
                       + $"LEFT JOIN mtags as m ON m.photoId = p.id "

@@ -27,9 +27,9 @@
                 }
 
                 var count = this.storage.CountHumanoidTagsForHumanoidTag(hTag.Name);
-                hTag.AmountOfUsageWithOtherHumanoidTags = count;
+                hTag.RefCount = count;
                 Console.WriteLine(hTag.Name + "("+ hTag.Id + ") -> " + count);
-                this.storage.UpdateAmountOfUsageWithOtherHumanoidTags(hTag);
+                this.storage.UpdateRefCount(hTag);
             }
         }
     }

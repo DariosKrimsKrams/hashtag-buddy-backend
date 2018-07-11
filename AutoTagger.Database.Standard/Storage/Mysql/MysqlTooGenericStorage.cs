@@ -12,7 +12,7 @@ namespace AutoTagger.Database.Storage.Mysql
     {
         public IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0)
         {
-            var query = $"SELECT name, posts, id FROM itags ORDER BY id ASC LIMIT {lastId}, {count}";
+            var query = $"SELECT id, name, posts FROM itags ORDER BY id ASC LIMIT {lastId}, {count}";
             return ExecuteHTagsQuery(query);
         }
 
@@ -28,10 +28,10 @@ namespace AutoTagger.Database.Storage.Mysql
             return result;
         }
 
-        public void UpdateAmountOfUsageWithOtherHumanoidTags(IHumanoidTag humanoidTag)
+        public void UpdateRefCount(IHumanoidTag humanoidTag)
         {
             var query = $"UPDATE itags SET `refCount`="
-                      + $"'{humanoidTag.AmountOfUsageWithOtherHumanoidTags}' WHERE `id`="
+                      + $"'{humanoidTag.RefCount}' WHERE `id`="
                       + $"'{humanoidTag.Id}' LIMIT 1";
             ExecuteCustomQuery(query);
         }

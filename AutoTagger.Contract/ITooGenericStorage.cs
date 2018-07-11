@@ -8,6 +8,6 @@
 
         int CountHumanoidTagsForHumanoidTag(string name);
 
-        void UpdateAmountOfUsageWithOtherHumanoidTags(IHumanoidTag humanoidTag);
+        void UpdateRefCount(IHumanoidTag humanoidTag);
     }
 }
