@@ -24,7 +24,7 @@ CREATE TABLE `itags` (
   `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `posts` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `amountOfUsageWithOtherITags` int(11) NOT NULL,
+  `refCount` int(11) NOT NULL,
   PRIMARY KEY (`id`,`name`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`) USING BTREE

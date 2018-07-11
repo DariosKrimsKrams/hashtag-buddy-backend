@@ -30,7 +30,7 @@ namespace AutoTagger.Database.Storage.Mysql
 
         public void UpdateAmountOfUsageWithOtherHumanoidTags(IHumanoidTag humanoidTag)
         {
-            var query = $"UPDATE itags SET `amountOfUsageWithOtherITags`="
+            var query = $"UPDATE itags SET `refCount`="
                       + $"'{humanoidTag.AmountOfUsageWithOtherHumanoidTags}' WHERE `id`="
                       + $"'{humanoidTag.Id}' LIMIT 1";
             ExecuteCustomQuery(query);

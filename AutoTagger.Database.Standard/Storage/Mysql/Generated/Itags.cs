@@ -14,7 +14,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public string Name { get; set; }
         public int Posts { get; set; }
         public DateTimeOffset Updated { get; set; }
-        public int AmountOfUsageWithOtherITags { get; set; }
+        public int RefCount { get; set; }
 
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }
 

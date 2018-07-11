@@ -86,8 +86,8 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.AmountOfUsageWithOtherITags)
-                    .HasColumnName("amountOfUsageWithOtherITags")
+                entity.Property(e => e.RefCount)
+                    .HasColumnName("refCount")
                     .HasColumnType("int(11)");
             });
 
