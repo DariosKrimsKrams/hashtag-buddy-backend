@@ -1,8 +1,11 @@
 ﻿namespace AutoTagger.Database.Storage.Mysql
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.Common;
+
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Database.Storage.Mysql.Generated;
@@ -65,42 +68,36 @@
             }
         }
 
-        // TODO refactoring
-
         protected IEnumerable<IEnumerable<string>> ExecuteCustomQuery(string query)
         {
-            var entries = new List<IEnumerable<string>>();
-            using (var command = this.db.Database.GetDbConnection().CreateCommand())
+            List<string> Func(List<string> entry, string key, string value)
             {
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
-                command.CommandTimeout = 600;
-
-                this.OpenConnection();
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var entry = new List<string>();
-                        for (var i = 0; i < reader.FieldCount; i++)
-                        {
-                            entry.Add(reader.GetValue(i).ToString());
-                        }
-                        entries.Add(entry);
-                    }
-                }
-                this.db.Database.CloseConnection();
+                entry.Add(value);
+                return entry;
             }
-            return entries;
+            return this.ExecuteQuery<List<string>>(query, Func);
         }
 
         protected IEnumerable<IHumanoidTag> ExecuteHTagsQuery(string query)
         {
-            var entries = new List<IHumanoidTag>();
+            HumanoidTag Func(HumanoidTag entry, string key, string value)
+            {
+                if (key == "name") entry.Name              = value;
+                else if (key == "posts") entry.Posts       = Convert.ToInt32(value);
+                else if (key == "id") entry.Id             = Convert.ToInt32(value);
+                else if (key == "refCount") entry.RefCount = Convert.ToInt32(value);
+                return entry;
+            }
+            return this.ExecuteQuery<HumanoidTag>(query, Func);
+        }
+
+        private IEnumerable<T> ExecuteQuery<T>(string query, Func<T, string, string, T> func) where T : new()
+        {
+            var result = new List<T>();
             using (var command = this.db.Database.GetDbConnection().CreateCommand())
             {
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
+                command.CommandText    = query;
+                command.CommandType    = CommandType.Text;
                 command.CommandTimeout = 600;
 
                 this.OpenConnection();
@@ -108,27 +105,19 @@
                 {
                     while (reader.Read())
                     {
-                        var htag = new HumanoidTag();
-
+                        var entry = new T();
                         for (var i = 0; i < reader.FieldCount; i++)
                         {
+                            var key   = reader.GetName(i);
                             var value = reader.GetValue(i).ToString();
-                            // TODO use keys instead of i
-                            if (i == 0)
-                                htag.Name = value;
-                            else if(i == 1)
-                                htag.Posts = Convert.ToInt32(value);
-                            else if(i == 2)
-                                htag.Id = Convert.ToInt32(value);
-                            else if(i == 3)
-                                htag.AmountOfUsageWithOtherHumanoidTags = Convert.ToInt32(value);
+                            entry = func(entry, key, value);
                         }
-                        entries.Add(htag);
+                        result.Add(entry);
                     }
                 }
                 this.db.Database.CloseConnection();
             }
-            return entries;
+            return result;
         }
 
     }
