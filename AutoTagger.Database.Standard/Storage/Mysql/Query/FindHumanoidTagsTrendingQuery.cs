@@ -10,7 +10,7 @@
             const int limitTopPhotos    = 50;
             const int countTagsToReturn = 30;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
-            var usageITagsLimit = 10 * 1000;
+            var usageITagsLimit = 5 * 1000;
 
             var query = $"SELECT i.name, i.posts, i.refCount "
                       + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "

@@ -12,7 +12,7 @@
             const int countTagsToReturn = 30;
             var       countInsertTags   = machineTags.Count();
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
-            var usageITagsLimit = 10 * 1000;
+            var usageITagsLimit = 5 * 1000;
 
             string query = $"SELECT i.name, i.posts, i.refCount "
                          + $"FROM itags AS i LEFT JOIN photo_itag_rel AS rel ON rel.itagId = i.id LEFT JOIN "
