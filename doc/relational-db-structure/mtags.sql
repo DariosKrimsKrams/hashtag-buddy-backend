@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : Hetzner
-Source Server Version : 50560
-Source Host           : 78.46.178.185:3306
-Source Database       : instatagger
-
-Target Server Type    : MYSQL
-Target Server Version : 50560
-File Encoding         : 65001
-
-Date: 2018-04-30 14:32:17
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
