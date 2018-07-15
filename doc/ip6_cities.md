@@ -5,8 +5,9 @@
 
 2. Code
 * csproj anlegen, um diese zu importieren
-* Trim nach Leerzeichen, **[**, **]** und Zahlen
-* Bei Leerzeichen zwischen den Wörtern -> einzeln importieren
+* Trim nach Leerzeichen, **[**, **]** und Zahlen und wegwerfen, was zwischen [ und ] ist
+* Bei Leerzeichen oder Bindestrich zwischen den Wörtern -> zerlegen
+* wegwerfen, wenn wortlänge <= 2
 
 3. Datenbank
 * Tabelle anlegen "blacklist"
