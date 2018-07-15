@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using AutoTagger.Common;
+using AutoTagger.Contract;
 
 namespace AutoTagger.Database.Storage.Mysql.Generated
 {
-    using System.Linq;
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
 
-    public class Photos
+    public partial class Photos
     {
         public Photos()
         {
@@ -25,8 +25,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public int Follower { get; set; }
         public int Following { get; set; }
         public int Posts { get; set; }
-        public DateTimeOffset? Uploaded { get; set; }
-        public DateTimeOffset Created { get; set; }
+        public DateTime? Uploaded { get; set; }
+        public DateTime Created { get; set; }
+
 
         public ICollection<Mtags> Mtags { get; set; }
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }

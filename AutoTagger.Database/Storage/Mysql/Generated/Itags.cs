@@ -13,7 +13,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public int Id { get; set; }
         public string Name { get; set; }
         public int Posts { get; set; }
-        public DateTimeOffset Updated { get; set; }
+        public DateTime Updated { get; set; }
         public int RefCount { get; set; }
 
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }

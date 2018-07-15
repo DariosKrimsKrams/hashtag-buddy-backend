@@ -8,6 +8,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public int Id { get; set; }
         public string Source { get; set; }
         public string Data { get; set; }
-        public DateTimeOffset Created { get; set; }
+        public DateTime Created { get; set; }
     }
 }
