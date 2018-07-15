@@ -20,6 +20,7 @@ LEFT JOIN
 	LIMIT 50
 ) as sub2 ON sub2.id = rel.photoId
 WHERE sub2.id IS NOT NULL
+AND i.refCount < 10000
 GROUP by i.name
 ORDER by sum(matches) DESC
 LIMIT 30

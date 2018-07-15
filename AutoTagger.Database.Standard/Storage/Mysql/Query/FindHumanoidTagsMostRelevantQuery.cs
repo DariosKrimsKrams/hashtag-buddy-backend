@@ -23,7 +23,8 @@
                          + $"FROM photos as p LEFT JOIN mtags AS m ON m.photoId = p.id "
                          + $"WHERE (({whereConditionLabel}) AND m.source='GCPVision_Label') "
                          + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web') "
-                         + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id WHERE sub1.id IS NOT NULL "
+                         + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id "
+                         + $"WHERE sub1.id IS NOT NULL AND (m.name NOT LIKE '%Instagram%' AND m.source = 'GCPVision_Web') "
                          + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = rel.photoId "
                          + $"WHERE sub2.id IS NOT NULL AND i.refCount < {usageITagsLimit} GROUP by i.name "
                          + $"ORDER by count(i.name) DESC, relationQuality DESC LIMIT {countTagsToReturn}";

@@ -4,7 +4,7 @@
 SELECT
 i.id as itagId,
 i.name,
-#i.amountOfUsageWithOtherITags,
+#i.refCount,
 relationQuality,
 count(i.name) as imagesCount
 FROM itags as i
@@ -33,12 +33,13 @@ LEFT JOIN
 		LIMIT 200
     ) as sub1 ON p.id = sub1.id 
     WHERE sub1.id IS NOT NULL
+	AND (m.name NOT LIKE '%Instagram%' AND m.source = 'GCPVision_Web') 
     GROUP by p.id
     ORDER by relationQuality DESC
     LIMIT 200
 ) as sub2 ON sub2.id = rel.photoId
 WHERE sub2.id IS NOT NULL
-AND i.amountOfUsageWithOtherITags < 10000
+AND i.refCount < 10000
 GROUP by i.name
 ORDER by count(i.name) DESC, relationQuality DESC
 LIMIT 30
