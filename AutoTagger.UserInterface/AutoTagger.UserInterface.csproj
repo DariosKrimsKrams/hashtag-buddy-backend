@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.0.2" />
@@ -27,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.csproj" />
     <ProjectReference Include="..\AutoTagger.Contract\AutoTagger.Contract.csproj" />
-    <ProjectReference Include="..\AutoTagger.Database.Standard\AutoTagger.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.Database\AutoTagger.Database.csproj" />
     <ProjectReference Include="..\AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.csproj" />
   </ItemGroup>
 
