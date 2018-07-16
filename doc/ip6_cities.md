@@ -1,18 +1,18 @@
 # Herausfiltern von Städte-/Länder-Namen
 
-1. Liste mit Städte, Länder, Kontinent Namen
-* Liste besorgen oder zusammenstellen
-
-2. Code
-* csproj anlegen, um diese zu importieren
-* Trim nach Leerzeichen, **[**, **]** und Zahlen und wegwerfen, was zwischen [ und ] ist
-* Bei Leerzeichen oder Bindestrich zwischen den Wörtern -> zerlegen
-* wegwerfen, wenn wortlänge <= 2
-
-3. Datenbank
+1. Liste mit Städte, Länder, Kontinent Namen besorgen
+2. In Datenbank speichern
 * Tabelle anlegen "blacklist"
 * Spalten: id | name | reason="location"
-
-4. Query
-* Im Evaluation-Query: Alle Blacklist-Items `like '%[Stadtname]%'` raus
-* NYC (von new york) muss auch rausgefiltert wird (evtl kann die VeganVsMeat Logik dazu verwendet werden, siehe [ip3](ip3_meat_vs_vegan.md)
+3. bei itag Tabelle "hidden"-Spalte [bool] erg#nzen
+4. Code
+* csproj anlegen, um diese zu importieren
+* Trim nach Leerzeichen, **[**, **]** und Zahlen und wegwerfen, was zwischen [] und () ist
+* Bei Leerzeichen oder Bindestrich zwischen den Wörtern -> zerlegen
+* wegwerfen, wenn wortlänge <= 2
+4. Processing
+* Alle Blacklist-Items durchgehen und itags suchen, die diesen stadtnamen enthalten
+5. Evaluation Query anpassen
+6. Testing
+* Fotos vorher testen, ob diese #newyork, #nyc oder #italia enthalten
+* NYC muss auch rausgefiltert werden iwie (soll bisherige logik nicht ausreichen -> evtl kann die VeganVsMeat Logik dazu verwendet werden, siehe [ip3](ip3_meat_vs_vegan.md)
