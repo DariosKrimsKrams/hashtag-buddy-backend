@@ -1,10 +1,11 @@
 # Herausfiltern von Städte-/Länder-Namen
 
 ## 1. Liste mit Städte, Länder, Kontinent Namen besorgen
-## 2. In Datenbank speichern
+## 2. DB -> blacklist
   * Tabelle anlegen "blacklist"
   * Spalten: id | name | reason="location"
-## 3. bei itag Tabelle "hidden"-Spalte [bool] erg#nzen
+## 3. DB -> itags
+  * bei itags Tabelle "hidden"-Spalte (bool) erg#nzen
 ## 4. Code
   * csproj anlegen, um diese zu importieren
   * was zwischen [] und () ist -> wegwerfen
@@ -12,6 +13,7 @@
   * Bei Leerzeichen oder Bindestrich zwischen den Wörtern -> zerlegen
   * Trim
   * wegwerfen, wenn wortlänge <= 2
+  * In Datenbank speichern
 ## 4. Processing
   * Alle Blacklist-Items durchgehen und itags suchen, die diesen stadtnamen enthalten
 ## 5. Evaluation Query anpassen
