@@ -14,4 +14,4 @@
   * instatagger_gcpvision_key1
   * instatagger_gcpvision_key2
   
-(Split the content of the key-file into two parts)
+(Split the content of the GCP Credentials key-file into two parts)
