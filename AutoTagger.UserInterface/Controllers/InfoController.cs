@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoTagger.UserInterface.Controllers
 {
+    [Route("[controller]")]
     public class InfoController : Controller
     {
-        // GET: /<controller>/
-        [HttpGet("Info/Version")]
+        [HttpGet("Version")]
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult Index()
         {
@@ -15,6 +15,7 @@ namespace AutoTagger.UserInterface.Controllers
 
             var list = new Dictionary<string, string>();
             list.Add("version", version);
+            list.Add("date", date);
             return this.Json(list);
         }
     }

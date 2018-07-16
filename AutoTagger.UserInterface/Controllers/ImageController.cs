@@ -4,8 +4,6 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.UserInterface.Models;
@@ -155,8 +153,7 @@
             var data = new Dictionary<string, object>
             {
                 { "mostRelevantHTags", mostRelevantHTags },
-                { "trendingHTags", trendingHTags },
-                { "machineTags", machineTags },
+                { "trendingHTags", trendingHTags }
             };
 
             return data;
