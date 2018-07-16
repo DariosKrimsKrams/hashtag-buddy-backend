@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
 
     abstract class ImageCrawler : HttpCrawler

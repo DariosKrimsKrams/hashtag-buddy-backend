@@ -19,15 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.AzureFunctions", "AutoTagger.AzureFunctions\AutoTagger.AzureFunctions.csproj", "{6A9997DE-A30E-45E6-B5DF-11454342CA0A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database", "AutoTagger.Database.Standard\AutoTagger.Database.csproj", "{8D0426E4-07B0-4845-80A0-67CFBBC962C3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Evaluation", "AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Common", "AutoTagger.Common.Standard\AutoTagger.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TooGenericProcessor", "Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj", "{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTagger.Database", "AutoTagger.Database\AutoTagger.Database.csproj", "{B2DFB5C1-7FF3-4920-BC52-C361E3909476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,14 +65,6 @@ Global
 		{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A9997DE-A30E-45E6-B5DF-11454342CA0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D0426E4-07B0-4845-80A0-67CFBBC962C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{99136302-4952-4A65-A735-E9B7D6F7F973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{99136302-4952-4A65-A735-E9B7D6F7F973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99136302-4952-4A65-A735-E9B7D6F7F973}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,6 +77,10 @@ Global
 		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2DFB5C1-7FF3-4920-BC52-C361E3909476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2DFB5C1-7FF3-4920-BC52-C361E3909476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2DFB5C1-7FF3-4920-BC52-C361E3909476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2DFB5C1-7FF3-4920-BC52-C361E3909476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

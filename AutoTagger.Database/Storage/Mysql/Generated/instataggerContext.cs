@@ -1,10 +1,21 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AutoTagger.Database.Storage.Mysql.Generated
 {
-    public partial class InstataggerContext : DbContext
+    public partial class instataggerContext : DbContext
     {
+        public instataggerContext()
+        {
+        }
+
+        public instataggerContext(DbContextOptions<instataggerContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<Blacklist> Blacklist { get; set; }
         public virtual DbSet<Debug> Debug { get; set; }
         public virtual DbSet<Itags> Itags { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
@@ -15,16 +26,43 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var ip = Environment.GetEnvironmentVariable("instatagger_mysql_ip");
+                var ip   = Environment.GetEnvironmentVariable("instatagger_mysql_ip");
                 var user = Environment.GetEnvironmentVariable("instatagger_mysql_user");
-                var pw = Environment.GetEnvironmentVariable("instatagger_mysql_pw");
-                var db = Environment.GetEnvironmentVariable("instatagger_mysql_db");
+                var pw   = Environment.GetEnvironmentVariable("instatagger_mysql_pw");
+                var db   = Environment.GetEnvironmentVariable("instatagger_mysql_db");
                 optionsBuilder.UseMySql($"Server={ip};User Id={user};Password={pw};Database={db}");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Blacklist>(entity =>
+            {
+                entity.ToTable("blacklist");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("name")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasColumnType("varchar(40)");
+
+                entity.Property(e => e.Reason)
+                    .IsRequired()
+                    .HasColumnName("reason")
+                    .HasColumnType("varchar(20)");
+            });
+
             modelBuilder.Entity<Debug>(entity =>
             {
                 entity.ToTable("debug");
@@ -74,10 +112,14 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)");
 
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.RefCount)
+                    .HasColumnName("refCount")
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Updated)
@@ -85,10 +127,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnType("timestamp")
                     .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
                     .ValueGeneratedOnAddOrUpdate();
-
-                entity.Property(e => e.AmountOfUsageWithOtherITags)
-                    .HasColumnName("amountOfUsageWithOtherITags")
-                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Mtags>(entity =>
@@ -109,7 +147,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)");
 
                 entity.Property(e => e.PhotoId)
                     .HasColumnName("photoId")
@@ -117,12 +155,12 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Score)
                     .HasColumnName("score")
-                    .HasColumnType("float(11)");
+                    .HasColumnType("float(11,9)");
 
                 entity.Property(e => e.Source)
                     .IsRequired()
                     .HasColumnName("source")
-                    .HasMaxLength(30);
+                    .HasColumnType("varchar(30)");
 
                 entity.HasOne(d => d.Photo)
                     .WithMany(p => p.Mtags)
@@ -190,7 +228,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Shortcode)
                     .HasColumnName("shortcode")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Comments)
                     .HasColumnName("comments")
@@ -235,7 +273,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.Property(e => e.User)
                     .IsRequired()
                     .HasColumnName("user")
-                    .HasMaxLength(50);
+                    .HasColumnType("varchar(50)");
             });
         }
     }

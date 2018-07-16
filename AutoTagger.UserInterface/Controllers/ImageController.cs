@@ -4,6 +4,8 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.UserInterface.Models;

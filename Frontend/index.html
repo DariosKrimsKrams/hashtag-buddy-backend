@@ -12,6 +12,10 @@
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	
 	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
 		body {
 			overflow-x: hidden;
 		}
@@ -40,12 +44,17 @@
 		p {
 			margin-bottom: 0.3rem;
 		}
-		textarea {
-			width: 100%;
-			height: 400px;
+		ul {
+			list-style: none;
+		}
+		ul li {
+			display: inline-block;
+			padding: 1px 6px;
+			border: 1px solid #c4c4c4;
+			margin: 0 5px 5px 0;
+			border-radius: 3px;
 		}
 	</style>
-	<base href="http://instatagger.do-epic-sh.it">
 </head>
 
 <body>
@@ -60,22 +69,20 @@
     <div id="main" class="col-md-6">
         <form id="formFile" class="form-horizontal" method="post" action="#" enctype="multipart/form-data" style="border-radius: 25px; padding: 20px; border: 1px solid black">
             <h2>Upload a photo</h2>
-            <input class="btn btn-file form-control-file form-control" type="file" name="file" id="file" accept="image/*">
+            <input class="btn btn-file form-control -file form-control" type="file" name="file" id="file" accept="image/*">
 			<hr />
             <input id="submitBtn" class="btn btn-default" style="width: 100%" type="submit"/>
 			<p id="loadingIndicator" class="hidden">Finding hashtags...</p>
         </form>
     </div>
 	
-	<div id="resultBox" class="col-md-4 hidden">
+	<div id="resultBox" class="col-md-6 hidden">
         <div style="border-radius: 25px; padding: 25px; border: 1px solid black">
 			<a href="/">< Back<a/>
 			<h2>Top Hashtags</h2>
 			<div>
-				<form>
-					<textarea id="results">
-					</textarea>
-				</form>
+				<div id="results">
+				</div>
 			</div>
 		</div>
 	</div>
@@ -88,13 +95,16 @@
 	$(document).ready(function() {
 	
 		var success = function(data) {
-			var itags = data.instagramTags;
 			var content = '';
-			$.each(itags, function(index, val) {
-				content += '#' + val + ' ';
+			$.each(data.mostRelevantHTags, function(index, val) {
+				content += '<li>#' + val.name + '</li>';
 			});
-			//content = '<ul>'+html+'</ul>';
-			$('#results').text(content);
+			content = '<ul>' + content + '</ul><hr />';
+			$.each(data.trendingHTags, function(index, val) {
+				content += '<li>#' + val.name + '</li>';
+			});
+			content = '<ul>' + content + '</ul>';
+			$('#results').html(content);
 			$('#main').addClass('hidden');
 			$('#resultBox').removeClass('hidden');
 		}
@@ -110,7 +120,7 @@
 			
 			var hasFile = $('#file').val() != '';
 			
-			var host = 'https://instaq.azurewebsites.net/api/Upload?code=Ss0jXxCayEFaqhTtFcyPXlN0WBPuc61Xg8IEY8aopRpH40yoH7paAg==';
+			var host = 'http://localhost:59892/image/file';
 			
 			if(hasFile) {
 				var url = host;

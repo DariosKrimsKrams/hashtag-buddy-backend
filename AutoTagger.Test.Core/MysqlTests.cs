@@ -6,7 +6,6 @@
     using AutoTagger.Contract;
     using AutoTagger.Database.Storage.Mysql;
     using Xunit;
-    using Image = Crawler.Standard.Image;
 
     public class MysqlTests
     {

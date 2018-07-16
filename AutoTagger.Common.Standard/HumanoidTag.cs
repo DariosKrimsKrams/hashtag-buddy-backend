@@ -10,6 +10,6 @@
 
         public int Posts { get; set; }
 
-        public int AmountOfUsageWithOtherHumanoidTags { get; set; }
+        public int RefCount { get; set; }
     }
 }
