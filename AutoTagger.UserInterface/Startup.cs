@@ -45,9 +45,7 @@
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 });
 
-            app.UseCors(
-                options => options.WithOrigins("http://localhost").AllowAnyMethod()
-            );
+            app.UseCors(options => options.WithOrigins("http://localhost", "http://instaq.innocliq.de").AllowAnyMethod());
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
