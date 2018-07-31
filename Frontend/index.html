@@ -60,7 +60,8 @@
 <body>
 <div class="row">
     <div class="col-md-12" style="text-align: center;">
-        <h1>Find the best Instagram Hashtags for your photos</h1>
+        <h1>Find the most relevant Instagram Hashtags</h1>
+		<p id="version"></p>
     </div>
 </div>
 
@@ -144,6 +145,13 @@
 			$('#submitBtn').addClass('hidden');
 			$('#loadingIndicator').removeClass('hidden');
 			
+		});
+		
+		// version
+		var url = 'http://instaq-api.innocliq.de/info/version';
+		$.getJSON(url, function( data ) {
+			console.log(data);
+			$('#version').text(data.version + ' (' + data.date + ')');
 		});
 	});
 </script>
