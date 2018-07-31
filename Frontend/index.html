@@ -71,15 +71,16 @@
         <form id="formFile" class="form-horizontal" method="post" action="#" enctype="multipart/form-data" style="border-radius: 25px; padding: 20px; border: 1px solid black">
             <h2>Upload a photo</h2>
             <input class="btn btn-file form-control -file form-control" type="file" name="file" id="file" accept="image/*">
-			<hr />
-            <input id="submitBtn" class="btn btn-default" style="width: 100%" type="submit"/>
+			<input id="submitBtn" class="btn btn-default" style="width: 100%" type="submit"/>
 			<p id="loadingIndicator" class="hidden">Finding hashtags...</p>
         </form>
+		<hr />
+        <p>&copy; 2018 by InnoCliq</p>
     </div>
 	
 	<div id="resultBox" class="col-md-6 hidden">
         <div style="border-radius: 25px; padding: 25px; border: 1px solid black">
-			<a href="/">< Back<a/>
+			<a href="/">< Back</a>
 			<h2>Top Hashtags</h2>
 			<div>
 				<div id="results">
@@ -150,7 +151,6 @@
 		// version
 		var url = 'http://instaq-api.innocliq.de/info/version';
 		$.getJSON(url, function( data ) {
-			console.log(data);
 			$('#version').text(data.version + ' (' + data.date + ')');
 		});
 	});
