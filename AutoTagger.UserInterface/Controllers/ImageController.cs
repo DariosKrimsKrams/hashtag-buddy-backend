@@ -7,6 +7,8 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.UserInterface.Models;
@@ -30,30 +32,30 @@
             this.fileHandler     = fileHandler;
         }
 
-        [HttpPost("Link")]
-        [ProducesResponseType(typeof(void), 200)]
-        public IActionResult Link(ScanLinkModel model)
-        {
-            var link = model.Link;
-            if (string.IsNullOrEmpty(link))
-            {
-                return this.BadRequest("No Link set");
-            }
-            var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
-            if (!machineTags.Any())
-            {
-                return this.BadRequest("No MachineTags found :'(");
-            }
+        //[HttpPost("Link")]
+        //[ProducesResponseType(typeof(void), 200)]
+        //public IActionResult Link(ScanLinkModel model)
+        //{
+        //    var link = model.Link;
+        //    if (string.IsNullOrEmpty(link))
+        //    {
+        //        return this.BadRequest("No Link set");
+        //    }
+        //    var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
+        //    if (!machineTags.Any())
+        //    {
+        //        return this.BadRequest("No MachineTags found :'(");
+        //    }
 
-            var content = this.FindTags(machineTags);
-            content.Add("link", link);
-            var json = this.Json(content);
+        //    var content = this.FindTags(machineTags);
+        //    content.Add("link", link);
+        //    var json = this.Json(content);
 
-            var debugStr = JsonConvert.SerializeObject(content);
-            this.storage.Log("web_link", debugStr);
+        //    var debugStr = JsonConvert.SerializeObject(content);
+        //    this.storage.InsertLog("web_link", debugStr);
 
-            return json;
-        }
+        //    return json;
+        //}
 
         [HttpPost("File")]
         [ProducesResponseType(typeof(void), 200)]
@@ -133,18 +135,25 @@
                     return this.BadRequest("No MachineTags found :'(");
                 }
 
-                var content = this.FindTags(machineTags);
-                var json = this.Json(content);
+                IEvaluation evaluation = new Evaluation();
+                evaluation.AddDebugInfos("ip", this.GetIpAddress());
+                var tags = this.FindTags(evaluation, machineTags);
+                var output = this.Json(tags);
 
-                var debug = content;
-                var debugStr = JsonConvert.SerializeObject(debug);
-                this.storage.Log("web_image", debugStr);
+                var debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
+                var id = this.storage.InsertLog(debugStr);
 
-                string id = "123"; // database -> get debug id
-                var hash = GetHashString(id);
-                this.fileHandler.Save(FolderType.User, bytes, hash);
+                var hash = GetHashString(id.ToString());
+                var ext = Path.GetExtension(file.FileName);
+                var debugFileName = hash + ext.ToLower();
+                this.fileHandler.Save(FolderType.User, bytes, debugFileName);
 
-                return json;
+                evaluation.AddDebugInfos("image", debugFileName);
+                evaluation.AddDebugInfos("originalFilename", file.FileName);
+                debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
+                this.storage.UpdateLog(id, debugStr);
+
+                return output;
             }
         }
 
@@ -155,14 +164,11 @@
             var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
             foreach (byte b in hash)
                 sb.Append(b.ToString("X2"));
-            return sb.ToString().Substring(0, 10);
+            return sb.ToString().Substring(0, 10).ToLower();
         }
 
-        private Dictionary<string, object> FindTags(IEnumerable<IMachineTag> machineTags)
+        private Dictionary<string, object> FindTags(IEvaluation evaluation, IEnumerable<IMachineTag> machineTags)
         {
-            IEvaluation evaluation = new Evaluation();
-
-            evaluation.AddDebugInfos("ip", this.GetIpAddress());
 
             var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
             var trendingHTags     = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);

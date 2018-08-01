@@ -60,7 +60,7 @@
         public void Save(FolderType user, byte[] bytes, string filename)
         {
             var path = this.PathUser + filename;
-            File.WriteAllBytes(path, bytes);
+            File.WriteAllBytes(path, bytes);    
         }
     }
 }
