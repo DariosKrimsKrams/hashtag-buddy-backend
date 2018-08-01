@@ -19,6 +19,11 @@
             this.debugInfos.Add(key, value);
         }
 
+        public Dictionary<string, object> GetDebugInfos()
+        {
+            return this.debugInfos;
+        }
+
         public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(
             IUiStorage storage,
             IEnumerable<IMachineTag> machineTags)
@@ -26,10 +31,10 @@
             var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
 
             this.debugInfos.Add("machineTags", machineTags);
-            this.AddDebugInfos("backend_version", "0.2");
+            this.debugInfos.Add("backend_version", "0.2");
             this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
             this.debugInfos.Add("queryMostRelevant", query);
-            this.SaveDebugInfos(storage);
+            //this.SaveDebugInfos(storage);
 
             //hTags = new OrderByAmountOfPosts().Do(hTags);
 
@@ -58,10 +63,10 @@
             return hTagsTrendingList;
         }
 
-        private void SaveDebugInfos(IUiStorage storage)
-        {
-            var json = JsonConvert.SerializeObject(this.debugInfos);
-            storage.Log("web_image", json);
-        }
+        //private void SaveDebugInfos(IUiStorage storage)
+        //{
+        //    var json = JsonConvert.SerializeObject(this.debugInfos);
+        //    storage.InsertLog("web_image", json);
+        //}
     }
 }

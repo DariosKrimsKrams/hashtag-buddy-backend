@@ -1,9 +1,14 @@
 ﻿namespace AutoTagger.UserInterface.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Threading.Tasks;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.UserInterface.Models;
@@ -18,43 +23,43 @@
 
         private readonly ITaggingProvider taggingProvider;
 
-        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider)
+        private readonly IFileHandler fileHandler;
+
+        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider, IFileHandler fileHandler)
         {
-            this.storage      = storage;
+            this.storage         = storage;
             this.taggingProvider = taggingProvider;
+            this.fileHandler     = fileHandler;
         }
 
-        [HttpPost("Link")]
-        [ProducesResponseType(typeof(void), 200)]
-        public IActionResult Post(ScanLinkModel model)
-        {
-            var link = model.Link;
+        //[HttpPost("Link")]
+        //[ProducesResponseType(typeof(void), 200)]
+        //public IActionResult Link(ScanLinkModel model)
+        //{
+        //    var link = model.Link;
+        //    if (string.IsNullOrEmpty(link))
+        //    {
+        //        return this.BadRequest("No Link set");
+        //    }
+        //    var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
+        //    if (!machineTags.Any())
+        //    {
+        //        return this.BadRequest("No MachineTags found :'(");
+        //    }
 
-            if (string.IsNullOrEmpty(link))
-            {
-                return this.BadRequest("No Link set");
-            }
+        //    var content = this.FindTags(machineTags);
+        //    content.Add("link", link);
+        //    var json = this.Json(content);
 
-            var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
+        //    var debugStr = JsonConvert.SerializeObject(content);
+        //    this.storage.InsertLog("web_link", debugStr);
 
-            if (!machineTags.Any())
-            {
-                return this.BadRequest("No MachineTags found :'(");
-            }
-
-            var content = this.FindTags(machineTags);
-            content.Add("link", link);
-            var json = this.Json(content);
-
-            var debugStr = JsonConvert.SerializeObject(content);
-            this.storage.Log("web_link", debugStr);
-
-            return json;
-        }
+        //    return json;
+        //}
 
         [HttpPost("File")]
         [ProducesResponseType(typeof(void), 200)]
-        public async Task<IActionResult> Post(IFormFile file)
+        public async Task<IActionResult> File(IFormFile file)
         {
             if (!this.Request.ContentType.Contains("multipart/form-data; boundary"))
             {
@@ -71,7 +76,7 @@
                 await file.CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
 
                 // photo of Hamburg
                 //var machineTags = new List<IMachineTag>
@@ -130,22 +135,40 @@
                     return this.BadRequest("No MachineTags found :'(");
                 }
 
-                var content = this.FindTags(machineTags);
-                var json = this.Json(content);
+                IEvaluation evaluation = new Evaluation();
+                evaluation.AddDebugInfos("ip", this.GetIpAddress());
+                var tags = this.FindTags(evaluation, machineTags);
+                var output = this.Json(tags);
 
-                var debug = content;
-                var debugStr = JsonConvert.SerializeObject(debug);
-                this.storage.Log("web_image", debugStr);
+                var debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
+                var id = this.storage.InsertLog(debugStr);
 
-                return json;
+                var hash = GetHashString(id.ToString());
+                var ext = Path.GetExtension(file.FileName);
+                var debugFileName = hash + ext.ToLower();
+                this.fileHandler.Save(FolderType.User, bytes, debugFileName);
+
+                evaluation.AddDebugInfos("image", debugFileName);
+                evaluation.AddDebugInfos("originalFilename", file.FileName);
+                debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
+                this.storage.UpdateLog(id, debugStr);
+
+                return output;
             }
         }
 
-        private Dictionary<string, object> FindTags(List<IMachineTag> machineTags)
+        public static string GetHashString(string inputString)
         {
-            IEvaluation evaluation = new Evaluation();
+            var sb = new StringBuilder();
+            var algorithm = MD5.Create();
+            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+            foreach (byte b in hash)
+                sb.Append(b.ToString("X2"));
+            return sb.ToString().Substring(0, 10).ToLower();
+        }
 
-            evaluation.AddDebugInfos("ip", this.GetIpAddress());
+        private Dictionary<string, object> FindTags(IEvaluation evaluation, IEnumerable<IMachineTag> machineTags)
+        {
 
             var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
             var trendingHTags     = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);

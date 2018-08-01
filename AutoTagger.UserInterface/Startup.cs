@@ -2,6 +2,7 @@
 {
     using AutoTagger.Contract;
     using AutoTagger.Database.Storage.Mysql;
+    using AutoTagger.FileHandling.Standard;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.UserInterface.Controllers.FIlter;
     using Microsoft.AspNetCore.Builder;
@@ -64,6 +65,7 @@
 
             services.AddTransient<IUiStorage, MysqlUiStorage>();
             services.AddTransient<ITaggingProvider, GcpVision>();
+            services.AddTransient<IFileHandler, DiskFileHander>();
 
             services.AddSwaggerGen(
                 c =>

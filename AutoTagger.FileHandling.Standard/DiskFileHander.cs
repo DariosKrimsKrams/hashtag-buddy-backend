@@ -3,14 +3,15 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-
     using AutoTagger.Contract;
 
     public class DiskFileHander : IFileHandler
     {
+
         private readonly string PathUnused = @"C:\Instagger\Unused\";
         private readonly string PathUsed = @"C:\Instagger\Used\";
         private readonly string PathDefect = @"C:\Instagger\Defect\";
+        private readonly string PathUser = @"C:\Instagger\User\";
         private readonly string Ext = ".jpg";
 
         public IList<string> GetAllUnusedImages()
@@ -54,6 +55,12 @@
         {
             var path = this.PathUnused + filename + Ext;
             return File.ReadAllBytes(path).Length;
+        }
+
+        public void Save(FolderType user, byte[] bytes, string filename)
+        {
+            var path = this.PathUser + filename;
+            File.WriteAllBytes(path, bytes);    
         }
     }
 }

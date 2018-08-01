@@ -84,11 +84,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("data")
                     .HasColumnType("text");
-
-                entity.Property(e => e.Source)
-                    .IsRequired()
-                    .HasColumnName("source")
-                    .HasColumnType("text");
             });
 
             modelBuilder.Entity<Itags>(entity =>

@@ -10,6 +10,8 @@
 
         IEnumerable<IEnumerable<string>> GetMtagsWithHighScore();
 
-        void Log(string source, string data);
+        int InsertLog(string data);
+
+        void UpdateLog(int id, string data);
     }
 }

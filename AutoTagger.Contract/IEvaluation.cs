@@ -6,6 +6,8 @@
     {
         void AddDebugInfos(string key, object value);
 
+        Dictionary<string, object> GetDebugInfos();
+
         IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IUiStorage storage, IEnumerable<IMachineTag> mTags);
 
         IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(

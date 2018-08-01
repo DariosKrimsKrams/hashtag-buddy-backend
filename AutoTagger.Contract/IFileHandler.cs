@@ -17,5 +17,7 @@ namespace AutoTagger.Contract
         string GetFullPath(string filename);
 
         int GetFileSize(string filename);
+
+        void Save(FolderType user, byte[] bytes, string filename);
     }
 }
