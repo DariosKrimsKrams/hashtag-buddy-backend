@@ -1,8 +1,11 @@
 ﻿namespace AutoTagger.UserInterface.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Threading.Tasks;
     using AutoTagger.Contract;
     using AutoTagger.Evaluation.Standard;
@@ -18,25 +21,25 @@
 
         private readonly ITaggingProvider taggingProvider;
 
-        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider)
+        private readonly IFileHandler fileHandler;
+
+        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider, IFileHandler fileHandler)
         {
-            this.storage      = storage;
+            this.storage         = storage;
             this.taggingProvider = taggingProvider;
+            this.fileHandler     = fileHandler;
         }
 
         [HttpPost("Link")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult Post(ScanLinkModel model)
+        public IActionResult Link(ScanLinkModel model)
         {
             var link = model.Link;
-
             if (string.IsNullOrEmpty(link))
             {
                 return this.BadRequest("No Link set");
             }
-
             var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
-
             if (!machineTags.Any())
             {
                 return this.BadRequest("No MachineTags found :'(");
@@ -54,7 +57,7 @@
 
         [HttpPost("File")]
         [ProducesResponseType(typeof(void), 200)]
-        public async Task<IActionResult> Post(IFormFile file)
+        public async Task<IActionResult> File(IFormFile file)
         {
             if (!this.Request.ContentType.Contains("multipart/form-data; boundary"))
             {
@@ -71,7 +74,7 @@
                 await file.CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes).ToList();
+                var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
 
                 // photo of Hamburg
                 //var machineTags = new List<IMachineTag>
@@ -137,11 +140,25 @@
                 var debugStr = JsonConvert.SerializeObject(debug);
                 this.storage.Log("web_image", debugStr);
 
+                string id = "123"; // database -> get debug id
+                var hash = GetHashString(id);
+                this.fileHandler.Save(FolderType.User, bytes, hash);
+
                 return json;
             }
         }
 
-        private Dictionary<string, object> FindTags(List<IMachineTag> machineTags)
+        public static string GetHashString(string inputString)
+        {
+            var sb = new StringBuilder();
+            var algorithm = MD5.Create();
+            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+            foreach (byte b in hash)
+                sb.Append(b.ToString("X2"));
+            return sb.ToString().Substring(0, 10);
+        }
+
+        private Dictionary<string, object> FindTags(IEnumerable<IMachineTag> machineTags)
         {
             IEvaluation evaluation = new Evaluation();
 
