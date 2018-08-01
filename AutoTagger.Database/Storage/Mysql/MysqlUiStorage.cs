@@ -31,7 +31,7 @@
         
         public int InsertLog(string data)
         {
-            var debug = new Debug { Source="", Data = data};
+            var debug = new Debug { Data = data};
             this.db.Debug.Add(debug);
             this.db.SaveChanges();
             return debug.Id;

@@ -6,7 +6,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
     public partial class Debug
     {
         public int Id { get; set; }
-        public string Source { get; set; }
         public string Data { get; set; }
         public DateTime Created { get; set; }
     }
