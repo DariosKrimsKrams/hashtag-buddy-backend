@@ -1,6 +1,8 @@
-# AutoTagger
-Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018.
-
+# Instaq
+Find the most relevant Instagram Hashtags for a specific Photo.
+  * A first Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018.
+  * First time foreign Users v0.2 at 2018-07-31
+  
 ## Architecture
 ![](/doc/architecture2.png)
 
@@ -14,12 +16,18 @@ Find the most relevant Instagram Hashtags for a specific Photo. A first Proof of
   * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.md)
   * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
   * [#5 Famous persons (coming soon)](/doc/ip5_famous_persons.md)
-  * [#6 Cities (coming soon)](/doc/ip6_cities.md)
+  * [#6 Cities](/doc/ip6_cities.md)
   * [#7 LocalTrends (coming maybe sometimes)](/doc/ip7_local_trends.md)
 
 ## Setup
   * [Setup](/doc/setup.md)
 
 ## Links
-  * [Frontend](http://instatagger.do-epic-sh.it/)
-  * [About](http://darionot.es/)
+  * [Frontend](http://instaq.innocliq.de)
+  * [API Endpoints](http://instaq-api.innocliq.de/swagger/index.html)
+  
+## Credits
+  * Build by Dario D. Müller
+  * Original build with Christian and Paul
+  * Brainstorming with Tim
+  * Refactoring with Lasse
