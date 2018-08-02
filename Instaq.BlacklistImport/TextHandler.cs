@@ -6,14 +6,30 @@ namespace Instaq.BlacklistImport
 {
     using System.Text.RegularExpressions;
 
-    class TextHandler
+    public class TextHandler
     {
+        public string ChangeToLowercase(string input)
+        {
+            return input.ToLower();
+        }
 
-        private string RemoveTextInsideBrackets(string text)
+        public string RemoveTextInsideBrackets(string input)
         {
             // *\([^)]*\
-            text = Regex.Replace(text, @" ?\(.*?\)", string.Empty);
-            return text;
+            var output = Regex.Replace(input, @" ?\(.*?\)", string.Empty);
+            return output;
         }
+
+        public string ReplaceBracketsNumbersAndDotsWithSpace(string input)
+        {
+            var pattern = new Regex("[0123456789]|[ ]{2}");
+            return pattern.Replace(input, "\n");
+        }
+
+        public string[] SplitAtSpaces(string input)
+        {
+            return input.Split(' ');
+        }
+
     }
 }
