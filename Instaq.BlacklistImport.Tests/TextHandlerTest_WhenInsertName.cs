@@ -47,13 +47,13 @@
             Assert.Equal(result, expected);
         }
 
-        [Theory]
+        //[Theory]
         //[InlineData("test1 test2", new string[] { "test1", "test2" })]
         //[InlineData(" test1  a   ", new string[] { "test1", "a" })]
-        public void ThenWordShouldSplittedAtSpaces(string input, string expected)
-        {
+        //public void ThenWordShouldSplittedAtSpaces(string input, string expected)
+        //{
 
-        }
+        //}
 
         [Theory]
         [InlineData("", "")]
