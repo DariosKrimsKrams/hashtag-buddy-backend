@@ -20,10 +20,10 @@ namespace Instaq.BlacklistImport
             return output;
         }
 
-        public string ReplaceBracketsNumbersAndDotsWithSpace(string input)
+        public string ReplaceBracketsNumbersMinusDotsWithSpace(string input)
         {
-            var pattern = new Regex("[0123456789]|[ ]{2}");
-            return pattern.Replace(input, "\n");
+            var pattern = new Regex("[\\[\\]\\(\\)-0123456789\\.]");
+            return pattern.Replace(input, " ");
         }
 
         public string[] SplitAtSpaces(string input)

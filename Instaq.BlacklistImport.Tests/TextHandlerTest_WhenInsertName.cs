@@ -4,11 +4,11 @@
 
     public class TextHandlerTest_WhenInsertName
     {
-        private TextHandler textHandler;
+        private readonly TextHandler textHandler;
 
         public TextHandlerTest_WhenInsertName()
         {
-            textHandler = new TextHandler();
+            this.textHandler = new TextHandler();
         }
 
         [Theory]
@@ -38,12 +38,13 @@
         }
 
         [Theory]
-        [InlineData("][a[]b()c", "a  b  c  ")]
+        [InlineData("][a[]b()c", "  a  b  c")]
         [InlineData("Washington D.C.", "Washington D C ")]
         [InlineData("Test 123 456 7890", "Test             ")]
-        public void ThenBracketsNumbersAndDots_ShouldBeReplacedWithSpace(string input, string expected)
+        [InlineData("Bla-Blubb", "Bla Blubb")]
+        public void ThenBracketsNumbersMinusDots_ShouldBeReplacedWithSpace(string input, string expected)
         {
-            var result = this.textHandler.ReplaceBracketsNumbersAndDotsWithSpace(input);
+            var result = this.textHandler.ReplaceBracketsNumbersMinusDotsWithSpace(input);
             Assert.Equal(result, expected);
         }
 
