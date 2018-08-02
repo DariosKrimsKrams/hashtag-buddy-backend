@@ -16,7 +16,9 @@ namespace Instaq.BlacklistImport
         public string RemoveTextInsideBrackets(string input)
         {
             // *\([^)]*\
-            var output = Regex.Replace(input, @" ?\(.*?\)", string.Empty);
+            // \(.*?\)
+            // \(|\[.*?\]|\)
+            var output = Regex.Replace(input, @"\(.*?\)", " ");
             return output;
         }
 
