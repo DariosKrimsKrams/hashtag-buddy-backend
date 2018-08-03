@@ -1,5 +1,6 @@
 # Instaq
 Find the most relevant Instagram Hashtags for a specific Photo.
+
   * A first Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018.
   * First time foreign Users v0.2 at 2018-07-31
   
@@ -28,7 +29,7 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   * [API Endpoints](http://instaq-api.innocliq.de/swagger/index.html)
   
 ## Credits
-  * Build by Dario D. MÃ¼ller
+  * Build by Dario D. Müller
   * Original build with Christian and Paul
   * Brainstorming with Tim
   * Refactoring with Lasse
