@@ -10,6 +10,7 @@
     <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj" />
     <ProjectReference Include="..\AutoTagger.Database\AutoTagger.Database.csproj" />
     <ProjectReference Include="..\AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.csproj" />
+    <ProjectReference Include="..\Instaq.BlacklistImport\Instaq.BlacklistImport.csproj" />
     <ProjectReference Include="..\Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj" />
   </ItemGroup>
 

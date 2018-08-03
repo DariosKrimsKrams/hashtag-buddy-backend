@@ -8,6 +8,7 @@
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.ImageDownloader.Standard;
 
+    using Instaq.BlacklistImport;
     using Instaq.TooGenericProcessor;
 
     internal class Program
@@ -21,6 +22,7 @@
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
                              "5: Run Too Generic Processor\n" +
+                             "6: Import csv to Blacklist\n" +
                              ""
                              );
             while(true)
@@ -52,6 +54,11 @@
                     case '5':
                         Console.WriteLine("Run Too Generic Processor...");
                         RunTooGenericProcessor();
+                        break;
+
+                    case '6':
+                        Console.WriteLine("Run BlacklistImport...");
+                        RunBlacklistImport();
                         break;
                 }
                 Console.WriteLine("------------");
@@ -136,8 +143,14 @@
                 Console.WriteLine("DB SAVED");
             };
             imageProcessor.Process();
+        }
 
-
+        private static void RunBlacklistImport()
+        {
+            var db = new MysqlBlacklistStorage();
+            var app = new BlacklistImportApp(db);
+            var filename = @"...";
+            app.ReadCsv(filename);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Instaq.BlacklistImport
             this.textHandler = new TextHandler();
         }
 
-        public List<string> GetCleanList(IEnumerable<string> entries)
+        public IEnumerable<string> GetCleanList(IEnumerable<string> entries)
         {
             var result = new List<string>();
             foreach (var entry in entries)
