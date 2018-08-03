@@ -13,6 +13,23 @@ namespace Instaq.BlacklistImport
             this.textHandler = new TextHandler();
         }
 
+        public List<string> GetCleanList(IEnumerable<string> entries)
+        {
+            var result = new List<string>();
+            foreach (var entry in entries)
+            {
+                var cleanText = ProcessText(entry);
+                foreach (var text in cleanText)
+                {
+                    if (!result.Contains(text))
+                    {
+                        result.Add(text);
+                    }
+                }
+            }
+            return result;
+        }
+
         public string[] ProcessText(string input)
         {
             var toLower = this.textHandler.ToLower(input);

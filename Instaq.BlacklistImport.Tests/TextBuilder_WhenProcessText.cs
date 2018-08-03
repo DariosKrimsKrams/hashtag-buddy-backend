@@ -14,7 +14,16 @@ namespace Instaq.BlacklistImport.Tests
             this.textBuilder = new TextBuilder();
 
         }
-        
+
+        [Fact]
+        public void ThenGetCleanList_ShouldNotContainDuplicates()
+        {
+            var input = new List<string> { "Abc (xx) def.", "GHI abC [q]" };
+            var expected = new List<string> { "abc", "def", "ghi" };
+            var result = this.textBuilder.GetCleanList(input);
+            Assert.Equal(result, expected);
+        }
+
         [Theory]
         [InlineData("Washington D.C.", new string[] { "washington" })]
         [InlineData("Ho-Chi-Minh-Stadt", new string[] { "chi", "minh", "stadt" })]
