@@ -3,7 +3,6 @@
     using AutoTagger.Common;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
-
     using Xunit;
 
     public class ImageProcessing

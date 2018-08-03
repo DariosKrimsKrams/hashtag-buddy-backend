@@ -1,6 +1,5 @@
 ﻿namespace AutoTagger.Test.Core
 {
-    using System.Collections.Concurrent;
     using System.Linq;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
@@ -26,11 +25,12 @@
         [Fact]
         public void CrawlerTest()
         {
-            var crawler = new CrawlerApp(this.db, new CrawlerV3());
+            var crawler = new CrawlerV3();
+            var crawlerApp = new CrawlerApp(this.db, crawler);
 
             //crawler.DoCrawling(1, "gratidão");
             //crawler.DoCrawling(1);
-            crawler.DoCrawling(0);
+            crawlerApp.DoCrawling(0);
         }
 
         [Fact]
@@ -47,36 +47,5 @@
             Assert.True(hashtags.Count > 2, "not enough random hashtags");
         }
 
-        [Fact]
-        public void SpeedCrawlerTest()
-        {
-            var limit = 10;
-
-            var speedCrawler = new CrawlerV2();
-            var queue        = new ConcurrentQueue<string>();
-            queue.Enqueue("hamburg");
-            speedCrawler.FoundImage += i =>
-            {
-                this.testConsole.WriteLine(i.ToString());
-                foreach (var humanoidTag in i.HumanoidTags)
-                {
-                    if (!queue.Contains(humanoidTag))
-                    {
-                        queue.Enqueue(humanoidTag);
-                    }
-                }
-            };
-
-            while (limit > 0 && queue.TryDequeue(out var hashtag))
-            {
-                limit--;
-
-                this.testConsole.WriteLine("Queue Size: " + queue.Count);
-                this.testConsole.WriteLine("Parsing HashTag: #" + hashtag);
-                speedCrawler.ParseHashTagPage(hashtag);
-            }
-
-            this.testConsole.WriteLine("Remained Queue: " + string.Join(", ", queue));
-        }
     }
 }
