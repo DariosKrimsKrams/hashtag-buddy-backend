@@ -4,8 +4,8 @@
     using System.Linq;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.Standard.V1;
-    using AutoTagger.Crawler.Standard.V1.Crawler;
+    using AutoTagger.Crawler.V3;
+    using AutoTagger.Crawler.V3.Crawler;
     using AutoTagger.Database.Storage.Mysql;
     using Xunit;
     using Xunit.Abstractions;
@@ -26,7 +26,7 @@
         [Fact]
         public void CrawlerTest()
         {
-            var crawler = new CrawlerApp(this.db, new CrawlerV1());
+            var crawler = new CrawlerApp(this.db, new CrawlerV3());
 
             //crawler.DoCrawling(1, "gratidão");
             //crawler.DoCrawling(1);

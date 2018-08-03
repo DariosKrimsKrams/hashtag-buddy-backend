@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AutoTagger.Crawler.Standard.V1
+﻿namespace AutoTagger.Crawler.V3.Queue
 {
     using System.Collections.Concurrent;
     using System.Linq;
     using AutoTagger.Contract;
+    using System;
+    using System.Collections.Generic;
     using static System.String;
 
     class ShortcodeQueue<T> : ConcurrentQueue<T>

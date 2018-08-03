@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.Standard.V1.Crawler
+﻿namespace AutoTagger.Crawler.V3.Crawler
 {
     using System;
     using System.Collections.Generic;
