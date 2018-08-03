@@ -2,11 +2,11 @@
 {
     using Xunit;
 
-    public class TextHandlerTest_WhenInsertName
+    public class TextHandlerTest_WhenInsertText
     {
         private readonly TextHandler textHandler;
 
-        public TextHandlerTest_WhenInsertName()
+        public TextHandlerTest_WhenInsertText()
         {
             this.textHandler = new TextHandler();
         }
@@ -48,13 +48,14 @@
             Assert.Equal(result, expected);
         }
 
-        //[Theory]
-        //[InlineData("test1 test2", new string[] { "test1", "test2" })]
-        //[InlineData(" test1  a   ", new string[] { "test1", "a" })]
-        //public void ThenWordShouldSplittedAtSpaces(string input, string expected)
-        //{
-
-        //}
+        [Theory]
+        [InlineData("a b", "a", "b")]
+        [InlineData(" a  b    c   ", "a", "b", "c")]
+        public void ThenTextWithSpaces_ShouldSplittedAtSpaces(string input, params string[] expected)
+        {
+            var result = this.textHandler.SplitAtSpaces(input);
+            Assert.Equal(result, expected);
+        }
 
         [Theory]
         [InlineData("", "")]

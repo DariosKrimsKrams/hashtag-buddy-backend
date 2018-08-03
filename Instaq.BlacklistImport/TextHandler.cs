@@ -4,6 +4,8 @@ using System.Text;
 
 namespace Instaq.BlacklistImport
 {
+    using System.Collections;
+    using System.Linq;
     using System.Text.RegularExpressions;
 
     public class TextHandler
@@ -33,7 +35,9 @@ namespace Instaq.BlacklistImport
 
         public string[] SplitAtSpaces(string input)
         {
-            return input.Split(' ');
+            var splitted = input.Split(' ');
+            var removedEmptyStrings = splitted.Where(val => !string.IsNullOrEmpty(val)).ToArray();
+            return removedEmptyStrings;
         }
 
     }
