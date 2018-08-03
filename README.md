@@ -29,7 +29,7 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   * [API Endpoints](http://instaq-api.innocliq.de/swagger/index.html)
   
 ## Credits
-  * Build by Dario D. Müller
+  * Build by Dario D. MÃ¼ller
   * Original build with Christian and Paul
   * Brainstorming with Tim
   * Refactoring with Lasse
