@@ -15,9 +15,10 @@ Find the most relevant Instagram Hashtags for a specific Photo.
 ## Improvement Proposals
   * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.md)
   * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
-  * [#5 Famous persons (coming soon)](/doc/ip5_famous_persons.md)
+  * [#5 Famous persons](/doc/ip5_famous_persons.md)
   * [#6 Cities](/doc/ip6_cities.md)
-  * [#7 LocalTrends (coming maybe sometimes)](/doc/ip7_local_trends.md)
+  * [#7 LocalTrends](/doc/ip7_local_trends.md)
+  * [#8 Location based Hashtags](/doc/ip8_location_based_hashtags.md)
 
 ## Setup
   * [Setup](/doc/setup.md)
