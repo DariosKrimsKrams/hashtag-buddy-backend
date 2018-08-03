@@ -13,12 +13,15 @@ namespace Instaq.BlacklistImport
             return input.ToLower();
         }
 
-        public string RemoveTextInsideBrackets(string input)
+        public string RemoveTextBetweenBracketsAndBrackets(string input)
         {
             // *\([^)]*\
-            // \(.*?\)
             // \(|\[.*?\]|\)
-            var output = Regex.Replace(input, @"\(.*?\)", " ");
+            // \(.*?\)
+            // \[.*?\]
+            // \(.*?\)|\[.*?\]
+            var regex = @"\(.*?\)|\[.*?\]";
+            var output = Regex.Replace(input, regex, " ");
             return output;
         }
 

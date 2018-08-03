@@ -23,17 +23,17 @@
         }
 
         [Theory]
-        [InlineData("Istanbul (Asiatischer Teil)", "")]
-        [InlineData("Zhōngguó(Zhōnghuá Rénmín Gònghéguó) 中国(中华人民共和国)", "Zhōngguó() 中国()")]
-        [InlineData("Anchorage[1337]", "Anchorage[]")]
-        [InlineData("[19]Anchorage", "[]Anchorage")]
-        [InlineData("Anchorage[q] Test", "Anchorage[] Test")]
-        [InlineData("test (a) test2 [b] test3", "test () test2 [] test3")]
+        [InlineData("Istanbul (Asiatischer Teil)", "Istanbul  ")]
+        [InlineData("Zhōngguó(Zhōnghuá Rénmín Gònghéguó) 中国(中华人民共和国)", "Zhōngguó  中国 ")]
+        [InlineData("Anchorage[1337]", "Anchorage ")]
+        [InlineData("[19]Anchorage", " Anchorage")]
+        [InlineData("Anchorage[q] Test", "Anchorage  Test")]
+        [InlineData("test (a) test2 [b] test3", "test   test2   test3")]
         [InlineData("test (b", "test (b")]
         [InlineData("test]b", "test]b")]
-        public void ThenCharsBetweenBrackets_ShouldBeRemoved(string input, string expected)
+        public void ThenTextBetweenBracketsAndBrackets_ShouldBeRemoved(string input, string expected)
         {
-            var result = this.textHandler.RemoveTextInsideBrackets(input);
+            var result = this.textHandler.RemoveTextBetweenBracketsAndBrackets(input);
             Assert.Equal(result, expected);
         }
 
