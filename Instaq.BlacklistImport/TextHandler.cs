@@ -10,7 +10,7 @@ namespace Instaq.BlacklistImport
 
     public class TextHandler
     {
-        public string ChangeToLowercase(string input)
+        public string ToLower(string input)
         {
             return input.ToLower();
         }
@@ -22,9 +22,9 @@ namespace Instaq.BlacklistImport
             return output;
         }
 
-        public string ReplaceBracketsNumbersMinusDotsWithSpace(string input)
+        public string ReplaceNumbersMinusDotsCommasWithSpace(string input)
         {
-            var pattern = new Regex("[\\[\\]\\(\\)-0123456789\\.]");
+            var pattern = new Regex("[-0123456789\\.,]");
             return pattern.Replace(input, " ");
         }
 

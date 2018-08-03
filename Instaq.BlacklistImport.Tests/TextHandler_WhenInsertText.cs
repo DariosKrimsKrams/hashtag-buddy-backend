@@ -2,11 +2,11 @@
 {
     using Xunit;
 
-    public class TextHandlerTest_WhenInsertText
+    public class TextHandler_WhenInsertText
     {
         private readonly TextHandler textHandler;
 
-        public TextHandlerTest_WhenInsertText()
+        public TextHandler_WhenInsertText()
         {
             this.textHandler = new TextHandler();
         }
@@ -18,7 +18,7 @@
         [InlineData("johannesBurg", "johannesburg")]
         public void ThenAnyChar_ShouldBeLowercase(string input, string expected)
         {
-            var result = this.textHandler.ChangeToLowercase(input);
+            var result = this.textHandler.ToLower(input);
             Assert.Equal(result, expected);
         }
 
@@ -38,13 +38,13 @@
         }
 
         [Theory]
-        [InlineData("][a[]b()c", "  a  b  c")]
         [InlineData("Washington D.C.", "Washington D C ")]
         [InlineData("Test 123 456 7890", "Test             ")]
         [InlineData("Bla-Blubb", "Bla Blubb")]
-        public void ThenBracketsNumbersMinusDots_ShouldBeReplacedWithSpace(string input, string expected)
+        [InlineData("Bla, Blubb", "Bla  Blubb")]
+        public void ThenBracketsNumbersMinusDotsCommas_ShouldBeReplacedWithSpace(string input, string expected)
         {
-            var result = this.textHandler.ReplaceBracketsNumbersMinusDotsWithSpace(input);
+            var result = this.textHandler.ReplaceNumbersMinusDotsCommasWithSpace(input);
             Assert.Equal(result, expected);
         }
 
