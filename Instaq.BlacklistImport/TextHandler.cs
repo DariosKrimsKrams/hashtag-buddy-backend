@@ -17,11 +17,6 @@ namespace Instaq.BlacklistImport
 
         public string RemoveTextBetweenBracketsAndBrackets(string input)
         {
-            // *\([^)]*\
-            // \(|\[.*?\]|\)
-            // \(.*?\)
-            // \[.*?\]
-            // \(.*?\)|\[.*?\]
             var regex = @"\(.*?\)|\[.*?\]";
             var output = Regex.Replace(input, regex, " ");
             return output;
@@ -38,6 +33,17 @@ namespace Instaq.BlacklistImport
             var splitted = input.Split(' ');
             var removedEmptyStrings = splitted.Where(val => !string.IsNullOrEmpty(val)).ToArray();
             return removedEmptyStrings;
+        }
+
+        public bool IsTooShort(string input)
+        {
+            return input.Length <= 2;
+        }
+
+        public string[] RemoveTooShortWords(string[] input)
+        {
+            var result = input.Where(val => !this.IsTooShort(val)).ToArray();
+            return result;
         }
 
     }

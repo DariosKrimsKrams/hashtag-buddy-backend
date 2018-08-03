@@ -49,37 +49,37 @@
         }
 
         [Theory]
-        [InlineData("a b", "a", "b")]
-        [InlineData(" a  b    c   ", "a", "b", "c")]
-        public void ThenTextWithSpaces_ShouldSplittedAtSpaces(string input, params string[] expected)
+        [InlineData("a b", new string[] { "a", "b"})]
+        [InlineData(" a  b    c   ", new string[] { "a", "b", "c"})]
+        public void ThenTextWithSpaces_ShouldSplittedAtSpaces(string input, string[] expected)
         {
             var result = this.textHandler.SplitAtSpaces(input);
             Assert.Equal(result, expected);
         }
 
         [Theory]
-        [InlineData("", "")]
-        public void ThenWordShouldBeTrimed(string input, string expected)
+        [InlineData("a")]
+        [InlineData("ab")]
+        public void ThenTooShortWords_ShouldBeIdentify(string input)
         {
-
+            var result = this.textHandler.IsTooShort(input);
+            Assert.True(result);
         }
 
         [Theory]
-        [InlineData("", "")]
-        public void ThenTooShouldWordsShouldBeRemoved(string input, string expected)
+        [InlineData("abc")]
+        public void ThenTooShortWords_ShouldNotBeIdentify(string input)
         {
-
+            var result = this.textHandler.IsTooShort(input);
+            Assert.False(result);
         }
 
-        /*
-         * Washington D.C.
-         * Nukuʻalofa
-         * Ho-Chi-Minh-Stadt
-         * Istanbul (Asiatischer Teil)
-         * China, Republic of → Taiwan
-         *
-         *
-         *
-         */
+        [Theory]
+        [InlineData(new string[] { "a", "ab", "abc", "→", "test", "x"}, new string[] { "abc", "test" })]
+        public void ThenTooShortWords_ShouldBeRemoved(string[] input, string[] expected)
+        {
+            var result = this.textHandler.RemoveTooShortWords(input);
+            Assert.Equal(result, expected);
+        }
     }
 }
