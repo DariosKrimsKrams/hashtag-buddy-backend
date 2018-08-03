@@ -42,9 +42,12 @@
         [InlineData("Test 123 456 7890", "Test             ")]
         [InlineData("Bla-Blubb", "Bla Blubb")]
         [InlineData("Bla, Blubb", "Bla  Blubb")]
-        public void ThenBracketsNumbersMinusDotsCommas_ShouldBeReplacedWithSpace(string input, string expected)
+        [InlineData("x'y", "x y")]
+        [InlineData("x\"y", "x y")]
+        [InlineData("x/y", "x y")]
+        public void ThenSpecialChars_ShouldBeReplacedWithSpace(string input, string expected)
         {
-            var result = this.textHandler.ReplaceNumbersMinusDotsCommasWithSpace(input);
+            var result = this.textHandler.ReplaceSpecialCharsWithSpace(input);
             Assert.Equal(result, expected);
         }
 

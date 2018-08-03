@@ -22,9 +22,9 @@ namespace Instaq.BlacklistImport
             return output;
         }
 
-        public string ReplaceNumbersMinusDotsCommasWithSpace(string input)
+        public string ReplaceSpecialCharsWithSpace(string input)
         {
-            var pattern = new Regex("[-0123456789\\.,]");
+            var pattern = new Regex("[-0123456789\\.,'\"/]");
             return pattern.Replace(input, " ");
         }
 
