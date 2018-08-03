@@ -1,5 +1,7 @@
-﻿namespace AutoTagger.Crawler.Standard.V1.Crawler
+﻿namespace AutoTagger.Crawler.V3.Crawler
 {
+    using AutoTagger.Crawler.Standard;
+
     public class ImageDetailCrawler : HttpCrawler
     {
         public string Parse(string url)

@@ -1,12 +1,13 @@
-﻿namespace AutoTagger.Crawler.Standard.V1
+﻿namespace AutoTagger.Crawler.V3
 {
     using System;
     using System.Collections.Generic;
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard.V1.Crawler;
+    using AutoTagger.Crawler.V3.Crawler;
+    using AutoTagger.Crawler.V3.Queue;
 
-    public class CrawlerV1 : ICrawler
+    public class CrawlerV3 : ICrawler
     {
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly RandomTagsCrawler randomTagsCrawler;
@@ -17,7 +18,7 @@
         public event Action<IHumanoidTag> OnHashtagFound;
         private readonly Dictionary<string, int> conditions;
 
-        public CrawlerV1()
+        public CrawlerV3()
         {
             this.conditions = new Dictionary<string, int>();
             this.conditions.Add("MinPostsForHashtags", 1 * 1000 * 1000);

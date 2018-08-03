@@ -1,12 +1,12 @@
-﻿namespace AutoTagger.Crawler.Standard.V1
+﻿namespace AutoTagger.Crawler.V3.Crawler
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Crawler.Standard;
 
     abstract class ImageCrawler : HttpCrawler
     {

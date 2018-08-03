@@ -3,11 +3,12 @@
     using System;
     using System.Linq;
     using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.Standard.V1;
+    using AutoTagger.Crawler.V3;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.ImageDownloader.Standard;
 
+    using Instaq.BlacklistImport;
     using Instaq.TooGenericProcessor;
 
     internal class Program
@@ -16,11 +17,12 @@
         private static void Main(string[] args)
         {
             Console.WriteLine("" + 
-                             "1: Start Crawler (CrawlerEngine V1)\n" +
+                             "1: Start Crawler (CrawlerEngine V3)\n" +
                              "2: Start Image Downloader\n" +
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
                              "5: Run Too Generic Processor\n" +
+                             "6: Import csv to Blacklist\n" +
                              ""
                              );
             while(true)
@@ -53,6 +55,11 @@
                         Console.WriteLine("Run Too Generic Processor...");
                         RunTooGenericProcessor();
                         break;
+
+                    case '6':
+                        Console.WriteLine("Run BlacklistImport...");
+                        RunBlacklistImport();
+                        break;
                 }
                 Console.WriteLine("------------");
             }
@@ -73,7 +80,7 @@
             var mtagsArr = mtags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 
             var crawlerDb = new MysqlCrawlerStorage();
-            var crawlerEngine = new CrawlerV1();
+            var crawlerEngine = new CrawlerV3();
             crawlerEngine.OverrideCondition("MinPostsForHashtags", 10 * 1000);
             crawlerEngine.BuildTags(mtagsArr);
             crawlerEngine.DisableFurtherEnqueue();
@@ -93,7 +100,7 @@
         private static void StartCrawler()
         {
             var db = new MysqlCrawlerStorage();
-            var crawler = new CrawlerApp(db, new CrawlerV1());
+            var crawler = new CrawlerApp(db, new CrawlerV3());
 
             crawler.OnImageSaved += image =>
             {
@@ -136,8 +143,14 @@
                 Console.WriteLine("DB SAVED");
             };
             imageProcessor.Process();
+        }
 
-
+        private static void RunBlacklistImport()
+        {
+            var db = new MysqlBlacklistStorage();
+            var app = new BlacklistImportApp(db);
+            var filename = @"...";
+            app.ReadCsv(filename);
         }
     }
 }
