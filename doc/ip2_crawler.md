@@ -1,6 +1,6 @@
-# Crawler (V1)
+# Crawler (V3)
 
-## Structure:
+## Functionality
 
 (1)
   * insert common hashtags or collect random hashtags from 3rd party service

@@ -1,19 +1,16 @@
 # Instaq
 Find the most relevant Instagram Hashtags for a specific Photo.
 
-  * A first Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018.
-  * First time foreign Users v0.2 at 2018-07-31
+  * Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
+  * First friends test on 2018-05 with Clarifai image recognition
+  * First user test on 2018-07-31
   
 ## Architecture
 ![](/doc/architecture2.png)
-
-## How it works
-  * [#1 Database](/doc/ip1_better_database.md)
-  * [#2 Crawler](/doc/ip2_crawler.md)
-  * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
-  * [Query for Trending Hashtags](/doc/relational-query-for-trending.md)
   
 ## Improvement Proposals
+  * [#1 Database](/doc/ip1_better_database.md)
+  * [#2 Crawler](/doc/ip2_crawler.md)
   * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.md)
   * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
   * [#5 Famous persons](/doc/ip5_famous_persons.md)
@@ -21,7 +18,9 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   * [#7 LocalTrends](/doc/ip7_local_trends.md)
   * [#8 Location based Hashtags](/doc/ip8_location_based_hashtags.md)
 
-## Setup
+## Technical
+  * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
+  * [Query for Trending Hashtags](/doc/relational-query-for-trending.md)
   * [Setup](/doc/setup.md)
 
 ## Links
@@ -30,6 +29,6 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   
 ## Credits
   * Build by Dario D. Müller
-  * Original build with Christian and Paul
-  * Brainstorming with Tim
-  * Refactoring with Lasse
+  * Original build together with Christian and Paul
+  * Brainstorming with Tim Wiesenmüller
+  * Refactoring with Lasse Klüver
