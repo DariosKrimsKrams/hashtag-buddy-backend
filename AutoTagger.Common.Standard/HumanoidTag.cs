@@ -11,5 +11,7 @@
         public int Posts { get; set; }
 
         public int RefCount { get; set; }
+
+        public bool OnBlacklist { get; set; }
     }
 }

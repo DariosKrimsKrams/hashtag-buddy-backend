@@ -150,7 +150,7 @@
             var db = new MysqlBlacklistStorage();
             var app = new BlacklistImportApp(db);
             var filename = @"...";
-            app.ReadCsv(filename);
+            app.Do(filename);
         }
     }
 }

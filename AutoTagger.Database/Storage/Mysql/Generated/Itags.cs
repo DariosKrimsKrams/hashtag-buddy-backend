@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace AutoTagger.Database.Storage.Mysql.Generated
 {
+    using AutoTagger.Common;
+    using AutoTagger.Contract;
+
     public partial class Itags
     {
         public Itags()
@@ -18,5 +21,39 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public sbyte OnBlacklist { get; set; }
 
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }
+
+        public IEnumerable<Photos> Photos
+        {
+            get
+            {
+                foreach (var photoItagRel in PhotoItagRel)
+                {
+                    yield return photoItagRel.Photo;
+                }
+            }
+        }
+
+        public IHumanoidTag ToHumanoidTag()
+        {
+            return new HumanoidTag
+            {
+                Id       = this.Id,
+                Name     = this.Name,
+                Posts    = this.Posts,
+                RefCount = this.RefCount
+            };
+        }
+
+        public static Itags FromHumanoidTag(IHumanoidTag hTag)
+        {
+            return new Itags
+            {
+                Id          = hTag.Id,
+                Name        = hTag.Name,
+                Posts       = hTag.Posts,
+                RefCount    = hTag.RefCount,
+                OnBlacklist = Convert.ToSByte(hTag.OnBlacklist)
+            };
+        }
     }
 }

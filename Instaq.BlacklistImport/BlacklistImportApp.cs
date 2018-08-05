@@ -1,5 +1,9 @@
 ﻿namespace Instaq.BlacklistImport
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using AutoTagger.Contract;
 
     public class BlacklistImportApp
@@ -15,11 +19,49 @@
             this.textBuilder = new TextBuilder();
         }
 
-        public void ReadCsv(string filename)
+        public void Do(string filename)
+        {
+            this.ReadCsv(filename);
+            this.SetItagOnBlacklistFlags();
+        }
+
+        private void ReadCsv(string filename)
         {
             var rawEntries = this.importer.ReadFile(filename);
             var cleanEntries = this.textBuilder.GetCleanList(rawEntries);
             this.db.Insert(cleanEntries);
+        }
+
+        private void SetItagOnBlacklistFlags()
+        {
+            var blacklistEntries = this.db.GetAllBlacklistEntries();
+            var updatedEntries = new List<IHumanoidTag>();
+            var countBlacklistEntries = 0;
+            var pendingUpdates = 0;
+            foreach (var blacklistEntry in blacklistEntries)
+            {
+                countBlacklistEntries++;
+                var hTags = this.db.GetHumanoidTagsThatContain(blacklistEntry.Name);
+                foreach (var hTag in hTags)
+                {
+                    hTag.OnBlacklist = true;
+                    updatedEntries.Add(hTag);
+                    pendingUpdates++;
+                }
+                if (pendingUpdates >= 100)
+                {
+                    pendingUpdates = 0;
+                    Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+                    updatedEntries.Clear();
+                }
+            }
+            Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+        }
+
+        private void Update(IEnumerable<IHumanoidTag> updatedEntries, int countBlacklistEntries, int overallCount)
+        {
+            this.db.UpdateHumanoidTags(updatedEntries);
+            Console.WriteLine("Updated Itags: " + updatedEntries.Count() + " (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
         }
     }
 }

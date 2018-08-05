@@ -74,14 +74,14 @@
         {
             hTag.Name = hTag.Name.ToLower();
 
-            var existingITag = this.allITags.FirstOrDefault(x => x.Name == hTag.Name);
-            if (existingITag != null)
+            var existingHITag = this.allITags.FirstOrDefault(x => x.Name == hTag.Name);
+            if (existingHITag != null)
             {
-                if (existingITag.Posts == hTag.Posts)
+                if (existingHITag.Posts == hTag.Posts)
                     return;
 
-                existingITag.Posts = hTag.Posts;
-                this.db.Itags.Update(existingITag);
+                existingHITag.Posts = hTag.Posts;
+                this.db.Itags.Update(existingHITag);
                 this.Save();
             }
             else

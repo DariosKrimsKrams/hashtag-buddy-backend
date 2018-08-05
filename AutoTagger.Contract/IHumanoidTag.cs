@@ -9,5 +9,7 @@
         int Posts { get; set; }
 
         int RefCount { get; set; }
+
+        bool OnBlacklist { get; set; }
     }
 }
