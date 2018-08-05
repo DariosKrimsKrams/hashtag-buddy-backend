@@ -17,6 +17,9 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   * [#6 Cities](/doc/ip6_cities.md)
   * [#7 LocalTrends](/doc/ip7_local_trends.md)
   * [#8 Location based Hashtags](/doc/ip8_location_based_hashtags.md)
+  * [#9 Hashtag Editor](/doc/ip9_hashtag_editor.md)
+  * [#10 Hashtags anderer Nutzer](/doc/ip10_hashtags_anderer_nutzer.md)
+  * [#11 Performance messen](/doc/ip11_performance_messen.md)
 
 ## Technical
   * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
