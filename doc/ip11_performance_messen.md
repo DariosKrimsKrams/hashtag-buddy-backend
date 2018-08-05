@@ -7,6 +7,7 @@ Nachdem der User sein Foto in Instaq hochgeladen, eine Hashtag Auswahl zusammeng
 ## Funktionsweise
 
 Das Bild muss auf Instagram wiedergefunden werden. Dies klappt ma besten, wenn der User uns im Bearbeitungsprozess seinen Instagram Usernamen angegeben hat. Folgende Möglichkeiten, um ihn dazu zu bringen:
+
   * Wir bieten ihm an, andere seiner Fotos zu crawlen und mit in die Berechnung einflißen zu lassen
   * Wir bieten ihm an, seine Profil/Zielgruppe zu analysieren und lassen uns per Instagram API Zugriff geben.
   * Er soll seinen Usernamen einfach angeben. Basta

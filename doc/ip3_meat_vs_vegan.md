@@ -6,12 +6,12 @@ Frage: Wie kann man am besten herausfinden, dass diese zwei hashtags NIE miteina
 
 ## Ausschluss Regeln (Subtags-Suche) für Konflikte wie "Meat" vs. "Vegan"
 
+```
 [hashtagsVorauswahl] = "meat", "vegas", ...
 [ausschlussDict<search, conflicted>]
 
 foreach [hashtagsVorauswahl] as [searchHashtag]
 {
-
 	- gib alle fotos [photos], die tag [searchHashtag] haben
 	- [hArr] gib alle hashtags von [photos] (entweder nicht-unique oder mit amount-counter)
 	foreach [hashtagsVorauswahl] as [hashtag]
@@ -23,3 +23,4 @@ foreach [hashtagsVorauswahl] as [searchHashtag]
 }
 foreach [ausschlussDict] as [entry]
 	[hashtagsVorauswahl].Remove([entry].value)
+```

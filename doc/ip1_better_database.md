@@ -12,6 +12,7 @@
   
 ## Berechnung
 Beispiel-Bild hat MTags *M3*, *M4*, *M5*. Wir wollen die erfolgreichsten ITags bekommen.
+
   * Fragestellung: Welches sind die erfolgreichsten Bilder?
   * Suche in der Datenbank nach allen Einträgen, die MTag *M3* oder *M4* enthalten
   * für jeden Eintrag folgendes berechnen:
@@ -21,6 +22,7 @@ Beispiel-Bild hat MTags *M3*, *M4*, *M5*. Wir wollen die erfolgreichsten ITags b
     * relationQuality = searchQulity * popularity
   * Nun hat jeder Eintrag die tempotäte Spalte relationQuality. Sortiere alle Einträge nach relQuality absteigerd.
   * Bekomme die ersten 10 Einträge
+
 Beispiel:
 
 | relQuality | ITags |
