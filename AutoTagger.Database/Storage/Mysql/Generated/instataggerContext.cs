@@ -68,7 +68,8 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.ToTable("debug");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("id");
+                    .HasName("id")
+                    .IsUnique();
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -108,6 +109,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasColumnType("varchar(30)");
+
+                entity.Property(e => e.OnBlacklist)
+                    .HasColumnName("onBlacklist")
+                    .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")
