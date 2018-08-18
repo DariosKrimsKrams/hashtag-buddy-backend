@@ -18,19 +18,19 @@ namespace Instaq.BlacklistImport.Tests
         [Fact]
         public void ThenGetCleanList_ShouldNotContainDuplicates()
         {
-            var input = new List<string> { "Abc (xx) def.", "GHI abC [q]" };
-            var expected = new List<string> { "abc", "def", "ghi" };
+            var input = new List<string> { "Ab (xx) c\r\nHey.", "GHI abC [q]\nhey", "a-b-0123c" };
+            var expected = new List<string> { "abc", "hey", "ghiabc" };
             var result = this.textBuilder.GetCleanList(input);
             Assert.Equal(result, expected);
         }
 
         [Theory]
         [InlineData("Washington D.C.", new string[] { "washington" })]
-        [InlineData("Ho-Chi-Minh-Stadt", new string[] { "chi", "minh", "stadt" })]
+        [InlineData("Ho-Chi-Minh-Stadt\rHochi-Minh", new string[] { "chiminhstadt", "hochiminh" })]
         [InlineData("Istanbul (Asiatischer Teil)", new string[] { "istanbul" })]
-        [InlineData("Virginia Beach[16]", new string[] { "virginia", "beach" })]
-        [InlineData("China, Republic of → Taiwan", new string[] { "china", "republic", "taiwan" })]
-        [InlineData(" Zhō'ab c(Zhōná mín)  中国(中国) abc [q]", new string[] { "zhō'ab", "abc" })]
+        [InlineData("Virginia Beach[16]", new string[] { "virginiabeach" })]
+        [InlineData("China, Republic of → Taiwan", new string[] { "chinarepublictaiwan" })]
+        [InlineData(" Zhō'ab c(Zhōná mín)  中国(中国) xyz [q]", new string[] { "zhōxyz" })]
         public void ThenAnyChar_ShouldBeLowercase(string input, string[] expected)
         {
             var result = this.textBuilder.ProcessText(input);

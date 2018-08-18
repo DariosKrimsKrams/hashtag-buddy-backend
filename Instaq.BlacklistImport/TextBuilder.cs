@@ -35,7 +35,11 @@ namespace Instaq.BlacklistImport
             var toLower = this.textHandler.ToLower(input);
             var noBrackets = this.textHandler.RemoveTextBetweenBracketsAndBrackets(toLower);
             var noSpecialChars = this.textHandler.ReplaceSpecialCharsWithSpace(noBrackets);
-            var splitted = this.textHandler.SplitAtSpaces(noSpecialChars);
+            // Remove too shorta
+            var noShortTextElements = this.textHandler.RemoveTooShortTextElementsAtSpace(noSpecialChars);
+
+            var noSpaces = this.textHandler.PutTogetherAtSpaces(noShortTextElements);
+            var splitted = this.textHandler.SplitAtLineBreaks(noSpaces);
             var noShortTexts = this.textHandler.RemoveTooShortWords(splitted);
             return noShortTexts;
         }
