@@ -7,6 +7,6 @@ Anhand einer vorgefertigten Blacklist (csv-Datei) mit Städte-, Länder- und Ins
 ## Funktionsweise
 
 * Ein Programm erlaubt das Auslesen einer csv Datei, behandelt Sonderzeichen o.ä. und speichert die Namen in eine Blacklist-Tabelle der DB
-* Ein weiteres Programm geht alle Einträge dieser Blacklist-Tabelle der DB durch, schaut in der itags-Tabelle der DB nach Vorkommen (lik %...%) dieses Namens und markiert die entsp. Einträge mit "ignore" flag
-* Die Evaluation checkt die itags "ignore" flag
+* Ein weiteres Programm geht alle Einträge dieser Blacklist-Tabelle der DB durch, schaut in der itags-Tabelle der DB nach Vorkommen (lik %...%) dieses Namens und markiert die entsp. Einträge mit "onBlacklist" flag
+* Die Evaluation checkt die itags "onBlacklist" flag
 
