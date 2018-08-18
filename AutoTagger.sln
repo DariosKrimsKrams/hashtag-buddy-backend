@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageProcessor",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.TestConsole", "AutoTagger.TestConsole.Core\AutoTagger.TestConsole.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.UserInterface", "AutoTagger.UserInterface\AutoTagger.UserInterface.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.API", "AutoTagger.UserInterface\AutoTagger.API.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler", "AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
 EndProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database", "Auto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport", "Instaq.BlacklistImport\Instaq.BlacklistImport.csproj", "{BB36731E-B034-4AD4-96E8-FFEF1ECAB244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instaq.BlacklistImport.Tests", "Instaq.BlacklistImport.Tests\Instaq.BlacklistImport.Tests.csproj", "{58EC69CE-A3D9-470D-B465-9A7B058B75B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport.Tests", "Instaq.BlacklistImport.Tests\Instaq.BlacklistImport.Tests.csproj", "{58EC69CE-A3D9-470D-B465-9A7B058B75B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
