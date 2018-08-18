@@ -42,6 +42,10 @@
 		#resultBox {
 			margin: 30px 20px;
 		}
+			#userImg {
+				max-width: 60%;
+				max-height: 250px;
+			}
 		#results ul {
 			list-style: none;
 		}
@@ -114,6 +118,7 @@
 	<div id="resultBox" class="col-md-4 hidden">
 		<a href="/">< Back</a>
 		<div>
+			<img src="#" id="userImg" alt="" />
 			<div id="results">
 				<!--<h4>Relevant:</h4><ul><li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li></ul><hr /><h4>Upcoming:</h4><ul><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li></ul>-->
 			</div>
@@ -129,7 +134,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
 
-	var baseUrl = 'http://instaq-api.innocliq.de/';
+	var baseUrl = 'http://localhost:59892/';
 	$(document).ready(function() {
 	
 		var success = function(data) {
@@ -145,6 +150,9 @@
 			$('#results').html(content);
 			$('#main').addClass('hidden');
 			$('#resultBox').removeClass('hidden');
+			
+			var imgUrl = baseUrl + 'Image/Img/' + data.img;
+			$('#userImg').attr('src', imgUrl)
 		}
 		var error = function(err) {
 			alert('Error: ' + err.statusText);
