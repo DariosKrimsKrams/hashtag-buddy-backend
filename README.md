@@ -28,7 +28,7 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   
   
 ## Knowledge database
-  * #kontextIsKing: Dimension des Kontext verstehen: Grundregel NUMMER 1! Relevanz ergibt sich aus dem Zusammenhang zwischen Inhalt und Kontext des Bildes und Aussage der Hashtags.
+  * Kontext is king: Dimension des Kontext verstehen: Grundregel NUMMER 1! Relevanz ergibt sich aus dem Zusammenhang zwischen Inhalt und Kontext des Bildes und Aussage der Hashtags.
 
 ## Technical
   * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)

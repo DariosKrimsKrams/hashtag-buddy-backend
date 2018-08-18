@@ -1,6 +1,6 @@
 # Hashtag Editor
 
-Zielgruppe **Influencer Agenturen** sollen Instaq nicht nur als reinen Generator für Hashtags nutzen, sondern den gesamten Content-Management-Prozess für Hashtags dort zusammenzustellen. Das Produkt soll mehr in Richtung Full-Service *Hashtag Editor* nutzbar sein.
+Zielgruppe **Influencer Agenturen** sollen Instaq nicht nur als reinen Generator für Hashtags nutzen, sondern den gesamten Instagram Content-Management-Prozess dort zusammenzustellen. Das Produkt soll mehr in Richtung *Full-Service Hashtag Editor* nutzbar sein.
 
 ## Funktionsweise
 
@@ -25,5 +25,5 @@ Oberhalb dieser Kategorien befindet sich eine Textarea, wo der User sich eine Au
   * Merken von Hashtags
   * Results per mail senden
   * Editor mit Team teilen (per URL) für QA
-  * (später) Slack-Integration für Abstimmung/Freigabe
-  * (ungewiss) Pro-Version: Custom SQL Query
+  * (Slack-Integration für Abstimmung/Freigabe)
+  * (Pro-Version: Custom SQL Query)
