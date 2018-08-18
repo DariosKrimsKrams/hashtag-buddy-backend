@@ -6,7 +6,7 @@ namespace AutoTagger.Contract
     {
         IList<string> GetAllUnusedImages();
 
-        bool FileExists(string filename);
+        bool FileExists(FileType fileType, string name);
 
         void FlagAsUsed(string filename);
 
@@ -16,8 +16,10 @@ namespace AutoTagger.Contract
 
         string GetFullPath(string filename);
 
-        int GetFileSize(string filename);
+        int GetFileSize(FileType fileType, string filename);
 
-        void Save(FolderType user, byte[] bytes, string filename);
+        void Save(FileType user, byte[] bytes, string filename);
+
+        byte[] GetFile(FileType fileType, string fileNameAndExt);
     }
 }

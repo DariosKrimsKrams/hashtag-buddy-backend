@@ -73,7 +73,7 @@
             //    return;
             //}
 
-            if (fileHandler.GetFileSize(image.Shortcode) == 0)
+            if (fileHandler.GetFileSize(FileType.Unused, image.Shortcode) == 0)
             {
                 Interlocked.Decrement(ref taggerRunning);
                 Console.WriteLine("Defect file (Size: 0 Bytes): " + image.Shortcode);

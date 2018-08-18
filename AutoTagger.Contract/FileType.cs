@@ -1,4 +1,4 @@
-﻿public enum FolderType
+﻿public enum FileType
 {
     None,
     Unused,

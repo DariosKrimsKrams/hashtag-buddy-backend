@@ -2,6 +2,7 @@
 {
     using AutoTagger.Contract;
     using AutoTagger.Database.Storage.Mysql;
+    using AutoTagger.Evaluation.Standard;
     using AutoTagger.FileHandling.Standard;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.UserInterface.Controllers.FIlter;
@@ -66,6 +67,7 @@
             services.AddTransient<IUiStorage, MysqlUiStorage>();
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
+            services.AddTransient<IEvaluation, Evaluation>();
 
             services.AddSwaggerGen(
                 c =>

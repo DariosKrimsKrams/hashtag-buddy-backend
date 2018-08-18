@@ -7,11 +7,8 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Evaluation.Standard;
-    using AutoTagger.UserInterface.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
@@ -24,12 +21,14 @@
         private readonly ITaggingProvider taggingProvider;
 
         private readonly IFileHandler fileHandler;
+        private readonly IEvaluation evaluation;
 
-        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider, IFileHandler fileHandler)
+        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider, IFileHandler fileHandler, IEvaluation evaluation)
         {
             this.storage         = storage;
             this.taggingProvider = taggingProvider;
             this.fileHandler     = fileHandler;
+            this.evaluation      = evaluation;
         }
 
         //[HttpPost("Link")]
@@ -76,32 +75,32 @@
                 await file.CopyToAsync(stream);
                 var bytes = stream.ToArray();
 
-                var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
+                //var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
 
                 // photo of Hamburg
-                //var machineTags = new List<IMachineTag>
-                //{
-                //    new MachineTag("metropolitan area", 0.9740945f, "GCPVision_Label"),
-                //    new MachineTag("urban area", 0.973557353f, "GCPVision_Label"),
-                //    new MachineTag("city", 0.9734007f, "GCPVision_Label"),
-                //    new MachineTag("cityscape", 0.938783467f, "GCPVision_Label"),
-                //    new MachineTag("metropolis", 0.9214143f, "GCPVision_Label"),
-                //    new MachineTag("landmark", 0.9191347f, "GCPVision_Label"),
-                //    new MachineTag("sky", 0.916840732f, "GCPVision_Label"),
-                //    new MachineTag("skyline", 0.905290544f, "GCPVision_Label"),
-                //    new MachineTag("skyscraper", 0.884226561f, "GCPVision_Label"),
-                //    new MachineTag("daytime", 0.851576f, "GCPVision_Label"),
-                //    new MachineTag("Skyscraper", 0.9230419f, "GCPVision_Web"),
-                //    new MachineTag("Metropolitan area", 0.7284566f, "GCPVision_Web"),
-                //    new MachineTag("Bird's-eye view", 0.6971554f, "GCPVision_Web"),
-                //    new MachineTag("Aerial photography", 0.659547f, "GCPVision_Web"),
-                //    new MachineTag("Skyline", 0.6276192f, "GCPVision_Web"),
-                //    new MachineTag("Tower", 0.627348959f, "GCPVision_Web"),
-                //    new MachineTag("Cityscape", 0.5896153f, "GCPVision_Web"),
-                //    new MachineTag("High-rise building", 0.56301415f, "GCPVision_Web"),
-                //    new MachineTag("Urban area", 0.5345906f, "GCPVision_Web"),
-                //    new MachineTag("Photography", 0.522f, "GCPVision_Web")
-                //};
+                var machineTags = new List<IMachineTag>
+                {
+                    new MachineTag("metropolitan area", 0.9740945f, "GCPVision_Label"),
+                    new MachineTag("urban area", 0.973557353f, "GCPVision_Label"),
+                    new MachineTag("city", 0.9734007f, "GCPVision_Label"),
+                    new MachineTag("cityscape", 0.938783467f, "GCPVision_Label"),
+                    new MachineTag("metropolis", 0.9214143f, "GCPVision_Label"),
+                    new MachineTag("landmark", 0.9191347f, "GCPVision_Label"),
+                    new MachineTag("sky", 0.916840732f, "GCPVision_Label"),
+                    new MachineTag("skyline", 0.905290544f, "GCPVision_Label"),
+                    new MachineTag("skyscraper", 0.884226561f, "GCPVision_Label"),
+                    new MachineTag("daytime", 0.851576f, "GCPVision_Label"),
+                    new MachineTag("Skyscraper", 0.9230419f, "GCPVision_Web"),
+                    new MachineTag("Metropolitan area", 0.7284566f, "GCPVision_Web"),
+                    new MachineTag("Bird's-eye view", 0.6971554f, "GCPVision_Web"),
+                    new MachineTag("Aerial photography", 0.659547f, "GCPVision_Web"),
+                    new MachineTag("Skyline", 0.6276192f, "GCPVision_Web"),
+                    new MachineTag("Tower", 0.627348959f, "GCPVision_Web"),
+                    new MachineTag("Cityscape", 0.5896153f, "GCPVision_Web"),
+                    new MachineTag("High-rise building", 0.56301415f, "GCPVision_Web"),
+                    new MachineTag("Urban area", 0.5345906f, "GCPVision_Web"),
+                    new MachineTag("Photography", 0.522f, "GCPVision_Web")
+                };
 
                 // photo of Meat vs Vegan
                 //var machineTags = new List<IMachineTag>
@@ -135,24 +134,24 @@
                     return this.BadRequest("No MachineTags found :'(");
                 }
 
-                IEvaluation evaluation = new Evaluation();
-                evaluation.AddDebugInfos("ip", this.GetIpAddress());
-                var tags = this.FindTags(evaluation, machineTags);
-                var output = this.Json(tags);
+                this.evaluation.AddDebugInfos("ip", this.GetIpAddress());
+                var data = this.FindTags(evaluation, machineTags);
 
-                var debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
-                var id = this.storage.InsertLog(debugStr);
+                var debugStr = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                var debugId = this.storage.InsertLog(debugStr);
 
-                var hash = GetHashString(id.ToString());
+                var hash = GetHashString(debugId.ToString());
                 var ext = Path.GetExtension(file.FileName);
-                var debugFileName = hash + ext.ToLower();
-                this.fileHandler.Save(FolderType.User, bytes, debugFileName);
+                var fileName = hash + ext.ToLower();
+                this.fileHandler.Save(FileType.User, bytes, fileName);
 
-                evaluation.AddDebugInfos("image", debugFileName);
-                evaluation.AddDebugInfos("originalFilename", file.FileName);
-                debugStr = JsonConvert.SerializeObject(evaluation.GetDebugInfos());
-                this.storage.UpdateLog(id, debugStr);
+                this.evaluation.AddDebugInfos("image", fileName);
+                this.evaluation.AddDebugInfos("originalFilename", file.FileName);
+                debugStr = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                this.storage.UpdateLog(debugId, debugStr);
 
+                data.Add("img", fileName);
+                var output = this.Json(data);
                 return output;
             }
         }
@@ -169,22 +168,43 @@
 
         private Dictionary<string, object> FindTags(IEvaluation evaluation, IEnumerable<IMachineTag> machineTags)
         {
-
             var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
             var trendingHTags     = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);
 
-            var data = new Dictionary<string, object>
+            return new Dictionary<string, object>
             {
                 { "mostRelevantHTags", mostRelevantHTags },
-                { "trendingHTags", trendingHTags }
+                { "trendingHTags", trendingHTags },
             };
-
-            return data;
         }
 
         private string GetIpAddress()
         {
             return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString();
+        }
+
+
+        [Route("Img/{fileName}")]
+        [HttpGet]
+        public IActionResult GetImg(string fileName)
+        {
+            if (fileName.Contains(".."))
+            {
+                return this.StatusCode(500);
+            }
+            try
+            {
+                var image = this.fileHandler.GetFile(FileType.User, fileName);
+                return this.File(image, "image/jpeg");
+            }
+            catch (FileNotFoundException)
+            {
+                return this.NotFound("Image not found");
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(500);
+            }
         }
     }
 }
