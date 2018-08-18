@@ -11,7 +11,7 @@ Find the most relevant Instagram Hashtags.
   * [#3 Meat vs Vegan](/doc/ip3_meat_vs_vegan.md)
   * [#4 Too generic hashtags](/doc/ip4_too_generic_hashtags.md)
   * [#5 Famous persons](/doc/ip5_famous_persons.md)
-  * [#6 Cities](/doc/ip6_cities.md)
+  * [#6 Cities & Countries](/doc/ip6_cities.md) ✔
   * [#7 LocalTrends](/doc/ip7_local_trends.md)
   * [#8 Location based Hashtags](/doc/ip8_location_based_hashtags.md)
   * [#9 Hashtag Editor](/doc/ip9_hashtag_editor.md)
