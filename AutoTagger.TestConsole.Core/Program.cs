@@ -22,7 +22,8 @@
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
                              "5: Run Too Generic Processor\n" +
-                             "6: Import csv to Blacklist\n" +
+                             "6: Blacklist: Import csv\n" +
+                             "7: Blacklist -> Set Itag Flag\n" +
                              ""
                              );
             while(true)
@@ -59,6 +60,11 @@
                     case '6':
                         Console.WriteLine("Run BlacklistImport...");
                         RunBlacklistImport();
+                        break;
+
+                    case '7':
+                        Console.WriteLine("Run Blacklist -> Set Itag Flag...");
+                        RunBlacklistSetItagFlags();
                         break;
                 }
                 Console.WriteLine("------------");
@@ -149,8 +155,17 @@
         {
             var db = new MysqlBlacklistStorage();
             var app = new BlacklistImportApp(db);
-            var filename = @"...";
-            app.Do(filename);
+            var filename = @"C:\Users\dario\Documents\SourceTree\instaq\doc\cities.csv";
+            app.ReadCsv(filename);
+            Console.WriteLine("Finished");
+        }
+
+        private static void RunBlacklistSetItagFlags()
+        {
+            var db = new MysqlBlacklistStorage();
+            var app = new BlacklistImportApp(db);
+            app.SetItagOnBlacklistFlags();
+            Console.WriteLine("Finished");
         }
     }
 }

@@ -19,20 +19,14 @@
             this.textBuilder = new TextBuilder();
         }
 
-        public void Do(string filename)
-        {
-            this.ReadCsv(filename);
-            this.SetItagOnBlacklistFlags();
-        }
-
-        private void ReadCsv(string filename)
+        public void ReadCsv(string filename)
         {
             var rawEntries = this.importer.ReadFile(filename);
             var cleanEntries = this.textBuilder.GetCleanList(rawEntries);
             this.db.Insert(cleanEntries);
         }
 
-        private void SetItagOnBlacklistFlags()
+        public void SetItagOnBlacklistFlags()
         {
             var blacklistEntries = this.db.GetAllBlacklistEntries();
             var updatedEntries = new List<IHumanoidTag>();
@@ -51,11 +45,12 @@
                 if (pendingUpdates >= 100)
                 {
                     pendingUpdates = 0;
-                    Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+                    this.Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
                     updatedEntries.Clear();
                 }
             }
-            Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+
+            this.Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
         }
 
         private void Update(IEnumerable<IHumanoidTag> updatedEntries, int countBlacklistEntries, int overallCount)
