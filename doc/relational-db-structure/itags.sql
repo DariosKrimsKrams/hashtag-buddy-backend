@@ -10,6 +10,7 @@ CREATE TABLE `itags` (
   `posts` int(11) NOT NULL,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `refCount` int(11) NOT NULL,
+  `onBlacklist` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`,`name`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`) USING BTREE

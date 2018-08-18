@@ -20,7 +20,7 @@
                       + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web')"
                       + $" GROUP BY p.id ORDER BY matches DESC LIMIT {limitTopPhotos} "
                       + $") as sub2 ON sub2.id = rel.photoId WHERE sub2.id IS NOT NULL "
-                      + $"AND i.refCount < {usageITagsLimit} "
+                      + $"AND i.refCount < {usageITagsLimit} AND i.onBlacklist = 0 "
                       + $"GROUP BY i.name ORDER by sum(matches) DESC LIMIT {countTagsToReturn}";
 
             return query;

@@ -52,11 +52,34 @@
         }
 
         [Theory]
-        [InlineData("a b", new string[] { "a", "b"})]
-        [InlineData(" a  b    c   ", new string[] { "a", "b", "c"})]
-        public void ThenTextWithSpaces_ShouldSplittedAtSpaces(string input, string[] expected)
+        [InlineData("Washington D C ", "Washington")]
+        [InlineData("Washington DC", "Washington")]
+        [InlineData("Washington ABC", "Washington ABC")]
+        [InlineData("   abc    defg  ", "abc defg")]
+        public void ThenTooShortTextElements_ShouldBeRemoved(string input, string expected)
         {
-            var result = this.textHandler.SplitAtSpaces(input);
+            var result = this.textHandler.RemoveTooShortTextElementsAtSpace(input);
+            Assert.Equal(result, expected);
+        }
+
+        [Theory]
+        [InlineData("a\r\nb", new string[] { "a", "b" })]
+        [InlineData("a\nb", new string[] { "a", "b" })]
+        [InlineData("a\rb", new string[] { "a", "b" })]
+        [InlineData(" a  \n   bc ", new string[] { " a  ", "   bc " })]
+        [InlineData("\r\na\r\n\r\nb\r\nc\r\n\r\n", new string[] { "a", "b", "c" })]
+        public void ThenTextWithLineBreaks_ShouldSplitAtLineBreak(string input, string[] expected)
+        {
+            var result = this.textHandler.SplitAtLineBreaks(input);
+            Assert.Equal(result, expected);
+        }
+
+        [Theory]
+        [InlineData("a b", "ab")]
+        [InlineData(" a  b    c   ", "abc")]
+        public void ThenTextWithSpaces_ShouldPutTogetherAtSpaces(string input, string expected)
+        {
+            var result = this.textHandler.PutTogetherAtSpaces(input);
             Assert.Equal(result, expected);
         }
 

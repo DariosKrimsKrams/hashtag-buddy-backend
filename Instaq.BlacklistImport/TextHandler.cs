@@ -28,11 +28,18 @@ namespace Instaq.BlacklistImport
             return pattern.Replace(input, " ");
         }
 
-        public string[] SplitAtSpaces(string input)
+        public string[] SplitAtLineBreaks(string input)
         {
-            var splitted = input.Split(' ');
-            var removedEmptyStrings = splitted.Where(val => !string.IsNullOrEmpty(val)).ToArray();
-            return removedEmptyStrings;
+            string[] lines = input.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+            return lines;
+        }
+
+        public string PutTogetherAtSpaces(string input)
+        {
+            return input.Replace(" ", "");
         }
 
         public bool IsTooShort(string input)
@@ -44,6 +51,13 @@ namespace Instaq.BlacklistImport
         {
             var result = input.Where(val => !this.IsTooShort(val)).ToArray();
             return result;
+        }
+
+        public string RemoveTooShortTextElementsAtSpace(string input)
+        {
+            var lines = input.Split(' ');
+            var withoutShortWords = RemoveTooShortWords(lines);
+            return string.Join(" ", withoutShortWords);
         }
 
     }
