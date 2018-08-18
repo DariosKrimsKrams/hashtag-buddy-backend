@@ -10,8 +10,8 @@ namespace AutoTagger.UserInterface.Controllers
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult Index()
         {
-            var version = "v0.2";
-            var date = "2018-07-15";
+            var version = "v0.3";
+            var date = "2018-08-18";
 
             var list = new Dictionary<string, string>();
             list.Add("version", version);
