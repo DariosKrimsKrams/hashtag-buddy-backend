@@ -1,12 +1,9 @@
 # Instaq
-Find the most relevant Instagram Hashtags for a specific Photo.
+Find the most relevant Instagram Hashtags.
 
-  * Proof of Concept started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
-  * First friends test on 2018-05 with Clarifai image recognition
+  * Started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
+  * First friends test on 2018-05
   * First user test on 2018-07-31
-  
-## Architecture
-![](/doc/architecture2.png)
   
 ## Improvement Proposals
   * [#1 Database Basics](/doc/ip1_better_database.md) ✔
@@ -27,13 +24,15 @@ Find the most relevant Instagram Hashtags for a specific Photo.
   * [#16 Geschlechter rausfiltern](/doc/ip16_geschlechter.md)
   
   
-## Knowledge database
+## Knowledge
   * Kontext is king: Dimension des Kontext verstehen: Grundregel NUMMER 1! Relevanz ergibt sich aus dem Zusammenhang zwischen Inhalt und Kontext des Bildes und Aussage der Hashtags.
 
 ## Technical
   * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
   * [Query for Trending Hashtags](/doc/relational-query-for-trending.md)
-  * [Setup](/doc/setup.md)
+  * [How to Setup](/doc/setup.md)
+  
+![](/doc/architecture2.png)
 
 ## Links
   * [Frontend](http://instaq.innocliq.de)
