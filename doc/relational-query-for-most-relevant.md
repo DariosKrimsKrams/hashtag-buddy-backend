@@ -40,6 +40,7 @@ LEFT JOIN
 ) as sub2 ON sub2.id = rel.photoId
 WHERE sub2.id IS NOT NULL
 AND i.refCount < 10000
+AND i.onBlacklist = 0
 GROUP by i.name
 ORDER by count(i.name) DESC, relationQuality DESC
 LIMIT 30
