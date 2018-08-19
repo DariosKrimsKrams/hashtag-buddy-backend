@@ -7,6 +7,8 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
 
@@ -144,9 +146,9 @@
                 var data = this.FindTags(evaluation, machineTags);
 
                 var debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                var debugId = this.logStorage.InsertLog(debugdata);
+                var logId = this.logStorage.InsertLog(debugdata);
 
-                var hash = GetHashString(debugId.ToString());
+                var hash = GetHashString(logId.ToString());
                 var ext = Path.GetExtension(file.FileName);
                 var fileName = hash + ext.ToLower();
                 this.fileHandler.Save(FileType.User, bytes, fileName);
@@ -154,11 +156,11 @@
                 this.evaluation.AddDebugInfos("image", fileName);
                 this.evaluation.AddDebugInfos("originalFilename", file.FileName);
                 debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                var log = new Log { Id = debugId, Data = debugdata };
+                var log = new Log { Id = logId, Data = debugdata };
                 this.logStorage.UpdateLog(log);
 
                 data.Add("img", fileName);
-                data.Add("debugId", debugId);
+                data.Add("logId", logId);
                 var output = this.Json(data);
                 return output;
             }

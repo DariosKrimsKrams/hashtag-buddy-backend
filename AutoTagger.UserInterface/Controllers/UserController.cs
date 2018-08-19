@@ -1,6 +1,7 @@
 ﻿namespace AutoTagger.API.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
 
     using AutoTagger.API.Models;
@@ -29,20 +30,21 @@
 
         [HttpPost("Feedback")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult SubmitFeedback([FromBody] FeedbackFormModel feedback)
+        public IActionResult SubmitFeedback([FromForm] FeedbackFormModel form)
         {
             var key = "feedback";
             try
             {
-                var log = this.logStorage.GetLog(feedback.Id);
+                var log = this.logStorage.GetLog(form.Id);
                 var data = log.GetDataAsList();
+                var formData = JsonConvert.DeserializeObject<Dictionary<string, string>>(form.Data);
                 if (data.ContainsKey(key))
                 {
-                    data[key] = feedback.Data;
+                    data[key] = formData;
                 }
                 else
                 {
-                    data.Add(key, feedback.Data);
+                    data.Add(key, formData);
                 }
                 log.SetData(data);
 
