@@ -58,6 +58,46 @@
 		#submitBtn {
 			margin-top: 10px;
 		}
+			#rating {
+				margin: 0 0 10px 0;
+			}
+				#rating a {
+					border: 1px solid #ccc;
+					border-radius: 5px;
+					padding: 5px;
+					height: 50px;
+					width: 70px;
+					margin: 0 10px 0 0;
+					display: inline-block;
+					text-align: center;
+					background-color: #fff;
+				}
+				#rating a.active {
+					border-color: #61affe;
+					background-color: rgba(97,175,254,.1);
+				}
+				#rating a img {
+					height: 100%;
+				}
+			.feedbackFormRow {
+				margin: 0 0 10px 0;
+			}
+				input,
+				textarea {
+					width: 100%;
+					border: 1px solid #ccc;
+					border-radius: 5px;
+					padding: 3px;
+				}
+				textarea {
+					height: 100px;
+				}
+			#thx4feedback {
+				border: 1px solid #49cc90;
+				border-radius: 5px;
+				background-color: rgba(73,204,144,.1);
+				padding: 5px;
+			}
 		p {
 			margin-bottom: 0.3rem;
 		}
@@ -120,7 +160,44 @@
 		<div>
 			<img src="#" id="userImg" alt="" />
 			<div id="results">
-				<!--<h4>Relevant:</h4><ul><li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li></ul><hr /><h4>Upcoming:</h4><ul><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li><li>Test123</li></ul>-->
+				<h4>Relevant:</h4>
+				<ul>
+					<li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li>
+					<li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li>
+					<li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li>
+					<li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li>
+				</ul>
+				<hr />
+				<h4>Upcoming:</h4>
+				<ul>
+					<li><a href="https://www.instagram.com/explore/tags/hamburg/" target="_blank">Test123</a></li>
+				</ul>
+				<!--<hr />
+				<h4>Location-based:</h4>
+				<p>coming soon...</p>-->
+			</div>
+			<hr />
+			<h4>Feedback</h4>
+			<form id="feedbackForm" method="post">
+				<div id="rating">
+					<a href="#" i="1"><img src="img/negative.png" alt="" /></a>
+					<a href="#" i="2"><img src="img/neutral.png" alt="" /></a>
+					<a href="#" i="3"><img src="img/positive.png" alt="" /></a>
+					<input type="hidden" id="ratingInput" name="rating" value="-1" />
+				</div>
+				<div class="feedbackFormRow">
+					<input type="text" name="missing" id="missing" placeholder="Hashtags, die dir fehlen" />
+				</div>
+				<div class="feedbackFormRow">
+					<input type="text" name="fail" id="fail" placeholder="Hashtags, die du unpassend findest" />
+				</div>
+				<div class="feedbackFormRow">
+					<textarea name="otherFeedback" id="otherFeedback" placeholder="Möchtest du mir weiteres Feedback mitteilen?"></textarea>
+				</div>
+				<input type="submit" />
+			</form>
+			<div id="thx4feedback" class="hidden">
+				<p><b>Danke</b>, dass du dir die Zeit genommen hast, Instaq zu verbessern :) - Dario</p>
 			</div>
 		</div>
 	</div>
@@ -135,6 +212,7 @@
 <script>
 
 	var baseUrl = 'http://localhost:59892/';
+	var logId = -1;
 	$(document).ready(function() {
 	
 		var success = function(data) {
@@ -151,8 +229,12 @@
 			$('#main').addClass('hidden');
 			$('#resultBox').removeClass('hidden');
 			
-			var imgUrl = baseUrl + 'Image/Img/' + data.img;
-			$('#userImg').attr('src', imgUrl)
+			var imgUrl = baseUrl + 'User/Img/' + data.img;
+			$('#userImg').attr('src', imgUrl);
+			
+			logId = data.logId;
+			$('#feedbackForm').removeClass('hidden');
+			$('#thx4feedback').addClass('hidden');
 		}
 		var error = function(err) {
 			alert('Error: ' + err.statusText);
@@ -163,7 +245,7 @@
 		$('#formFile').on('submit', function(e) {
 			e.preventDefault();
 			var hasFile = $('#file').val() != '';
-			var host = baseUrl + 'image/file';
+			var host = baseUrl + 'evaluation/file';
 			if(hasFile) {
 				var url = host;
 				var data = new FormData();
@@ -192,6 +274,39 @@
 		var url = baseUrl + 'info/version';
 		$.getJSON(url, function( data ) {
 			$('#version').text(data.version + ' (' + data.date + ')');
+		});
+		
+		var thumbRating = -1;
+		$('#rating a').click(function() {
+			var newRating = $(this).attr('i');
+			if(thumbRating != -1) {
+				$('#rating a:nth-child('+thumbRating+')').removeClass('active');
+			}
+			thumbRating = newRating;
+			$('#rating a:nth-child('+thumbRating+')').addClass('active');
+			$('#ratingInput').val(thumbRating);
+		});
+		
+		$('#feedbackForm').submit(function(e) {
+			e.preventDefault();
+			var form = {
+				rating: $("#ratingInput").val(),
+				missing: $("#missing").val(),
+				fail: $("#fail").val(),
+				otherFeedback: $("#otherFeedback").val()
+			}
+			var outerData = {
+				id: logId,
+				data: JSON.stringify(form)
+			}
+			var url = baseUrl + 'User/Feedback';
+            $.post(url, outerData, function() {
+				$('#feedbackForm').addClass('hidden');
+				$('#thx4feedback').removeClass('hidden');
+			})
+			.fail(function(xhr, resp, text) {
+				console.log(xhr, resp, text);
+			});
 		});
 	});
 </script>
