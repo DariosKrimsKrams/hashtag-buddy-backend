@@ -14,7 +14,7 @@ namespace AutoTagger.UserInterface.Controllers
             var date = Config.Date;
 
             var list = new Dictionary<string, string>();
-            list.Add("version", version);
+            list.Add("version", version.ToString());
             list.Add("date", date);
             return this.Json(list);
         }
