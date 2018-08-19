@@ -1,6 +1,7 @@
 ﻿namespace AutoTagger.UserInterface
 {
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Storage;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.Evaluation.Standard;
     using AutoTagger.FileHandling.Standard;
@@ -69,6 +70,7 @@
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
             services.AddTransient<IEvaluation, Evaluation>();
+            services.AddTransient<IDebugStorage, MysqlDebugStorage>();
 
             services.AddSwaggerGen(
                 c =>

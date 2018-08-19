@@ -16,7 +16,7 @@
 
         protected MysqlBaseStorage()
         {
-            db = new InstataggerContext();
+            this.db = new InstataggerContext();
         }
 
         private void Reconnect()
