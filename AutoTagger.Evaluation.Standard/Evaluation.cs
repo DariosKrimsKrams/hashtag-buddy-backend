@@ -31,8 +31,8 @@
             var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
 
             this.debugInfos.Add("machineTags", machineTags);
-            this.debugInfos.Add("backend_version", "0.3");
-            this.debugInfos.Add("backend_date", "2018-08-18");
+            this.debugInfos.Add("backend_version", Config.Version);
+            this.debugInfos.Add("backend_date", Config.Date);
             this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
             this.debugInfos.Add("queryMostRelevant", query);
             //this.SaveDebugInfos(storage);
