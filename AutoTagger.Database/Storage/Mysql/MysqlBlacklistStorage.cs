@@ -21,7 +21,7 @@
         public IEnumerable<IBlacklistEntryDto> GetAllBlacklistEntries()
         {
             var results = new List<IBlacklistEntryDto>();
-            foreach (var blacklistEntry in db.Blacklist)
+            foreach (var blacklistEntry in this.db.Blacklist)
             {
                 results.Add(new BlacklistEntryDto
                 {
@@ -42,6 +42,10 @@
 
         public void UpdateHumanoidTags(IEnumerable<IHumanoidTag> hTags)
         {
+            if (!hTags.Any())
+            {
+                return;
+            }
             var ids = "";
             foreach (var hTag in hTags)
             {
@@ -49,7 +53,7 @@
                     ids += " OR ";
                 ids += "id=" + hTag.Id;
             }
-            var query = "UPDATE itags set onBlacklist = 1 where " + ids;
+            var query = "UPDATE itags set onBlacklist = '1' where " + ids;
             this.ExecuteCustomQuery(query);
         }
 
