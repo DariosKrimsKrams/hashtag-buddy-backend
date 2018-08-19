@@ -81,7 +81,7 @@
 
         private static void CrawlMtagsWithHighScore()
         {
-            var uiDb = new MysqlUiStorage();
+            var uiDb = new MysqlEvaluationStorage();
             var mtags = uiDb.GetMtagsWithHighScore();
             var mtagsArr = mtags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 

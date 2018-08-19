@@ -7,25 +7,31 @@
     using System.Security.Cryptography;
     using System.Text;
     using System.Threading.Tasks;
-    using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
     [Route("[controller]")]
-    public class ImageController : Controller
+    public class EvaluationController : Controller
     {
-        private readonly IUiStorage storage;
-
+        private readonly IEvaluationStorage evaluationStorage;
+        private readonly ILogStorage logStorage;
         private readonly ITaggingProvider taggingProvider;
-
         private readonly IFileHandler fileHandler;
         private readonly IEvaluation evaluation;
 
-        public ImageController(IUiStorage storage, ITaggingProvider taggingProvider, IFileHandler fileHandler, IEvaluation evaluation)
+        public EvaluationController(IEvaluationStorage evaluationStorage,
+                               ITaggingProvider taggingProvider,
+                               IFileHandler fileHandler,
+                               IEvaluation evaluation,
+                               ILogStorage logStorage
+            )
         {
-            this.storage         = storage;
+            this.evaluationStorage = evaluationStorage;
+            this.logStorage      = logStorage;
             this.taggingProvider = taggingProvider;
             this.fileHandler     = fileHandler;
             this.evaluation      = evaluation;
@@ -51,7 +57,7 @@
         //    var json = this.Json(content);
 
         //    var debugStr = JsonConvert.SerializeObject(content);
-        //    this.storage.InsertLog("web_link", debugStr);
+        //    this.evaluationStorage.InsertLog("web_link", debugStr);
 
         //    return json;
         //}
@@ -137,8 +143,8 @@
                 this.evaluation.AddDebugInfos("ip", this.GetIpAddress());
                 var data = this.FindTags(evaluation, machineTags);
 
-                var debugStr = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                var debugId = this.storage.InsertLog(debugStr);
+                var debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                var debugId = this.logStorage.InsertLog(debugdata);
 
                 var hash = GetHashString(debugId.ToString());
                 var ext = Path.GetExtension(file.FileName);
@@ -147,10 +153,12 @@
 
                 this.evaluation.AddDebugInfos("image", fileName);
                 this.evaluation.AddDebugInfos("originalFilename", file.FileName);
-                debugStr = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                this.storage.UpdateLog(debugId, debugStr);
+                debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                var log = new Log { Id = debugId, Data = debugdata };
+                this.logStorage.UpdateLog(log);
 
                 data.Add("img", fileName);
+                data.Add("debugId", debugId);
                 var output = this.Json(data);
                 return output;
             }
@@ -168,8 +176,8 @@
 
         private Dictionary<string, object> FindTags(IEvaluation evaluation, IEnumerable<IMachineTag> machineTags)
         {
-            var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(storage, machineTags);
-            var trendingHTags     = evaluation.GetTrendingHumanoidTags(storage, machineTags, mostRelevantHTags);
+            var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
+            var trendingHTags     = evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);
 
             return new Dictionary<string, object>
             {
@@ -181,30 +189,6 @@
         private string GetIpAddress()
         {
             return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString();
-        }
-
-
-        [Route("Img/{fileName}")]
-        [HttpGet]
-        public IActionResult GetImg(string fileName)
-        {
-            if (fileName.Contains(".."))
-            {
-                return this.StatusCode(500);
-            }
-            try
-            {
-                var image = this.fileHandler.GetFile(FileType.User, fileName);
-                return this.File(image, "image/jpeg");
-            }
-            catch (FileNotFoundException)
-            {
-                return this.NotFound("Image not found");
-            }
-            catch (Exception)
-            {
-                return this.StatusCode(500);
-            }
         }
     }
 }

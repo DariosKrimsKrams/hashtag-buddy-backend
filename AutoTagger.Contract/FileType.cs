@@ -1,8 +1,15 @@
-﻿public enum FileType
+﻿namespace AutoTagger.Contract
 {
-    None,
-    Unused,
-    Used,
-    Defect,
-    User
+    public enum FileType
+    {
+        None,
+
+        Unused,
+
+        Used,
+
+        Defect,
+
+        User
+    }
 }

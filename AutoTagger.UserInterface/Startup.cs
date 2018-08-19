@@ -64,7 +64,8 @@
             services.AddMvc();
             services.AddCors();
 
-            services.AddTransient<IUiStorage, MysqlUiStorage>();
+            services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
+            services.AddTransient<ILogStorage, MysqlLogStorage>();
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
             services.AddTransient<IEvaluation, Evaluation>();

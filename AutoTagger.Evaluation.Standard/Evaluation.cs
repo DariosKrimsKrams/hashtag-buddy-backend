@@ -25,7 +25,7 @@
         }
 
         public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(
-            IUiStorage storage,
+            IEvaluationStorage storage,
             IEnumerable<IMachineTag> machineTags)
         {
             var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
@@ -43,7 +43,7 @@
         }
 
         public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
-            IUiStorage storage,
+            IEvaluationStorage storage,
             IEnumerable<IMachineTag> mTags,
             IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
@@ -64,7 +64,7 @@
             return hTagsTrendingList;
         }
 
-        //private void SaveDebugInfos(IUiStorage storage)
+        //private void SaveDebugInfos(IEvaluationStorage storage)
         //{
         //    var json = JsonConvert.SerializeObject(this.debugInfos);
         //    storage.InsertLog("web_image", json);

@@ -60,7 +60,7 @@
         public void WhenGettingAllPhotos()
         {
             // Arrange
-            var mysql = new MysqlUiStorage();
+            var mysql = new MysqlEvaluationStorage();
 
             // Act
             var machineTags = new List<IMachineTag> { new MachineTag {Name = "beach" }, new MachineTag {Name = "water" } };
