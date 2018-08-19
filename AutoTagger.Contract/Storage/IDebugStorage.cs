@@ -3,5 +3,11 @@
     public interface IDebugStorage
     {
         string GetPhotosCount();
+
+        string GetHumanoidTagsCount();
+
+        string GetHumanoidTagRelationCount();
+
+        string GetMachineTagsCount();
     }
 }

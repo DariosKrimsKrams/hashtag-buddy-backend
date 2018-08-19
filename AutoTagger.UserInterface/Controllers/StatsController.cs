@@ -26,21 +26,29 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        /*
-         * 
-// show photos count
-SELECT count(*) from photos 
+        [Route("HumanoidTags")]
+        [HttpGet]
+        public IActionResult GetHumanoidTagsCount()
+        {
+            var count = this.debugStorage.GetHumanoidTagsCount();
+            return this.Ok(count);
+        }
 
-// show photos count
-SELECT count(*) from itags 
+        [Route("HumanoidTagRelations")]
+        [HttpGet]
+        public IActionResult GetHumanoidTagRelationCount()
+        {
+            var count = this.debugStorage.GetHumanoidTagRelationCount();
+            return this.Ok(count);
+        }
 
-// show photos count
-SELECT count(*) from photo_itag_rel 
-
-// count photos with mtags
-SELECT count(distinct m.photoId) from mtags as m
-
-         */
+        [Route("MachineTags")]
+        [HttpGet]
+        public IActionResult GetMachineTagsCount()
+        {
+            var count = this.debugStorage.GetMachineTagsCount();
+            return this.Ok(count);
+        }
 
     }
 }
