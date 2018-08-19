@@ -186,6 +186,9 @@
 					<input type="hidden" id="ratingInput" name="rating" value="-1" />
 				</div>
 				<div class="feedbackFormRow">
+					<input type="text" name="good" id="good" placeholder="Hashtags, die du feierst" />
+				</div>
+				<div class="feedbackFormRow">
 					<input type="text" name="missing" id="missing" placeholder="Hashtags, die dir fehlen" />
 				</div>
 				<div class="feedbackFormRow">
@@ -291,6 +294,7 @@
 			e.preventDefault();
 			var form = {
 				rating: $("#ratingInput").val(),
+				good: $("#good").val(),
 				missing: $("#missing").val(),
 				fail: $("#fail").val(),
 				otherFeedback: $("#otherFeedback").val()
