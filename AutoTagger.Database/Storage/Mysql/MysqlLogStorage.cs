@@ -30,7 +30,7 @@
             {
                 throw new ArgumentException();
             }
-            return entry.toLog();
+            return entry.ToLog();
         }
     }
 }

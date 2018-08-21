@@ -2,7 +2,7 @@
 {
     using AutoTagger.Contract;
 
-    public class BlacklistEntryDto : IBlacklistEntryDto
+    public class BlacklistEntry : IBlacklistEntry
     {
         public int Id { get; set; }
 

@@ -6,14 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoTagger.API.Controllers
 {
+    using AutoTagger.Contract.Models;
     using AutoTagger.Contract.Storage;
 
     [Route("[controller]")]
-    public class StatsController : Controller
+    public class DebugController : Controller
     {
         private IDebugStorage debugStorage;
 
-        public StatsController(IDebugStorage debugStorage)
+        public DebugController(IDebugStorage debugStorage)
         {
             this.debugStorage = debugStorage;
         }
@@ -48,6 +49,13 @@ namespace AutoTagger.API.Controllers
         {
             var count = this.debugStorage.GetMachineTagsCount();
             return this.Ok(count);
+        }
+
+        [Route("Logs")]
+        [HttpGet]
+        public IEnumerable<ILog> GetLogs()
+        {
+            return this.debugStorage.GetLogs();
         }
 
     }

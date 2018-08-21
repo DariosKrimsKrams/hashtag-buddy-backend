@@ -18,12 +18,12 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<IBlacklistEntryDto> GetAllBlacklistEntries()
+        public IEnumerable<IBlacklistEntry> GetAllBlacklistEntries()
         {
-            var results = new List<IBlacklistEntryDto>();
+            var results = new List<IBlacklistEntry>();
             foreach (var blacklistEntry in this.db.Blacklist)
             {
-                results.Add(new BlacklistEntryDto
+                results.Add(new BlacklistEntry
                 {
                     Id = blacklistEntry.Id,
                     Name = blacklistEntry.Name,

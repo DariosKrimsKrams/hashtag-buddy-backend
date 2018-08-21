@@ -6,7 +6,7 @@
     {
         void Insert(IEnumerable<string> entries);
 
-        IEnumerable<IBlacklistEntryDto> GetAllBlacklistEntries();
+        IEnumerable<IBlacklistEntry> GetAllBlacklistEntries();
 
         IEnumerable<IHumanoidTag> GetHumanoidTagsThatContain(string name);
 

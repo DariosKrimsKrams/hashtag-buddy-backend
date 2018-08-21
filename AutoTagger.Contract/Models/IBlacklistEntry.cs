@@ -1,6 +1,6 @@
 ﻿namespace AutoTagger.Contract
 {
-    public interface IBlacklistEntryDto
+    public interface IBlacklistEntry
     {
         int Id { get; set; }
 

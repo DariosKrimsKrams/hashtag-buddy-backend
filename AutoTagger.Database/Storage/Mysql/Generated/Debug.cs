@@ -11,7 +11,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public string Data { get; set; }
         public DateTime Created { get; set; }
 
-        public ILog toLog()
+        public ILog ToLog()
         {
             return new Log { Id = this.Id, Data = this.Data, Created = this.Created };
         }
