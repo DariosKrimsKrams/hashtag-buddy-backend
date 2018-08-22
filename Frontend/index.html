@@ -198,6 +198,12 @@
 					<textarea name="otherFeedback" id="otherFeedback" placeholder="Möchtest du mir weiteres Feedback mitteilen?"></textarea>
 				</div>
 				<input type="submit" />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
 			</form>
 			<div id="thx4feedback" class="hidden">
 				<p><b>Danke</b>, dass du dir die Zeit genommen hast, Instaq zu verbessern :) - Dario</p>
@@ -214,7 +220,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script>
 
-	var baseUrl = 'http://localhost:59892/';
+	var baseUrl = '';
+	if (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+		baseUrl = 'http://localhost:59892/';
+	else
+		baseUrl = 'http://instaq-api.innocliq.de/';
 	var logId = -1;
 	$(document).ready(function() {
 	
