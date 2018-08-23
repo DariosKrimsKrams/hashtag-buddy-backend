@@ -16,11 +16,11 @@
                       + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "
                       + $"LEFT JOIN (SELECT p.id, count(m.name) as matches FROM photos as p "
                       + $"LEFT JOIN mtags as m ON m.photoId = p.id "
-                      + $"WHERE (({whereConditionLabel}) AND m.source='GCPVision_Label')"
-                      + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web')"
+                      + $"WHERE ((({whereConditionLabel}) AND m.source='GCPVision_Label') "
+                      + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web')) AND m.onBlacklist = '0' "
                       + $" GROUP BY p.id ORDER BY matches DESC LIMIT {limitTopPhotos} "
                       + $") as sub2 ON sub2.id = rel.photoId WHERE sub2.id IS NOT NULL "
-                      + $"AND i.refCount < {usageITagsLimit} AND i.onBlacklist = 0 "
+                      + $"AND i.refCount < {usageITagsLimit} AND i.onBlacklist = '0' "
                       + $"GROUP BY i.name ORDER by sum(matches) DESC LIMIT {countTagsToReturn}";
 
             return query;

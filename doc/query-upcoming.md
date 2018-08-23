@@ -14,14 +14,18 @@ LEFT JOIN
 	count(m.name) as matches
 	FROM photos as p
 	LEFT JOIN mtags as m ON m.photoId =  p.id
-	WHERE m.`name` = 'group' OR m.`name` = 'festival' OR m.`name` = 'people'
+	WHERE (
+		((m.`name` = 'group' OR m.`name` = 'happy') AND m.source = 'GCPVision_Label') 
+		OR ((m.`name` = 'festival' OR m.`name` = 'deichbrand') AND m.source = 'GCPVision_Web')
+	)
+	AND m.onBlacklist = '0'
 	GROUP BY p.id
 	ORDER BY matches DESC
 	LIMIT 50
 ) as sub2 ON sub2.id = rel.photoId
 WHERE sub2.id IS NOT NULL
 AND i.refCount < 10000
-AND i.onBlacklist = 0
+AND i.onBlacklist = '0'
 GROUP by i.name
 ORDER by sum(matches) DESC
 LIMIT 30

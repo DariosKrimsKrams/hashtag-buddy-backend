@@ -45,6 +45,8 @@
             var updatedEntries = new List<IHumanoidTag>();
             var countBlacklistEntries = 0;
             var pendingUpdates = 0;
+            var rowsNothingHappened = 0;
+            var overallCount = blacklistEntries.Count();
             foreach (var blacklistEntry in blacklistEntries)
             {
                 if (blacklistEntry.Table == "mtags")
@@ -56,21 +58,32 @@
 
                 countBlacklistEntries++;
                 var hTags = this.db.GetHumanoidTagsThatContain(blacklistEntry.Name);
+                var hasUpdate = false;
                 foreach (var hTag in hTags)
                 {
                     hTag.OnBlacklist = true;
                     updatedEntries.Add(hTag);
                     pendingUpdates++;
+                    hasUpdate = true;
+                }
+                if (!hasUpdate)
+                {
+                    rowsNothingHappened++;
                 }
                 if (pendingUpdates >= 100)
                 {
                     pendingUpdates = 0;
-                    this.Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+                    this.Update(updatedEntries, countBlacklistEntries, overallCount);
                     updatedEntries.Clear();
+                }
+                if (rowsNothingHappened >= 50)
+                {
+                    rowsNothingHappened = 0;
+                    Console.WriteLine("Updated Itags: 0 (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
                 }
             }
 
-            this.Update(updatedEntries, countBlacklistEntries, blacklistEntries.Count());
+            this.Update(updatedEntries, countBlacklistEntries, overallCount);
         }
 
         private void Update(IEnumerable<IHumanoidTag> updatedEntries, int countBlacklistEntries, int overallCount)

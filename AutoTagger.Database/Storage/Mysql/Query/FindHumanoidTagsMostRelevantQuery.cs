@@ -21,12 +21,13 @@
                          + $"FROM photos AS p LEFT JOIN mtags AS m ON m.photoId = p.id LEFT JOIN "
                          + $"( SELECT p.id, (p.likes+p.comments)/ p.follower AS popularity, count(m.name) AS matches "
                          + $"FROM photos as p LEFT JOIN mtags AS m ON m.photoId = p.id "
-                         + $"WHERE (({whereConditionLabel}) AND m.source='GCPVision_Label') "
-                         + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web') "
+                         + $"WHERE ((({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
+                         + $"OR (({whereConditionWeb}) AND m.source = 'GCPVision_Web')) AND m.onBlacklist = '0' "
                          + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id "
                          + $"WHERE sub1.id IS NOT NULL AND (m.name NOT LIKE '%Instagram%' AND m.source = 'GCPVision_Web') "
-                         + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = rel.photoId "
-                         + $"WHERE sub2.id IS NOT NULL AND i.refCount < {usageITagsLimit} AND i.onBlacklist = 0 GROUP by i.name "
+                         + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = "
+                         + $"rel.photoId WHERE sub2.id IS NOT NULL AND i.refCount < {usageITagsLimit} "
+                         + $"AND i.onBlacklist = '0' GROUP by i.name "
                          + $"ORDER by count(i.name) DESC, relationQuality DESC LIMIT {countTagsToReturn}";
 
             return query;

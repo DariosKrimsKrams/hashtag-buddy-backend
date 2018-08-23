@@ -27,13 +27,17 @@ LEFT JOIN
         SELECT p.id, (p.likes+p.comments)/p.follower as popularity, count(m.name) as matches
         FROM photos as p
         LEFT JOIN mtags as m ON m.photoId =  p.id
-        WHERE m.`name` = 'group' OR m.`name` = 'festival' OR m.`name` = 'people'
+		WHERE (
+			((m.`name` = 'group' OR m.`name` = 'happy') AND m.source = 'GCPVision_Label') 
+			OR ((m.`name` = 'festival' OR m.`name` = 'deichbrand') AND m.source = 'GCPVision_Web')
+		)
+		AND m.onBlacklist = '0'
         GROUP by p.id
 		ORDER by matches DESC
 		LIMIT 200
     ) as sub1 ON p.id = sub1.id 
     WHERE sub1.id IS NOT NULL
-	AND (m.name NOT LIKE '%Instagram%' AND m.source = 'GCPVision_Web') 
+	AND m.onBlacklist == '0'
     GROUP by p.id
     ORDER by relationQuality DESC
     LIMIT 200
