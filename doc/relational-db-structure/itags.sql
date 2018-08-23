@@ -13,5 +13,6 @@ CREATE TABLE `itags` (
   `onBlacklist` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`,`name`),
   UNIQUE KEY `id` (`id`) USING BTREE,
-  UNIQUE KEY `name` (`name`) USING BTREE
+  UNIQUE KEY `name` (`name`) USING BTREE,
+  KEY `name_2` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
