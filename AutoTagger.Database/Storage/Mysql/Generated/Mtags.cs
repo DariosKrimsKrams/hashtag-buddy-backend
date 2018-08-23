@@ -10,6 +10,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public string Name { get; set; }
         public float Score { get; set; }
         public string Source { get; set; }
+        public sbyte OnBlacklist { get; set; }
 
         public Photos Photo { get; set; }
     }

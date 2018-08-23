@@ -162,6 +162,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnName("source")
                     .HasColumnType("varchar(30)");
 
+                entity.Property(e => e.OnBlacklist)
+                    .HasColumnName("onBlacklist")
+                    .HasColumnType("tinyint(1)");
+
                 entity.HasOne(d => d.Photo)
                     .WithMany(p => p.Mtags)
                     .HasPrincipalKey(p => p.Id)
