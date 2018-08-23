@@ -155,7 +155,7 @@
         {
             var db = new MysqlBlacklistStorage();
             var app = new BlacklistImportApp(db);
-            var filename = @"C:\Users\dario\Documents\SourceTree\instaq\doc\cities.csv";
+            var filename = @"C:\Users\dario\Documents\SourceTree\instaq\doc\days.csv";
             app.ReadCsv(filename);
             Console.WriteLine("Finished");
         }

@@ -40,7 +40,8 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 Id       = this.Id,
                 Name     = this.Name,
                 Posts    = this.Posts,
-                RefCount = this.RefCount
+                RefCount = this.RefCount,
+                OnBlacklist = Convert.ToBoolean(this.OnBlacklist)
             };
         }
 

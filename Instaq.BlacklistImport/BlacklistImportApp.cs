@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoTagger.Common;
     using AutoTagger.Contract;
 
     public class BlacklistImportApp
@@ -19,11 +20,23 @@
             this.textBuilder = new TextBuilder();
         }
 
-        public void ReadCsv(string filename)
+        public void ReadCsv(string filename, string reason="days", string table = "itags")
         {
+            this.db.Delete(reason, table);
             var rawEntries = this.importer.ReadFile(filename);
-            var cleanEntries = this.textBuilder.GetCleanList(rawEntries);
-            this.db.Insert(cleanEntries);
+
+            var entries = this.textBuilder.GetCleanList(rawEntries);
+            var items = new List<IBlacklistEntry>();
+            foreach (var entry in entries)
+            {
+                var item = new BlacklistEntry {
+                    Name = entry,
+                    Reason = reason,
+                    Table = table
+                };
+                items.Add(item);
+            }
+            this.db.Insert(items);
         }
 
         public void SetItagOnBlacklistFlags()
@@ -34,6 +47,13 @@
             var pendingUpdates = 0;
             foreach (var blacklistEntry in blacklistEntries)
             {
+                if (blacklistEntry.Table == "mtags")
+                {
+                    // ToDo
+                    //var mTags = this.db.GetMachineTagsThatContain(blacklistEntry.Name);
+                    continue;
+                }
+
                 countBlacklistEntries++;
                 var hTags = this.db.GetHumanoidTagsThatContain(blacklistEntry.Name);
                 foreach (var hTag in hTags)

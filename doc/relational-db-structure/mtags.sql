@@ -10,9 +10,10 @@ CREATE TABLE `mtags` (
   `name` varchar(30) NOT NULL,
   `score` float(11,9) NOT NULL,
   `source` varchar(30) NOT NULL,
+  `onBlacklist` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `photoId` (`photoId`),
   KEY `name` (`name`),
   CONSTRAINT `mtags_ibfk_1` FOREIGN KEY (`photoId`) REFERENCES `photos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1998082 DEFAULT CHARSET=utf8;

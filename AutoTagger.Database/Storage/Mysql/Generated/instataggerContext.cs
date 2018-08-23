@@ -61,6 +61,11 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("reason")
                     .HasColumnType("varchar(20)");
+
+                entity.Property(e => e.Table)
+                    .IsRequired()
+                    .HasColumnName("table")
+                    .HasColumnType("varchar(10)");
             });
 
             modelBuilder.Entity<Debug>(entity =>

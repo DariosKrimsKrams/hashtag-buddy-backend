@@ -45,6 +45,7 @@
         [InlineData("x'y", "x y")]
         [InlineData("x\"y", "x y")]
         [InlineData("x/y", "x y")]
+        [InlineData("'’‘`´יmoon day'", "      moon day ")]
         public void ThenSpecialChars_ShouldBeReplacedWithSpace(string input, string expected)
         {
             var result = this.textHandler.ReplaceSpecialCharsWithSpace(input);

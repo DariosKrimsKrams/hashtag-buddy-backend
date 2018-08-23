@@ -7,5 +7,7 @@
         string Name { get; set; }
 
         string Reason { get; set; }
+
+        string Table { get; set; }
     }
 }

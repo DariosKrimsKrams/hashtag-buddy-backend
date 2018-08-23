@@ -9,5 +9,7 @@
         float Score { get; set; }
 
         string Source { get; set; }
+
+        sbyte OnBlacklist { get; set; }
     }
 }

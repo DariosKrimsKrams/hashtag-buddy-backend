@@ -24,7 +24,7 @@ namespace Instaq.BlacklistImport
 
         public string ReplaceSpecialCharsWithSpace(string input)
         {
-            var pattern = new Regex("[-0123456789\\.,'\"/]");
+            var pattern = new Regex("[-0123456789\\.,'’‘`´י\"/]");
             return pattern.Replace(input, " ");
         }
 
