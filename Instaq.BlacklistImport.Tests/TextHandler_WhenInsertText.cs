@@ -76,7 +76,7 @@
         }
 
         [Theory]
-        [InlineData("a b", "ab")]
+        [InlineData("ab c", "abc")]
         [InlineData(" a  b    c   ", "abc")]
         public void ThenTextWithSpaces_ShouldPutTogetherAtSpaces(string input, string expected)
         {

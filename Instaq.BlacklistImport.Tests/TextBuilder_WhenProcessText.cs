@@ -18,8 +18,8 @@ namespace Instaq.BlacklistImport.Tests
         [Fact]
         public void ThenGetCleanList_ShouldNotContainDuplicates()
         {
-            var input = new List<string> { "Ab (xx) c\r\nHey.", "GHI abC [q]\nhey", "a-b-0123c" };
-            var expected = new List<string> { "abc", "hey", "ghiabc" };
+            var input = new List<string> { "Abc (xx) def\r\nHey.", "io u GHI /abC [q]\nhey", "a-b-0123c" };
+            var expected = new List<string> { "abcdef", "hey", "ghiabc" };
             var result = this.textBuilder.GetCleanList(input);
             Assert.Equal(result, expected);
         }
