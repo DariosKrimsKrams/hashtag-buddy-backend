@@ -24,7 +24,7 @@
                          + $"WHERE ((({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
                          + $"OR (({whereConditionWeb}) AND m.source = 'GCPVision_Web')) AND m.onBlacklist = '0' "
                          + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id "
-                         + $"WHERE sub1.id IS NOT NULL AND (m.name NOT LIKE '%Instagram%' AND m.source = 'GCPVision_Web') "
+                         + $"WHERE sub1.id IS NOT NULL AND m.onBlacklist = '0' "
                          + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = "
                          + $"rel.photoId WHERE sub2.id IS NOT NULL AND i.refCount < {usageITagsLimit} "
                          + $"AND i.onBlacklist = '0' GROUP by i.name "

@@ -37,7 +37,7 @@ LEFT JOIN
 		LIMIT 200
     ) as sub1 ON p.id = sub1.id 
     WHERE sub1.id IS NOT NULL
-	AND m.onBlacklist == '0'
+	AND m.onBlacklist = '0'
     GROUP by p.id
     ORDER by relationQuality DESC
     LIMIT 200
