@@ -23,7 +23,7 @@
                              "4: Crawl Mtags with HighScore\n" +
                              "5: Run Too Generic Processor\n" +
                              "6: Blacklist: Import csv\n" +
-                             "7: Blacklist -> Set Itag Flag\n" +
+                             "7: Blacklist -> Set onBlacklist Flag\n" +
                              ""
                              );
             while(true)
@@ -63,7 +63,7 @@
                         break;
 
                     case '7':
-                        Console.WriteLine("Run Blacklist -> Set Itag Flag...");
+                        Console.WriteLine("Run Blacklist -> Set onBlacklist Flag...");
                         RunBlacklistSetItagFlags();
                         break;
                 }

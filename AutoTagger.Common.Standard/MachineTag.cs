@@ -23,7 +23,7 @@
 
         public string Source { get; set; }
 
-        public sbyte OnBlacklist { get; set; }
+        public bool OnBlacklist { get; set; }
 
     }
 }

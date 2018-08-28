@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace AutoTagger.Database.Storage.Mysql.Generated
 {
@@ -17,15 +16,15 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
         public Photos Photo { get; set; }
 
-        public IMachineTag ToHumanoidTag()
+        public IMachineTag ToMachineTag()
         {
             return new MachineTag
             {
-                Id       = this.Id,
-                Name     = this.Name,
+                Id = this.Id,
+                Name = this.Name,
                 Score = this.Score,
                 Source = this.Source,
-                OnBlacklist = this.OnBlacklist
+                OnBlacklist = Convert.ToBoolean(this.OnBlacklist)
             };
         }
     }

@@ -1,7 +1,7 @@
 ﻿public static class Config
 {
-    public static int Version = 4;
+    public static int Version = 5;
 
-    public static string Date = "2018-08-19";
+    public static string Date = "2018-08-28";
 
 }

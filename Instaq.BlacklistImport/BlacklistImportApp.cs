@@ -6,6 +6,7 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public class BlacklistImportApp
     {
@@ -20,7 +21,7 @@
             this.textBuilder = new TextBuilder();
         }
 
-        public void ReadCsv(string filename, string reason="days", string table = "itags")
+        public void ReadCsv(string filename, string reason="days", string table = "iTags")
         {
             this.db.Delete(reason, table);
             var rawEntries = this.importer.ReadFile(filename);
@@ -41,31 +42,40 @@
 
         public void SetItagOnBlacklistFlags()
         {
-            var blacklistEntries = this.db.GetAllBlacklistEntries();
-            var updatedEntries = new List<IHumanoidTag>();
+            var entries = this.db.GetAllBlacklistEntries();
+            var iTags = new List<IEntity>();
+            var mTags = new List<IEntity>();
             var countBlacklistEntries = 0;
             var pendingUpdates = 0;
             var rowsNothingHappened = 0;
-            var overallCount = blacklistEntries.Count();
-            foreach (var blacklistEntry in blacklistEntries)
+            var overallCount = entries.Count();
+            foreach (var entry in entries)
             {
-                if (blacklistEntry.Table == "mtags")
+                countBlacklistEntries++;
+                var hasUpdate = false;
+
+                IEnumerable<IEntity> tags;
+                if (entry.Table == "mtags")
                 {
-                    // ToDo
-                    //var mTags = this.db.GetMachineTagsThatContain(blacklistEntry.Name);
-                    continue;
+                    tags = this.db.GetMachineTagsThatContain(entry.Name);
+                    foreach (var tag in tags)
+                    {
+                        mTags.Add(tag);
+                        pendingUpdates++;
+                        hasUpdate = true;
+                    }
+                }
+                else
+                {
+                    tags = this.db.GetHumanoidTagsThatContain(entry.Name);
+                    foreach (var tag in tags)
+                    {
+                        iTags.Add(tag);
+                        pendingUpdates++;
+                        hasUpdate = true;
+                    }
                 }
 
-                countBlacklistEntries++;
-                var hTags = this.db.GetHumanoidTagsThatContain(blacklistEntry.Name);
-                var hasUpdate = false;
-                foreach (var hTag in hTags)
-                {
-                    hTag.OnBlacklist = true;
-                    updatedEntries.Add(hTag);
-                    pendingUpdates++;
-                    hasUpdate = true;
-                }
                 if (!hasUpdate)
                 {
                     rowsNothingHappened++;
@@ -73,23 +83,25 @@
                 if (pendingUpdates >= 100)
                 {
                     pendingUpdates = 0;
-                    this.Update(updatedEntries, countBlacklistEntries, overallCount);
-                    updatedEntries.Clear();
+                    this.Update(iTags, mTags, countBlacklistEntries, overallCount);
+                    iTags.Clear();
+                    mTags.Clear();
                 }
                 if (rowsNothingHappened >= 50)
                 {
                     rowsNothingHappened = 0;
-                    Console.WriteLine("Updated Itags: 0 (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
+                    Console.WriteLine("No Updates (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
                 }
             }
 
-            this.Update(updatedEntries, countBlacklistEntries, overallCount);
+            this.Update(iTags, mTags, countBlacklistEntries, overallCount);
         }
 
-        private void Update(IEnumerable<IHumanoidTag> updatedEntries, int countBlacklistEntries, int overallCount)
+        private void Update(IEnumerable<IEntity> iTags, IEnumerable<IEntity> mTags, int countBlacklistEntries, int overallCount)
         {
-            this.db.UpdateHumanoidTags(updatedEntries);
-            Console.WriteLine("Updated Itags: " + updatedEntries.Count() + " (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
+            this.db.UpdateTags(iTags, "itags");
+            this.db.UpdateTags(mTags, "mtags");
+            Console.WriteLine("Updated ITags: " + iTags.Count() + " updated mTags: " + mTags.Count() + " (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
         }
     }
 }

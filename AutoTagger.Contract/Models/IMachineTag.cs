@@ -1,15 +1,15 @@
 ﻿namespace AutoTagger.Contract
 {
-    public interface IMachineTag
-    {
-        int Id { get; set; }
+    using AutoTagger.Contract.Models;
 
+    public interface IMachineTag : IEntity
+    {
         string Name { get; set; }
 
         float Score { get; set; }
 
         string Source { get; set; }
 
-        sbyte OnBlacklist { get; set; }
+        bool OnBlacklist { get; set; }
     }
 }

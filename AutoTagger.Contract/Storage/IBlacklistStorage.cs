@@ -1,6 +1,8 @@
-﻿namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract.Models
 {
     using System.Collections.Generic;
+
+    using AutoTagger.Contract.Models;
 
     public interface IBlacklistStorage
     {
@@ -10,10 +12,10 @@
 
         IEnumerable<IBlacklistEntry> GetAllBlacklistEntries();
 
-        IEnumerable<IHumanoidTag> GetHumanoidTagsThatContain(string name);
+        IEnumerable<IEntity> GetHumanoidTagsThatContain(string name);
 
-        IEnumerable<IMachineTag> GetMachineTagsThatContain(string name);
+        IEnumerable<IEntity> GetMachineTagsThatContain(string name);
 
-        void UpdateHumanoidTags(IEnumerable<IHumanoidTag> hTags);
+        void UpdateTags(IEnumerable<IEntity> hTags, string table);
     }
 }

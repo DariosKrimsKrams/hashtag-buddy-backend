@@ -2,10 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
 
-    using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Database.Storage.Mysql.Generated;
 
     public class MysqlBlacklistStorage : MysqlBaseStorage, IBlacklistStorage
@@ -32,44 +31,41 @@
 
         public IEnumerable<IBlacklistEntry> GetAllBlacklistEntries()
         {
-            var results = new List<IBlacklistEntry>();
             foreach (var blacklist in this.db.Blacklist)
             {
-                results.Add(blacklist.ToBlacklistEntry());
+                yield return blacklist.ToBlacklistEntry();
             }
-            return results;
         }
 
-        public IEnumerable<IHumanoidTag> GetHumanoidTagsThatContain(string name)
+        public IEnumerable<IEntity> GetHumanoidTagsThatContain(string name)
         {
             return this.db.Itags
                 .Where(i => i.Name.Contains(name) && i.OnBlacklist == 0)
                 .Select(x => x.ToHumanoidTag());
         }
 
-        public IEnumerable<IMachineTag> GetMachineTagsThatContain(string name)
+        public IEnumerable<IEntity> GetMachineTagsThatContain(string name)
         {
             return this.db.Mtags
                 .Where(m => m.Name.Contains(name) && m.OnBlacklist == 0)
-                .Select(x => x.ToHumanoidTag());
+                .Select(x => x.ToMachineTag());
         }
 
-        public void UpdateHumanoidTags(IEnumerable<IHumanoidTag> hTags)
+        public void UpdateTags(IEnumerable<IEntity> tags, string table)
         {
-            if (!hTags.Any())
+            if (!tags.Any())
             {
                 return;
             }
             var ids = "";
-            foreach (var hTag in hTags)
+            foreach (var tag in tags)
             {
                 if (!string.IsNullOrEmpty(ids))
                     ids += " OR ";
-                ids += "id=" + hTag.Id;
+                ids += "id=" + tag.Id;
             }
-            var query = "UPDATE itags set onBlacklist = '1' where " + ids;
+            var query = $"UPDATE {table} SET `onBlacklist` = '1' WHERE {ids}";
             this.ExecuteCustomQuery(query);
         }
-
     }
 }
