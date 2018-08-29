@@ -90,6 +90,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("data")
                     .HasColumnType("text");
+
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasColumnType("tinyint(1)");
             });
 
             modelBuilder.Entity<Itags>(entity =>

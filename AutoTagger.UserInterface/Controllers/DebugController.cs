@@ -19,7 +19,7 @@ namespace AutoTagger.API.Controllers
             this.debugStorage = debugStorage;
         }
 
-        [Route("Photos")]
+        [Route("Stats/PhotosCount")]
         [HttpGet]
         public IActionResult GetPhotosCount()
         {
@@ -27,7 +27,7 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        [Route("HumanoidTags")]
+        [Route("Stats/HumanoidTagsCount")]
         [HttpGet]
         public IActionResult GetHumanoidTagsCount()
         {
@@ -35,7 +35,7 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        [Route("HumanoidTagRelations")]
+        [Route("Stats/HumanoidTagRelationsCount")]
         [HttpGet]
         public IActionResult GetHumanoidTagRelationCount()
         {
@@ -43,7 +43,7 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        [Route("MachineTags")]
+        [Route("Stats/MachineTagsCount")]
         [HttpGet]
         public IActionResult GetMachineTagsCount()
         {
@@ -51,11 +51,12 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        [Route("Logs")]
+        [Route("Logs/{page}")]
         [HttpGet]
-        public IEnumerable<ILog> GetLogs()
+        public IEnumerable<ILog> GetLogs(int page)
         {
-            return this.debugStorage.GetLogs();
+            var count = 10;
+            return this.debugStorage.GetLogs(count, count * (page - 1));
         }
 
     }

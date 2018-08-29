@@ -37,11 +37,11 @@
             return results?.FirstOrDefault()?.FirstOrDefault();
         }
 
-        public IEnumerable<ILog> GetLogs()
+        public IEnumerable<ILog> GetLogs(int limit, int skip)
         {
             return this.db.Debug
-                //.Where(x => x.Deleted == 0)
-                .OrderByDescending(x => x.Id)
+                .Where(x => x.Deleted == 0)
+                .OrderByDescending(x => x.Id).Skip(skip).Take(limit)
                 .Select(x => x.ToLog());
         }
 

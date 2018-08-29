@@ -13,6 +13,8 @@
 
         public DateTime Created { get; set; }
 
+        public bool Deleted { get; set; }
+
         public IDictionary<string, object> GetDataAsList()
         {
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(this.Data);

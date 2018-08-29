@@ -13,6 +13,6 @@
 
         string GetMachineTagsCount();
 
-        IEnumerable<ILog> GetLogs();
+        IEnumerable<ILog> GetLogs(int limit, int skip);
     }
 }
