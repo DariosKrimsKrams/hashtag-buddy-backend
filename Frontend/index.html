@@ -286,7 +286,7 @@
 		// version
 		var url = baseUrl + 'info/version';
 		$.getJSON(url, function( data ) {
-			$('#version').text(data.version + ' (' + data.date + ')');
+			$('#version').text('build ' + data.version + ' (' + data.date + ')');
 		});
 		
 		var thumbRating = -1;
