@@ -9,6 +9,8 @@ namespace AutoTagger.API.Controllers
     using AutoTagger.Contract.Models;
     using AutoTagger.Contract.Storage;
 
+    using Newtonsoft.Json;
+
     [Route("[controller]")]
     public class DebugController : Controller
     {
@@ -53,10 +55,24 @@ namespace AutoTagger.API.Controllers
 
         [Route("Logs/{page}")]
         [HttpGet]
-        public IEnumerable<ILog> GetLogs(int page)
+        public IEnumerable<Dictionary<string, object>> GetLogs(int page)
         {
             var count = 10;
-            return this.debugStorage.GetLogs(count, count * (page - 1));
+            var logs = this.debugStorage.GetLogs(count, count * (page - 1));
+            foreach (var log in logs)
+            {
+                var entries = JsonConvert.DeserializeObject<Dictionary<string, object>>(log.Data);
+                foreach (var entry in entries)
+                {
+                    if (entry.Value is string valueAsStr && valueAsStr.Substring(0, 2) == "[{")
+                    {
+                        entries[entry.Key] = JsonConvert.DeserializeObject<Dictionary<string, object>>(valueAsStr);
+                    }
+                }
+                entries.Add("id", log.Id);
+                entries.Add("created", log.Created);
+                yield return entries;
+            }
         }
 
     }
