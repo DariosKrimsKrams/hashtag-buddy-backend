@@ -45,10 +45,15 @@
             app.UseSwaggerUI(
                 c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1");
                 });
 
-            app.UseCors(options => options.WithOrigins("http://localhost", "http://instaq.innocliq.de").AllowAnyMethod());
+            app.UseCors(options => options.WithOrigins(
+                "http://localhost:4200",
+                "http://localhost:80",
+                "http://instaq.innocliq.de",
+                "http://instaq-debug.innocliq.de"
+                ).AllowAnyMethod());
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
