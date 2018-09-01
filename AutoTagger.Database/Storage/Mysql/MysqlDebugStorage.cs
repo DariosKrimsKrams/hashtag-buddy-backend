@@ -45,6 +45,12 @@
                 .Select(x => x.ToLog());
         }
 
+        public ILog GetLog(int id)
+        {
+            return this.db.Debug
+                .FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
+        }
+
     }
 
 }

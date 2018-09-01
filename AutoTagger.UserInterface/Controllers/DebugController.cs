@@ -61,18 +61,36 @@ namespace AutoTagger.API.Controllers
             var logs = this.debugStorage.GetLogs(count, count * (page - 1));
             foreach (var log in logs)
             {
-                var entries = JsonConvert.DeserializeObject<Dictionary<string, object>>(log.Data);
-                foreach (var entry in entries)
-                {
-                    if (entry.Value is string valueAsStr && valueAsStr.Substring(0, 2) == "[{")
-                    {
-                        entries[entry.Key] = JsonConvert.DeserializeObject<Dictionary<string, object>>(valueAsStr);
-                    }
-                }
-                entries.Add("id", log.Id);
-                entries.Add("created", log.Created);
-                yield return entries;
+                yield return this.BuildLogOutput(log);
             }
+        }
+
+        [Route("Log/{id}")]
+        [HttpGet]
+        public IActionResult GetLog(int id)
+        {
+            var log = this.debugStorage.GetLog(id);
+            if (log == null)
+            {
+                return this.NotFound("Log doesn't exist or was deleted :'(");
+            }
+            var output = this.BuildLogOutput(log);
+            return this.Ok(output);
+        }
+
+        private Dictionary<string, object> BuildLogOutput(ILog log)
+        {
+            var entries = JsonConvert.DeserializeObject<Dictionary<string, object>>(log.Data);
+            foreach (var entry in entries)
+            {
+                if (entry.Value is string valueAsStr && valueAsStr.Substring(0, 2) == "[{")
+                {
+                    entries[entry.Key] = JsonConvert.DeserializeObject<Dictionary<string, object>>(valueAsStr);
+                }
+            }
+            entries.Add("id", log.Id);
+            entries.Add("created", log.Created);
+            return entries;
         }
 
     }
