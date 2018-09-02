@@ -18,7 +18,7 @@
 
         public string GetHumanoidTagsCount()
         {
-            var query = "SELECT count(*) FROM itags WHERE";
+            var query = "SELECT count(*) FROM itags";
             var results = this.ExecuteCustomQuery(query);
             return results?.FirstOrDefault()?.FirstOrDefault();
         }
@@ -37,11 +37,18 @@
             return results?.FirstOrDefault()?.FirstOrDefault();
         }
 
-        public IEnumerable<ILog> GetLogs(int limit, int skip)
+        public string GetLogCount()
+        {
+            var query = "SELECT count(*) from debug";
+            var results = this.ExecuteCustomQuery(query);
+            return results?.FirstOrDefault()?.FirstOrDefault();
+        }
+
+        public IEnumerable<ILog> GetLogs(int skip, int take, string orderby)
         {
             return this.db.Debug
                 .Where(x => x.Deleted == 0)
-                .OrderByDescending(x => x.Id).Skip(skip).Take(limit)
+                .OrderByDescending(x => x.Id).Skip(skip).Take(take)
                 .Select(x => x.ToLog());
         }
 

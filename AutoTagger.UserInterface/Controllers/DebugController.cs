@@ -53,16 +53,29 @@ namespace AutoTagger.API.Controllers
             return this.Ok(count);
         }
 
-        [Route("Logs/{page}")]
+        [Route("Logs/{skip}/{take}/{orderby}")]
         [HttpGet]
-        public IEnumerable<Dictionary<string, object>> GetLogs(int page)
+        public IEnumerable<Dictionary<string, object>> GetLogs(int skip, int take, string orderby)
         {
-            var count = 10;
-            var logs = this.debugStorage.GetLogs(count, count * (page - 1));
+            //var logsCount = this.debugStorage.GetLogCount();
+            var logs = this.debugStorage.GetLogs(skip, take, orderby);
+            //var items = new List<Dictionary<string, object>>();
             foreach (var log in logs)
             {
                 yield return this.BuildLogOutput(log);
             }
+            //var output = new Dictionary<string, object>();
+            //output.Add("totalCount", logsCount);
+            //output.Add("items", items);
+            //return output;
+        }
+
+        [Route("LogsCount")]
+        [HttpGet]
+        public string GetLogsCount()
+        {
+            var logsCount = this.debugStorage.GetLogCount();
+            return logsCount;
         }
 
         [Route("Log/{id}")]
