@@ -62,12 +62,14 @@
                     }
 
                     var hTagNames = image.HumanoidTags;
-                    foreach (var hTagname in hTagNames)
+                    foreach (var hTagName in hTagNames)
                     {
-                        var newHTag = new HumanoidTag();
-                        newHTag.Name = hTagname;
-                        var newHTagAsT = (T)Convert.ChangeType(newHTag, typeof(HumanoidTag));
-                        this.Enqueue(newHTagAsT);
+                        var newHTag = new HumanoidTag
+                        {
+                            Name = hTagName
+                        };
+                        var hTagAsT = (T)Convert.ChangeType(newHTag, typeof(HumanoidTag));
+                        this.Enqueue(hTagAsT);
                     }
 
                     yield return image;

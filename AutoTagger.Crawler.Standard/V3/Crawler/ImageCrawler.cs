@@ -40,12 +40,7 @@
             foreach (var node in nodes)
             {
                 var edges = node?.node?.edge_media_to_caption?.edges;
-                if (edges == null)
-                {
-                    continue;
-                }
-
-                if (edges.ToString() == "[]")
+                if (edges == null || edges.ToString() == "[]")
                 {
                     continue;
                 }
@@ -99,7 +94,6 @@
                 if (c < '0' || c > '9')
                     return false;
             }
-
             return true;
         }
 
@@ -109,7 +103,6 @@
             {
                 return Enumerable.Empty<string>();
             }
-
             return FindHashTagsRegex.Matches(text).OfType<Match>().Select(m => m?.Value.Trim(' ', '#').ToLower())
                 .Where(HashtagIsAllowed).Distinct();
         }

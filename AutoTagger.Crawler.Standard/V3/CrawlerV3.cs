@@ -43,7 +43,7 @@
         {
             this.BuildTags(customTags);
             this.hashtagQueue.SetLimit(limit);
-            this.hashtagQueue.OnHashtagFound += HashtagFound;
+            this.hashtagQueue.OnHashtagFound += this.HashtagFound;
             return this.hashtagQueue.Process(
                 this.ExploreTagsCrawlerFunc,
                 this.ImagePageCrawlerFunc,
@@ -76,7 +76,6 @@
             {
                 return (amountPosts, shortcodes);
             }
-
             foreach (var image in images)
             {
                 shortcodes.Add(image.Shortcode);

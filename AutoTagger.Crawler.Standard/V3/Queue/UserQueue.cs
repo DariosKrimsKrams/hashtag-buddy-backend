@@ -20,7 +20,7 @@
         {
             while (this.TryDequeue(out T userNameAsT))
             {
-                if (IsProcessed(userNameAsT))
+                if (this.IsProcessed(userNameAsT))
                 {
                     continue;
                 }

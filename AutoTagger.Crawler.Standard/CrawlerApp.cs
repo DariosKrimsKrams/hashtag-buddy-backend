@@ -29,7 +29,7 @@
             foreach (var image in images)
             {
                 foreach (var hTagName in image.HumanoidTags)
-                {
+                {  
                     var exists = this.allHTags.FirstOrDefault(htag => htag.Name == hTagName);
                     if (exists != null)
                         continue;

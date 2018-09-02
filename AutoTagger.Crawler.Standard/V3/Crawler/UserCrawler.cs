@@ -26,17 +26,16 @@
             }
 
             var nodes = GetNodes(data);
-            IEnumerable<IImage> images = this.GetImages(nodes);
-            var imagesList = images.ToList();
+            var images = this.GetImages(nodes);
 
-            foreach (IImage image in imagesList)
+            foreach (IImage image in images)
             {
                 image.Follower  = followerCount;
                 image.Following = followingCount;
                 image.Posts = postsCount;
             }
 
-            images = RemoveImagesWithDuplicateHashtags(imagesList);
+            images = this.RemoveImagesWithDuplicateHashtags(images);
 
             foreach (IImage image in images)
             {
@@ -44,7 +43,7 @@
             }
         }
 
-        private IEnumerable<IImage> RemoveImagesWithDuplicateHashtags(List<IImage> images)
+        private IEnumerable<IImage> RemoveImagesWithDuplicateHashtags(IList<IImage> images)
         {
             var newImages = new Dictionary<string, IImage>();
             for (int i = images.Count-1; i >= 0; i--)
