@@ -29,11 +29,12 @@
             return GetScriptNodeData(document);
         }
 
-        protected IEnumerable<IImage> GetImages(dynamic nodes)
+        protected IList<IImage> GetImages(dynamic nodes)
         {
+            var output = new List<IImage>();
             if (nodes == null)
             {
-                yield break;
+                return output;
             }
 
             foreach (var node in nodes)
@@ -49,13 +50,13 @@
                     continue;
                 }
 
-                string text  = edges[0]?.node?.text;
-                text         = text?.Replace("\\n", "\n");
-                text         = System.Web.HttpUtility.HtmlDecode(text);
+                string text = edges[0]?.node?.text;
+                text = text?.Replace("\\n", "\n");
+                text = System.Web.HttpUtility.HtmlDecode(text);
                 var hashtags = ParseHashTags(text).ToList();
 
-                var innerNode     = node.node;
-                int likes         = innerNode.edge_liked_by?.count;
+                var innerNode = node.node;
+                int likes = innerNode.edge_liked_by?.count;
                 var hashTagsCount = hashtags.Count;
                 var commentsCount = innerNode?.edge_media_to_comment?.count;
 
@@ -66,18 +67,20 @@
                 }
 
                 var takenDate = GetDateTime(Convert.ToDouble(innerNode?.taken_at_timestamp.ToString()));
-                var image     = new Image
+                var image = new Image
                 {
-                    Likes        = likes,
-                    Comments     = commentsCount,
-                    Shortcode    = innerNode?.shortcode,
+                    Likes = likes,
+                    Comments = commentsCount,
+                    Shortcode = innerNode?.shortcode,
                     HumanoidTags = hashtags,
-                    LargeUrl     = innerNode?.display_url,
-                    ThumbUrl     = innerNode?.thumbnail_src,
-                    Uploaded     = takenDate
+                    LargeUrl = innerNode?.display_url,
+                    ThumbUrl = innerNode?.thumbnail_src,
+                    Uploaded = takenDate
                 };
-                yield return image;
+                output.Add(image);
             }
+
+            return output;
         }
 
         private static bool HashtagIsAllowed(string value)

@@ -17,7 +17,7 @@
             this.MinLikes        = 100;
         }
 
-        public (int, List<IImage>) Parse(string url)
+        public (int, IList<IImage>) Parse(string url)
         {
             var data = this.GetData(url);
             var amountPosts = GetAmountOfPosts(data);
@@ -27,8 +27,7 @@
             }
 
             var nodes  = GetTopPostsNodes(data);
-            var images = this.GetImages(nodes);
-            var imagesList = images.ToList();
+            var imagesList = this.GetImages(nodes) as IList<IImage>;
 
             return (amountPosts, imagesList);
         }

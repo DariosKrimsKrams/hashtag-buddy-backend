@@ -70,14 +70,16 @@
         private (int, List<string>) ExploreTagsCrawlerFunc(IHumanoidTag tag)
         {
             var url = $"https://www.instagram.com/explore/tags/{tag.Name}/";
-            (var amountPosts, var images) = this.exploreTagsPageCrawler.Parse(url);
+            var (amountPosts, images) = this.exploreTagsPageCrawler.Parse(url);
             var shortcodes = new List<string>();
-            if (images != null)
+            if (images == null)
             {
-                foreach (var image in images)
-                {
-                    shortcodes.Add(image.Shortcode);
-                }
+                return (amountPosts, shortcodes);
+            }
+
+            foreach (var image in images)
+            {
+                shortcodes.Add(image.Shortcode);
             }
             return (amountPosts, shortcodes);
         }
