@@ -5,11 +5,11 @@
     using System.Linq;
     using AutoTagger.Contract;
 
-    class UserCrawler : ImageCrawler
+    class UserPageCrawler : BaseImagePageCrawler
     {
         private const int MinFollowerCount = 1000;
 
-        public UserCrawler()
+        public UserPageCrawler()
         {
             this.MinHashTagCount  = 5;
             this.MinCommentsCount = 10;

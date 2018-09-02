@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using AutoTagger.Contract;
 
-    class ExploreTagsCrawler : ImageCrawler
+    class ExploreTagsPageCrawler : BaseImagePageCrawler
     {
         private readonly ICrawler crawler;
 
-        public ExploreTagsCrawler(ICrawler crawler)
+        public ExploreTagsPageCrawler(ICrawler crawler)
         {
             this.crawler = crawler;
             this.MinHashTagCount = 0;

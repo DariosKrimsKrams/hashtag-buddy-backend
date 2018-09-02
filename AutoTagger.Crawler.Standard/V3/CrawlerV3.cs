@@ -11,9 +11,9 @@
     {
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly RandomTagsCrawler randomTagsCrawler;
-        private readonly ExploreTagsCrawler exploreTagsPageCrawler;
-        private readonly ImageDetailCrawler imageDetailPageCrawler;
-        private readonly UserCrawler userCrawler;
+        private readonly ExploreTagsPageCrawler exploreTagsPagePageCrawler;
+        private readonly ImageDetailPageCrawler imageDetailPageCrawler;
+        private readonly UserPageCrawler userPageCrawler;
 
         public event Action<IHumanoidTag> OnHashtagFound;
         private readonly Dictionary<string, int> conditions;
@@ -23,11 +23,11 @@
             this.conditions = new Dictionary<string, int>();
             this.conditions.Add("MinPostsForHashtags", 1 * 1000 * 1000);
 
-            this.hashtagQueue = new HashtagQueue<IHumanoidTag>();
-            this.randomTagsCrawler      = new RandomTagsCrawler();
-            this.exploreTagsPageCrawler = new ExploreTagsCrawler(this);
-            this.imageDetailPageCrawler = new ImageDetailCrawler();
-            this.userCrawler            = new UserCrawler();
+            this.hashtagQueue                = new HashtagQueue<IHumanoidTag>();
+            this.randomTagsCrawler           = new RandomTagsCrawler();
+            this.exploreTagsPagePageCrawler  = new ExploreTagsPageCrawler(this);
+            this.imageDetailPageCrawler      = new ImageDetailPageCrawler();
+            this.userPageCrawler             = new UserPageCrawler();
         }
 
         public void AddHTags(List<IHumanoidTag> preexistingHTags)
@@ -70,7 +70,7 @@
         private (int, List<string>) ExploreTagsCrawlerFunc(IHumanoidTag tag)
         {
             var url = $"https://www.instagram.com/explore/tags/{tag.Name}/";
-            var (amountPosts, images) = this.exploreTagsPageCrawler.Parse(url);
+            var (amountPosts, images) = this.exploreTagsPagePageCrawler.Parse(url);
             var shortcodes = new List<string>();
             if (images == null)
             {
@@ -92,7 +92,7 @@
         private IEnumerable<IImage> UserCrawlerFunc(string user)
         {
             var url = $"https://www.instagram.com/{user}/?hl=en";
-            var images = this.userCrawler.Parse(url);
+            var images = this.userPageCrawler.Parse(url);
             foreach (var image in images)
             {
                 image.User = user;

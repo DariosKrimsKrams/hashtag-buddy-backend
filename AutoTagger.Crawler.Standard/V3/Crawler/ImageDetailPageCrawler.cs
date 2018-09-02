@@ -2,7 +2,7 @@
 {
     using AutoTagger.Crawler.Standard;
 
-    public class ImageDetailCrawler : HttpCrawler
+    public class ImageDetailPageCrawler : HttpCrawler
     {
         public string Parse(string url)
         {

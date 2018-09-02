@@ -8,7 +8,7 @@
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
 
-    abstract class ImageCrawler : HttpCrawler
+    abstract class BaseImagePageCrawler : HttpCrawler
     {
         protected static int MaxHashtagLength = 30;
         protected static int MinHashtagLength = 5;
@@ -55,8 +55,9 @@
                 var hashTagsCount = hashtags.Count;
                 var commentsCount = innerNode?.edge_media_to_comment?.count;
 
-                if (hashTagsCount < this.MinHashTagCount || likes < this.MinLikes
-                 || commentsCount < this.MinCommentsCount)
+                if (hashTagsCount < this.MinHashTagCount
+                    || likes < this.MinLikes
+                    || commentsCount < this.MinCommentsCount)
                 {
                     continue;
                 }

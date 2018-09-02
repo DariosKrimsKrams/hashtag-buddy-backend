@@ -84,8 +84,8 @@
 
         private static void SetAmountOfPosts(T currentTag, int amountPosts)
         {
-            Type         hTagType = currentTag.GetType();
-            PropertyInfo pinfo    = hTagType.GetProperty("Posts");
+            var hTagType = currentTag.GetType();
+            var pinfo = hTagType.GetProperty("Posts");
             pinfo.SetValue(currentTag, amountPosts, null);
         }
 

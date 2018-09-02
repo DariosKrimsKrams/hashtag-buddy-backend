@@ -48,8 +48,9 @@
                 {
                     continue;
                 }
-                userQueue.Enqueue(userName);
-                var images = userQueue.Process(userPageCrawling);
+
+                this.userQueue.Enqueue(userName);
+                var images = this.userQueue.Process(userPageCrawling);
 
                 foreach (var image in images)
                 {
@@ -104,9 +105,5 @@
             return this.processed.Count >= this.limit;
         }
 
-    }
-
-    internal class CrawlerLimitException : Exception
-    {
     }
 }
