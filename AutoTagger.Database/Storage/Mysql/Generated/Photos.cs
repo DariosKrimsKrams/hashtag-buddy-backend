@@ -25,9 +25,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public int Follower { get; set; }
         public int Following { get; set; }
         public int Posts { get; set; }
+        public int? LocationId { get; set; }
         public DateTime? Uploaded { get; set; }
         public DateTime Created { get; set; }
-
 
         public ICollection<Mtags> Mtags { get; set; }
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }

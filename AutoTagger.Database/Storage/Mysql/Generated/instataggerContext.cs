@@ -18,6 +18,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public virtual DbSet<Blacklist> Blacklist { get; set; }
         public virtual DbSet<Debug> Debug { get; set; }
         public virtual DbSet<Itags> Itags { get; set; }
+        public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
         public virtual DbSet<Photos> Photos { get; set; }
@@ -42,10 +43,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Name)
-                    .HasName("name")
                     .IsUnique();
 
                 entity.Property(e => e.Id)
@@ -107,8 +104,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsUnique();
 
                 entity.HasIndex(e => e.Name)
-                    .HasName("name")
-                    .IsUnique();
+                    .HasName("name_2");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -138,6 +134,57 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .ValueGeneratedOnAddOrUpdate();
             });
 
+            modelBuilder.Entity<Locations>(entity =>
+            {
+                entity.ToTable("locations");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.HasPublicPage)
+                    .HasColumnName("has_public_page")
+                    .HasColumnType("tinyint(1)");
+
+                entity.Property(e => e.InstaId)
+                    .HasColumnName("insta_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Lat)
+                    .HasColumnName("lat")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Lng)
+                    .IsRequired()
+                    .HasColumnName("lng")
+                    .HasColumnType("varchar(11)");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasColumnType("text");
+
+                entity.Property(e => e.ProfilePicUrl)
+                    .IsRequired()
+                    .HasColumnName("profile_pic_url")
+                    .HasColumnType("text");
+
+                entity.Property(e => e.Slug)
+                    .IsRequired()
+                    .HasColumnName("slug")
+                    .HasColumnType("varchar(50)");
+            });
+
             modelBuilder.Entity<Mtags>(entity =>
             {
                 entity.ToTable("mtags");
@@ -145,6 +192,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
                     .IsUnique();
+
+                entity.HasIndex(e => e.Name)
+                    .HasName("name");
 
                 entity.HasIndex(e => e.PhotoId)
                     .HasName("photoId");
@@ -158,6 +208,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnName("name")
                     .HasColumnType("varchar(30)");
 
+                entity.Property(e => e.OnBlacklist)
+                    .HasColumnName("onBlacklist")
+                    .HasColumnType("tinyint(1)");
+
                 entity.Property(e => e.PhotoId)
                     .HasColumnName("photoId")
                     .HasColumnType("int(11)");
@@ -170,10 +224,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("source")
                     .HasColumnType("varchar(30)");
-
-                entity.Property(e => e.OnBlacklist)
-                    .HasColumnName("onBlacklist")
-                    .HasColumnType("tinyint(1)");
 
                 entity.HasOne(d => d.Photo)
                     .WithMany(p => p.Mtags)
@@ -230,6 +280,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasName("id")
                     .IsUnique();
 
+                entity.HasIndex(e => e.LocationId)
+                    .HasName("rel_photos_location");
+
                 entity.HasIndex(e => e.Shortcode)
                     .HasName("imgId")
                     .IsUnique();
@@ -270,6 +323,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnName("likes")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.LocationId)
+                    .HasColumnName("location_id")
+                    .HasColumnType("int(11)");
+
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")
                     .HasColumnType("int(11)");
@@ -287,6 +344,11 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("user")
                     .HasColumnType("varchar(50)");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Photos)
+                    .HasForeignKey(d => d.LocationId)
+                    .HasConstraintName("rel_photos_location");
             });
         }
     }
