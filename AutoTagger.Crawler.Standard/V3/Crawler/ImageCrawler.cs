@@ -88,7 +88,8 @@
             return !string.IsNullOrWhiteSpace(value)
                 && value.Length >= MinHashtagLength
                 && value.Length < MaxHashtagLength
-                && !IsDigitsOnly(value);
+                && !IsDigitsOnly(value)
+                && !value.Contains('\'');
         }
 
         private static bool IsDigitsOnly(string str)
