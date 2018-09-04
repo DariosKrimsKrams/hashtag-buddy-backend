@@ -8,7 +8,7 @@
     using AutoTagger.Common;
     using AutoTagger.Contract;
 
-    class HashtagQueue<T> : ConcurrentQueue<T>
+    public class HashtagQueue<T> : ConcurrentQueue<T>
     {
         private readonly HashSet<T> processed;
         private readonly ShortcodeQueue<string> shortcodeQueue;

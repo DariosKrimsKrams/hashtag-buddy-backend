@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport.Tests", "Instaq.BlacklistImport.Tests\Instaq.BlacklistImport.Tests.csproj", "{58EC69CE-A3D9-470D-B465-9A7B058B75B4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler.Tests", "Instaq.Crawler.Tests\Instaq.Crawler.Tests.csproj", "{665ECC60-8652-46A3-BDF0-37E55F681BB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{58EC69CE-A3D9-470D-B465-9A7B058B75B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58EC69CE-A3D9-470D-B465-9A7B058B75B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58EC69CE-A3D9-470D-B465-9A7B058B75B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665ECC60-8652-46A3-BDF0-37E55F681BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665ECC60-8652-46A3-BDF0-37E55F681BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665ECC60-8652-46A3-BDF0-37E55F681BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665ECC60-8652-46A3-BDF0-37E55F681BB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
