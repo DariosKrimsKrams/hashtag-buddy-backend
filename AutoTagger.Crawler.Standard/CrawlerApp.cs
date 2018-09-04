@@ -18,29 +18,15 @@
             this.crawler                =  crawler;
             this.allHTags               =  db.GetAllHumanoidTags<HumanoidTag>().ToList();
             this.crawler.OnHashtagFound += this.HashtagFound;
+            this.crawler.OnImageFound += this.ImageFound;
         }
 
+        public event Action<IHumanoidTag> OnHashtagFound;
         public event Action<IImage> OnImageSaved;
 
         public void DoCrawling(int limit, params string[] customTags)
         {
             this.crawler.DoCrawling(limit, customTags);
-
-            foreach (var image in images)
-            {
-                foreach (var hTagName in image.HumanoidTags)
-                {  
-                    var exists = this.allHTags.FirstOrDefault(htag => htag.Name == hTagName);
-                    if (exists != null)
-                        continue;
-                    var newHTag = new HumanoidTag { Name = hTagName };
-                    this.db.InsertOrUpdateHumanoidTag(newHTag);
-                    this.allHTags.Add(newHTag);
-                }
-
-                this.db.Upsert(image);
-                this.ImageFound(image);
-            }
         }
 
         private void HashtagFound(IHumanoidTag humanoidTag)
@@ -55,10 +41,25 @@
             //{
             //    existinhHumanoidTag.Posts = humanoidTag.Posts;
             //}
+            this.OnHashtagFound?.Invoke(humanoidTag);
         }
 
         private void ImageFound(IImage image)
         {
+            foreach (var hTagName in image.HumanoidTags)
+            {
+                var exists = this.allHTags.FirstOrDefault(htag => htag.Name == hTagName);
+                if (exists != null)
+                    continue;
+                var newHTag = new HumanoidTag { Name = hTagName };
+                this.db.InsertOrUpdateHumanoidTag(newHTag);
+                this.allHTags.Add(newHTag);
+            }
+
+            this.db.Upsert(image);
+            this.ImageFound(image);
+
+
             this.OnImageSaved?.Invoke(image);
         }
     }

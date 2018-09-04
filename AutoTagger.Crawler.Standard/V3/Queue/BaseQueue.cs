@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract class BaseQueue<T> : ConcurrentQueue<T>
+    public class BaseQueue<T> : ConcurrentQueue<T>
     {
         protected readonly HashSet<T> Processed = new HashSet<T>();
 
@@ -35,7 +35,7 @@
             }
         }
 
-        protected bool GetEntry(out T entry)
+        public bool GetEntry(out T entry)
         {
             var status = this.TryDequeue(out T entry2);
             entry = entry2;

@@ -7,12 +7,14 @@
     {
         event Action<IHumanoidTag> OnHashtagFound;
 
-        void BuildTags(string[] customTags);
+        event Action<IImage> OnImageFound;
+
+        //void BuildTags(string[] customTags);
 
         void DoCrawling(int limit, params string[] customTags);
 
         int GetCondition(string key);
 
-        bool OverrideCondition(string key, int value);
+        //bool OverrideCondition(string key, int value);
     }
 }
