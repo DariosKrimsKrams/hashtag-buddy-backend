@@ -1,66 +1,21 @@
 ﻿namespace AutoTagger.Crawler.V3.Queue
 {
-    using System.Collections.Concurrent;
-    using System.Linq;
     using System;
     using System.Collections.Generic;
+
     using AutoTagger.Contract;
 
-    class UserQueue<T> : ConcurrentQueue<T>
+    class UserQueue<T> : BaseQueue<T>
     {
-        private readonly HashSet<T> processed;
-
-        public UserQueue()
+        public new void Process(Action<T> userPageCrawling)
         {
-            this.processed = new HashSet<T>();
-        }
-
-        public IEnumerable<IImage> Process(
-            Func<string, IEnumerable<IImage>> userPageCrawling)
-        {
-            while (this.TryDequeue(out T userNameAsT))
+            while (this.GetEntry(out T entry))
             {
-                if (this.IsProcessed(userNameAsT))
-                {
-                    continue;
-                }
+                //this.AddProcessed(entry);
 
-                var userName = (string)Convert.ChangeType(userNameAsT, typeof(string));
-                this.AddProcessed(userNameAsT);
-
-                var images = userPageCrawling(userName);
-                foreach (var image in images)
-                {
-                    yield return image;
-                }
+                var userName = (T) Convert.ChangeType(entry, typeof(T));
+                userPageCrawling(userName);
             }
-        }
-
-        public new void Enqueue(T shortCode)
-        {
-            if (shortCode == null)
-            {
-                return;
-            }
-            if (this.IsProcessed(shortCode))
-            {
-                return;
-            }
-            if (this.Contains(shortCode))
-            {
-                return;
-            }
-            base.Enqueue(shortCode);
-        }
-
-        private bool IsProcessed(T value)
-        {
-            return this.processed.Contains(value);
-        }
-
-        private void AddProcessed(T value)
-        {
-            this.processed.Add(value);
         }
     }
 }

@@ -8,7 +8,7 @@
 
     using NUnit.Framework;
 
-    class Queue_WhenStoring
+    class Queue_WhenEnqueue
     {
         private ConcurrentQueue<string> Queue;
 

@@ -21,7 +21,7 @@
             var amountPosts = GetAmountOfPosts(data);
             if (amountPosts < this.crawler.GetCondition("MinPostsForHashtags"))
             {
-                return (amountPosts, null);
+                return (amountPosts, new List<IImage>());
             }
 
             var nodes  = GetTopPostsNodes(data);

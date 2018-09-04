@@ -9,7 +9,7 @@
 
         void BuildTags(string[] customTags);
 
-        IEnumerable<IImage> DoCrawling(int limit, params string[] customTags);
+        void DoCrawling(int limit, params string[] customTags);
 
         int GetCondition(string key);
 

@@ -24,7 +24,7 @@
 
         public void DoCrawling(int limit, params string[] customTags)
         {
-            var images = this.crawler.DoCrawling(limit, customTags);
+            this.crawler.DoCrawling(limit, customTags);
 
             foreach (var image in images)
             {
@@ -43,12 +43,18 @@
             }
         }
 
-        private void HashtagFound(IHumanoidTag hTag)
+        private void HashtagFound(IHumanoidTag humanoidTag)
         {
-            this.db.InsertOrUpdateHumanoidTag(hTag);
-            var exists = this.allHTags.FirstOrDefault(htag => htag.Name == hTag.Name);
-            if (exists == null)
-                this.allHTags.Add(hTag);
+            this.db.InsertOrUpdateHumanoidTag(humanoidTag);
+            //var existinhHumanoidTag = this.allHTags.FirstOrDefault(htag => htag.Name == humanoidTag.Name);
+            //if (existinhHumanoidTag == null)
+            //{
+            //    this.allHTags.Add(humanoidTag);
+            //}
+            //else
+            //{
+            //    existinhHumanoidTag.Posts = humanoidTag.Posts;
+            //}
         }
 
         private void ImageFound(IImage image)
