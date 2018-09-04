@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface IImage
     {
         int Comments { get; set; }
@@ -30,5 +32,7 @@
         DateTime Uploaded { get; set; }
 
         string User { get; set; }
+
+        ILocation Location { get; set; }
     }
 }

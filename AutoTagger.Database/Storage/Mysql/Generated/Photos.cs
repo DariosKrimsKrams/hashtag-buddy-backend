@@ -29,6 +29,7 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public DateTime? Uploaded { get; set; }
         public DateTime Created { get; set; }
 
+        public Locations Location { get; set; }
         public ICollection<Mtags> Mtags { get; set; }
         public ICollection<PhotoItagRel> PhotoItagRel { get; set; }
 

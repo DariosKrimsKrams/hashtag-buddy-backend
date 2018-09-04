@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
+
     using Newtonsoft.Json;
 
     public class Image : IImage
@@ -32,6 +34,8 @@
         public DateTime Uploaded { get; set; }
 
         public string User { get; set; }
+
+        public ILocation Location { get; set; }
 
         public override string ToString()
         {

@@ -73,6 +73,21 @@
                     ThumbUrl = innerNode?.thumbnail_src,
                     Uploaded = takenDate
                 };
+
+                dynamic locationNode = innerNode?.location;
+                if (locationNode != null)
+                {
+                    var location = new Location
+                    {
+                        Id            = locationNode.id,
+                        HasPublicPage = locationNode.has_public_page,
+                        Name          = locationNode.name,
+                        Slug          = locationNode.slug
+                    };
+                    // {"id":"20864646","has_public_page":true,"name":"Tomorrowland","slug":"tomorrowland"}
+                    image.Location = location;
+                }
+
                 output.Add(image);
             }
 
