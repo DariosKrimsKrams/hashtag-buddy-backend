@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.V3.Queue
+﻿namespace AutoTagger.Crawler.V4.Queue
 {
     using System;
     using System.Collections.Concurrent;

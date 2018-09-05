@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.V3
+﻿namespace AutoTagger.Crawler.V4
 {
     using System;
     using System.Collections.Generic;
@@ -6,13 +6,16 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.V3.Crawler;
-    using AutoTagger.Crawler.V3.Queue;
+    using AutoTagger.Crawler.Standard;
+    using AutoTagger.Crawler.V4.Crawler;
+    using AutoTagger.Crawler.V4.Queue;
+    using AutoTagger.Crawler.V4.Requests;
+
     using static System.String;
 
-    public class CrawlerV3 : ICrawler
+    public class CrawlerV4 : ICrawler
     {
-        private readonly Dictionary<string, int> settings;
+        private readonly CrawlerSettings settings;
 
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly UserQueue<string> userQueue;
@@ -26,29 +29,37 @@
         public event Action<IHumanoidTag> OnHashtagFound;
         public event Action<IImage> OnImageFound;
 
-        public CrawlerV3()
+        public CrawlerV4()
         {
-            this.settings = new Dictionary<string, int>();
-            this.settings.Add("MinPostsForHashtags", 1 * 1000 * 1000);
-            this.settings.Add("limit", 10);
+            this.settings = new CrawlerSettings
+            {
+                MinPostsForHashtags         = 1 * 1000 * 1000,
+                Limit                       = -1,
+                ExploreTagsMinHashtagCount  = 0,
+                ExploreTagsMinLikes         = 100,
+                ExploreTagsMinCommentsCount = 0,
+                MaxHashtagLength            = 30,
+                MinHashtagLength            = 5
+            };
 
-            this.hashtagQueue                = new HashtagQueue<IHumanoidTag>();
+            this.hashtagQueue   = new HashtagQueue<IHumanoidTag>();
             this.userQueue      = new UserQueue<string>();
             this.shortcodeQueue = new ShortcodeQueue<string>();
 
+            var requestHandler = new HttpRequestHandler();
             this.randomTagsCrawler           = new RandomTagsCrawler();
-            this.exploreTagsPagePageCrawler  = new ExploreTagsPageCrawler(this);
+            this.exploreTagsPagePageCrawler  = new ExploreTagsPageCrawler(this.settings, requestHandler);
             this.imageDetailPageCrawler      = new ImageDetailPageCrawler();
             this.userPageCrawler             = new UserPageCrawler();
         }
 
         public void DoCrawling(int limit, params string[] customTags)
         {
-            this.BuildTags(customTags);
+            this.InsertTags(customTags);
             this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc);
         }
 
-        public void BuildTags(string[] customTags)
+        public void InsertTags(string[] customTags)
         {
             var tags = customTags.Length == 0 ? this.randomTagsCrawler.Parse() : customTags;
             var hTags = new List<IHumanoidTag>();
@@ -113,24 +124,11 @@
             }
         }
 
-        public bool OverrideCondition(string key, int value)
+        public void SetSetting(string key, int value)
         {
-            if (this.settings.ContainsKey(key))
-            {
-                this.settings[key] = value;
-                return true;
-            }
-
-            return false;
+            // ToDo
+            // this.settings.[key] = value
         }
 
-        public int GetCondition(string key)
-        {
-            if (this.settings.ContainsKey(key))
-            {
-                return this.settings[key];
-            }
-            return 0;
-        }
     }
 }

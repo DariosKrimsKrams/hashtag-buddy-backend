@@ -1,25 +1,27 @@
-﻿namespace AutoTagger.Crawler.V3.Crawler
+﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
     using System.Collections.Generic;
     using AutoTagger.Contract;
+    using AutoTagger.Crawler.V4.Requests;
 
-    class ExploreTagsPageCrawler : BaseImagePageCrawler
+    public class ExploreTagsPageCrawler : BaseImagePageCrawler
     {
-        private readonly ICrawler crawler;
 
-        public ExploreTagsPageCrawler(ICrawler crawler)
+        public ExploreTagsPageCrawler(CrawlerSettings settings, IRequestHandler requestHandler)
         {
-            this.crawler = crawler;
-            this.MinHashTagCount = 0;
-            this.MinLikes        = 100;
+            this.Settings = settings;
+            this.MinCommentsCount = this.Settings.ExploreTagsMinCommentsCount;
+            this.MinHashTagCount  = this.Settings.ExploreTagsMinHashtagCount;
+            this.MinLikes         = this.Settings.ExploreTagsMinLikes;
+            this.requestHandler = requestHandler;
         }
 
         public (int, IList<IImage>) Parse(string url)
         {
             var data = this.GetData(url);
             var amountPosts = GetAmountOfPosts(data);
-            if (amountPosts < this.crawler.GetCondition("MinPostsForHashtags"))
+            if (amountPosts < this.Settings.MinPostsForHashtags)
             {
                 return (amountPosts, new List<IImage>());
             }

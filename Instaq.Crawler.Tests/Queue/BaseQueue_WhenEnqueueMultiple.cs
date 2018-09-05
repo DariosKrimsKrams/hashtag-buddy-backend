@@ -1,10 +1,10 @@
-﻿namespace Instaq.Crawler.Tests
+﻿namespace Instaq.Crawler.Tests.Queue
 {
     using System.Collections.Generic;
-    using AutoTagger.Crawler.V3.Queue;
+    using AutoTagger.Crawler.V4.Queue;
     using NUnit.Framework;
 
-    class Queue_WhenEnqueueMultiple
+    class BaseQueue_WhenEnqueueMultiple
     {
         private BaseQueue<string> queue;
 

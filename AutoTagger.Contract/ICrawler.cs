@@ -13,8 +13,7 @@
 
         void DoCrawling(int limit, params string[] customTags);
 
-        int GetCondition(string key);
+        void SetSetting(string key, int value);
 
-        //bool OverrideCondition(string key, int value);
     }
 }

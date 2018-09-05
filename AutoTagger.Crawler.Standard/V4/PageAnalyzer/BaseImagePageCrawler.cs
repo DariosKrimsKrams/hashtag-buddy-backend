@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.V3.Crawler
+﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
     using System.Collections.Generic;
@@ -7,15 +7,18 @@
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
+    using AutoTagger.Crawler.V4.Requests;
 
-    abstract class BaseImagePageCrawler : HttpCrawler
+    public abstract class BaseImagePageCrawler
     {
-        protected static int MaxHashtagLength = 30;
-        protected static int MinHashtagLength = 5;
         private static readonly Regex FindHashTagsRegex = new Regex(@"#\w+", RegexOptions.Compiled);
-        protected int MinCommentsCount = 0;
-        protected int MinHashTagCount = 0;
-        protected int MinLikes = 0;
+
+        protected CrawlerSettings Settings;
+        protected int MinCommentsCount;
+        protected int MinHashTagCount;
+        protected int MinLikes;
+
+        protected IRequestHandler requestHandler;
 
         public static DateTime GetDateTime(double unixTimeStamp)
         {
@@ -25,8 +28,7 @@
 
         protected dynamic GetData(string url)
         {
-            var document = this.FetchDocument(url);
-            return GetScriptNodeData(document);
+            return this.requestHandler.FetchNode(url);
         }
 
         protected IList<IImage> GetImages(dynamic nodes)
@@ -94,11 +96,11 @@
             return output;
         }
 
-        private static bool HashtagIsAllowed(string value)
+        private bool HashtagIsAllowed(string value)
         {
             return !string.IsNullOrWhiteSpace(value)
-                && value.Length >= MinHashtagLength
-                && value.Length < MaxHashtagLength
+                && value.Length >= this.Settings.MinHashtagLength
+                && value.Length < this.Settings.MaxHashtagLength
                 && !IsDigitsOnly(value)
                 && !value.Contains('\'');
         }
@@ -113,7 +115,7 @@
             return true;
         }
 
-        private static IEnumerable<string> ParseHashTags(string text)
+        private IEnumerable<string> ParseHashTags(string text)
         {
             if (text == null)
             {

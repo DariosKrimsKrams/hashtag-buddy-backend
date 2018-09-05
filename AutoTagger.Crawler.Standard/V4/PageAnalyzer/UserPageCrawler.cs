@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Crawler.V3.Crawler
+﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
 
-    class UserPageCrawler : BaseImagePageCrawler
+    public class UserPageCrawler : BaseImagePageCrawler
     {
         private const int MinFollowerCount = 1000;
 

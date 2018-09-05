@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Crawler.V3.Crawler
+﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Crawler.Standard;
 
-    public class RandomTagsCrawler : HttpCrawler
+    public class RandomTagsCrawler : HttpRequestHandler
     {
         public IEnumerable<string> Parse()
         {

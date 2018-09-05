@@ -1,62 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Crawler.Standard
+﻿namespace AutoTagger.Crawler.Standard
 {
+    using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text.RegularExpressions;
-
+    using AutoTagger.Crawler.V4.Requests;
     using HtmlAgilityPack;
-
     using Newtonsoft.Json;
 
-    public abstract class HttpCrawler
+    public class HttpRequestHandler : IRequestHandler
     {
         private static readonly Regex FindJson = new Regex(
             @"\s*window\s*\.\s*_sharedData\s*\=\s*(.*)\s*\;\s*",
             RegexOptions.Compiled);
 
-        private static HttpClient httpClient;
+        private readonly HttpClient httpClient;
 
-        protected static HttpClient HttpClient
+        public HttpRequestHandler()
         {
-            get
-            {
-                if (httpClient == null)
-                {
-                    httpClient = new HttpClient();
-                }
-                return httpClient;
-            }
+            this.httpClient = new HttpClient();
         }
 
-        protected HtmlNode FetchDocument(string url)
+        public HtmlNode FetchDocument(string url)
         {
-            HttpResponseMessage result;
             try
             {
-                result = HttpClient.GetAsync(url).Result;
+                var result = this.httpClient.GetAsync(url).Result;
                 var status = result.StatusCode;
                 if (status != HttpStatusCode.OK)
                 {
                     return null;
                 }
+
+                var document = new HtmlDocument();
+                document.Load(result.Content.ReadAsStreamAsync().Result);
+                return document.DocumentNode;
             }
             catch (Exception)
             {
                 Console.WriteLine("Exception while fetching url " + url);
                 return null;
             }
-
-            var document = new HtmlDocument();
-            document.Load(result.Content.ReadAsStreamAsync().Result);
-            return document.DocumentNode;
         }
 
-        protected static dynamic GetScriptNodeData(HtmlNode document)
+        public dynamic FetchNode(string url)
+        {
+            var document = this.FetchDocument(url);
+            return this.GetScriptNodeData(document);
+        }
+
+        public dynamic GetScriptNodeData(HtmlNode document)
         {
             var scriptNode = document?.SelectNodes("//script")
                 ?.FirstOrDefault(n => n.InnerText.Contains("window._sharedData = "));
