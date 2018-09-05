@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.V3;
+    using AutoTagger.Crawler.V4;
     using AutoTagger.Database.Storage.Mysql;
     using AutoTagger.ImageProcessor.Standard;
     using AutoTagger.ImageDownloader.Standard;
@@ -17,7 +17,7 @@
         private static void Main(string[] args)
         {
             Console.WriteLine("" + 
-                             "1: Start Crawler (CrawlerEngine V3)\n" +
+                             "1: Start Crawler (CrawlerEngine V4)\n" +
                              "2: Start Image Downloader\n" +
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
@@ -82,14 +82,14 @@
         private static void CrawlMtagsWithHighScore()
         {
             var uiDb = new MysqlEvaluationStorage();
-            var mtags = uiDb.GetMtagsWithHighScore();
-            var mtagsArr = mtags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
+            var machineTags = uiDb.GetMtagsWithHighScore();
+            var machineTagsArr = machineTags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 
             var crawlerDb = new MysqlCrawlerStorage();
-            var crawlerEngine = new CrawlerV3();
-            crawlerEngine.OverrideCondition("MinPostsForHashtags", 10 * 1000);
-            crawlerEngine.BuildTags(mtagsArr);
-            crawlerEngine.DisableFurtherEnqueue();
+            var crawlerEngine = new CrawlerV4();
+            crawlerEngine.SetSetting("MinPostsForHashtags", 10 * 1000);
+            crawlerEngine.InsertTags(machineTagsArr);
+            //crawlerEngine.DisableFurtherEnqueue();
 
             var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
             crawler.OnImageSaved += image =>
@@ -106,7 +106,7 @@
         private static void StartCrawler()
         {
             var db = new MysqlCrawlerStorage();
-            var crawler = new CrawlerApp(db, new CrawlerV3());
+            var crawler = new CrawlerApp(db, new CrawlerV4());
 
             crawler.OnImageSaved += image =>
             {

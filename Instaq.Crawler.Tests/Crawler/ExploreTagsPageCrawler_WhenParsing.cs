@@ -36,11 +36,11 @@
         }
 
         [Test]
-        public void ThenReturnedData_ShouldHaveCorrectAmountOfPosts()
+        public void ThenReturnedData_ShouldHaveExpectedAmountOfPosts()
         {
             (int amountOfPosts, IList<IImage> images) = this.crawler.Parse("test");
             var expectedAmountOfPosts = 12239843;
-            Assert.AreSame(amountOfPosts, expectedAmountOfPosts);
+            Assert.AreEqual(amountOfPosts, expectedAmountOfPosts);
         }
 
         [Test]
@@ -48,7 +48,7 @@
         {
             (int amountOfPosts, IList<IImage> images) = this.crawler.Parse("test");
             var expectedAmountOfImages = 9;
-            Assert.AreSame(images.Count, expectedAmountOfImages);
+            Assert.AreEqual(images.Count, expectedAmountOfImages);
         }
 
         [Test]
