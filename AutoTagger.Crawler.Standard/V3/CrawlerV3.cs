@@ -132,10 +132,5 @@
             }
             return 0;
         }
-
-        //public void DisableFurtherEnqueue()
-        //{
-        //    this.hashtagQueue.AllowEnqueue = false;
-        //}
     }
 }

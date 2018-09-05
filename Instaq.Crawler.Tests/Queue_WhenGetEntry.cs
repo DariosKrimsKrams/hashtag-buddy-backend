@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instaq.Crawler.Tests
+﻿namespace Instaq.Crawler.Tests
 {
     using AutoTagger.Crawler.V3.Queue;
-
     using NUnit.Framework;
 
     class Queue_WhenGetEntry
@@ -19,7 +14,7 @@ namespace Instaq.Crawler.Tests
         }
 
         [Test]
-        public void ThenInsertedvalue_ShouldGetBack()
+        public void ThenInsertedValue_ShouldGetBack()
         {
             this.queue.Enqueue("test1");
             this.queue.GetEntry(out string entry);
@@ -27,7 +22,7 @@ namespace Instaq.Crawler.Tests
         }
 
         [Test]
-        public void ThenFirstInsertedvalue_ShouldGetBackFirst()
+        public void ThenFirstInsertedValue_ShouldGetBackFirst()
         {
             this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
@@ -36,7 +31,7 @@ namespace Instaq.Crawler.Tests
         }
 
         [Test]
-        public void ThenAllInsertedvalue_ShouldGetBackInItsOrder()
+        public void ThenAllInsertedValue_ShouldGetBackInItsOrder()
         {
             this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
@@ -50,15 +45,18 @@ namespace Instaq.Crawler.Tests
         }
 
         [Test]
-        public void ThenDuplicateEntries_ShouldReturnOnlyOnce()
+        public void ThenDuplicateInserts_ShouldReturnOnlyOnce()
         {
             this.queue.Enqueue("test1");
-            this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
+            this.queue.Enqueue("test1");
             this.queue.GetEntry(out string entry);
             Assert.AreEqual(entry, "test1");
             this.queue.GetEntry(out string entry2);
             Assert.AreEqual(entry2, "test2");
+            var status = this.queue.GetEntry(out string entry3);
+            Assert.AreEqual(entry3, null);
+            Assert.IsFalse(status);
         }
 
         [Test]
@@ -73,8 +71,8 @@ namespace Instaq.Crawler.Tests
         {
             this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
-            this.queue.GetEntry(out string entry1);
-            this.queue.GetEntry(out string entry2);
+            this.queue.GetEntry(out _);
+            this.queue.GetEntry(out _);
             this.queue.GetEntry(out string entry3);
             Assert.AreEqual(entry3, null);
         }
@@ -83,14 +81,14 @@ namespace Instaq.Crawler.Tests
         public void ThenReturnBoolean_ShouldBeTrueIfQueueFilled()
         {
             this.queue.Enqueue("test1");
-            var status = this.queue.GetEntry(out string entry);
+            var status = this.queue.GetEntry(out _);
             Assert.IsTrue(status);
         }
 
         [Test]
         public void ThenReturnBoolean_ShouldBeFalseIfQueueEmpty()
         {
-            var status = this.queue.GetEntry(out string entry);
+            var status = this.queue.GetEntry(out _);
             Assert.IsFalse(status);
         }
 
@@ -99,9 +97,21 @@ namespace Instaq.Crawler.Tests
         {
             this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
-            this.queue.GetEntry(out string entry1);
-            this.queue.GetEntry(out string entry2);
-            var status = this.queue.GetEntry(out string entry3);
+            this.queue.GetEntry(out _);
+            this.queue.GetEntry(out _);
+            var status = this.queue.GetEntry(out _);
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenProcessedValue_ShouldNotPossibleToEnqueueAgain()
+        {
+
+            this.queue.Enqueue("test1");
+            this.queue.GetEntry(out _);
+            this.queue.Enqueue("test1");
+            var status = this.queue.GetEntry(out string entry);
+            Assert.AreEqual(entry, null);
             Assert.IsFalse(status);
         }
     }

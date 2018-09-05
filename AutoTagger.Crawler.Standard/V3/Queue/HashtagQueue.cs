@@ -10,20 +10,6 @@
 
     public class HashtagQueue<T> : BaseQueue<T>
     {
-        public bool AllowEnqueue = true;
-
-        private new void Enqueue(T tag)
-        {
-            if (tag == null
-                || this.IsProcessed(tag)
-                || this.Contains(tag)
-                || !this.AllowEnqueue)
-            {
-                return;
-            }
-
-            base.Enqueue(tag);
-        }
 
         private bool IsProcessed(T checkingTag)
         {
