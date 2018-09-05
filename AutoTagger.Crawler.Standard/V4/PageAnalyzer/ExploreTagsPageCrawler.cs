@@ -5,16 +5,17 @@
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Requests;
 
-    public class ExploreTagsPageCrawler : BaseImagePageCrawler
+    public class ExploreTagsPageCrawler : BaseImagePageCrawler, IPageAnalyzer
     {
 
         public ExploreTagsPageCrawler(CrawlerSettings settings, IRequestHandler requestHandler)
         {
             this.Settings = settings;
+            this.requestHandler = requestHandler;
+
             this.MinCommentsCount = this.Settings.ExploreTagsMinCommentsCount;
             this.MinHashTagCount  = this.Settings.ExploreTagsMinHashtagCount;
             this.MinLikes         = this.Settings.ExploreTagsMinLikes;
-            this.requestHandler = requestHandler;
         }
 
         public (int, IList<IImage>) Parse(string url)
@@ -39,7 +40,7 @@
             return amountPosts;
         }
 
-        public dynamic GetTopPostsNodes(dynamic data)
+        private dynamic GetTopPostsNodes(dynamic data)
         {
             return data?.entry_data?.TagPage?[0]?.graphql?.hashtag?.edge_hashtag_to_top_posts?.edges;
         }

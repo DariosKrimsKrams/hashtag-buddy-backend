@@ -20,5 +20,13 @@ namespace AutoTagger.Crawler.V4
 
         public int MinHashtagLength { get; set; }
 
+        public int UserMinFollowerCount { get; set; }
+
+        public int UserMinHashTagCount { get; set; }
+
+        public int UserMinCommentsCount { get; set; }
+
+        public int UserMinLikes { get; set; }
+
     }
 }

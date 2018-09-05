@@ -39,7 +39,11 @@
                 ExploreTagsMinLikes         = 100,
                 ExploreTagsMinCommentsCount = 0,
                 MaxHashtagLength            = 30,
-                MinHashtagLength            = 5
+                MinHashtagLength            = 5,
+                UserMinFollowerCount        = 1000,
+                UserMinHashTagCount         = 5,
+                UserMinCommentsCount        = 10,
+                UserMinLikes                = 300
             };
 
             this.hashtagQueue   = new HashtagQueue<IHumanoidTag>();
@@ -49,8 +53,8 @@
             var requestHandler = new HttpRequestHandler();
             this.randomTagsCrawler           = new RandomTagsCrawler();
             this.exploreTagsPagePageCrawler  = new ExploreTagsPageCrawler(this.settings, requestHandler);
+            this.userPageCrawler             = new UserPageCrawler(this.settings, requestHandler);
             this.imageDetailPageCrawler      = new ImageDetailPageCrawler();
-            this.userPageCrawler             = new UserPageCrawler();
         }
 
         public void DoCrawling(int limit, params string[] customTags)

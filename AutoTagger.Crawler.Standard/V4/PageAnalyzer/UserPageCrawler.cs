@@ -4,16 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
+    using AutoTagger.Crawler.V4.Requests;
 
     public class UserPageCrawler : BaseImagePageCrawler
     {
-        private const int MinFollowerCount = 1000;
+        private readonly int MinFollowerCount;
 
-        public UserPageCrawler()
+        public UserPageCrawler(CrawlerSettings settings, IRequestHandler requestHandler)
         {
-            this.MinHashTagCount  = 5;
-            this.MinCommentsCount = 10;
-            this.MinLikes         = 300;
+            this.Settings         = settings;
+            this.requestHandler   = requestHandler;
+            this.MinFollowerCount = this.Settings.UserMinFollowerCount;
+            this.MinCommentsCount = this.Settings.UserMinHashTagCount;
+            this.MinHashTagCount  = this.Settings.UserMinCommentsCount;
+            this.MinLikes         = this.Settings.UserMinLikes;
         }
 
         public IEnumerable<IImage> Parse(string url)
@@ -22,7 +26,7 @@
 
             if (!HasUserEnoughFollower(data, out int followerCount, out int followingCount, out int postsCount))
             {
-                yield break;
+                return new List<IImage>();
             }
 
             var nodes = GetNodes(data);
@@ -35,31 +39,23 @@
                 image.Posts = postsCount;
             }
 
-            images = this.RemoveImagesWithDuplicateHashtags(images);
-
-            foreach (IImage image in images)
-            {
-                yield return image;
-            }
+            return this.RemoveImagesWithDuplicateHashtags(images);
         }
 
         private IEnumerable<IImage> RemoveImagesWithDuplicateHashtags(IList<IImage> images)
         {
             var newImages = new Dictionary<string, IImage>();
-            for (int i = images.Count-1; i >= 0; i--)
+            for (var i = images.Count-1; i >= 0; i--)
             {
                 var image = images[i];
                 var hashTags = string.Join("", image.HumanoidTags);
                 if (!newImages.ContainsKey(hashTags))
                     newImages.Add(hashTags, image);
             }
-            foreach (var newImage in newImages)
-            {
-                yield return newImage.Value;
-            }
+            return newImages.Select(x => x.Value);
         }
 
-        private static bool HasUserEnoughFollower(dynamic data, out int followerCount, out int followingCount, out int postsCount)
+        private bool HasUserEnoughFollower(dynamic data, out int followerCount, out int followingCount, out int postsCount)
         {
             var node      = data?.entry_data?.ProfilePage?[0]?.graphql?.user;
             followerCount = Convert.ToInt32(node?.edge_followed_by?.count.ToString());
