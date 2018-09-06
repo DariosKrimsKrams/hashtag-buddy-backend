@@ -2,23 +2,25 @@
 {
     using System;
     using System.Collections.Generic;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Requests;
 
     public class ExploreTagsPageCrawler : BaseImagePageCrawler, IPageAnalyzer
     {
 
-        public ExploreTagsPageCrawler(CrawlerSettings settings, IRequestHandler requestHandler)
+        public ExploreTagsPageCrawler(ICrawlerSettings settings, IRequestHandler requestHandler)
         {
             this.Settings = settings;
-            this.requestHandler = requestHandler;
+            this.RequestHandler = requestHandler;
 
             this.MinCommentsCount = this.Settings.ExploreTagsMinCommentsCount;
             this.MinHashTagCount  = this.Settings.ExploreTagsMinHashtagCount;
             this.MinLikes         = this.Settings.ExploreTagsMinLikes;
         }
 
-        public (int, IList<IImage>) Parse(string url)
+        public (int, IEnumerable<IImage>) Parse(string url)
         {
             var data = this.GetData(url);
             var amountPosts = GetAmountOfPosts(data);

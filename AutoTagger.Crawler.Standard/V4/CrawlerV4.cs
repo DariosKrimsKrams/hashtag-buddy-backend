@@ -95,19 +95,19 @@
             this.userQueue.Process(this.UserCrawlerFunc);
         }
 
-        private void UserCrawlerFunc(string user)
+        private void UserCrawlerFunc(string username)
         {
-            var url = $"https://www.instagram.com/{user}/?hl=en";
-            var images = this.userPageCrawler.Parse(url);
+            var url = $"https://www.instagram.com/{username}/?hl=en";
+            var user = this.userPageCrawler.Parse(url);
 
-            foreach (var image in images)
+
+            foreach (var image in user.Images)
             {
-                // ToDo limit check
+                image.Follower  = user.FollowerCount;
+                image.Following = user.FollowingCount;
+                image.Posts     = user.PostCount;
 
-                if (image == null)
-                {
-                    continue;
-                }
+                // ToDo limit check
 
                 var hTagNames = image.HumanoidTags;
                 foreach (var hTagName in hTagNames)

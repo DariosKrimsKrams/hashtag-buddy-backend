@@ -13,12 +13,12 @@
     {
         private static readonly Regex FindHashTagsRegex = new Regex(@"#\w+", RegexOptions.Compiled);
 
-        protected CrawlerSettings Settings;
+        protected ICrawlerSettings Settings;
         protected int MinCommentsCount;
         protected int MinHashTagCount;
         protected int MinLikes;
 
-        protected IRequestHandler requestHandler;
+        protected IRequestHandler RequestHandler;
 
         public static DateTime GetDateTime(double unixTimeStamp)
         {
@@ -28,7 +28,7 @@
 
         protected dynamic GetData(string url)
         {
-            return this.requestHandler.FetchNode(url);
+            return this.RequestHandler.FetchNode(url);
         }
 
         protected IList<IImage> GetImages(dynamic nodes)
@@ -50,7 +50,7 @@
                 string text = edges[0]?.node?.text;
                 text = text?.Replace("\\n", "\n");
                 text = System.Web.HttpUtility.HtmlDecode(text);
-                var hashtags = ParseHashTags(text).ToList();
+                var hashtags = this.ParseHashTags(text).ToList();
 
                 var innerNode = node.node;
                 int likes = innerNode.edge_liked_by?.count;
@@ -99,6 +99,7 @@
         private bool HashtagIsAllowed(string value)
         {
             return !string.IsNullOrWhiteSpace(value)
+                && value != ""
                 && value.Length >= this.Settings.MinHashtagLength
                 && value.Length < this.Settings.MaxHashtagLength
                 && !IsDigitsOnly(value)
@@ -122,7 +123,7 @@
                 return Enumerable.Empty<string>();
             }
             return FindHashTagsRegex.Matches(text).OfType<Match>().Select(m => m?.Value.Trim(' ', '#').ToLower())
-                .Where(HashtagIsAllowed).Distinct();
+                .Where(this.HashtagIsAllowed).Distinct();
         }
     }
 }

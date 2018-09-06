@@ -6,6 +6,6 @@
 
     public interface IPageAnalyzer
     {
-        (int, IList<IImage>) Parse(string url);
+        (int, IEnumerable<IImage>) Parse(string url);
     }
 }

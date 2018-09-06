@@ -2,20 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Requests;
-
-    using HtmlAgilityPack;
-
     using Newtonsoft.Json;
-
     using NSubstitute;
-
     using NUnit.Framework;
 
     class ExploreTagsPageCrawler_WhenParsing
@@ -38,7 +33,7 @@
         [Test]
         public void ThenReturnedData_ShouldHaveExpectedAmountOfPosts()
         {
-            (int amountOfPosts, IList<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
             var expectedAmountOfPosts = 12239843;
             Assert.AreEqual(amountOfPosts, expectedAmountOfPosts);
         }
@@ -46,15 +41,15 @@
         [Test]
         public void ThenReturnedData_ShouldHaveExpectedAmountOfImages()
         {
-            (int amountOfPosts, IList<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
             var expectedAmountOfImages = 9;
-            Assert.AreEqual(images.Count, expectedAmountOfImages);
+            Assert.AreEqual(images.Count(), expectedAmountOfImages);
         }
 
         [Test]
         public void ThenFirstImage_ShouldHaveExpectedValues()
         {
-            (int amountOfPosts, IList<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
             var expectedImage = new Image
             {
                 Likes = 5473,
@@ -66,7 +61,7 @@
                 HumanoidTags = new List<string>()
 
             };
-            Assert.AreEqual(JsonConvert.SerializeObject(images[0]), JsonConvert.SerializeObject(expectedImage));
+            Assert.AreEqual(JsonConvert.SerializeObject(images.FirstOrDefault()), JsonConvert.SerializeObject(expectedImage));
         }
     }
 }

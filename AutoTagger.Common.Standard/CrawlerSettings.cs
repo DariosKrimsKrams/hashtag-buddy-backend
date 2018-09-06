@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AutoTagger.Crawler.V4
+﻿namespace AutoTagger.Common
 {
-    public class CrawlerSettings
+    using AutoTagger.Contract;
+
+    public class CrawlerSettings : ICrawlerSettings
     {
         public int MinPostsForHashtags { get; set; }
 
