@@ -20,7 +20,7 @@
 
             this.queue.GetEntry(out var entry);
 
-            Assert.AreEqual(entry, "test1");
+            Assert.AreEqual("test1", entry);
         }
 
         [Test]
@@ -31,7 +31,7 @@
 
             this.queue.GetEntry(out var entry);
 
-            Assert.AreEqual(entry, "test1");
+            Assert.AreEqual("test1", entry);
         }
 
         [Test]
@@ -41,13 +41,13 @@
             this.queue.Enqueue("test2");
             this.queue.Enqueue("test3");
 
-            this.queue.GetEntry(out var entry);
+            this.queue.GetEntry(out var entry1);
             this.queue.GetEntry(out var entry2);
             this.queue.GetEntry(out var entry3);
 
-            Assert.AreEqual(entry, "test1");
-            Assert.AreEqual(entry2, "test2");
-            Assert.AreEqual(entry3, "test3");
+            Assert.AreEqual("test1", entry1);
+            Assert.AreEqual("test2", entry2);
+            Assert.AreEqual("test3", entry3);
         }
 
         [Test]
@@ -60,9 +60,9 @@
             this.queue.GetEntry(out var entry2);
             var status = this.queue.GetEntry(out var entry3);
 
-            Assert.AreEqual(entry, "test1");
-            Assert.AreEqual(entry2, "test2");
-            Assert.AreEqual(entry3, null);
+            Assert.AreEqual("test1", entry);
+            Assert.AreEqual("test2", entry2);
+            Assert.AreEqual(null, entry3);
             Assert.IsFalse(status);
         }
 
@@ -71,7 +71,7 @@
         {
             this.queue.GetEntry(out var entry);
 
-            Assert.AreEqual(entry, null);
+            Assert.AreEqual(null, entry);
         }
 
         [Test]
@@ -84,7 +84,7 @@
             this.queue.GetEntry(out _);
             this.queue.GetEntry(out var entry3);
 
-            Assert.AreEqual(entry3, null);
+            Assert.AreEqual(null, entry3);
         }
 
         [Test]
@@ -127,7 +127,7 @@
 
             var status = this.queue.GetEntry(out var entry);
 
-            Assert.AreEqual(entry, null);
+            Assert.AreEqual(null, entry);
             Assert.IsFalse(status);
         }
     }

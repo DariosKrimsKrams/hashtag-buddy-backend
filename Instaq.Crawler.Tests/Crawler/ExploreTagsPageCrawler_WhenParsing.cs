@@ -37,7 +37,7 @@
 
             var expectedAmountOfPosts = 12239843;
 
-            Assert.AreEqual(amountOfPosts, expectedAmountOfPosts);
+            Assert.AreEqual(expectedAmountOfPosts, amountOfPosts);
         }
 
         [Test]
@@ -47,26 +47,29 @@
 
             var expectedAmountOfImages = 9;
 
-            Assert.AreEqual(images.Count(), expectedAmountOfImages);
+            Assert.AreEqual(expectedAmountOfImages, images.Count());
         }
 
         [Test]
         public void ThenFirstImage_ShouldHaveExpectedValues()
         {
             (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
-
             var expectedImage = new Image
             {
                 Likes = 5473,
                 CommentCount = 122,
+                Comments = Enumerable.Empty<string>(),
                 Shortcode = "BnV-TCDgVb_",
                 LargeUrl = "https://scontent-frt3-2.cdninstagram.com/vp/b9033477f9c1b4954909240dbf698f12/5C1DF24B/t51.2885-15/e35/39565490_296723474249155_3505199295043207168_n.jpg",
                 ThumbUrl = "https://scontent-frt3-2.cdninstagram.com/vp/290a08ac8dae7f7e1d4225a071261509/5C31A8E0/t51.2885-15/sh0.08/e35/c0.134.1080.1080/s640x640/39565490_296723474249155_3505199295043207168_n.jpg",
                 Uploaded = new DateTime(2018, 9, 5, 11, 49, 2).ToLocalTime(),
                 HumanoidTags = new List<string> { "leipzig" }
             };
+            var expectedJson = JsonConvert.SerializeObject(expectedImage);
 
-            Assert.AreEqual(JsonConvert.SerializeObject(images.FirstOrDefault()), JsonConvert.SerializeObject(expectedImage));
+            var resultJson = JsonConvert.SerializeObject(images.FirstOrDefault());
+
+            Assert.AreEqual(expectedJson, resultJson);
         }
     }
 }

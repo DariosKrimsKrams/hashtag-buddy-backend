@@ -1,6 +1,7 @@
 ﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -47,47 +48,55 @@
             foreach (var node in nodes)
             {
                 var innerNode = node?.node;
-                var edges = innerNode?.edge_media_to_caption?.edges;
-                if (edges == null || edges.ToString() == "[]")
+                var images = this.GetImage(innerNode);
+                foreach (var image in images)
                 {
-                    continue;
+                    yield return image;
                 }
-
-                string text = edges[0]?.node?.text;
-                text = text?.Replace("\\n", "\n");
-                text = System.Web.HttpUtility.HtmlDecode(text);
-                var hashtags = this.ParseHashtags(text).ToList();
-
-                var comments = innerNode?.edge_media_to_comment?.edges;
-
-                var takenDate = GetDateTime(Convert.ToDouble(innerNode?.taken_at_timestamp.ToString()));
-                var image = new Image
-                {
-                    Likes = innerNode.edge_liked_by?.count,
-                    CommentCount = innerNode?.edge_media_to_comment?.count,
-                    Comments = comments,
-                    Shortcode = innerNode?.shortcode,
-                    HumanoidTags = hashtags,
-                    LargeUrl = innerNode?.display_url,
-                    ThumbUrl = innerNode?.thumbnail_src,
-                    Uploaded = takenDate
-                };
-
-                var locationNode = innerNode?.location;
-                if (locationNode != null)
-                {
-                    var location = new Location
-                    {
-                        Id            = locationNode.id,
-                        HasPublicPage = locationNode.has_public_page,
-                        Name          = locationNode.name,
-                        Slug          = locationNode.slug
-                    };
-                    image.Location = location;
-                }
-
-                yield return image;
             }
+        }
+
+        public IEnumerable<IImage> GetImage(dynamic node)
+        {
+            var edges = node?.edge_media_to_caption?.edges;
+            if (edges == null || edges.ToString() == "[]")
+            {
+                yield break;
+            }
+
+            string text = edges[0]?.node?.text;
+            var hashtags = this.ParseHashtags(text);
+
+            //var comments = node?.edge_media_to_comment?.edges;
+            var comments = new List<string>();
+
+            var takenDate = GetDateTime(Convert.ToDouble(node?.taken_at_timestamp.ToString()));
+            var image = new Image
+            {
+                Likes        = node.edge_media_preview_like?.count,
+                CommentCount = node?.edge_media_to_comment?.count,
+                Comments = comments,
+                Shortcode    = node?.shortcode,
+                HumanoidTags = hashtags,
+                LargeUrl     = node?.display_url,
+                ThumbUrl     = node?.thumbnail_src,
+                Uploaded     = takenDate
+            };
+
+            var locationNode = node?.location;
+            if (locationNode != null)
+            {
+                var location = new Location
+                {
+                    Id            = locationNode.id,
+                    HasPublicPage = locationNode.has_public_page,
+                    Name          = locationNode.name,
+                    Slug          = locationNode.slug
+                };
+                image.Location = location;
+            }
+
+            yield return image;
         }
 
         public IEnumerable<string> ParseHashtags(string text)
@@ -96,6 +105,8 @@
             {
                 return Enumerable.Empty<string>();
             }
+            text = text.Replace("\\n", "\n");
+            text = System.Web.HttpUtility.HtmlDecode(text);
             return FindHashTagsRegex
                 .Matches(text)
                 .OfType<Match>()

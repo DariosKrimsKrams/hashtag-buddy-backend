@@ -1,5 +1,6 @@
 ﻿namespace Instaq.Crawler.Tests.Logic
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -88,7 +89,76 @@
         {
             IEnumerable<IImage> images = this.logic.GetImages(this.nodes);
 
-            Assert.AreEqual(images.Count(), 12);
+            Assert.AreEqual(12, images.Count());
+        }
+
+        [Test]
+        public void ThenOneImageFromUserPage_ShouldReturnExpectedData()
+        {
+            var jsonOneImage = "[{\"node\":{\"__typename\":\"GraphImage\",\"id\":\"1859593211102936307\",\"edge_media_to_caption\":{\"edges\":[{\"node\":{\"text\":\"FUCK! Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. Und es war sooo GEIL! ^.^ Ihr seit alle so fertig und komplett im Arsch! Danke liebe Alle, die mit am Start waren, und die ich kennen gelernt habe :) #hierNochnKlischeeSpruchEinf\u00fcgen\"}}]},\"shortcode\":\"BnOmixGhLzz\",\"edge_media_to_comment\":{\"count\":4},\"comments_disabled\":false,\"taken_at_timestamp\":1535900807,\"dimensions\":{\"height\":1350,\"width\":1080},\"display_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"edge_liked_by\":{\"count\":22},\"edge_media_preview_like\":{\"count\":22},\"gating_info\":null,\"media_preview\":\"ACEqlmVVwqjcx/hH6E+n49qh3sBtLsxHJVPur/vN3qKNxEDvJZjyQP5s39P0qZiQw6KuACucZX3HYnioV3o9jVR6q1/uX49fT7x0bK3LDb2xx36YBH8vzprw7/u49P8AOT/LNT5CrgEY/wBrg+2RyOncfjVKQEd8g8ZBBHvkjp/hWll0f3gpuLs9PT9Uxfsb+v8AOikwfVf++h/hRU2fdfc/8y/av+b8F/kRwIQMYGTzg/jz6/mKmEcY5f8AP3/Qj9asKWdRkKxA9s/XIwc49DTBsz1IH8Q5IGemQef8aL9/6/QFK+i+636rX8BjSOowDvTOBnkfmcf0ps2QMEAAHOMEH9f58/WpXt1cAKyMB0wcHn1B/wA44qGRQVKZLnOcehHB4HHSnden9f12Jtqklfuuq89f+CVNy0U7yT/zzb9aKXMu6/r5mt12/wDSf/kR0MiYwSUOcjuv4jr+IqWJzvPmZKkbQRyPrk9u/PTjjNZy1PGxHQkUJ30LlBW5v6+/cs3A2sQGXDYIC8jHuOg6c+/PSlafC4DbcAckkZ/AD8xn0qKX5cEcHanT6VAWJJySaqy6nK0S7x/fT9aKr0VRFl/Vj//Z\",\"owner\":{\"id\":\"51603030\"},\"thumbnail_src\":\"https://scontent-frx5-1.cdninstagram.com/vp/68fb2fb26a09968b6ae9f35f012ab5e3/5C2584E7/t51.2885-15/sh0.08/e35/c0.135.1080.1080/s640x640/40747690_739744336373924_2008795589189304320_n.jpg\",\"thumbnail_resources\":[{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/a65a5887937c34997c139cf0094568ae/5C26BDFC/t51.2885-15/e35/c0.135.1080.1080/s150x150/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":150,\"config_height\":150},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/e728d46f9ccbfcec69b8d9d285f96548/5C2688B6/t51.2885-15/e35/c0.135.1080.1080/s240x240/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":240,\"config_height\":240},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/58f7c86361ad60e0ebde86d485db59fb/5C16DE0C/t51.2885-15/e35/c0.135.1080.1080/s320x320/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":320,\"config_height\":320},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/891245818c984c08c782fb306ea2fc89/5C35D056/t51.2885-15/e35/c0.135.1080.1080/s480x480/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":480,\"config_height\":480},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/68fb2fb26a09968b6ae9f35f012ab5e3/5C2584E7/t51.2885-15/sh0.08/e35/c0.135.1080.1080/s640x640/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":640,\"config_height\":640}],\"is_video\":false,\"accessibility_caption\":null}}]";
+            var nodes = JsonConvert.DeserializeObject(jsonOneImage);
+            var expectedImage = new Image
+            {
+                Likes        = 22,
+                CommentCount = 4,
+                Comments     = Enumerable.Empty<string>(),
+                Shortcode    = "BnOmixGhLzz",
+                LargeUrl     = "https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg",
+                ThumbUrl     = "https://scontent-frx5-1.cdninstagram.com/vp/68fb2fb26a09968b6ae9f35f012ab5e3/5C2584E7/t51.2885-15/sh0.08/e35/c0.135.1080.1080/s640x640/40747690_739744336373924_2008795589189304320_n.jpg",
+                Uploaded     = new DateTime(2018, 9, 2, 15, 06, 47).ToLocalTime(),
+                HumanoidTags = new List<string> { "hiernochnklischeesprucheinfügen" }
+            };
+            var expectedJson = JsonConvert.SerializeObject(expectedImage);
+
+            IEnumerable<IImage> images = this.logic.GetImages(nodes);
+            var resultJson = JsonConvert.SerializeObject(images.FirstOrDefault());
+
+            Assert.AreEqual(expectedJson, resultJson);
+        }
+
+        [Test]
+        public void ThenOneImageFromImageDetailPage_ShouldReturnExpectedData()
+        {
+            var jsonOneImage = "{\"__typename\":\"GraphImage\",\"id\":\"1859593211102936307\",\"shortcode\":\"BnOmixGhLzz\",\"dimensions\":{\"height\":1350,\"width\":1080},\"gating_info\":null,\"media_preview\":\"ACEqlmVVwqjcx/hH6E+n49qh3sBtLsxHJVPur/vN3qKNxEDvJZjyQP5s39P0qZiQw6KuACucZX3HYnioV3o9jVR6q1/uX49fT7x0bK3LDb2xx36YBH8vzprw7/u49P8AOT/LNT5CrgEY/wBrg+2RyOncfjVKQEd8g8ZBBHvkjp/hWll0f3gpuLs9PT9Uxfsb+v8AOikwfVf++h/hRU2fdfc/8y/av+b8F/kRwIQMYGTzg/jz6/mKmEcY5f8AP3/Qj9asKWdRkKxA9s/XIwc49DTBsz1IH8Q5IGemQef8aL9/6/QFK+i+636rX8BjSOowDvTOBnkfmcf0ps2QMEAAHOMEH9f58/WpXt1cAKyMB0wcHn1B/wA44qGRQVKZLnOcehHB4HHSnden9f12Jtqklfuuq89f+CVNy0U7yT/zzb9aKXMu6/r5mt12/wDSf/kR0MiYwSUOcjuv4jr+IqWJzvPmZKkbQRyPrk9u/PTjjNZy1PGxHQkUJ30LlBW5v6+/cs3A2sQGXDYIC8jHuOg6c+/PSlafC4DbcAckkZ/AD8xn0qKX5cEcHanT6VAWJJySaqy6nK0S7x/fT9aKr0VRFl/Vj//Z\",\"display_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"display_resources\":[{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/ad4725cb4a41564d5793687b8ffcd395/5C282052/t51.2885-15/sh0.08/e35/p640x640/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":640,\"config_height\":800},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/68d141bffc6bf56f230fd6f079fbf62a/5C22F052/t51.2885-15/sh0.08/e35/p750x750/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":750,\"config_height\":937},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":1080,\"config_height\":1350}],\"accessibility_caption\":null,\"is_video\":false,\"should_log_client_event\":false,\"tracking_token\":\"eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjpmYWxzZSwidXVpZCI6IjEzMzg0NWI0ZGE2ZDQ2YzY4ZTNkYjJhZmQyZDhjZGRjMTg1OTU5MzIxMTEwMjkzNjMwNyIsInNlcnZlcl90b2tlbiI6IjE1MzYzNTM4MTE5MDd8MTg1OTU5MzIxMTEwMjkzNjMwN3w1MTYwMzAzMHxhMTFhZTI2YTdkZDU2NGRhMmVkMDVkNjI5ZmM2MTE0ZjQ4YzZhZWUzMTA0YWU1ZDU5MjhkMzMwYzBjN2MwMTJhIn0sInNpZ25hdHVyZSI6IiJ9\",\"edge_media_to_tagged_user\":{\"edges\":[]},\"edge_media_to_caption\":{\"edges\":[{\"node\":{\"text\":\"FUCK! #doppelt Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. ^.^#hurricanefestival #hurricane #doppelt #festival:) #hierNochnKlischeeSpruchEinf\u00fcgen\"}}]},\"caption_is_edited\":false,\"has_ranked_comments\":false,\"edge_media_to_comment\":{\"count\":4,\"page_info\":{\"has_next_page\":false,\"end_cursor\":null},\"edges\":[{\"node\":{\"id\":\"17915396320205892\",\"text\":\"\ud83d\ude0d\ud83d\ude0dRespekt\",\"created_at\":1535914028,\"owner\":{\"id\":\"1242452287\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/c6ef51d87d64be887c3f4d19f047bba6/5C25A887/t51.2885-19/s150x150/15305912_590701741130769_8624826111743754240_a.jpg\",\"username\":\"linajo_ft\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17966924284079396\",\"text\":\"Wo ist das #tml! Lederband??#Tomorrowland\",\"created_at\":1535915264,\"owner\":{\"id\":\"17052236\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/1d2559cc0b6d55bdce91bd87009d2932/5C1B9EFA/t51.2885-19/s150x150/38436457_959682847550901_8411232281397559296_n.jpg\",\"username\":\"gina_globetrotter\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17955249307082596\",\"text\":\"Ich seh unser b\u00e4ndchen von 2014 \ud83d\ude0d\",\"created_at\":1535955467,\"owner\":{\"id\":\"526836007\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/fbbdac86f112f48e5d04259e65c8bb48/5C2DAF17/t51.2885-19/s150x150/15056740_970603243085913_6971859144164769792_a.jpg\",\"username\":\"lucas_hssl\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17948414212146963\",\"text\":\"@gina_globetrotter eingepackt in#test #test#test der @personTest \u00f6den Box#hashtagZumTesten :D\",\"created_at\":1536044743,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\"},\"viewer_has_liked\":false,\"edge_liked_by\":{\"count\":0}}}]},\"comments_disabled\":false,\"taken_at_timestamp\":1535900807,\"edge_media_preview_like\":{\"count\":22,\"edges\":[]},\"edge_media_to_sponsor_user\":{\"edges\":[]},\"location\":{\"id\":\"108433841\",\"has_public_page\":true,\"name\":\"Hurricane Festival\",\"slug\":\"hurricane-festival\"},\"viewer_has_liked\":false,\"viewer_has_saved\":false,\"viewer_has_saved_to_collection\":false,\"viewer_in_photo_of_you\":false,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\",\"blocked_by_viewer\":false,\"followed_by_viewer\":false,\"full_name\":\"Dario\",\"has_blocked_viewer\":false,\"is_private\":false,\"is_unpublished\":false,\"is_verified\":false,\"requested_by_viewer\":false},\"is_ad\":false,\"edge_web_media_to_related_media\":{\"edges\":[]},\"share_ids\":null}";
+            var node = JsonConvert.DeserializeObject(jsonOneImage);
+            var expectedImage = new Image
+            {
+                Likes        = 22,
+                CommentCount = 4,
+                Comments = new List<string>
+                {
+                    "FUCK! #doppelt Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. ^.^#hurricanefestival #hurricane #doppelt #festival:) #hierNochnKlischeeSpruchEinf\u00fcgen",
+                    "\ud83d\ude0d\ud83d\ude0dRespekt",
+                    "Wo ist das #tml! Lederband??#Tomorrowland",
+                    "Ich seh unser b\u00e4ndchen von 2014 \ud83d\ude0d",
+                    "@gina_globetrotter eingepackt in#test #test#test der @personTest \u00f6den Box#hashtagZumTesten :D"
+                },
+                Shortcode    = "BnOmixGhLzz",
+                LargeUrl     = "https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg",
+                ThumbUrl     = "https://scontent-frx5-1.cdninstagram.com/vp/68fb2fb26a09968b6ae9f35f012ab5e3/5C2584E7/t51.2885-15/sh0.08/e35/c0.135.1080.1080/s640x640/40747690_739744336373924_2008795589189304320_n.jpg",
+                Uploaded     = new DateTime(2018, 9, 2, 15, 06, 47).ToLocalTime(),
+                HumanoidTags = new List<string> {
+                    "doppelt",
+                    "hurricanefestival",
+                    "hurricane",
+                    "festival",
+                    "hiermochnklischeesprucheinfügen",
+                    "tml",
+                    "Tomorrowland",
+                    "test",
+                    "hashtagzumtesten"
+                },
+                Location = new Location
+                {
+
+                }
+            };
+            var expectedJson = JsonConvert.SerializeObject(expectedImage);
+
+            IEnumerable<IImage> images = this.logic.GetImage(node);
+            var resultJson = JsonConvert.SerializeObject(images.FirstOrDefault());
+
+            Assert.AreEqual(expectedJson, resultJson);
         }
 
     }
