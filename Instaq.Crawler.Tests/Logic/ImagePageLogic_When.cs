@@ -3,29 +3,163 @@
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Crawler;
+    using AutoTagger.Crawler.V4.Requests;
+
+    using Newtonsoft.Json;
+
+    using NSubstitute;
+
     using NUnit.Framework;
 
-    class ImagePageLogic_When
+    class ImagePageLogic_WhenCheckingHashtagIsAllowed
     {
         private ImagePageLogic logic;
         private ICrawlerSettings settings;
-        //private IUser user;
 
         [SetUp]
         public void Setup()
         {
             this.settings = new CrawlerSettings();
-            //this.logic  = new ImagePageLogic(this.settings);
-            //this.user     = new User { FollowerCount = 1337 };
+            var requestHandler = Substitute.For<IRequestHandler>();
+            //var json = "{node: empty}";
+            //dynamic jsonObj = JsonConvert.DeserializeObject(json);
+            //requestHandler.FetchNode("test").Returns(new);
+            this.logic = new ImagePageLogic(this.settings, requestHandler);
         }
 
         [Test]
-        public void ThenParsIngHashTags_ShouldY()
+        public void ThenValidHashtag_ShouldBeTrue()
         {
+            var hashtag = "test";
+
+            var status = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsTrue(status);
         }
+
         [Test]
-        public void ThenHashtagIsAllowed_ShouldY()
+        public void ThenHashtagWithNull_ShouldBeFalse()
         {
+            string hashtag = null;
+
+            var status = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenHashtagWithWhitespace_ShouldBeFalse()
+        {
+            var hashtag = "   ";
+
+            var status = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenEmptyHashtag_ShouldBeFalse()
+        {
+            var hashtag = "";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenTooShortHashtag_ShouldBeFalse()
+        {
+            this.settings.MinHashtagLength = 5;
+            var hashtag = "dari";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenLongEnoughHashtag_ShouldBeTrue()
+        {
+            this.settings.MinHashtagLength = 5;
+            var hashtag = "dario";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsTrue(status);
+        }
+
+        [Test]
+        public void ThenTooLongHashtag_ShouldBeFalse()
+        {
+            this.settings.MaxHashtagLength = 10;
+            var hashtag = "darioiscool";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenShortEnoughHashtag_ShouldBeTrue()
+        {
+            this.settings.MaxHashtagLength = 10;
+            var hashtag = "darioiscoo";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsTrue(status);
+        }
+
+        [Test]
+        public void ThenAShortHashtagAndMaxHashtagLengthOf0_ShouldBeTrue()
+        {
+            this.settings.MaxHashtagLength = 0;
+            var hashtag = "a";
+
+            var status = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsTrue(status);
+        }
+
+        [Test]
+        public void ThenHashtagWithOnlyDigits_ShouldBeFalse()
+        {
+            var hashtag = "1234567890";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenHashtagWithDigitsAndAtLeastOneChar_ShouldBeTrue()
+        {
+            var hashtag = "123456a7890";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsTrue(status);
+        }
+
+        [Test]
+        public void ThenHashtagWithSingleQuotes_ShouldBeFalse()
+        {
+            var hashtag = "bday'91";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenHashtagWithAnySpecialCharsExcludingSingleQuotes_ShouldBeTrue()
+        {
+            var hashtag = "!\"§$%&/()={[]}?\\`´*+~'#-_.:,;@€";
+
+            var status  = this.logic.HashtagIsAllowed(hashtag);
+
+            Assert.IsFalse(status);
         }
     }
 }

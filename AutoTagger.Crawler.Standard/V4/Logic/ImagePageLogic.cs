@@ -116,7 +116,7 @@
             return !string.IsNullOrWhiteSpace(value)
                 && value != ""
                 && value.Length >= this.settings.MinHashtagLength
-                && value.Length < this.settings.MaxHashtagLength
+                && (value.Length <= this.settings.MaxHashtagLength || this.settings.MaxHashtagLength == 0)
                 && !IsDigitsOnly(value)
                 && !value.Contains('\'');
         }
