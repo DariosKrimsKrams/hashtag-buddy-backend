@@ -98,7 +98,7 @@
                     "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
                   + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
                   + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
-                  + "\", \"comments\":\"" + image.Comments + "\", }");
+                  + "\", \"comments\":\"" + image.CommentCount + "\", }");
             };
             crawler.DoCrawling(0);
         }
@@ -114,7 +114,7 @@
                     "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
                   + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
                   + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
-                  + "\", \"comments\":\"" + image.Comments + "\", }");
+                  + "\", \"comments\":\"" + image.CommentCount + "\", }");
             };
             crawler.DoCrawling(0);
         }

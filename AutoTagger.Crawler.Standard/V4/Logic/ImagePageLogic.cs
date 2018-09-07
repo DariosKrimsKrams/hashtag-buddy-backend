@@ -63,8 +63,9 @@
                 var takenDate = GetDateTime(Convert.ToDouble(innerNode?.taken_at_timestamp.ToString()));
                 var image = new Image
                 {
-                    Likes = likes,
-                    Comments = commentsCount,
+                    Likes = innerNode.edge_liked_by?.count,
+                    CommentCount = innerNode?.edge_media_to_comment?.count,
+                    Comments = comments,
                     Shortcode = innerNode?.shortcode,
                     HumanoidTags = hashtags,
                     LargeUrl = innerNode?.display_url,

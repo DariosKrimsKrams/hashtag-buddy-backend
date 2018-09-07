@@ -58,7 +58,7 @@
             var expectedImage = new Image
             {
                 Likes = 5473,
-                Comments = 122,
+                CommentCount = 122,
                 Shortcode = "BnV-TCDgVb_",
                 LargeUrl = "https://scontent-frt3-2.cdninstagram.com/vp/b9033477f9c1b4954909240dbf698f12/5C1DF24B/t51.2885-15/e35/39565490_296723474249155_3505199295043207168_n.jpg",
                 ThumbUrl = "https://scontent-frt3-2.cdninstagram.com/vp/290a08ac8dae7f7e1d4225a071261509/5C31A8E0/t51.2885-15/sh0.08/e35/c0.134.1080.1080/s640x640/39565490_296723474249155_3505199295043207168_n.jpg",

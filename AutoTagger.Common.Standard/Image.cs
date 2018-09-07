@@ -9,7 +9,9 @@
 
     public class Image : IImage
     {
-        public int Comments { get; set; }
+        public int CommentCount { get; set; }
+
+        public IEnumerable<string> Comments { get; set; }
 
         public int Follower { get; set; }
 

@@ -7,7 +7,9 @@
 
     public interface IImage
     {
-        int Comments { get; set; }
+        int CommentCount { get; set; }
+
+        IEnumerable<string> Comments { get; set; }
 
         int Follower { get; set; }
 

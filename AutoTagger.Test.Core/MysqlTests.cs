@@ -17,7 +17,7 @@
             crawlerDb.GetAllHumanoidTags<HumanoidTag>();
             var image = new Image
             {
-                Comments = 10,
+                CommentCount = 10,
                 Follower = 99,
                 Following = 150,
                 Posts = 42,
