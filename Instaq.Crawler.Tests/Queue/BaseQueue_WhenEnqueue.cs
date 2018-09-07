@@ -17,14 +17,19 @@
         [Test]
         public void ThenNoInserts_ShouldBeEmptyQueue()
         {
-            Assert.IsTrue(this.queue.Count == 0);
+            var count = this.queue.Count;
+
+            Assert.IsTrue(count == 0);
         }
 
         [Test]
         public void ThenInsertedEntry_ShouldBeOneEntryQueue()
         {
             this.queue.Enqueue("test");
-            Assert.IsTrue(this.queue.Count == 1);
+
+            var count = this.queue.Count;
+
+            Assert.IsTrue(count == 1);
         }
 
         [Test]
@@ -32,7 +37,10 @@
         {
             this.queue.Enqueue("test");
             this.queue.Enqueue("test");
-            Assert.IsTrue(this.queue.Count == 1);
+
+            var count = this.queue.Count;
+
+            Assert.IsTrue(count == 1);
         }
 
         [Test]
@@ -41,7 +49,10 @@
             this.queue.Enqueue("test1");
             this.queue.Enqueue("test2");
             this.queue.Enqueue("test3");
-            Assert.IsTrue(this.queue.Count == 3);
+
+            var count = this.queue.Count;
+
+            Assert.IsTrue(count == 3);
         }
     }
 }

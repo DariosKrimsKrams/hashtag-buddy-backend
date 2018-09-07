@@ -34,7 +34,9 @@
         public void ThenReturnedData_ShouldHaveExpectedAmountOfPosts()
         {
             (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
+
             var expectedAmountOfPosts = 12239843;
+
             Assert.AreEqual(amountOfPosts, expectedAmountOfPosts);
         }
 
@@ -42,7 +44,9 @@
         public void ThenReturnedData_ShouldHaveExpectedAmountOfImages()
         {
             (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
+
             var expectedAmountOfImages = 9;
+
             Assert.AreEqual(images.Count(), expectedAmountOfImages);
         }
 
@@ -50,6 +54,7 @@
         public void ThenFirstImage_ShouldHaveExpectedValues()
         {
             (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
+
             var expectedImage = new Image
             {
                 Likes = 5473,
@@ -59,8 +64,8 @@
                 ThumbUrl = "https://scontent-frt3-2.cdninstagram.com/vp/290a08ac8dae7f7e1d4225a071261509/5C31A8E0/t51.2885-15/sh0.08/e35/c0.134.1080.1080/s640x640/39565490_296723474249155_3505199295043207168_n.jpg",
                 Uploaded = new DateTime(2018, 9, 5, 11, 49, 2).ToLocalTime(),
                 HumanoidTags = new List<string>()
-
             };
+
             Assert.AreEqual(JsonConvert.SerializeObject(images.FirstOrDefault()), JsonConvert.SerializeObject(expectedImage));
         }
     }

@@ -40,6 +40,7 @@ namespace Instaq.Crawler.Tests.Crawler
         public void ThenUser_ShouldNotBeNull()
         {
             var user = this.crawler.Parse("test");
+
             Assert.NotNull(user);
         }
 
@@ -47,6 +48,7 @@ namespace Instaq.Crawler.Tests.Crawler
         public void ThenUser_ShouldHaveExpectedFollowerCount()
         {
             var user = this.crawler.Parse("test");
+
             Assert.AreEqual(user.FollowerCount, 206);
         }
 
@@ -54,6 +56,7 @@ namespace Instaq.Crawler.Tests.Crawler
         public void ThenUser_ShouldHaveExpectedFollowingCount()
         {
             var user = this.crawler.Parse("test");
+
             Assert.AreEqual(user.FollowingCount, 324);
         }
 
@@ -61,6 +64,7 @@ namespace Instaq.Crawler.Tests.Crawler
         public void ThenUser_ShouldHaveExpectedPostCount()
         {
             var user = this.crawler.Parse("test");
+
             Assert.AreEqual(user.PostCount, 75);
         }
 
@@ -68,6 +72,7 @@ namespace Instaq.Crawler.Tests.Crawler
         public void ThenUser_ShouldHaveExpectedAmountOfImages()
         {
             var user = this.crawler.Parse("test");
+
             Assert.AreEqual(user.Images.Count(), 9);
         }
 

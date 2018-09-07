@@ -23,7 +23,9 @@
         public void ThenUserHasEnough_ShouldReturnTrue()
         {
             this.settings.UserMinFollowerCount = 1337;
+
             var status = this.logic.HasUserEnoughFollower(this.user);
+
             Assert.IsTrue(status);
         }
 
@@ -31,7 +33,9 @@
         public void ThenUserHasNotEnough_ShouldReturnFalse()
         {
             this.settings.UserMinFollowerCount = 1338;
+
             var status = this.logic.HasUserEnoughFollower(this.user);
+
             Assert.IsFalse(status);
         }
     }
