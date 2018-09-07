@@ -56,7 +56,7 @@
                 string text = edges[0]?.node?.text;
                 text = text?.Replace("\\n", "\n");
                 text = System.Web.HttpUtility.HtmlDecode(text);
-                var hashtags = this.ParseHashTags(text).ToList();
+                var hashtags = this.ParseHashtags(text).ToList();
 
                 var innerNode = node.node;
                 int likes = innerNode.edge_liked_by?.count;
@@ -101,13 +101,18 @@
             return output;
         }
 
-        public IEnumerable<string> ParseHashTags(string text)
+        public IEnumerable<string> ParseHashtags(string text)
         {
-            if (text == null)
+            if (string.IsNullOrEmpty(text))
             {
                 return Enumerable.Empty<string>();
             }
-            return FindHashTagsRegex.Matches(text).OfType<Match>().Select(m => m?.Value.Trim(' ', '#').ToLower())
+            return FindHashTagsRegex
+                .Matches(text)
+                .OfType<Match>()
+                .Select(m => m?.Value
+                    .Trim(' ', '#')
+                    .ToLower())
                 .Where(this.HashtagIsAllowed).Distinct();
         }
 

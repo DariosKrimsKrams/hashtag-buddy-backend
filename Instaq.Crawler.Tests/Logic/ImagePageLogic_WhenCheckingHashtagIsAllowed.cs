@@ -4,11 +4,7 @@
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Requests;
-
-    using Newtonsoft.Json;
-
     using NSubstitute;
-
     using NUnit.Framework;
 
     class ImagePageLogic_WhenCheckingHashtagIsAllowed
@@ -21,9 +17,6 @@
         {
             this.settings = new CrawlerSettings();
             var requestHandler = Substitute.For<IRequestHandler>();
-            //var json = "{node: empty}";
-            //dynamic jsonObj = JsonConvert.DeserializeObject(json);
-            //requestHandler.FetchNode("test").Returns(new);
             this.logic = new ImagePageLogic(this.settings, requestHandler);
         }
 
