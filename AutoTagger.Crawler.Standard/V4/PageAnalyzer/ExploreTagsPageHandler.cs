@@ -32,9 +32,10 @@
             }
 
             var nodes  = GetTopPostsNodes(data);
-            var imagesList = this.imagePageLogic.GetImages(nodes) as IList<IImage>;
+            var images = this.imagePageLogic.GetImages(nodes);
+            images = this.imagePageLogic.RemoveUnrelevantImages(images);
 
-            return (amountPosts, imagesList);
+            return (amountPosts, images);
         }
 
         private static int GetAmountOfPosts(dynamic data)

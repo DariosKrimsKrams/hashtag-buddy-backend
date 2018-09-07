@@ -37,17 +37,17 @@
             return this.requestHandler.FetchNode(url);
         }
 
-        public IList<IImage> GetImages(dynamic nodes)
+        public IEnumerable<IImage> GetImages(dynamic nodes)
         {
-            var output = new List<IImage>();
             if (nodes == null)
             {
-                return output;
+                yield break;
             }
 
             foreach (var node in nodes)
             {
-                var edges = node?.node?.edge_media_to_caption?.edges;
+                var innerNode = node?.node;
+                var edges = innerNode?.edge_media_to_caption?.edges;
                 if (edges == null || edges.ToString() == "[]")
                 {
                     continue;
@@ -58,17 +58,7 @@
                 text = System.Web.HttpUtility.HtmlDecode(text);
                 var hashtags = this.ParseHashtags(text).ToList();
 
-                var innerNode = node.node;
-                int likes = innerNode.edge_liked_by?.count;
-                var hashTagsCount = hashtags.Count;
-                var commentsCount = innerNode?.edge_media_to_comment?.count;
-
-                if (hashTagsCount < this.MinHashTagCount
-                    || likes < this.MinLikes
-                    || commentsCount < this.MinCommentsCount)
-                {
-                    continue;
-                }
+                var comments = innerNode?.edge_media_to_comment?.edges;
 
                 var takenDate = GetDateTime(Convert.ToDouble(innerNode?.taken_at_timestamp.ToString()));
                 var image = new Image
@@ -82,7 +72,7 @@
                     Uploaded = takenDate
                 };
 
-                dynamic locationNode = innerNode?.location;
+                var locationNode = innerNode?.location;
                 if (locationNode != null)
                 {
                     var location = new Location
@@ -95,10 +85,8 @@
                     image.Location = location;
                 }
 
-                output.Add(image);
+                yield return image;
             }
-
-            return output;
         }
 
         public IEnumerable<string> ParseHashtags(string text)
@@ -135,5 +123,24 @@
             }
             return true;
         }
+
+        public IEnumerable<IImage> RemoveUnrelevantImages(IEnumerable<IImage> images)
+        {
+            foreach (var image in images)
+            {
+                if (this.ImageMeetsCriteria(image))
+                {
+                    yield return image;
+                }
+            }
+        }
+
+        public bool ImageMeetsCriteria(IImage image)
+        {
+            return image.HumanoidTags.Count() >= this.MinHashTagCount
+                && image.Likes >= this.MinLikes
+                && image.CommentCount >= this.MinCommentsCount;
+        }
+
     }
 }

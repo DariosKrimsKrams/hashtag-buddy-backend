@@ -20,12 +20,13 @@
             return user.FollowerCount >= this.Settings.UserMinFollowerCount;
         }
 
-        public IEnumerable<IImage> RemoveImagesWithDuplicateHashtags(IList<IImage> images)
+        public IEnumerable<IImage> RemoveImagesWithDuplicateHashtags(IEnumerable<IImage> images)
         {
+            var imagesList = images.ToList();
             var newImages = new Dictionary<string, IImage>();
-            for (var i = images.Count - 1; i >= 0; i--)
+            for (var i = imagesList.Count() - 1; i >= 0; i--)
             {
-                var image    = images[i];
+                var image    = imagesList[i];
                 var hashTags = string.Join("", image.HumanoidTags);
                 if (!newImages.ContainsKey(hashTags))
                     newImages.Add(hashTags, image);

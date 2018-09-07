@@ -69,11 +69,11 @@ namespace Instaq.Crawler.Tests.Crawler
         }
 
         [Test]
-        public void ThenUser_ShouldHaveExpectedAmountOfImages()
+        public void ThenUserOfWhich12PhotosHave7PhotosWithHashtags_ShouldHaveExpectedAmountOfImagesWithHashtags()
         {
             var user = this.crawler.Parse("test");
 
-            Assert.AreEqual(user.Images.Count(), 9);
+            Assert.AreEqual(user.Images.Count(), 7);
         }
 
         [Test]
