@@ -22,7 +22,7 @@
         private readonly ShortcodeQueue<string> shortcodeQueue;
 
         private readonly RandomTagsCrawler randomTagsCrawler;
-        private readonly ExploreTagsPageCrawler exploreTagsPagePageCrawler;
+        private readonly ExploreTagsPageHandler exploreTagsPagePageHandler;
         private readonly ImageDetailPageCrawler imageDetailPageCrawler;
         private readonly UserPageCrawler userPageCrawler;
 
@@ -52,7 +52,7 @@
 
             var requestHandler = new HttpRequestHandler();
             this.randomTagsCrawler           = new RandomTagsCrawler();
-            this.exploreTagsPagePageCrawler  = new ExploreTagsPageCrawler(this.settings, requestHandler);
+            this.exploreTagsPagePageHandler  = new ExploreTagsPageHandler(this.settings, requestHandler);
             this.userPageCrawler             = new UserPageCrawler(this.settings, requestHandler);
             this.imageDetailPageCrawler      = new ImageDetailPageCrawler();
         }
@@ -77,7 +77,7 @@
         private void ExploreTagsCrawlerFunc(IHumanoidTag tag)
         {
             var url = $"https://www.instagram.com/explore/tags/{tag.Name}/";
-            var (amountOfPosts, images) = this.exploreTagsPagePageCrawler.Parse(url);
+            var (amountOfPosts, images) = this.exploreTagsPagePageHandler.Parse(url);
             tag.Posts = amountOfPosts;
             this.OnHashtagFound?.Invoke(tag);
 

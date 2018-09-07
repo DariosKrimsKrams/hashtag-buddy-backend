@@ -15,7 +15,7 @@
 
     class ExploreTagsPageCrawler_WhenParsing
     {
-        private ExploreTagsPageCrawler crawler;
+        private ExploreTagsPageHandler handler;
 
         [SetUp]
         public void Setup()
@@ -27,13 +27,13 @@
             dynamic jsonObj = JsonConvert.DeserializeObject(json);
             requestHandler.FetchNode("test").Returns(jsonObj);
 
-            this.crawler = new ExploreTagsPageCrawler(settings, requestHandler);
+            this.handler = new ExploreTagsPageHandler(settings, requestHandler);
         }
 
         [Test]
         public void ThenReturnedData_ShouldHaveExpectedAmountOfPosts()
         {
-            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
             var expectedAmountOfPosts = 12239843;
             Assert.AreEqual(amountOfPosts, expectedAmountOfPosts);
         }
@@ -41,7 +41,7 @@
         [Test]
         public void ThenReturnedData_ShouldHaveExpectedAmountOfImages()
         {
-            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
             var expectedAmountOfImages = 9;
             Assert.AreEqual(images.Count(), expectedAmountOfImages);
         }
@@ -49,7 +49,7 @@
         [Test]
         public void ThenFirstImage_ShouldHaveExpectedValues()
         {
-            (int amountOfPosts, IEnumerable<IImage> images) = this.crawler.Parse("test");
+            (int amountOfPosts, IEnumerable<IImage> images) = this.handler.Parse("test");
             var expectedImage = new Image
             {
                 Likes = 5473,

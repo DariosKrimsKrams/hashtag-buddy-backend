@@ -9,35 +9,38 @@
     using AutoTagger.Crawler.V4.PageAnalyzer;
     using AutoTagger.Crawler.V4.Requests;
 
-    public class UserPageCrawler : BaseImagePageCrawler
+    public class UserPageCrawler
     {
-        private UserPageHandler handler;
+        private readonly UserPageLogic userPageLogic;
+        private readonly ImagePageLogic imagePageLogic;
+        private ICrawlerSettings Settings;
 
-        public UserPageCrawler(ICrawlerSettings settings, IRequestHandler requestHandler)
+        public UserPageCrawler(ICrawlerSettings settings,
+                               IRequestHandler requestHandler)
         {
-            this.handler = new UserPageHandler(settings);
-
             this.Settings = settings;
-            this.RequestHandler = requestHandler;
-            this.MinCommentsCount = this.Settings.UserMinHashTagCount;
-            this.MinHashTagCount  = this.Settings.UserMinCommentsCount;
-            this.MinLikes         = this.Settings.UserMinLikes;
+            this.userPageLogic = new UserPageLogic(settings);
+            this.imagePageLogic = new ImagePageLogic(settings, requestHandler);
+
+            this.imagePageLogic.MinCommentsCount = this.Settings.UserMinHashTagCount;
+            this.imagePageLogic.MinHashTagCount  = this.Settings.UserMinCommentsCount;
+            this.imagePageLogic.MinLikes = this.Settings.UserMinLikes;
         }
 
         public IUser Parse(string url)
         {
-            var data = this.GetData(url);
+            var data = this.imagePageLogic.GetData(url);
 
             var user = this.GetUser(data);
 
-            if (!this.handler.HasUserEnoughFollower(user))
+            if (!this.userPageLogic.HasUserEnoughFollower(user))
             {
                 return user;
             }
 
             var nodes = GetTimelineMediaNodes(data);
-            user.Images = this.GetImages(nodes);
-            user.Images = this.handler.RemoveImagesWithDuplicateHashtags(user.Images);
+            user.Images = this.imagePageLogic.GetImages(nodes);
+            user.Images = this.userPageLogic.RemoveImagesWithDuplicateHashtags(user.Images);
 
             return user;
         }

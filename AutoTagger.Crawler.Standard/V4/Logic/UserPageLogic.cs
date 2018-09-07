@@ -6,11 +6,11 @@
     using AutoTagger.Common;
     using AutoTagger.Contract;
 
-    public class UserPageHandler
+    public class UserPageLogic
     {
         protected ICrawlerSettings Settings;
 
-        public UserPageHandler(ICrawlerSettings settings)
+        public UserPageLogic(ICrawlerSettings settings)
         {
             this.Settings = settings;
         }

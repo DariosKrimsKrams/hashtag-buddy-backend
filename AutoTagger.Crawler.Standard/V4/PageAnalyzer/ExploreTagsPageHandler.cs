@@ -7,30 +7,32 @@
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Requests;
 
-    public class ExploreTagsPageCrawler : BaseImagePageCrawler, IPageAnalyzer
+    public class ExploreTagsPageHandler : IPageAnalyzer
     {
+        private readonly ICrawlerSettings settings;
+        private readonly ImagePageLogic imagePageLogic;
 
-        public ExploreTagsPageCrawler(ICrawlerSettings settings, IRequestHandler requestHandler)
+        public ExploreTagsPageHandler(ICrawlerSettings settings, IRequestHandler requestHandler)
         {
-            this.Settings = settings;
-            this.RequestHandler = requestHandler;
+            this.settings = settings;
+            this.imagePageLogic = new ImagePageLogic(settings, requestHandler);
 
-            this.MinCommentsCount = this.Settings.ExploreTagsMinCommentsCount;
-            this.MinHashTagCount  = this.Settings.ExploreTagsMinHashtagCount;
-            this.MinLikes         = this.Settings.ExploreTagsMinLikes;
+            this.imagePageLogic.MinCommentsCount = this.settings.ExploreTagsMinCommentsCount;
+            this.imagePageLogic.MinHashTagCount  = this.settings.ExploreTagsMinHashtagCount;
+            this.imagePageLogic.MinLikes         = this.settings.ExploreTagsMinLikes;
         }
 
         public (int, IEnumerable<IImage>) Parse(string url)
         {
-            var data = this.GetData(url);
+            var data = this.imagePageLogic.GetData(url);
             var amountPosts = GetAmountOfPosts(data);
-            if (amountPosts < this.Settings.MinPostsForHashtags)
+            if (amountPosts < this.settings.MinPostsForHashtags)
             {
                 return (amountPosts, new List<IImage>());
             }
 
             var nodes  = GetTopPostsNodes(data);
-            var imagesList = this.GetImages(nodes) as IList<IImage>;
+            var imagesList = this.imagePageLogic.GetImages(nodes) as IList<IImage>;
 
             return (amountPosts, imagesList);
         }

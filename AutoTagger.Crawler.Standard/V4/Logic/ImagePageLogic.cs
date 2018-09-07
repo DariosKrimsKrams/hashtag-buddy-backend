@@ -6,32 +6,38 @@
     using System.Text.RegularExpressions;
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4.Requests;
 
-    public abstract class BaseImagePageCrawler
+    public class ImagePageLogic
     {
         private static readonly Regex FindHashTagsRegex = new Regex(@"#\w+", RegexOptions.Compiled);
 
-        protected ICrawlerSettings Settings;
-        protected int MinCommentsCount;
-        protected int MinHashTagCount;
-        protected int MinLikes;
+        private readonly ICrawlerSettings settings;
+        private readonly IRequestHandler requestHandler;
 
-        protected IRequestHandler RequestHandler;
+        public int MinCommentsCount;
+        public int MinHashTagCount;
+        public int MinLikes;
 
-        public static DateTime GetDateTime(double unixTimeStamp)
+        public ImagePageLogic(ICrawlerSettings settings,
+                                IRequestHandler requestHandler)
+        {
+            this.settings = settings;
+            this.requestHandler = requestHandler;
+        }
+
+        private static DateTime GetDateTime(double unixTimeStamp)
         {
             var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             return dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
         }
 
-        protected dynamic GetData(string url)
+        public dynamic GetData(string url)
         {
-            return this.RequestHandler.FetchNode(url);
+            return this.requestHandler.FetchNode(url);
         }
 
-        protected IList<IImage> GetImages(dynamic nodes)
+        public IList<IImage> GetImages(dynamic nodes)
         {
             var output = new List<IImage>();
             if (nodes == null)
@@ -86,7 +92,6 @@
                         Name          = locationNode.name,
                         Slug          = locationNode.slug
                     };
-                    // {"id":"20864646","has_public_page":true,"name":"Tomorrowland","slug":"tomorrowland"}
                     image.Location = location;
                 }
 
@@ -96,12 +101,22 @@
             return output;
         }
 
-        private bool HashtagIsAllowed(string value)
+        public IEnumerable<string> ParseHashTags(string text)
+        {
+            if (text == null)
+            {
+                return Enumerable.Empty<string>();
+            }
+            return FindHashTagsRegex.Matches(text).OfType<Match>().Select(m => m?.Value.Trim(' ', '#').ToLower())
+                .Where(this.HashtagIsAllowed).Distinct();
+        }
+
+        public bool HashtagIsAllowed(string value)
         {
             return !string.IsNullOrWhiteSpace(value)
                 && value != ""
-                && value.Length >= this.Settings.MinHashtagLength
-                && value.Length < this.Settings.MaxHashtagLength
+                && value.Length >= this.settings.MinHashtagLength
+                && value.Length < this.settings.MaxHashtagLength
                 && !IsDigitsOnly(value)
                 && !value.Contains('\'');
         }
@@ -114,16 +129,6 @@
                     return false;
             }
             return true;
-        }
-
-        private IEnumerable<string> ParseHashTags(string text)
-        {
-            if (text == null)
-            {
-                return Enumerable.Empty<string>();
-            }
-            return FindHashTagsRegex.Matches(text).OfType<Match>().Select(m => m?.Value.Trim(' ', '#').ToLower())
-                .Where(this.HashtagIsAllowed).Distinct();
         }
     }
 }
