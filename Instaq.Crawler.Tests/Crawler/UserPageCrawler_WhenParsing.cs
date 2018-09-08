@@ -1,5 +1,6 @@
 ﻿namespace Instaq.Crawler.Tests.Crawler
 {
+    using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Common;
     using AutoTagger.Contract;
@@ -70,9 +71,21 @@
         [Test]
         public void ThenUserHasNotEnoughFollower_ShouldEmptyList()
         {
-            //this.settings.UserMinFollowerCount = 207;
-            //IEnumerable<IImage> images = this.crawler.Parse("test");
-            //Assert.AreEqual(images.Count(), 0);
+            this.settings.UserMinFollowerCount = 207;
+
+            var user = this.crawler.Parse("test");
+            var images = user.Images;
+
+            Assert.AreEqual(images.Count(), 0);
+        }
+
+        [Test]
+        public void ThenUserHasEnoughFollower_ShouldBeExpectedImagesList()
+        {
+            var user   = this.crawler.Parse("test");
+            var images = user.Images;
+
+            Assert.AreEqual(images.Count(), 7);
         }
     }
 }

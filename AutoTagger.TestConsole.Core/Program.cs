@@ -86,7 +86,8 @@
             var machineTagsArr = machineTags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 
             var crawlerDb = new MysqlCrawlerStorage();
-            var crawlerEngine = new CrawlerV4();
+            var requestHandler = new HttpRequestHandler();
+            var crawlerEngine = new CrawlerV4(requestHandler);
             crawlerEngine.SetSetting("MinPostsForHashtags", 10 * 1000);
             crawlerEngine.InsertTags(machineTagsArr);
             //crawlerEngine.DisableFurtherEnqueue();
@@ -106,7 +107,8 @@
         private static void StartCrawler()
         {
             var db = new MysqlCrawlerStorage();
-            var crawler = new CrawlerApp(db, new CrawlerV4());
+            var requestHandler = new HttpRequestHandler();
+            var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler));
 
             crawler.OnImageSaved += image =>
             {

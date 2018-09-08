@@ -3,15 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Queue;
     using AutoTagger.Crawler.V4.Requests;
-
-    using static System.String;
 
     public class CrawlerV4 : ICrawler
     {
@@ -29,7 +26,7 @@
         public event Action<IHumanoidTag> OnHashtagFound;
         public event Action<IImage> OnImageFound;
 
-        public CrawlerV4()
+        public CrawlerV4(IRequestHandler requestHandler)
         {
             this.settings = new CrawlerSettings
             {
@@ -50,7 +47,6 @@
             this.userQueue      = new UserQueue<string>();
             this.shortcodeQueue = new ShortcodeQueue<string>();
 
-            var requestHandler = new HttpRequestHandler();
             this.randomTagsCrawler           = new RandomTagsCrawler(requestHandler);
             this.exploreTagsPagePageHandler  = new ExploreTagsPageHandler(this.settings, requestHandler);
             this.userPageCrawler             = new UserPageCrawler(this.settings, requestHandler);

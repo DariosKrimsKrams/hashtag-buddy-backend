@@ -1,6 +1,9 @@
 ﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.PageAnalyzer;
@@ -26,17 +29,18 @@
 
         public IUser Parse(string url)
         {
-            var data = this.imagePageLogic.GetData(url);
+            var nodes = this.imagePageLogic.GetData(url);
 
-            var user = this.GetUser(data);
+            var user = this.GetUser(nodes);
 
             if (!this.userPageLogic.HasUserEnoughFollower(user))
             {
+                user.Images = Enumerable.Empty<IImage>();
                 return user;
             }
 
-            var nodes = GetTimelineMediaNodes(data);
-            user.Images = this.imagePageLogic.GetImages(nodes);
+            var timelineMediaNodes = GetTimelineMediaNodes(nodes);
+            user.Images = this.imagePageLogic.GetImages(timelineMediaNodes);
             user.Images = this.imagePageLogic.RemoveUnrelevantImages(user.Images);
             user.Images = this.userPageLogic.RemoveImagesWithIdenticalHashtags(user.Images);
 

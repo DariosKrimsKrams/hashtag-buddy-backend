@@ -22,35 +22,35 @@
 
         public (int, IEnumerable<IImage>) Parse(string url)
         {
-            var data = this.imagePageLogic.GetData(url);
-            var amountPosts = GetAmountOfPosts(data);
+            var node = this.imagePageLogic.GetData(url);
+            var hashtagNode  = GetHashtagNodes(node);
+            var amountPosts = GetAmountOfPosts(hashtagNode);
             if (amountPosts < this.settings.MinPostsForHashtags)
             {
                 return (amountPosts, new List<IImage>());
             }
 
-            var nodes  = GetTopPostsNodes(data);
+            var nodes  = GetTopPostsNodes(hashtagNode);
             var images = this.imagePageLogic.GetImages(nodes);
             images = this.imagePageLogic.RemoveUnrelevantImages(images);
 
             return (amountPosts, images);
         }
-
-        private static int GetAmountOfPosts(dynamic data)
+        private static dynamic GetHashtagNodes(dynamic node)
         {
-            var hashtagNodes  = GetHashtagNodes(data);
-            var amountPosts = Convert.ToInt32(hashtagNodes?.edge_hashtag_to_media?.count.ToString());
+            return node?.entry_data?.TagPage?[0]?.graphql?.hashtag;
+        }
+
+        private static int GetAmountOfPosts(dynamic hashtagNode)
+        {
+            var amountPosts = Convert.ToInt32(hashtagNode?.edge_hashtag_to_media?.count.ToString());
             return amountPosts;
         }
 
-        private dynamic GetTopPostsNodes(dynamic data)
+        private dynamic GetTopPostsNodes(dynamic hashtagNode)
         {
-            return data?.entry_data?.TagPage?[0]?.graphql?.hashtag?.edge_hashtag_to_top_posts?.edges;
+            return hashtagNode.edge_hashtag_to_top_posts?.edges;
         }
 
-        private static dynamic GetHashtagNodes(dynamic data)
-        {
-            return data?.entry_data?.TagPage?[0]?.graphql?.hashtag;
-        }
     }
 }
