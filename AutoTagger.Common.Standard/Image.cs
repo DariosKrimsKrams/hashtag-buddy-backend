@@ -25,7 +25,11 @@
 
         public int Likes { get; set; }
 
+        public ILocation Location { get; set; }
+
         public IEnumerable<IMachineTag> MachineTags { get; set; }
+
+        public string Message { get; set; }
 
         public int Posts { get; set; }
 
@@ -36,8 +40,6 @@
         public DateTime Uploaded { get; set; }
 
         public string User { get; set; }
-
-        public ILocation Location { get; set; }
 
         public override string ToString()
         {

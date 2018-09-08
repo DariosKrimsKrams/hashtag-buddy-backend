@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-
     using AutoTagger.Contract.Models;
 
     public interface IImage
@@ -23,7 +22,11 @@
 
         int Likes { get; set; }
 
+        ILocation Location { get; set; }
+
         IEnumerable<IMachineTag> MachineTags { get; set; }
+
+        string Message { get; set; }
 
         int Posts { get; set; }
 
@@ -34,7 +37,5 @@
         DateTime Uploaded { get; set; }
 
         string User { get; set; }
-
-        ILocation Location { get; set; }
     }
 }

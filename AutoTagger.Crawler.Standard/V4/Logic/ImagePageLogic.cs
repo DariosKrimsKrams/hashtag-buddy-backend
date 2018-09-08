@@ -64,22 +64,23 @@
                 yield break;
             }
 
-            string text = edges[0]?.node?.text;
-            var hashtags = this.ParseHashtags(text);
+            string message = edges[0]?.node?.text;
+            var hashtags = this.ParseHashtags(message);
 
-            //var comments = node?.edge_media_to_comment?.edges;
-            var comments = new List<string>();
+            var comments = GetComments(node, ref hashtags);
+            var thumb = node?.thumbnail_src ?? node?.display_resources?[0].src;
 
             var takenDate = GetDateTime(Convert.ToDouble(node?.taken_at_timestamp.ToString()));
             var image = new Image
             {
                 Likes        = node.edge_media_preview_like?.count,
                 CommentCount = node?.edge_media_to_comment?.count,
+                Message = message,
                 Comments = comments,
                 Shortcode    = node?.shortcode,
                 HumanoidTags = hashtags,
                 LargeUrl     = node?.display_url,
-                ThumbUrl     = node?.thumbnail_src,
+                ThumbUrl     = thumb,
                 Uploaded     = takenDate
             };
 
@@ -97,6 +98,22 @@
             }
 
             yield return image;
+        }
+
+        private IEnumerable<string> GetComments(dynamic node, ref IEnumerable<string> hashtags)
+        {
+            var comments     = new List<string>();
+            var commentsNode = node?.edge_media_to_comment?.edges;
+            foreach (var commentNode in commentsNode)
+            {
+                var commentText = commentNode?.node?.text.ToString();
+                comments.Add(commentText);
+                var commentHashtags = this.ParseHashtags(commentText);
+                hashtags = Enumerable.Concat(hashtags, commentHashtags);
+                hashtags = hashtags.Distinct();
+            }
+
+            return comments;
         }
 
         public IEnumerable<string> ParseHashtags(string text)
