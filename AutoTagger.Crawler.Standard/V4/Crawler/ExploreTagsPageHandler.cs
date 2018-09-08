@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Requests;
 
-    public class ExploreTagsPageHandler : IPageAnalyzer
+    public class ExploreTagsPageHandler
     {
         private readonly ICrawlerSettings settings;
         private readonly ImagePageLogic imagePageLogic;

@@ -48,20 +48,20 @@
             foreach (var node in nodes)
             {
                 var innerNode = node?.node;
-                var images = this.GetImage(innerNode);
-                foreach (var image in images)
+                var image = this.GetImage(innerNode);
+                if (image != null)
                 {
                     yield return image;
                 }
             }
         }
 
-        public IEnumerable<IImage> GetImage(dynamic node)
+        public IImage GetImage(dynamic node)
         {
             var edges = node?.edge_media_to_caption?.edges;
             if (edges == null || edges.ToString() == "[]")
             {
-                yield break;
+                return null;
             }
 
             string message = edges[0]?.node?.text;
@@ -85,7 +85,7 @@
                 Location     = GetLocation(node),
             };
 
-            yield return image;
+            return image;
         }
 
         private Location GetLocation(dynamic node)

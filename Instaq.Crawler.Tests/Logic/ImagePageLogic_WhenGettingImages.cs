@@ -19,18 +19,12 @@
     {
         private ImagePageLogic logic;
         private ICrawlerSettings settings;
-
-        //private dynamic nodes;
-        private string jsonOneImage;
+        private string detailPageJson;
 
         [SetUp]
         public void Setup()
         {
-
-            this.jsonOneImage = "{\"__typename\":\"GraphImage\",\"id\":\"1859593211102936307\",\"shortcode\":\"BnOmixGhLzz\",\"dimensions\":{\"height\":1350,\"width\":1080},\"gating_info\":null,\"media_preview\":\"ACEqlmVVwqjcx/hH6E+n49qh3sBtLsxHJVPur/vN3qKNxEDvJZjyQP5s39P0qZiQw6KuACucZX3HYnioV3o9jVR6q1/uX49fT7x0bK3LDb2xx36YBH8vzprw7/u49P8AOT/LNT5CrgEY/wBrg+2RyOncfjVKQEd8g8ZBBHvkjp/hWll0f3gpuLs9PT9Uxfsb+v8AOikwfVf++h/hRU2fdfc/8y/av+b8F/kRwIQMYGTzg/jz6/mKmEcY5f8AP3/Qj9asKWdRkKxA9s/XIwc49DTBsz1IH8Q5IGemQef8aL9/6/QFK+i+636rX8BjSOowDvTOBnkfmcf0ps2QMEAAHOMEH9f58/WpXt1cAKyMB0wcHn1B/wA44qGRQVKZLnOcehHB4HHSnden9f12Jtqklfuuq89f+CVNy0U7yT/zzb9aKXMu6/r5mt12/wDSf/kR0MiYwSUOcjuv4jr+IqWJzvPmZKkbQRyPrk9u/PTjjNZy1PGxHQkUJ30LlBW5v6+/cs3A2sQGXDYIC8jHuOg6c+/PSlafC4DbcAckkZ/AD8xn0qKX5cEcHanT6VAWJJySaqy6nK0S7x/fT9aKr0VRFl/Vj//Z\",\"display_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"display_resources\":[{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/ad4725cb4a41564d5793687b8ffcd395/5C282052/t51.2885-15/sh0.08/e35/p640x640/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":640,\"config_height\":800},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/68d141bffc6bf56f230fd6f079fbf62a/5C22F052/t51.2885-15/sh0.08/e35/p750x750/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":750,\"config_height\":937},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":1080,\"config_height\":1350}],\"accessibility_caption\":null,\"is_video\":false,\"should_log_client_event\":false,\"tracking_token\":\"eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjpmYWxzZSwidXVpZCI6IjEzMzg0NWI0ZGE2ZDQ2YzY4ZTNkYjJhZmQyZDhjZGRjMTg1OTU5MzIxMTEwMjkzNjMwNyIsInNlcnZlcl90b2tlbiI6IjE1MzYzNTM4MTE5MDd8MTg1OTU5MzIxMTEwMjkzNjMwN3w1MTYwMzAzMHxhMTFhZTI2YTdkZDU2NGRhMmVkMDVkNjI5ZmM2MTE0ZjQ4YzZhZWUzMTA0YWU1ZDU5MjhkMzMwYzBjN2MwMTJhIn0sInNpZ25hdHVyZSI6IiJ9\",\"edge_media_to_tagged_user\":{\"edges\":[]},\"edge_media_to_caption\":{\"edges\":[{\"node\":{\"text\":\"FUCK! #doppelt Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. ^.^#hurricanefestival #hurricane #doppelt #test:) #bla\"}}]},\"caption_is_edited\":false,\"has_ranked_comments\":false,\"edge_media_to_comment\":{\"count\":4,\"page_info\":{\"has_next_page\":false,\"end_cursor\":null},\"edges\":[{\"node\":{\"id\":\"17915396320205892\",\"text\":\"\ud83d\ude0d\ud83d\ude0dRespekt\",\"created_at\":1535914028,\"owner\":{\"id\":\"1242452287\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/c6ef51d87d64be887c3f4d19f047bba6/5C25A887/t51.2885-19/s150x150/15305912_590701741130769_8624826111743754240_a.jpg\",\"username\":\"linajo_ft\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17966924284079396\",\"text\":\"Wo ist das #tml! Lederband??#Tomorrowland\",\"created_at\":1535915264,\"owner\":{\"id\":\"17052236\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/1d2559cc0b6d55bdce91bd87009d2932/5C1B9EFA/t51.2885-19/s150x150/38436457_959682847550901_8411232281397559296_n.jpg\",\"username\":\"gina_globetrotter\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17955249307082596\",\"text\":\"Ich seh unser b\u00e4ndchen von 2014 \ud83d\ude0d\",\"created_at\":1535955467,\"owner\":{\"id\":\"526836007\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/fbbdac86f112f48e5d04259e65c8bb48/5C2DAF17/t51.2885-19/s150x150/15056740_970603243085913_6971859144164769792_a.jpg\",\"username\":\"lucas_hssl\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17948414212146963\",\"text\":\"@gina_globetrotter eingepackt in#test #test#test der @personTest \u00f6den Box#hashtagZumTesten :D\",\"created_at\":1536044743,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\"},\"viewer_has_liked\":false,\"edge_liked_by\":{\"count\":0}}}]},\"comments_disabled\":false,\"taken_at_timestamp\":1535900807,\"edge_media_preview_like\":{\"count\":22,\"edges\":[]},\"edge_media_to_sponsor_user\":{\"edges\":[]},\"location\":{\"id\":\"108433841\",\"has_public_page\":true,\"name\":\"Hurricane Festival\",\"slug\":\"hurricane-festival\"},\"viewer_has_liked\":false,\"viewer_has_saved\":false,\"viewer_has_saved_to_collection\":false,\"viewer_in_photo_of_you\":false,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\",\"blocked_by_viewer\":false,\"followed_by_viewer\":false,\"full_name\":\"Dario\",\"has_blocked_viewer\":false,\"is_private\":false,\"is_unpublished\":false,\"is_verified\":false,\"requested_by_viewer\":false},\"is_ad\":false,\"edge_web_media_to_related_media\":{\"edges\":[]},\"share_ids\":null}";
-            //requestHandler.FetchNode("test").Returns(jsonObj);
-            //this.crawler = new UserPageCrawler(settings, requestHandler);
-
+            this.detailPageJson = "{\"__typename\":\"GraphImage\",\"id\":\"1859593211102936307\",\"shortcode\":\"BnOmixGhLzz\",\"dimensions\":{\"height\":1350,\"width\":1080},\"gating_info\":null,\"media_preview\":\"ACEqlmVVwqjcx/hH6E+n49qh3sBtLsxHJVPur/vN3qKNxEDvJZjyQP5s39P0qZiQw6KuACucZX3HYnioV3o9jVR6q1/uX49fT7x0bK3LDb2xx36YBH8vzprw7/u49P8AOT/LNT5CrgEY/wBrg+2RyOncfjVKQEd8g8ZBBHvkjp/hWll0f3gpuLs9PT9Uxfsb+v8AOikwfVf++h/hRU2fdfc/8y/av+b8F/kRwIQMYGTzg/jz6/mKmEcY5f8AP3/Qj9asKWdRkKxA9s/XIwc49DTBsz1IH8Q5IGemQef8aL9/6/QFK+i+636rX8BjSOowDvTOBnkfmcf0ps2QMEAAHOMEH9f58/WpXt1cAKyMB0wcHn1B/wA44qGRQVKZLnOcehHB4HHSnden9f12Jtqklfuuq89f+CVNy0U7yT/zzb9aKXMu6/r5mt12/wDSf/kR0MiYwSUOcjuv4jr+IqWJzvPmZKkbQRyPrk9u/PTjjNZy1PGxHQkUJ30LlBW5v6+/cs3A2sQGXDYIC8jHuOg6c+/PSlafC4DbcAckkZ/AD8xn0qKX5cEcHanT6VAWJJySaqy6nK0S7x/fT9aKr0VRFl/Vj//Z\",\"display_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"display_resources\":[{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/ad4725cb4a41564d5793687b8ffcd395/5C282052/t51.2885-15/sh0.08/e35/p640x640/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":640,\"config_height\":800},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/68d141bffc6bf56f230fd6f079fbf62a/5C22F052/t51.2885-15/sh0.08/e35/p750x750/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":750,\"config_height\":937},{\"src\":\"https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg\",\"config_width\":1080,\"config_height\":1350}],\"accessibility_caption\":null,\"is_video\":false,\"should_log_client_event\":false,\"tracking_token\":\"eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjpmYWxzZSwidXVpZCI6IjEzMzg0NWI0ZGE2ZDQ2YzY4ZTNkYjJhZmQyZDhjZGRjMTg1OTU5MzIxMTEwMjkzNjMwNyIsInNlcnZlcl90b2tlbiI6IjE1MzYzNTM4MTE5MDd8MTg1OTU5MzIxMTEwMjkzNjMwN3w1MTYwMzAzMHxhMTFhZTI2YTdkZDU2NGRhMmVkMDVkNjI5ZmM2MTE0ZjQ4YzZhZWUzMTA0YWU1ZDU5MjhkMzMwYzBjN2MwMTJhIn0sInNpZ25hdHVyZSI6IiJ9\",\"edge_media_to_tagged_user\":{\"edges\":[]},\"edge_media_to_caption\":{\"edges\":[{\"node\":{\"text\":\"FUCK! #doppelt Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. ^.^#hurricanefestival #hurricane #doppelt #test:) #bla\"}}]},\"caption_is_edited\":false,\"has_ranked_comments\":false,\"edge_media_to_comment\":{\"count\":4,\"page_info\":{\"has_next_page\":false,\"end_cursor\":null},\"edges\":[{\"node\":{\"id\":\"17915396320205892\",\"text\":\"\ud83d\ude0d\ud83d\ude0dRespekt\",\"created_at\":1535914028,\"owner\":{\"id\":\"1242452287\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/c6ef51d87d64be887c3f4d19f047bba6/5C25A887/t51.2885-19/s150x150/15305912_590701741130769_8624826111743754240_a.jpg\",\"username\":\"linajo_ft\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17966924284079396\",\"text\":\"Wo ist das #tml! Lederband??#Tomorrowland\",\"created_at\":1535915264,\"owner\":{\"id\":\"17052236\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/1d2559cc0b6d55bdce91bd87009d2932/5C1B9EFA/t51.2885-19/s150x150/38436457_959682847550901_8411232281397559296_n.jpg\",\"username\":\"gina_globetrotter\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17955249307082596\",\"text\":\"Ich seh unser b\u00e4ndchen von 2014 \ud83d\ude0d\",\"created_at\":1535955467,\"owner\":{\"id\":\"526836007\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/fbbdac86f112f48e5d04259e65c8bb48/5C2DAF17/t51.2885-19/s150x150/15056740_970603243085913_6971859144164769792_a.jpg\",\"username\":\"lucas_hssl\"},\"viewer_has_liked\":true,\"edge_liked_by\":{\"count\":1}}},{\"node\":{\"id\":\"17948414212146963\",\"text\":\"@gina_globetrotter eingepackt in#test #test#test der @personTest \u00f6den Box#hashtagZumTesten :D\",\"created_at\":1536044743,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\"},\"viewer_has_liked\":false,\"edge_liked_by\":{\"count\":0}}}]},\"comments_disabled\":false,\"taken_at_timestamp\":1535900807,\"edge_media_preview_like\":{\"count\":22,\"edges\":[]},\"edge_media_to_sponsor_user\":{\"edges\":[]},\"location\":{\"id\":\"108433841\",\"has_public_page\":true,\"name\":\"Hurricane Festival\",\"slug\":\"hurricane-festival\"},\"viewer_has_liked\":false,\"viewer_has_saved\":false,\"viewer_has_saved_to_collection\":false,\"viewer_in_photo_of_you\":false,\"owner\":{\"id\":\"51603030\",\"profile_pic_url\":\"https://scontent-frx5-1.cdninstagram.com/vp/32fc5db00efab28c5574382fed00a500/5C2FBDEF/t51.2885-19/s150x150/14073272_196937750720784_1156034781_a.jpg\",\"username\":\"the_dario_\",\"blocked_by_viewer\":false,\"followed_by_viewer\":false,\"full_name\":\"Dario\",\"has_blocked_viewer\":false,\"is_private\":false,\"is_unpublished\":false,\"is_verified\":false,\"requested_by_viewer\":false},\"is_ad\":false,\"edge_web_media_to_related_media\":{\"edges\":[]},\"share_ids\":null}";
             var requestHandler = Substitute.For<IRequestHandler>();
             this.settings = new CrawlerSettings();
             this.logic = new ImagePageLogic(this.settings, requestHandler);
@@ -122,7 +116,7 @@
         [Test]
         public void ThenImageFromDetailPage_ShouldContainsExpectedData()
         {
-            var node = JsonConvert.DeserializeObject(this.jsonOneImage);
+            var node = JsonConvert.DeserializeObject(this.detailPageJson);
             var expectedLargeUrl = "https://scontent-frx5-1.cdninstagram.com/vp/559fe5caf0273d1f0032cd962bb9ca09/5C3BCAA4/t51.2885-15/e35/40747690_739744336373924_2008795589189304320_n.jpg";
             var expectedThumbUrl = "https://scontent-frx5-1.cdninstagram.com/vp/ad4725cb4a41564d5793687b8ffcd395/5C282052/t51.2885-15/sh0.08/e35/p640x640/40747690_739744336373924_2008795589189304320_n.jpg";
             var expectedMessage  = "FUCK! #doppelt Schon wieder 1 sch\u00f6ner Festiwal Sommer vorbei. ^.^#hurricanefestival #hurricane #doppelt #test:) #bla";
@@ -133,17 +127,16 @@
                 "doppelt", "hurricanefestival", "hurricane", "test",
                 "bla", "tml", "tomorrowland", "hashtagzumtesten"
             };
-            var expectedHumanoidTagsJson = JsonConvert.SerializeObject(expectedHumanoidTags);
+            //var expectedHumanoidTagsJson = JsonConvert.SerializeObject(expectedHumanoidTags);
 
-            IEnumerable<IImage> images = this.logic.GetImage(node);
-            var image = images.FirstOrDefault();
-            var actualHumanoidTagsJson = JsonConvert.SerializeObject(image.HumanoidTags);
+            var image = this.logic.GetImage(node);
+            //var actualHumanoidTagsJson = JsonConvert.SerializeObject(image.HumanoidTags);
 
             Assert.AreEqual(22, image.Likes);
             Assert.AreEqual(4, image.CommentCount);
             Assert.AreEqual("BnOmixGhLzz", image.Shortcode);
             Assert.AreEqual(expectedHumanoidTags.Count, image.HumanoidTags.Count());
-            Assert.AreEqual(expectedHumanoidTagsJson, actualHumanoidTagsJson);
+            Assert.AreEqual(expectedHumanoidTags, image.HumanoidTags);
             Assert.AreEqual(expectedLargeUrl, image.LargeUrl);
             Assert.AreEqual(expectedThumbUrl, image.ThumbUrl);
             Assert.AreEqual(expectedMessage, image.Message);
@@ -153,7 +146,7 @@
         [Test]
         public void ThenImageFromDetailPage_ShouldContainsComments()
         {
-            var node = JsonConvert.DeserializeObject(this.jsonOneImage);
+            var node = JsonConvert.DeserializeObject(this.detailPageJson);
             var expectedComments = new List<string>
             {
                 "\ud83d\ude0d\ud83d\ude0dRespekt",
@@ -163,8 +156,7 @@
             };
             var expectedCommentsJson = JsonConvert.SerializeObject(expectedComments);
 
-            IEnumerable<IImage> images = this.logic.GetImage(node);
-            var image  = images.FirstOrDefault();
+            var image  = this.logic.GetImage(node);
             var actualCommentsJson = JsonConvert.SerializeObject(image.Comments);
 
             Assert.AreEqual(4, image.CommentCount);
@@ -174,7 +166,7 @@
         [Test]
         public void ThenImageFromDetailPage_ShouldContainsLocation()
         {
-            var node = JsonConvert.DeserializeObject(this.jsonOneImage);
+            var node = JsonConvert.DeserializeObject(this.detailPageJson);
             var expectedLocation = new Location
             {
                 Id            = 108433841,
@@ -184,8 +176,7 @@
             };
             var expectedLocationJson = JsonConvert.SerializeObject(expectedLocation);
 
-            IEnumerable<IImage> images = this.logic.GetImage(node);
-            var image  = images.FirstOrDefault();
+            var image  = this.logic.GetImage(node);
             var actualLocationJson = JsonConvert.SerializeObject(image.Location);
 
             Assert.AreEqual(4, image.CommentCount);

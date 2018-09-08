@@ -1,9 +1,6 @@
 ﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.PageAnalyzer;
@@ -13,18 +10,18 @@
     {
         private readonly UserPageLogic userPageLogic;
         private readonly ImagePageLogic imagePageLogic;
-        private ICrawlerSettings Settings;
+        private readonly ICrawlerSettings settings;
 
         public UserPageCrawler(ICrawlerSettings settings,
                                IRequestHandler requestHandler)
         {
-            this.Settings = settings;
+            this.settings = settings;
             this.userPageLogic = new UserPageLogic(settings);
             this.imagePageLogic = new ImagePageLogic(settings, requestHandler);
 
-            this.imagePageLogic.MinCommentsCount = this.Settings.UserMinHashTagCount;
-            this.imagePageLogic.MinHashTagCount  = this.Settings.UserMinCommentsCount;
-            this.imagePageLogic.MinLikes = this.Settings.UserMinLikes;
+            this.imagePageLogic.MinCommentsCount = this.settings.UserMinHashTagCount;
+            this.imagePageLogic.MinHashTagCount  = this.settings.UserMinCommentsCount;
+            this.imagePageLogic.MinLikes = this.settings.UserMinLikes;
         }
 
         public IUser Parse(string url)

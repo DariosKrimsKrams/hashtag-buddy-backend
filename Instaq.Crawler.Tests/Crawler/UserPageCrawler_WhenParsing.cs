@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instaq.Crawler.Tests.Crawler
+﻿namespace Instaq.Crawler.Tests.Crawler
 {
     using System.Linq;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.V4;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Requests;
-
     using Newtonsoft.Json;
-
     using NSubstitute;
-
     using NUnit.Framework;
 
     class UserPageCrawler_WhenParsing
