@@ -41,7 +41,7 @@
             var nodes = GetTimelineMediaNodes(data);
             user.Images = this.imagePageLogic.GetImages(nodes);
             user.Images = this.imagePageLogic.RemoveUnrelevantImages(user.Images);
-            user.Images = this.userPageLogic.RemoveImagesWithDuplicateHashtags(user.Images);
+            user.Images = this.userPageLogic.RemoveImagesWithIdenticalHashtags(user.Images);
 
             return user;
         }

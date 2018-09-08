@@ -66,54 +66,67 @@
 
             string message = edges[0]?.node?.text;
             var hashtags = this.ParseHashtags(message);
-
-            var comments = GetComments(node, ref hashtags);
+            var comments = GetComments(node);
+            GetHashtagsFromComments(comments, ref hashtags);
             var thumb = node?.thumbnail_src ?? node?.display_resources?[0].src;
 
-            var takenDate = GetDateTime(Convert.ToDouble(node?.taken_at_timestamp.ToString()));
+            var takenDate = GetDateTime(Convert.ToDouble(node?.taken_at_timestamp));
             var image = new Image
             {
                 Likes        = node.edge_media_preview_like?.count,
                 CommentCount = node?.edge_media_to_comment?.count,
-                Message = message,
-                Comments = comments,
+                Message      = message,
+                Comments     = comments,
                 Shortcode    = node?.shortcode,
                 HumanoidTags = hashtags,
                 LargeUrl     = node?.display_url,
                 ThumbUrl     = thumb,
-                Uploaded     = takenDate
+                Uploaded     = takenDate,
+                Location     = GetLocation(node),
             };
 
+            yield return image;
+        }
+
+        private Location GetLocation(dynamic node)
+        {
             var locationNode = node?.location;
             if (locationNode != null)
             {
-                var location = new Location
+                return new Location
                 {
                     Id            = locationNode.id,
                     HasPublicPage = locationNode.has_public_page,
                     Name          = locationNode.name,
                     Slug          = locationNode.slug
                 };
-                image.Location = location;
             }
-
-            yield return image;
+            return null;
         }
 
-        private IEnumerable<string> GetComments(dynamic node, ref IEnumerable<string> hashtags)
+        private IEnumerable<string> GetComments(dynamic node)
         {
-            var comments     = new List<string>();
             var commentsNode = node?.edge_media_to_comment?.edges;
+            if (commentsNode == null)
+            {
+                yield break;
+            }
             foreach (var commentNode in commentsNode)
             {
                 var commentText = commentNode?.node?.text.ToString();
-                comments.Add(commentText);
-                var commentHashtags = this.ParseHashtags(commentText);
-                hashtags = Enumerable.Concat(hashtags, commentHashtags);
-                hashtags = hashtags.Distinct();
+                yield return commentText;
             }
+        }
 
-            return comments;
+
+        private void GetHashtagsFromComments(IEnumerable<string> comments, ref IEnumerable<string> hashtags)
+        {
+            foreach (var comment in comments)
+            {
+                var commentHashtags = this.ParseHashtags(comment);
+                hashtags = hashtags.Concat(commentHashtags);
+            }
+            hashtags = hashtags.Distinct();
         }
 
         public IEnumerable<string> ParseHashtags(string text)
