@@ -159,7 +159,7 @@ namespace Instaq.Crawler.Tests.Logic
                         "blubb"
                     },
                     Likes = 9001,
-                    Follower = 200200,
+                    User = new User { FollowerCount = 123678 },
                     LargeUrl = "test",
                     MachineTags = new List<IMachineTag>
                     {
@@ -175,7 +175,7 @@ namespace Instaq.Crawler.Tests.Logic
                         "acker"
                     },
                     Likes    = 12345,
-                    Follower = 9876,
+                    User = new User { FollowerCount = 123678 },
                     LargeUrl = "test",
                     MachineTags = new List<IMachineTag>
                     {

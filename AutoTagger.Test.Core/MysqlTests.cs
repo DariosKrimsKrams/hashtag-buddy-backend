@@ -18,16 +18,13 @@
             var image = new Image
             {
                 CommentCount = 10,
-                Follower = 99,
-                Following = 150,
-                Posts = 42,
                 HumanoidTags = new List<string> { "catlove", "instabeach", "hamburg" },
                 //MachineTags = new List<string> { "cat", "beach", "city" },
                 LargeUrl = "content.com/pic/ab12xy67laaaarge",
                 ThumbUrl = "content.com/pic/ab12xthump",
                 Shortcode = "ab12xy67",
                 Likes = 1337,
-                User = "DarioDomi",
+                User = new User { Username = "DarioDomi", FollowerCount = 99, FollowingCount = 150, PostCount = 42 },
                 Uploaded = DateTime.Now
             };
 

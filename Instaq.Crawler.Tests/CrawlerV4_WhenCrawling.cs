@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Instaq.Crawler.Tests
 {
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
@@ -44,10 +45,15 @@ namespace Instaq.Crawler.Tests
             var userPageUrl = "https://www.instagram.com/felixadergold/?hl=en";
             requestHandler.FetchNode(userPageUrl).Returns(userPageObj);
 
-            this.crawler = new CrawlerV4(requestHandler);
-            this.crawler.SetSetting("LimitExplorePages", 1);
-            this.crawler.SetSetting("LimitImagePages", 1);
-            this.crawler.SetSetting("LimitUserPages", 1);
+            var settings = new CrawlerSettings
+            {
+                LimitExplorePages = 1,
+                LimitImagePages = 1,
+                LimitUserPages = 1,
+                MaxHashtagLength = 30,
+                MinHashtagLength = 5
+            };
+            this.crawler = new CrawlerV4(requestHandler, settings);
 
             this.crawler.OnHashtagNameFound += this.OnHashtagNameFound;
             this.crawler.OnHashtagFoundComplete += this.OnHashtagFoundComplete;
@@ -75,21 +81,17 @@ namespace Instaq.Crawler.Tests
         }
 
         [Test]
-        public void ThenRunningExploringPage_ShouldX()
+        public void ThenRunningExploringPageFor1User_ShouldReturnExpectedUser()
         {
-            this.crawler.DoCrawling(1, "hamburg");
+            this.crawler.DoCrawling("hamburg");
 
-            // follower = 34942
-            // following 2453
-            // 383
             Assert.AreEqual(176, this.tagNames.Count);
             Assert.AreEqual(1, this.tags.Count);
             Assert.AreEqual(12, this.images.Count);
-
-            Console.WriteLine(this.tagNames);
-            Console.WriteLine(this.tagNames.Count);
-            Console.WriteLine(this.images);
-            Console.WriteLine(this.images.Count);
+            Assert.AreEqual("felixadergold", this.images[0].User.Username);
+            Assert.AreEqual(34942, this.images[0].User.FollowerCount);
+            Assert.AreEqual(2453, this.images[0].User.FollowingCount);
+            Assert.AreEqual(383, this.images[0].User.PostCount);
         }
     }
 }

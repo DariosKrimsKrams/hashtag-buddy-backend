@@ -24,9 +24,9 @@
         public event Action<IHumanoidTag> OnHashtagFound;
         public event Action<IImage> OnImageSaved;
 
-        public void DoCrawling(int limit, params string[] customTags)
+        public void DoCrawling(params string[] customTags)
         {
-            this.crawler.DoCrawling(limit, customTags);
+            this.crawler.DoCrawling(customTags);
         }
 
         private void HashtagFound(IHumanoidTag humanoidTag)

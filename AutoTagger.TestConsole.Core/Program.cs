@@ -2,6 +2,8 @@
 {
     using System;
     using System.Linq;
+
+    using AutoTagger.Common;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
     using AutoTagger.Database.Storage.Mysql;
@@ -87,8 +89,20 @@
 
             var crawlerDb = new MysqlCrawlerStorage();
             var requestHandler = new HttpRequestHandler();
-            var crawlerEngine = new CrawlerV4(requestHandler);
-            crawlerEngine.SetSetting("MinPostsForHashtags", 10 * 1000);
+            var settings = new CrawlerSettings
+            {
+                MinPostsForHashtags         = 10 * 1000,
+                ExploreTagsMinHashtagCount  = 0,
+                ExploreTagsMinLikes         = 100,
+                ExploreTagsMinCommentsCount = 0,
+                MaxHashtagLength            = 30,
+                MinHashtagLength            = 5,
+                UserMinFollowerCount        = 1000,
+                UserMinHashTagCount         = 5,
+                UserMinCommentsCount        = 10,
+                UserMinLikes                = 300
+            };
+            var crawlerEngine = new CrawlerV4(requestHandler, settings);
             crawlerEngine.InsertTags(machineTagsArr);
             //crawlerEngine.DisableFurtherEnqueue();
 
@@ -98,17 +112,31 @@
                 Console.WriteLine(
                     "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
                   + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
-                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
+                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.User.FollowerCount
                   + "\", \"comments\":\"" + image.CommentCount + "\", }");
             };
-            crawler.DoCrawling(0);
+            crawler.DoCrawling();
         }
 
         private static void StartCrawler()
         {
             var db = new MysqlCrawlerStorage();
             var requestHandler = new HttpRequestHandler();
-            var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler));
+
+            var settings = new CrawlerSettings
+            {
+                MinPostsForHashtags = 1 * 1000 * 1000,
+                ExploreTagsMinHashtagCount = 0,
+                ExploreTagsMinLikes = 100,
+                ExploreTagsMinCommentsCount = 0,
+                MaxHashtagLength = 30,
+                MinHashtagLength = 5,
+                UserMinFollowerCount = 1000,
+                UserMinHashTagCount = 5,
+                UserMinCommentsCount = 10,
+                UserMinLikes = 300
+            };
+            var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler, settings));
 
             crawler.OnImageSaved += image =>
             {
@@ -118,7 +146,7 @@
                   + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
                   + "\", \"comments\":\"" + image.CommentCount + "\", }");
             };
-            crawler.DoCrawling(0);
+            crawler.DoCrawling();
         }
 
         private static void StartImageDownloader()

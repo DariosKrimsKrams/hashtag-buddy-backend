@@ -13,9 +13,11 @@
 
         public IEnumerable<string> Comments { get; set; }
 
-        public int Follower { get; set; }
+        //public int Follower { get; set; }
 
-        public int Following { get; set; }
+        //public int Following { get; set; }
+
+        //public int Posts { get; set; }
 
         public IEnumerable<string> HumanoidTags { get; set; }
 
@@ -31,15 +33,13 @@
 
         public string Message { get; set; }
 
-        public int Posts { get; set; }
-
         public string Shortcode { get; set; }
 
         public string ThumbUrl { get; set; }
 
         public DateTime Uploaded { get; set; }
 
-        public string User { get; set; }
+        public IUser User { get; set; }
 
         public override string ToString()
         {

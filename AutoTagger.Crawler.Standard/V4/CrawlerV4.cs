@@ -12,7 +12,7 @@
 
     public class CrawlerV4 : ICrawler
     {
-        private readonly CrawlerSettings settings;
+        private readonly ICrawlerSettings settings;
 
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly UserQueue<string> userQueue;
@@ -27,21 +27,9 @@
         public event Action<string> OnHashtagNameFound;
         public event Action<IImage> OnImageFound;
 
-        public CrawlerV4(IRequestHandler requestHandler)
+        public CrawlerV4(IRequestHandler requestHandler, ICrawlerSettings crawlerSetting)
         {
-            this.settings = new CrawlerSettings
-            {
-                MinPostsForHashtags         = 1 * 1000 * 1000,
-                ExploreTagsMinHashtagCount  = 0,
-                ExploreTagsMinLikes         = 100,
-                ExploreTagsMinCommentsCount = 0,
-                MaxHashtagLength            = 30,
-                MinHashtagLength            = 5,
-                UserMinFollowerCount        = 1000,
-                UserMinHashTagCount         = 5,
-                UserMinCommentsCount        = 10,
-                UserMinLikes                = 300
-            };
+            this.settings = crawlerSetting;
 
             this.hashtagQueue   = new HashtagQueue<IHumanoidTag>();
             this.userQueue      = new UserQueue<string>();
@@ -53,7 +41,7 @@
             this.imageDetailPageCrawler      = new ImageDetailPageCrawler(this.settings, requestHandler);
         }
 
-        public void DoCrawling(int limit, params string[] customTags)
+        public void DoCrawling(params string[] customTags)
         {
             this.InsertTags(customTags);
             this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, this.settings.LimitExplorePages);
@@ -99,9 +87,11 @@
 
             foreach (var image in user.Images)
             {
-                image.Follower  = user.FollowerCount;
-                image.Following = user.FollowingCount;
-                image.Posts     = user.PostCount;
+                //image.Follower  = user.FollowerCount;
+                //image.Following = user.FollowingCount;
+                //image.Posts     = user.PostCount;
+                //image.User      = user.Username;
+                image.User = user;
 
                 this.hashtagQueue.EnqueueMultiple(image.HumanoidTags);
                 var hTagNames = image.HumanoidTags;
@@ -111,22 +101,6 @@
                 }
 
                 this.OnImageFound?.Invoke(image);
-            }
-        }
-
-        public void SetSetting(string key, int value)
-        {
-            switch (key)
-            {
-                case "LimitImagePages":
-                    this.settings.LimitImagePages = value;
-                    break;
-                case "LimitUserPages":
-                    this.settings.LimitUserPages = value;
-                    break;
-                case "LimitExplorePages":
-                    this.settings.LimitExplorePages = value;
-                    break;
             }
         }
 

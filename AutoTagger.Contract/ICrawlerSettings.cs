@@ -4,7 +4,11 @@
     {
         int MinPostsForHashtags { get; set; }
 
+        int LimitExplorePages { get; set; }
+
         int LimitImagePages { get; set; }
+
+        int LimitUserPages { get; set; }
 
         int ExploreTagsMinHashtagCount { get; set; }
 

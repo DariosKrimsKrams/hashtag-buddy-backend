@@ -10,9 +10,11 @@
 
         IEnumerable<string> Comments { get; set; }
 
-        int Follower { get; set; }
+        //int Follower { get; set; }
 
-        int Following { get; set; }
+        //int Following { get; set; }
+
+        //int Posts { get; set; }
 
         IEnumerable<string> HumanoidTags { get; set; }
 
@@ -28,14 +30,12 @@
 
         string Message { get; set; }
 
-        int Posts { get; set; }
-
         string Shortcode { get; set; }
 
         string ThumbUrl { get; set; }
 
         DateTime Uploaded { get; set; }
 
-        string User { get; set; }
+        IUser User { get; set; }
     }
 }

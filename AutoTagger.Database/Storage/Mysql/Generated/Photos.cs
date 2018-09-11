@@ -42,10 +42,10 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 Shortcode = image.Shortcode,
                 Likes     = image.Likes,
                 Comments  = image.CommentCount,
-                User      = image.User,
-                Follower = image.Follower,
-                Following  = image.Following,
-                Posts  = image.Posts,
+                User      = image.User.Username,
+                Follower = image.User.FollowerCount,
+                Following  = image.User.FollowingCount,
+                Posts  = image.User.PostCount,
                 Uploaded  = image.Uploaded
             };
 
@@ -65,19 +65,24 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
         public IImage ToImage()
         {
+            var user = new User()
+            {
+                FollowerCount  = this.Follower,
+                FollowingCount = this.Following,
+                PostCount      = this.Posts,
+                Username       = this.User,
+            };
             var image = new Image
             {
-                Id = this.Id,
-                LargeUrl  = this.LargeUrl,
-                ThumbUrl  = this.ThumbUrl,
-                Shortcode = this.Shortcode,
-                Likes     = this.Likes,
-                CommentCount  = this.Comments,
-                User      = this.User,
-                Follower  = this.Follower,
-                Following = this.Following,
-                Posts     = this.Posts,
-                MachineTags = this.Mtags.Select(tag => new MachineTag{Name= tag.Name , Score=tag.Score, Source = tag.Source}),
+                Id           = this.Id,
+                LargeUrl     = this.LargeUrl,
+                ThumbUrl     = this.ThumbUrl,
+                Shortcode    = this.Shortcode,
+                Likes        = this.Likes,
+                CommentCount = this.Comments,
+                User         = user,
+                MachineTags =
+                    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),
                 HumanoidTags = this.Itags.Select(tag => tag.Name)
             };
             return image;

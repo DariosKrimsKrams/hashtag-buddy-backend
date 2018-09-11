@@ -10,8 +10,6 @@
 
         event Action<IImage> OnImageFound;
 
-        void DoCrawling(int limit, params string[] customTags);
-
-        void SetSetting(string key, int value);
+        void DoCrawling(params string[] customTags);
     }
 }
