@@ -6,7 +6,11 @@
     {
         public int MinPostsForHashtags { get; set; }
 
-        public int Limit { get; set; }
+        public int LimitExplorePages { get; set; }
+
+        public int LimitImagePages { get; set; }
+
+        public int LimitUserPages { get; set; }
 
         public int ExploreTagsMinHashtagCount { get; set; }
 

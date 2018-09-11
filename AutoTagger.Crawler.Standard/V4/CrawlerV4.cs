@@ -23,7 +23,8 @@
         private readonly ImageDetailPageCrawler imageDetailPageCrawler;
         private readonly UserPageCrawler userPageCrawler;
 
-        public event Action<IHumanoidTag> OnHashtagFound;
+        public event Action<IHumanoidTag> OnHashtagFoundComplete;
+        public event Action<string> OnHashtagNameFound;
         public event Action<IImage> OnImageFound;
 
         public CrawlerV4(IRequestHandler requestHandler)
@@ -31,7 +32,6 @@
             this.settings = new CrawlerSettings
             {
                 MinPostsForHashtags         = 1 * 1000 * 1000,
-                Limit                       = -1,
                 ExploreTagsMinHashtagCount  = 0,
                 ExploreTagsMinLikes         = 100,
                 ExploreTagsMinCommentsCount = 0,
@@ -56,7 +56,7 @@
         public void DoCrawling(int limit, params string[] customTags)
         {
             this.InsertTags(customTags);
-            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc);
+            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, this.settings.LimitExplorePages);
         }
 
         public void InsertTags(string[] customTags)
@@ -75,11 +75,11 @@
             var url = $"https://www.instagram.com/explore/tags/{tag.Name}/";
             var (amountOfPosts, images) = this.exploreTagsPagePageHandler.Parse(url);
             tag.Posts = amountOfPosts;
-            this.OnHashtagFound?.Invoke(tag);
+            this.OnHashtagFoundComplete?.Invoke(tag);
 
             var shortcodes = images.Select(x => x.Shortcode);
             this.shortcodeQueue.EnqueueMultiple(shortcodes);
-            this.shortcodeQueue.Process(this.UserCrawlerFunc);
+            this.shortcodeQueue.Process(this.ImagePageCrawlerFunc, this.settings.LimitImagePages);
         }
 
         private void ImagePageCrawlerFunc(string shortcode)
@@ -88,7 +88,8 @@
             var username = this.imageDetailPageCrawler.ParseUsername(url);
 
             this.userQueue.Enqueue(username);
-            this.userQueue.Process(this.UserCrawlerFunc);
+            this.userQueue.ProcessEachValueOnlyOnce = false;
+            this.userQueue.Process(this.UserCrawlerFunc, this.settings.LimitUserPages);
         }
 
         private void UserCrawlerFunc(string username)
@@ -96,29 +97,18 @@
             var url = $"https://www.instagram.com/{username}/?hl=en";
             var user = this.userPageCrawler.Parse(url);
 
-
             foreach (var image in user.Images)
             {
                 image.Follower  = user.FollowerCount;
                 image.Following = user.FollowingCount;
                 image.Posts     = user.PostCount;
 
-                // ToDo limit check
-
+                this.hashtagQueue.EnqueueMultiple(image.HumanoidTags);
                 var hTagNames = image.HumanoidTags;
                 foreach (var hTagName in hTagNames)
                 {
-                    var newHTag = new HumanoidTag
-                    {
-                        Name = hTagName
-                    };
-                    this.hashtagQueue.Enqueue(newHTag);
+                    this.OnHashtagNameFound?.Invoke(hTagName);
                 }
-
-                //var shortcode = (T)Convert.ChangeType(image.Shortcode, typeof(T));
-                this.shortcodeQueue.Enqueue(image.Shortcode);
-                //this.AddProcessed(shortcode);
-                //yield return image;
 
                 this.OnImageFound?.Invoke(image);
             }
@@ -126,8 +116,18 @@
 
         public void SetSetting(string key, int value)
         {
-            // ToDo
-            // this.settings.[key] = value
+            switch (key)
+            {
+                case "LimitImagePages":
+                    this.settings.LimitImagePages = value;
+                    break;
+                case "LimitUserPages":
+                    this.settings.LimitUserPages = value;
+                    break;
+                case "LimitExplorePages":
+                    this.settings.LimitExplorePages = value;
+                    break;
+            }
         }
 
     }

@@ -9,11 +9,20 @@
     {
         protected readonly HashSet<T> Processed = new HashSet<T>();
 
-        public void Process(Action<T> func)
+        private int count;
+
+        public bool ProcessEachValueOnlyOnce = true;
+
+        public void Process(Action<T> func, int limit = -1)
         {
-            while (this.GetEntry(out T currentShortcode))
+            while (this.GetEntry(out T value))
             {
-                func(currentShortcode);
+                func(value);
+                this.count++;
+                if (limit > 0 && this.count >= limit)
+                {
+                    break;
+                }
             }
         }
 
@@ -51,16 +60,21 @@
             }
 
             this.AddProcessed(entry);
+
             return true;
         }
 
-        private void AddProcessed(T value)
+        protected void AddProcessed(T value)
         {
             this.Processed.Add(value);
         }
 
-        private bool IsProcessed(T value)
+        protected bool IsProcessed(T value)
         {
+            if (this.ProcessEachValueOnlyOnce)
+            {
+                return false;
+            }
             return this.Processed.Contains(value);
         }
     }

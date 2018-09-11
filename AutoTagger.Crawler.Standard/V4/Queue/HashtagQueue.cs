@@ -2,16 +2,31 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Concurrent;
     using System.Linq;
-    using System.Reflection;
+
     using AutoTagger.Common;
-    using AutoTagger.Contract;
 
     public class HashtagQueue<T> : BaseQueue<T>
     {
+        public void EnqueueMultiple(IEnumerable<string> tagNames)
+        {
+            foreach (var tagName in tagNames)
+            {
+                var htag = new HumanoidTag { Name = tagName };
+                var htagAsT = (T)Convert.ChangeType(htag, typeof(HumanoidTag));
+                this.Enqueue(htagAsT);
+            }
+        }
 
-        private bool IsProcessed(T checkingTag)
+        protected bool Contains(T checkingTag)
+        {
+            var checkingHTag = (HumanoidTag) Convert.ChangeType(checkingTag, typeof(HumanoidTag));
+            var exists = this.FirstOrDefault(
+                htag => ((HumanoidTag) Convert.ChangeType(htag, typeof(HumanoidTag))).Name == checkingHTag.Name);
+            return exists != null;
+        }
+
+        protected new bool IsProcessed(T checkingTag)
         {
             var checkingHTag = (HumanoidTag) Convert.ChangeType(checkingTag, typeof(HumanoidTag));
             foreach (var htag in this.Processed)
@@ -22,23 +37,8 @@
                     return true;
                 }
             }
+
             return false;
         }
-
-        private bool Contains(T checkingTag)
-        {
-            var checkingHTag = (HumanoidTag)Convert.ChangeType(checkingTag, typeof(HumanoidTag));
-            var exists = this.FirstOrDefault(htag => ((HumanoidTag)Convert.ChangeType(htag, typeof(HumanoidTag))).Name == checkingHTag.Name);
-            return exists != null;
-        }
-
-        public void AddProcessed(IEnumerable<T> tags)
-        {
-            foreach (var tag in tags)
-            {
-                this.Processed.Add(tag);
-            }
-        }
-
     }
 }

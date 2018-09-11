@@ -17,7 +17,7 @@
             this.db                     =  db;
             this.crawler                =  crawler;
             this.allHTags               =  db.GetAllHumanoidTags<HumanoidTag>().ToList();
-            this.crawler.OnHashtagFound += this.HashtagFound;
+            this.crawler.OnHashtagFoundComplete += this.HashtagFound;
             this.crawler.OnImageFound += this.ImageFound;
         }
 
