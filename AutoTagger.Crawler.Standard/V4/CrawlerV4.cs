@@ -15,8 +15,8 @@
         private ICrawlerSettings settings;
 
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
-        private readonly UserQueue<string> userQueue;
-        private readonly ShortcodeQueue<string> shortcodeQueue;
+        private readonly BaseQueue<string> userQueue;
+        private readonly BaseQueue<string> shortcodeQueue;
 
         private readonly RandomTagsCrawler randomTagsCrawler;
         private readonly ExploreTagsPageHandler exploreTagsPagePageHandler;
@@ -32,8 +32,8 @@
             this.settings = crawlerSetting;
 
             this.hashtagQueue   = new HashtagQueue<IHumanoidTag>();
-            this.userQueue      = new UserQueue<string>();
-            this.shortcodeQueue = new ShortcodeQueue<string>();
+            this.userQueue      = new BaseQueue<string>();
+            this.shortcodeQueue = new BaseQueue<string>();
 
             this.randomTagsCrawler           = new RandomTagsCrawler(requestHandler);
             this.exploreTagsPagePageHandler  = new ExploreTagsPageHandler(this.settings, requestHandler);
