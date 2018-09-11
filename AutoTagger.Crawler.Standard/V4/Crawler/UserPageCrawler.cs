@@ -43,6 +43,10 @@
             user.Images = this.imagePageLogic.GetImages(timelineMediaNodes);
             user.Images = this.imagePageLogic.RemoveUnrelevantImages(user.Images);
             user.Images = this.userPageLogic.RemoveImagesWithIdenticalHashtags(user.Images);
+            foreach (var image in user.Images)
+            {
+                image.User = user;
+            }
 
             return user;
         }

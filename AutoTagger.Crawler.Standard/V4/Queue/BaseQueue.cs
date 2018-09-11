@@ -13,7 +13,7 @@
 
         public bool ProcessEachValueOnlyOnce = true;
 
-        public void Process(Action<T> func, int limit = -1)
+        public void Process(Action<T> func, int limit = 0)
         {
             while (this.GetEntry(out T value))
             {
@@ -71,7 +71,7 @@
 
         protected bool IsProcessed(T value)
         {
-            if (this.ProcessEachValueOnlyOnce)
+            if (!this.ProcessEachValueOnlyOnce)
             {
                 return false;
             }

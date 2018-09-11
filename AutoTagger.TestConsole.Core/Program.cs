@@ -143,7 +143,7 @@
                 Console.WriteLine(
                     "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
                   + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
-                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.Follower
+                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.User.FollowerCount
                   + "\", \"comments\":\"" + image.CommentCount + "\", }");
             };
             crawler.DoCrawling();

@@ -12,7 +12,7 @@
 
     public class CrawlerV4 : ICrawler
     {
-        private readonly ICrawlerSettings settings;
+        private ICrawlerSettings settings;
 
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly UserQueue<string> userQueue;
@@ -24,7 +24,7 @@
         private readonly UserPageCrawler userPageCrawler;
 
         public event Action<IHumanoidTag> OnHashtagFoundComplete;
-        public event Action<string> OnHashtagNameFound;
+        public event Action<IEnumerable<string>> OnHashtagNamesFound;
         public event Action<IImage> OnImageFound;
 
         public CrawlerV4(IRequestHandler requestHandler, ICrawlerSettings crawlerSetting)
@@ -50,12 +50,7 @@
         public void InsertTags(string[] customTags)
         {
             var tags = customTags.Length == 0 ? this.randomTagsCrawler.Parse() : customTags;
-            var hTags = new List<IHumanoidTag>();
-            foreach (var name in tags)
-            {
-                hTags.Add(new HumanoidTag { Name = name });
-            }
-            this.hashtagQueue.EnqueueMultiple(hTags);
+            this.hashtagQueue.EnqueueMultiple(tags);
         }
 
         private void ExploreTagsCrawlerFunc(IHumanoidTag tag)
@@ -87,21 +82,15 @@
 
             foreach (var image in user.Images)
             {
-                //image.Follower  = user.FollowerCount;
-                //image.Following = user.FollowingCount;
-                //image.Posts     = user.PostCount;
-                //image.User      = user.Username;
-                image.User = user;
-
                 this.hashtagQueue.EnqueueMultiple(image.HumanoidTags);
-                var hTagNames = image.HumanoidTags;
-                foreach (var hTagName in hTagNames)
-                {
-                    this.OnHashtagNameFound?.Invoke(hTagName);
-                }
-
+                this.OnHashtagNamesFound?.Invoke(image.HumanoidTags);
                 this.OnImageFound?.Invoke(image);
             }
+        }
+
+        public void UpdateSettings(ICrawlerSettings settings)
+        {
+            this.settings = settings;
         }
 
     }

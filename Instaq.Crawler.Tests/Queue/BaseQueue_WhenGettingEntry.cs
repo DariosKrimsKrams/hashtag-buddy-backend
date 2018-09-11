@@ -127,7 +127,36 @@
 
             var status = this.queue.GetEntry(out var entry);
 
-            Assert.AreEqual(null, entry);
+            Assert.Null(entry);
+            Assert.IsFalse(status);
+        }
+
+        [Test]
+        public void ThenProcessEachValueOnlyOnceToTrue_AndMultipleGetEntryOfSameValue_ShouldBePossible()
+        {
+            this.queue.ProcessEachValueOnlyOnce = false;
+            this.queue.Enqueue("test1");
+            this.queue.GetEntry(out _);
+            this.queue.Enqueue("test1");
+
+            var status = this.queue.GetEntry(out var entry);
+
+            Assert.NotNull(entry);
+            Assert.AreEqual("test1", entry);
+            Assert.IsTrue(status);
+        }
+
+        [Test]
+        public void ThenProcessEachValueOnlyOnceToTrue_AndEnqueueWithoutGetEntry_ShouldNotBePossible()
+        {
+            this.queue.ProcessEachValueOnlyOnce = false;
+            this.queue.Enqueue("test1");
+            this.queue.Enqueue("test1");
+            this.queue.GetEntry(out _);
+
+            var status = this.queue.GetEntry(out var entry);
+
+            Assert.Null(entry);
             Assert.IsFalse(status);
         }
     }
