@@ -1,6 +1,8 @@
 ﻿namespace Instaq.Crawler.Tests
 {
     using System.Collections.Generic;
+    using System.Threading;
+
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4;

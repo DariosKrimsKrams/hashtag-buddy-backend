@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+
     using AutoTagger.Contract;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Queue;
@@ -14,7 +16,7 @@
 
         private readonly HashtagQueue<IHumanoidTag> hashtagQueue;
         private readonly BaseQueue<string> userQueue;
-        private readonly BaseQueue<string> shortcodeQueue;
+        private readonly BaseQueue<string> imageQueue;
 
         private readonly RandomTagsCrawler randomTagsCrawler;
         private readonly ExploreTagsPageHandler exploreTagsPagePageHandler;
@@ -31,7 +33,7 @@
 
             this.hashtagQueue   = new HashtagQueue<IHumanoidTag>();
             this.userQueue      = new BaseQueue<string>();
-            this.shortcodeQueue = new BaseQueue<string>();
+            this.imageQueue     = new BaseQueue<string>();
 
             this.randomTagsCrawler           = new RandomTagsCrawler(requestHandler);
             this.exploreTagsPagePageHandler  = new ExploreTagsPageHandler(this.settings, requestHandler);
@@ -42,11 +44,31 @@
         public void DoCrawling(params string[] customTags)
         {
             this.hashtagQueue.SetLimit(this.settings.LimitExplorePages);
-            this.shortcodeQueue.SetLimit(this.settings.LimitImagePages);
+            this.imageQueue.SetLimit(this.settings.LimitImagePages);
             this.userQueue.SetLimit(this.settings.LimitUserPages);
 
             this.InsertTags(customTags);
+            new Thread(this.HashtagQueueThread).Start();
+            new Thread(this.ShortcodeQueueThread).Start();
+            new Thread(this.UserQueueThread).Start();
+        }
+
+        public void HashtagQueueThread()
+        {
             this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc);
+            Console.WriteLine("End hashtagQueue :(");
+        }
+
+        public void ShortcodeQueueThread()
+        {
+            this.imageQueue.Process(this.ImagePageCrawlerFunc);
+            Console.WriteLine("End imageQueue :(");
+        }
+
+        public void UserQueueThread()
+        {
+            this.userQueue.Process(this.UserCrawlerFunc);
+            Console.WriteLine("End userQueue :(");
         }
 
         public void InsertTags(string[] customTags)
@@ -63,8 +85,7 @@
             this.OnHashtagFoundComplete?.Invoke(tag);
 
             var shortcodes = images.Select(x => x.Shortcode);
-            this.shortcodeQueue.EnqueueMultiple(shortcodes);
-            this.shortcodeQueue.Process(this.ImagePageCrawlerFunc);
+            this.imageQueue.EnqueueMultiple(shortcodes);
         }
 
         private void ImagePageCrawlerFunc(string shortcode)
@@ -74,7 +95,6 @@
 
             this.userQueue.Enqueue(username);
             this.userQueue.ProcessEachValueOnlyOnce = false;
-            this.userQueue.Process(this.UserCrawlerFunc);
         }
 
         private void UserCrawlerFunc(string username)
