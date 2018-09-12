@@ -43,8 +43,12 @@
 
         public void DoCrawling(params string[] customTags)
         {
+            this.hashtagQueue.SetLimit(this.settings.LimitExplorePages);
+            this.shortcodeQueue.SetLimit(this.settings.LimitImagePages);
+            this.userQueue.SetLimit(this.settings.LimitUserPages);
+
             this.InsertTags(customTags);
-            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, this.settings.LimitExplorePages);
+            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc);
         }
 
         public void InsertTags(string[] customTags)
@@ -62,7 +66,7 @@
 
             var shortcodes = images.Select(x => x.Shortcode);
             this.shortcodeQueue.EnqueueMultiple(shortcodes);
-            this.shortcodeQueue.Process(this.ImagePageCrawlerFunc, this.settings.LimitImagePages);
+            this.shortcodeQueue.Process(this.ImagePageCrawlerFunc);
         }
 
         private void ImagePageCrawlerFunc(string shortcode)
@@ -72,7 +76,7 @@
 
             this.userQueue.Enqueue(username);
             this.userQueue.ProcessEachValueOnlyOnce = false;
-            this.userQueue.Process(this.UserCrawlerFunc, this.settings.LimitUserPages);
+            this.userQueue.Process(this.UserCrawlerFunc);
         }
 
         private void UserCrawlerFunc(string username)

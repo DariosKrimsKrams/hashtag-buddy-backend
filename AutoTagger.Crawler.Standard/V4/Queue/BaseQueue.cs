@@ -7,22 +7,28 @@
 
     public class BaseQueue<T> : ConcurrentQueue<T>
     {
-        protected readonly HashSet<T> Processed = new HashSet<T>();
-
         private int count;
+        private int limit;
+
+        protected readonly HashSet<T> Processed = new HashSet<T>();
 
         public bool ProcessEachValueOnlyOnce = true;
 
-        public void Process(Action<T> func, int limit = 0)
+        public void SetLimit(int limit)
+        {
+            this.limit = limit;
+        }
+
+        public void Process(Action<T> func)
         {
             while (this.GetEntry(out T value))
             {
-                func(value);
-                this.count++;
-                if (limit > 0 && this.count >= limit)
+                if (this.limit > 0 && this.count >= this.limit)
                 {
                     break;
                 }
+                this.count++;
+                func(value);
             }
         }
 
