@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using AutoTagger.Common;
     using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Queue;
     using AutoTagger.Crawler.V4.Requests;

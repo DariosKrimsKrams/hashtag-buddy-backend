@@ -1,10 +1,11 @@
-﻿namespace AutoTagger.ImageDownloader.Standard
+﻿namespace AutoTagger.ImageDownloader
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Threading;
+
     using AutoTagger.Contract;
     using AutoTagger.FileHandling.Standard;
 
@@ -12,10 +13,9 @@
     {
         private static IImageProcessorStorage storage;
         private static int downloaderRunning;
-
-        private static readonly int QueryImagesAtLessOrEqualImages = 20;
-        private static readonly int DbSelectImagesAmount = 500;
-        private static readonly int ParallelThreads = 100;
+        private const int QueryImagesAtLessOrEqualImages = 20;
+        private const int DbSelectImagesAmount = 500;
+        private const int ParallelThreads = 100;
         private static int lastId = 0;
         private static IFileHandler fileHandler;
         private static List<string> files;

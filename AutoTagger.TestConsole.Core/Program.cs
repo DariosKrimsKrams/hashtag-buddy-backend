@@ -7,8 +7,8 @@
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
     using AutoTagger.Database.Storage.Mysql;
+    using AutoTagger.ImageDownloader;
     using AutoTagger.ImageProcessor.Standard;
-    using AutoTagger.ImageDownloader.Standard;
 
     using Instaq.BlacklistImport;
     using Instaq.TooGenericProcessor;
