@@ -72,17 +72,17 @@
 
         public void InsertOrUpdateHumanoidTag(IHumanoidTag hTag)
         {
-            hTag.Name = hTag.Name.ToLower();
-
-            var existingHITag = this.allITags.FirstOrDefault(x => x.Name == hTag.Name);
-            if (existingHITag != null)
+            var existingHumanoidTag = this.allITags.FirstOrDefault(x => x.Name == hTag.Name && hTag.Posts != 0);
+            if (existingHumanoidTag != null)
             {
-                if (existingHITag.Posts == hTag.Posts)
+                if (existingHumanoidTag.Posts == hTag.Posts)
                     return;
 
-                existingHITag.Posts = hTag.Posts;
-                this.db.Itags.Update(existingHITag);
+                existingHumanoidTag.Posts = hTag.Posts;
+                this.db.Itags.Update(existingHumanoidTag);
                 this.Save();
+
+                // ToDo this.allITags[key].Posts=hTag.Posts
             }
             else
             {

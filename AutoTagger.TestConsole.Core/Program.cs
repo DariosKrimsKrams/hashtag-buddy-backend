@@ -106,20 +106,23 @@
             crawlerEngine.InsertTags(machineTagsArr);
             //crawlerEngine.DisableFurtherEnqueue();
 
-            var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
-            crawler.OnImageSaved += image =>
-            {
-                Console.WriteLine(
-                    "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
-                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
-                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.User.FollowerCount
-                  + "\", \"comments\":\"" + image.CommentCount + "\", }");
-            };
-            crawler.DoCrawling();
+            // ToDo
+
+            //var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
+            //crawler.OnImageSaved += image =>
+            //{
+            //    Console.WriteLine(
+            //        "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
+            //      + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
+            //      + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.User.FollowerCount
+            //      + "\", \"comments\":\"" + image.CommentCount + "\", }");
+            //};
+            //crawler.DoCrawling();
         }
 
         private static void StartCrawler()
         {
+            var saveIt = true;
             var db = new MysqlCrawlerStorage();
             var requestHandler = new HttpRequestHandler();
 
@@ -127,7 +130,7 @@
             {
                 MinPostsForHashtags = 1 * 1000 * 1000,
                 ExploreTagsMinHashtagCount = 0,
-                ExploreTagsMinLikes = 100,
+                ExploreTagsMinLikes = 10,
                 ExploreTagsMinCommentsCount = 0,
                 MaxHashtagLength = 30,
                 MinHashtagLength = 5,
@@ -136,16 +139,41 @@
                 UserMinCommentsCount = 10,
                 UserMinLikes = 300
             };
-            var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler, settings));
+            var crawler = new CrawlerV4(requestHandler, settings);
+            //var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler, settings));
 
-            crawler.OnImageSaved += image =>
+            if (saveIt)
+            {
+                db.GetAllHumanoidTags<HumanoidTag>();
+
+            }
+
+            crawler.OnImageFound += image =>
             {
                 Console.WriteLine(
-                    "{ \"shortcode\":\"" + image.Shortcode + "\", \"from\":\"" + image.User + "\", \"tags\": ["
-                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "], \"uploaded\":\""
-                  + image.Uploaded + "\", " + "\"likes\":\"" + image.Likes + "\", \"follower\":\"" + image.User.FollowerCount
-                  + "\", \"comments\":\"" + image.CommentCount + "\", }");
+                    "Img Found -> { \"shortcode\":\"" + image.Shortcode + "\", \"user\":\"" + image.User.Username + "\", \"follower\":\"" + image.User.FollowerCount + "\", \"tags\": ["
+                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "]");
+                Console.WriteLine("___");
+                if (saveIt)
+                {
+                    db.Upsert(image);
+                }
             };
+            crawler.OnHashtagFoundComplete += hashtag =>
+            {
+                Console.WriteLine("Hashtag Found -> " + hashtag.Name + "(Posts:" + hashtag.Posts + ")");
+                db.InsertOrUpdateHumanoidTag(hashtag);
+            };
+            crawler.OnHashtagNamesFound += hashtagNames =>
+            {
+                foreach (var hashtagName in hashtagNames)
+                {
+                    var newHTag = new HumanoidTag { Name = hashtagName };
+                    db.InsertOrUpdateHumanoidTag(newHTag);
+                }
+                Console.WriteLine("HashtagNames Found -> " + string.Join(", ", hashtagNames));
+            };
+
             crawler.DoCrawling();
         }
 
