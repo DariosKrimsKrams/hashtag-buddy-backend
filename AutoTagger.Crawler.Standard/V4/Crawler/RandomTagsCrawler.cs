@@ -20,7 +20,7 @@
             var url = "https://www.all-hashtag.com/library/contents/ajax_top.php";
             var document = this.requestHandler.FetchDocument(url);
             var nodes = document.SelectNodes("//section[@id='tab1']//span[@class='hashtag']");
-            return nodes.Select(n => n.InnerText.Trim(' ', '#'));
+            return nodes.Select(n => n.InnerText.Trim(' ', '#').ToLower());
         }
     }
 }

@@ -122,7 +122,6 @@
 
         private static void StartCrawler()
         {
-            var saveIt = true;
             var db = new MysqlCrawlerStorage();
             var requestHandler = new HttpRequestHandler();
 
@@ -142,11 +141,7 @@
             var crawler = new CrawlerV4(requestHandler, settings);
             //var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler, settings));
 
-            if (saveIt)
-            {
-                db.GetAllHumanoidTags<HumanoidTag>();
-
-            }
+            db.GetAllHumanoidTags<HumanoidTag>();
 
             crawler.OnImageFound += image =>
             {
@@ -154,10 +149,7 @@
                     "Img Found -> { \"shortcode\":\"" + image.Shortcode + "\", \"user\":\"" + image.User.Username + "\", \"follower\":\"" + image.User.FollowerCount + "\", \"tags\": ["
                   + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "]");
                 Console.WriteLine("___");
-                if (saveIt)
-                {
-                    db.Upsert(image);
-                }
+                  db.Upsert(image);
             };
             crawler.OnHashtagFoundComplete += hashtag =>
             {
