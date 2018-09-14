@@ -139,7 +139,6 @@
                 UserMinLikes = 300
             };
             var crawler = new CrawlerV4(requestHandler, settings);
-            //var crawler = new CrawlerApp(db, new CrawlerV4(requestHandler, settings));
 
             db.GetAllHumanoidTags<HumanoidTag>();
 
@@ -158,12 +157,13 @@
             };
             crawler.OnHashtagNamesFound += hashtagNames =>
             {
-                foreach (var hashtagName in hashtagNames)
+                var enumerable = hashtagNames as string[] ?? hashtagNames.ToArray();
+                foreach (var hashtagName in enumerable)
                 {
                     var newHTag = new HumanoidTag { Name = hashtagName };
                     db.InsertOrUpdateHumanoidTag(newHTag);
                 }
-                Console.WriteLine("HashtagNames Found -> " + string.Join(", ", hashtagNames));
+                Console.WriteLine("HashtagNames Found -> " + string.Join(", ", enumerable));
             };
 
             crawler.DoCrawling();
