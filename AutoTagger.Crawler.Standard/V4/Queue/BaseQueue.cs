@@ -4,6 +4,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
 
     public class BaseQueue<T> : ConcurrentQueue<T>
     {
@@ -21,8 +22,14 @@
 
         public void Process(Action<T> func)
         {
-            while (this.GetEntry(out T value))
+            while (true)
             {
+                var status = this.GetEntry(out T value);
+                if (!status)
+                {
+                    Thread.Sleep(100);
+                    continue;
+                }
                 if (this.limit > 0 && this.count >= this.limit)
                 {
                     break;
