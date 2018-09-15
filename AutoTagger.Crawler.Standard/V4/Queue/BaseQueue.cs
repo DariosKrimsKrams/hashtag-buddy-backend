@@ -20,10 +20,14 @@
             this.limit = limit;
         }
 
-        public void Process(Action<T> func)
+        public void Process(Action<T> func, Func<bool> isAllowed)
         {
             while (true)
             {
+                if (!isAllowed())
+                {
+                    Thread.Sleep(100);
+                }
                 var status = this.GetEntry(out T value);
                 if (!status)
                 {

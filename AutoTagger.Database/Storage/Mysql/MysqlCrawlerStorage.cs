@@ -46,7 +46,7 @@
                 var itag = this.allITags.SingleOrDefault(x => x.Name == iTagName);
                 if (itag == null)
                 {
-                    throw new InvalidOperationException("ITag must exists in DB");
+                    throw new InvalidOperationException("ITag must exist in DB");
                 }
 
                 var rel = new PhotoItagRel { Itag = itag, Photo = photo };

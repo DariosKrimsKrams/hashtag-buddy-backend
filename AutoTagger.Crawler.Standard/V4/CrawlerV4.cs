@@ -55,20 +55,35 @@
 
         public void HashtagQueueThread()
         {
-            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc);
+            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, AllowedToRunExploreCrawler);
             Console.WriteLine("End hashtagQueue :(");
+        }
+
+        private bool AllowedToRunExploreCrawler()
+        {
+            return this.imageQueue.Count <= 10;
         }
 
         public void ShortcodeQueueThread()
         {
-            this.imageQueue.Process(this.ImagePageCrawlerFunc);
+            this.imageQueue.Process(this.ImagePageCrawlerFunc, AllowedToRunImageCrawler);
             Console.WriteLine("End imageQueue :(");
+        }
+
+        private bool AllowedToRunImageCrawler()
+        {
+            return this.userQueue.Count <= 20;
         }
 
         public void UserQueueThread()
         {
-            this.userQueue.Process(this.UserCrawlerFunc);
+            this.userQueue.Process(this.UserCrawlerFunc, AllowedToRunUserCrawler);
             Console.WriteLine("End userQueue :(");
+        }
+
+        private bool AllowedToRunUserCrawler()
+        {
+            return true;
         }
 
         public void InsertTags(string[] customTags)

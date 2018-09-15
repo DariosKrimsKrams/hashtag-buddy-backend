@@ -39,14 +39,15 @@ namespace AutoTagger.TestConsole
             };
             var crawler = new CrawlerV4(requestHandler, settings);
 
+            Console.WriteLine("GetExistingHumanoidTags start");
             db.GetAllHumanoidTags<HumanoidTag>();
+            Console.WriteLine("GetExistingHumanoidTags finished");
 
             crawler.OnImageFound += image =>
             {
                 Console.WriteLine(
-                    "Img Found -> { \"shortcode\":\"" + image.Shortcode + "\", \"user\":\"" + image.User.Username + "\", \"follower\":\"" + image.User.FollowerCount + "\", \"tags\": ["
-                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'")) + "]");
-                Console.WriteLine("___");
+                    "Image found -> {\"user\":\"" + image.User.Username + "\", \"tags\": ["
+                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'").Skip(3)) + "]");
                 UpsertImages.Add(image);
             };
             crawler.OnHashtagFoundComplete += hashtag =>
@@ -74,18 +75,27 @@ namespace AutoTagger.TestConsole
             while (true)
             {
                 var countHTags = UpsertHtags.Count;
-                for (int i = countHTags - 1; i >= 0; i--)
+                var countImages = UpsertImages.Count;
+                for (var i = countHTags - 1; i >= 0; i--)
                 {
                     var htag = UpsertHtags[i];
                     Db.InsertOrUpdateHumanoidTag(htag);
                     UpsertHtags.RemoveAt(i);
                 }
-                var countImages = UpsertImages.Count;
-                for (int i = countImages - 1; i >= 0; i--)
+                for (var i = countImages - 1; i >= 0; i--)
                 {
                     var image = UpsertImages[i];
-                    Db.Upsert(image);
-                    UpsertImages.RemoveAt(i);
+                    try
+                    {
+                        Db.Upsert(image);
+                        UpsertImages.RemoveAt(i);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        Console.WriteLine("!!!!!!!!!!!");
+                        Console.WriteLine(e);
+                        Console.WriteLine("!!!!!!!!!!!");
+                    }
                 }
                 Thread.Sleep(100);
             }
