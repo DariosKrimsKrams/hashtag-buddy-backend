@@ -130,5 +130,14 @@
             this.settings = settings;
         }
 
+        public IDictionary<string, int> GetDebugInfos()
+        {
+            var output = new Dictionary<string, int>();
+            output.Add("hashtagsQueueCount", this.hashtagQueue.Count);
+            output.Add("userQueueCount", this.userQueue.Count);
+            output.Add("imageQueueCount", this.imageQueue.Count);
+            return output;
+        }
+
     }
 }

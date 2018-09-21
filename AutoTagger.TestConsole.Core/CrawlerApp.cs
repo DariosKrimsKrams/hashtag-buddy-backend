@@ -12,11 +12,17 @@ namespace AutoTagger.TestConsole
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
 
+    using Google.Protobuf.WellKnownTypes;
+
     class CrawlerApp
     {
         private static ICrawlerStorage Db;
         private static readonly List<IImage> UpsertImages = new List<IImage>();
         private static readonly List<IHumanoidTag> UpsertHtags = new List<IHumanoidTag>();
+        private static int savedHtagsCount;
+        private static int savedImagesCount;
+        private static DateTime startedDate;
+        private static CrawlerV4 crawler;
 
         public CrawlerApp(ICrawlerStorage db)
         {
@@ -37,7 +43,7 @@ namespace AutoTagger.TestConsole
                 UserMinCommentsCount        = 10,
                 UserMinLikes                = 300
             };
-            var crawler = new CrawlerV4(requestHandler, settings);
+            crawler = new CrawlerV4(requestHandler, settings);
 
             Console.WriteLine("GetExistingHumanoidTags start");
             db.GetAllHumanoidTags<HumanoidTag>();
@@ -46,8 +52,7 @@ namespace AutoTagger.TestConsole
             crawler.OnImageFound += image =>
             {
                 Console.WriteLine(
-                    "Image found -> {\"user\":\"" + image.User.Username + "\", \"tags\": ["
-                  + string.Join(", ", image.HumanoidTags.Select(x => "'" + x + "'").Skip(3)) + "]");
+                    "Image found -> [" + string.Join(", ", image.HumanoidTags.Take(5).Select(x => "#" + x)) + "... ]");
                 UpsertImages.Add(image);
             };
             crawler.OnHashtagFoundComplete += hashtag =>
@@ -63,11 +68,44 @@ namespace AutoTagger.TestConsole
                     var newHTag = new HumanoidTag { Name = hashtagName };
                     UpsertHtags.Add(newHTag);
                 }
-                Console.WriteLine("HashtagNames Found -> " + string.Join(", ", enumerable));
+                Console.WriteLine("HashtagNames Found -> " + string.Join(", ", enumerable.Take(5).Select(x => "#" + x)) + "...");
             };
 
             new Thread(CrawlerStorageThread).Start();
+            new Thread(Logs).Start();
             crawler.DoCrawling();
+            startedDate = DateTime.Now;
+        }
+
+        private static void Logs()
+        {
+            while (true)
+            {
+                var debugInfos = crawler.GetDebugInfos();
+
+                var requestCount = 0;
+                var timespan = DateTime.Now - startedDate;
+                var time = GetDateTimeFromTimespan(timespan);
+
+                Console.Write("____");
+                Console.Write($"PendingHtagsToSave: {UpsertHtags.Count} | ");
+                Console.Write($"PendingImagesToSave: {UpsertImages.Count} | ");
+                Console.Write($"SavedHtags: {savedHtagsCount} | ");
+                Console.Write($"SavedImages: {savedImagesCount} | ");
+                Console.Write($"Running since: {time} | ");
+                Console.Write($"Hashtag: {debugInfos["hashtagsQueueCount"]} | ");
+                Console.Write($"userQueue: {debugInfos["userQueueCount"]} | ");
+                Console.Write($"imageQueue: {debugInfos["imageQueueCount"]} | ");
+                Console.Write($"Requests: {requestCount} | ");
+                Console.WriteLine("____");
+                Thread.Sleep(1000);
+            }
+        }
+
+        public static DateTime GetDateTimeFromTimespan(TimeSpan unixTimeStamp)
+        {
+            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            return dtDateTime.AddSeconds(unixTimeStamp.TotalSeconds).ToLocalTime();
         }
 
         private static void CrawlerStorageThread()
@@ -79,8 +117,9 @@ namespace AutoTagger.TestConsole
                 for (var i = countHTags - 1; i >= 0; i--)
                 {
                     var htag = UpsertHtags[i];
-                    Db.InsertOrUpdateHumanoidTag(htag);
+                    Db.UpsertHumanoidTag(htag);
                     UpsertHtags.RemoveAt(i);
+                    savedHtagsCount++;
                 }
                 for (var i = countImages - 1; i >= 0; i--)
                 {
@@ -89,6 +128,7 @@ namespace AutoTagger.TestConsole
                     {
                         Db.Upsert(image);
                         UpsertImages.RemoveAt(i);
+                        savedImagesCount++;
                     }
                     catch (InvalidOperationException e)
                     {
@@ -97,6 +137,7 @@ namespace AutoTagger.TestConsole
                         Console.WriteLine("!!!!!!!!!!!");
                     }
                 }
+                Db.Save();
                 Thread.Sleep(100);
             }
         }

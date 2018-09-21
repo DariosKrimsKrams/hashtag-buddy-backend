@@ -14,5 +14,7 @@
         void DoCrawling(params string[] customTags);
 
         void UpdateSettings(ICrawlerSettings settings);
+
+        IDictionary<string, int> GetDebugInfos();
     }
 }

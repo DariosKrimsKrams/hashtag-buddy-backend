@@ -28,7 +28,7 @@
             {
                 this.Insert(image, photo);
             }
-            this.Save();
+            //this.Save();
         }
 
         private Photos GetExistingPhoto(Photos photo)
@@ -70,25 +70,44 @@
             return hTags;
         }
 
-        public void InsertOrUpdateHumanoidTag(IHumanoidTag hTag)
+        public void UpsertHumanoidTag(IHumanoidTag hTag)
         {
             var existingHumanoidTag = this.allITags.FirstOrDefault(x => x.Name == hTag.Name);
             if (existingHumanoidTag != null)
             {
-                if (existingHumanoidTag.Posts <= hTag.Posts)
+                if (hTag.Posts == 0)
                     return;
 
-                existingHumanoidTag.Posts = hTag.Posts;
-                this.db.Itags.Update(existingHumanoidTag);
-                this.Save();
+                //existingHumanoidTag.Posts = hTag.Posts;
+                //this.db.Itags.Update(existingHumanoidTag);
+                //this.Save();
+                this.UpdateHumanoidTag(hTag);
             }
             else
             {
-                var itag = new Itags { Name = hTag.Name, Posts = hTag.Posts };
-                this.db.Itags.Add(itag);
-                this.Save();
-                this.allITags.Add(itag);
+                //this.db.Itags.Add(itag);
+                //this.Save();
+                this.InsertHumanoidTag(hTag);
             }
+        }
+
+        private void UpdateHumanoidTag(IHumanoidTag hTag)
+        {
+            var query = $"UPDATE itags SET Posts = '{hTag.Posts}' WHERE id = '{hTag.Id}'";
+            this.ExecuteCustomQuery(query);
+        }
+
+        private void InsertHumanoidTag(IHumanoidTag hTag)
+        {
+            var itag = new Itags { Name = hTag.Name, Posts = hTag.Posts };
+            this.allITags.Add(itag);
+            var query = $"INSERT INTO itags (Name, Posts) VALUES ('{hTag.Name}', '{hTag.Posts}')";
+            this.ExecuteCustomQuery(query);
+        }
+
+        public new void Save()
+        {
+            base.Save();
         }
 
     }
