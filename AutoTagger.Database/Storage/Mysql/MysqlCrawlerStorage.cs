@@ -53,9 +53,11 @@
 
                 var rel = new PhotoItagRel { Itag = itag, Photo = photo };
                 photo.PhotoItagRel.Add(rel);
+                // ToDo to query
             }
 
             this.db.Photos.Add(photo);
+            // ToDo to query
         }
 
         public void FullHumanoidTags()
