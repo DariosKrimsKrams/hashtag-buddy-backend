@@ -111,7 +111,7 @@
 
             // ToDo
 
-            //var crawler = new CrawlerApp(crawlerDb, crawlerEngine);
+            //var crawler = new CrawlerBootstrap(crawlerDb, crawlerEngine);
             //crawler.OnImageSaved += image =>
             //{
             //    Console.WriteLine(
@@ -126,7 +126,7 @@
         private static void StartCrawler()
         {
             var db = new MysqlCrawlerStorage();
-            new CrawlerApp(db);
+            new CrawlerBootstrap(db);
         }
 
         private static void StartImageDownloader()

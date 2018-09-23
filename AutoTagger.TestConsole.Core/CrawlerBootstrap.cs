@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace AutoTagger.TestConsole
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
 
-    using Google.Protobuf.WellKnownTypes;
-
-    class CrawlerApp
+    class CrawlerBootstrap
     {
         private static ICrawlerStorage Db;
         private static readonly List<IImage> UpsertImages = new List<IImage>();
@@ -24,7 +20,7 @@ namespace AutoTagger.TestConsole
         private static DateTime startedDate;
         private static CrawlerV4 crawler;
 
-        public CrawlerApp(ICrawlerStorage db)
+        public CrawlerBootstrap(ICrawlerStorage db)
         {
             Db = db;
 
@@ -46,7 +42,7 @@ namespace AutoTagger.TestConsole
             crawler = new CrawlerV4(requestHandler, settings);
 
             Console.WriteLine("GetExistingHumanoidTags start");
-            db.GetAllHumanoidTags<HumanoidTag>();
+            db.FullHumanoidTags();
             Console.WriteLine("GetExistingHumanoidTags finished");
 
             crawler.OnImageFound += image =>

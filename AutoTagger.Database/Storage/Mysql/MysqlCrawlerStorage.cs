@@ -8,6 +8,8 @@
 
     using global::AutoTagger.Contract;
 
+    using Instaq.Logger;
+
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {
         private List<Itags> allITags;
@@ -56,9 +58,20 @@
             this.db.Photos.Add(photo);
         }
 
-        public IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag
+        public void FullHumanoidTags()
         {
             this.allITags = this.db.Itags.ToList();
+            //this.allITags.ForEach(
+            //    x =>
+            //    {
+            //        Logging.LogInline(x.Name + ", ");
+            //    });
+            //Logging.Log("_________________");
+        }
+
+        public IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag
+        {
+            this.FullHumanoidTags();
             var hTags = new List<IHumanoidTag>();
             foreach (var iTag in this.allITags)
             {
@@ -77,16 +90,13 @@
             {
                 if (hTag.Posts == 0)
                     return;
-
-                //existingHumanoidTag.Posts = hTag.Posts;
-                //this.db.Itags.Update(existingHumanoidTag);
-                //this.Save();
+                Logging.Log("Update " + hTag.Name);
+                existingHumanoidTag.Posts = hTag.Posts;
                 this.UpdateHumanoidTag(hTag);
             }
             else
             {
-                //this.db.Itags.Add(itag);
-                //this.Save();
+                Logging.Log("Insert " + hTag.Name);
                 this.InsertHumanoidTag(hTag);
             }
         }
@@ -99,14 +109,17 @@
 
         private void InsertHumanoidTag(IHumanoidTag hTag)
         {
-            var itag = new Itags { Name = hTag.Name, Posts = hTag.Posts };
+            var query = $"INSERT INTO itags (Name, Posts) VALUES ('{hTag.Name}', '{hTag.Posts}'); SELECT LAST_INSERT_ID();";
+            var output = this.ExecuteCustomQuery(query);
+            //var id = Convert.ToInt32(output.FirstOrDefault()?.FirstOrDefault());
+            //var itag = new Itags { Id = id, Name = hTag.Name, Posts = hTag.Posts };
+            var itag = this.db.Itags.OrderByDescending(x => x.Id).Take(1).FirstOrDefault();
             this.allITags.Add(itag);
-            var query = $"INSERT INTO itags (Name, Posts) VALUES ('{hTag.Name}', '{hTag.Posts}')";
-            this.ExecuteCustomQuery(query);
         }
 
         public new void Save()
         {
+            Logging.Log("________________ Save ________________");
             base.Save();
         }
 

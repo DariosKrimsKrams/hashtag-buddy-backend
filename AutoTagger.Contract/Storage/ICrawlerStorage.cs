@@ -6,6 +6,8 @@
     {
         IEnumerable<IHumanoidTag> GetAllHumanoidTags<T>() where T : IHumanoidTag;
 
+        void FullHumanoidTags();
+
         void UpsertHumanoidTag(IHumanoidTag hTag);
 
         void Upsert(IImage image);
