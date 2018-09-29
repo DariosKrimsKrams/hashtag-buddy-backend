@@ -16,34 +16,48 @@
 
         public void Upsert(IImage image)
         {
-            var photo = Photos.FromImage(image);
-
             try
             {
-                var existingPhoto = this.GetExistingPhoto(photo);
-                existingPhoto.Likes     = photo.Likes;
-                existingPhoto.Comments  = photo.Comments;
-                existingPhoto.Following = photo.Following;
-                existingPhoto.Posts     = photo.Posts;
+                var existingPhoto = this.GetExistingPhoto(image);
+                existingPhoto.Likes     = image.Likes;
+                existingPhoto.Comments  = image.CommentCount;
+                existingPhoto.Follower = image.User.FollowerCount;
+                existingPhoto.Following = image.User.FollowingCount;
+                existingPhoto.Posts     = image.User.PostCount;
             }
             catch
             {
-                this.Insert(image, photo);
+                this.Insert(image);
             }
-            //this.Save();
         }
 
-        private Photos GetExistingPhoto(Photos photo)
+        private Photos GetExistingPhoto(IImage image)
         {
-            return this.db.Photos.First(x => x.Shortcode == photo.Shortcode);
+            var query = $"SELECT `id`, `likes`, `comments`, `follower`, `following`, `posts` FROM photos WHERE `shortcode` = '{image.Shortcode}' LIMIT 1";
+            var output = this.ExecutePhotosQuery(query);
+            var entry = output.FirstOrDefault();
+            if (entry == null)
+            {
+                throw new Exception();
+            }
+            return entry;
         }
 
-        private void Insert(IImage image, Photos photo)
+        private void Insert(IImage image)
         {
             if (image.HumanoidTags == null)
                 return;
 
-            foreach (var iTagName in image.HumanoidTags)
+            var query = $"INSERT INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.Comments}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}'); SELECT LAST_INSERT_ID();";
+            var output = this.ExecuteCustomQuery(query);
+            var photoId = Convert.ToInt32(output.FirstOrDefault()?.FirstOrDefault());
+
+            this.InsertRelations(image.HumanoidTags, photoId);
+        }
+
+        private void InsertRelations(IEnumerable<string> humanoidTags, int photoId)
+        {
+            foreach (var iTagName in humanoidTags)
             {
                 var itag = this.allITags.SingleOrDefault(x => x.Name == iTagName);
                 if (itag == null)
@@ -51,13 +65,9 @@
                     throw new InvalidOperationException("ITag must exist in DB");
                 }
 
-                var rel = new PhotoItagRel { Itag = itag, Photo = photo };
-                photo.PhotoItagRel.Add(rel);
-                // ToDo to query
+                var query = $"INSERT INTO photo_itag_rel (`photoId`, `itagId`) VALUES ('{photoId}', '{itag.Id}');";
+                this.ExecuteCustomQuery(query);
             }
-
-            this.db.Photos.Add(photo);
-            // ToDo to query
         }
 
         public void FullHumanoidTags()
@@ -111,18 +121,11 @@
 
         private void InsertHumanoidTag(IHumanoidTag hTag)
         {
-            var query = $"INSERT INTO itags (Name, Posts) VALUES ('{hTag.Name}', '{hTag.Posts}'); SELECT LAST_INSERT_ID();";
+            var query = $"INSERT INTO itags (`Name`, `Posts`) VALUES ('{hTag.Name}', '{hTag.Posts}'); SELECT LAST_INSERT_ID();";
             var output = this.ExecuteCustomQuery(query);
-            //var id = Convert.ToInt32(output.FirstOrDefault()?.FirstOrDefault());
-            //var itag = new Itags { Id = id, Name = hTag.Name, Posts = hTag.Posts };
-            var itag = this.db.Itags.OrderByDescending(x => x.Id).Take(1).FirstOrDefault();
+            var id = Convert.ToInt32(output.FirstOrDefault()?.FirstOrDefault());
+            var itag = new Itags { Id = id, Name = hTag.Name, Posts = hTag.Posts };
             this.allITags.Add(itag);
-        }
-
-        public new void Save()
-        {
-            Logging.Log("________________ Save ________________");
-            base.Save();
         }
 
     }

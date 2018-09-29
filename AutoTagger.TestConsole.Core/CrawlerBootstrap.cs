@@ -133,7 +133,7 @@ namespace AutoTagger.TestConsole
                         Console.WriteLine("!!!!!!!!!!!");
                     }
                 }
-                Db.Save();
+                //Db.Save();
                 Thread.Sleep(100);
             }
         }

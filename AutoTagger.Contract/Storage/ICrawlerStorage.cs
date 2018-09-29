@@ -12,6 +12,6 @@
 
         void Upsert(IImage image);
 
-        void Save();
+        //void Save();
     }
 }

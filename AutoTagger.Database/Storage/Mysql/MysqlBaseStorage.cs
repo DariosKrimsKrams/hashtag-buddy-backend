@@ -76,14 +76,57 @@
             return this.ExecuteQuery<List<string>>(query, Func);
         }
 
+        protected IEnumerable<Photos> ExecutePhotosQuery(string query)
+        {
+            Photos Func(Photos entry, string key, string value)
+            {
+                switch (key)
+                {
+                    case "likes":
+                        entry.Likes = Convert.ToInt32(value);
+                        break;
+                    case "comments":
+                        entry.Comments = Convert.ToInt32(value);
+                        break;
+                    case "follower":
+                        entry.Follower = Convert.ToInt32(value);
+                        break;
+                    case "following":
+                        entry.Following = Convert.ToInt32(value);
+                        break;
+                    case "posts":
+                        entry.Posts = Convert.ToInt32(value);
+                        break;
+                    case "id":
+                        entry.Id = Convert.ToInt32(value);
+                        break;
+                }
+
+                return entry;
+            }
+            return this.ExecuteQuery<Photos>(query, Func);
+        }
+
         protected IEnumerable<IHumanoidTag> ExecuteHTagsQuery(string query)
         {
             HumanoidTag Func(HumanoidTag entry, string key, string value)
             {
-                if (key == "name") entry.Name              = value;
-                else if (key == "posts") entry.Posts       = Convert.ToInt32(value);
-                else if (key == "id") entry.Id             = Convert.ToInt32(value);
-                else if (key == "refCount") entry.RefCount = Convert.ToInt32(value);
+                switch (key)
+                {
+                    case "name":
+                        entry.Name = value;
+                        break;
+                    case "posts":
+                        entry.Posts = Convert.ToInt32(value);
+                        break;
+                    case "id":
+                        entry.Id = Convert.ToInt32(value);
+                        break;
+                    case "refCount":
+                        entry.RefCount = Convert.ToInt32(value);
+                        break;
+                }
+
                 return entry;
             }
             return this.ExecuteQuery<HumanoidTag>(query, Func);
