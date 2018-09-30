@@ -5,7 +5,7 @@
 
     public interface ICrawlerStorage
     {
-        void InsertImage(IImage image);
+        void InsertImages(IImage[] image);
 
         void InsertHumanoidTags(IHumanoidTag[] hTags);
 

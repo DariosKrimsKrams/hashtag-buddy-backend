@@ -11,26 +11,35 @@
         private readonly List<TimeSpan> timingsRels = new List<TimeSpan>();
         private readonly List<TimeSpan> timingsHTags = new List<TimeSpan>();
 
-        public void InsertImage(IImage image)
+        public void InsertImages(IImage[] images)
         {
-            if (image.HumanoidTags == null)
-                return;
+            var values = "";
+            foreach (var image in images)
+            {
+                if (image.HumanoidTags == null)
+                {
+                    continue;
+                }
+                values += $"('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.Comments}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}'),";
+            }
+            values = values.TrimEnd(',');
+            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES {values};";
 
-            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES ('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.Comments}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}')";
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsImages.Add(time);
 
-            // ToDo Batch
-
-            this.InsertRelations(image);
+            this.InsertRelations(images);
         }
 
-        private void InsertRelations(IImage image)
+        private void InsertRelations(IImage[] images)
         {
             var values = "";
-            foreach (var humanoidTag in image.HumanoidTags)
+            foreach (var image in images)
             {
-                values += $"('{image.Shortcode}', '{humanoidTag}'),";
+                foreach (var humanoidTag in image.HumanoidTags)
+                {
+                    values += $"('{image.Shortcode}', '{humanoidTag}'),";
+                }
             }
             values = values.TrimEnd(',');
             var query = $"INSERT INTO photo_itag_rel (`shortcode`, `itag`) VALUES {values};";
