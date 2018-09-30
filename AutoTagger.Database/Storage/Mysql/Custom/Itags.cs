@@ -22,7 +22,6 @@
         {
             return new Itags
             {
-                Id          = hTag.Id,
                 Name        = hTag.Name,
                 Posts       = hTag.Posts,
                 RefCount    = hTag.RefCount,
@@ -34,7 +33,6 @@
         {
             return new HumanoidTag
             {
-                Id          = this.Id,
                 Name        = this.Name,
                 Posts       = this.Posts,
                 RefCount    = this.RefCount,

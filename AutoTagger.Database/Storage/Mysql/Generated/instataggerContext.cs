@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AutoTagger.Database
 {
-    public partial class instataggerContext : DbContext
+    public partial class InstataggerContext : DbContext
     {
-        public instataggerContext()
+        public InstataggerContext()
         {
         }
 
-        public instataggerContext(DbContextOptions<instataggerContext> options)
+        public InstataggerContext(DbContextOptions<InstataggerContext> options)
             : base(options)
         {
         }
