@@ -30,26 +30,12 @@
             var values = "";
             foreach (var humanoidTag in image.HumanoidTags)
             {
-                var id = this.GetHumanoidTagId(humanoidTag);
-                values += $"('{image.Shortcode}', '{id}'),";
+                values += $"('{image.Shortcode}', '{humanoidTag}'),";
             }
             values = values.TrimEnd(',');
-            var query = $"INSERT INTO photo_itag_rel (`shortcode`, `itagId`) VALUES {values};";
+            var query = $"INSERT INTO photo_itag_rel (`shortcode`, `itag`) VALUES {values};";
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsRels.Add(time);
-        }
-
-        private int GetHumanoidTagId(string name)
-        {
-            var query  = $"SELECT `id` FROM itags WHERE `name`='{name}'";
-            // ToDo remove id and use name as key!
-            var (result, _) = this.ExecuteCustomQuery(query);
-            var value  = result.FirstOrDefault()?.FirstOrDefault();
-            if (value == null)
-            {
-                throw new InvalidOperationException("Itag doesn't exist. It must exist in DB");
-            }
-            return Convert.ToInt32(value);
         }
 
         public void InsertHumanoidTags(IHumanoidTag[] hTags)

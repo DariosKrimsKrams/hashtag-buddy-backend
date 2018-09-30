@@ -95,25 +95,17 @@ namespace AutoTagger.Database
 
             modelBuilder.Entity<Itags>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.Name });
+                entity.HasKey(e => e.Name);
 
                 entity.ToTable("itags");
 
-                entity.HasIndex(e => e.Id)
-                    .HasName("id")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.Name)
-                    .HasName("name_2");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedOnAdd();
+                    .HasName("name")
+                    .IsUnique();
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.OnBlacklist)
                     .HasColumnName("onBlacklist")
@@ -237,7 +229,7 @@ namespace AutoTagger.Database
             {
                 entity.ToTable("photo_itag_rel");
 
-                entity.HasIndex(e => e.ItagId)
+                entity.HasIndex(e => e.Itag)
                     .HasName("itagId");
 
                 entity.HasIndex(e => e.Shortcode)
@@ -247,9 +239,10 @@ namespace AutoTagger.Database
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.ItagId)
-                    .HasColumnName("itagId")
-                    .HasColumnType("int(11)");
+                entity.Property(e => e.Itag)
+                    .IsRequired()
+                    .HasColumnName("itag")
+                    .HasColumnType("varchar(50)");
 
                 entity.Property(e => e.Shortcode)
                     .IsRequired()
