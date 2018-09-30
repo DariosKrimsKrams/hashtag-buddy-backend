@@ -56,8 +56,8 @@ namespace AutoTagger.Database
                 Likes        = this.Likes,
                 CommentCount = this.Comments,
                 User         = user,
-                MachineTags =
-                    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),
+                //MachineTags =
+                //    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),
                 //HumanoidTags = this.Itags.Select(tag => tag.Name)
             };
             return image;

@@ -1,5 +1,6 @@
 ﻿namespace AutoTagger.Database.Storage.Mysql
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
@@ -22,8 +23,9 @@
 
         public IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes)
         {
-            var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
-            return query.ToList().Select(x => x.ToImage());
+            //var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
+            //return query.ToList().Select(x => x.ToImage());
+            throw new NotImplementedException();
         }
 
         public int GetLargestPhotoIdForPhotoWithMTag()
@@ -40,7 +42,7 @@
                     Name = mTag.Name,
                     Score = mTag.Score,
                     Source = mTag.Source,
-                    PhotoId = image.Shortcode
+                    Shortcode = image.Shortcode
                 };
                 this.db.Mtags.Add(mTagDb);
             }
