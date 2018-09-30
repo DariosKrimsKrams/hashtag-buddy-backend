@@ -13,12 +13,6 @@
 
         public IEnumerable<string> Comments { get; set; }
 
-        //public int Follower { get; set; }
-
-        //public int Following { get; set; }
-
-        //public int Posts { get; set; }
-
         public IEnumerable<string> HumanoidTags { get; set; }
 
         public int Id { get; set; }

@@ -5,7 +5,7 @@
 
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
-    using AutoTagger.Database.Storage.Mysql.Generated;
+    using AutoTagger.Database;
 
     public class MysqlBlacklistStorage : MysqlBaseStorage, IBlacklistStorage
     {
