@@ -3,45 +3,47 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
-
-    using AutoTagger.Database.Storage.Mysql.Generated;
-
     using global::AutoTagger.Contract;
-
-    using Instaq.Logger;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {
+        private readonly List<TimeSpan> timingsImages = new List<TimeSpan>();
+        private readonly List<TimeSpan> timingsRels = new List<TimeSpan>();
+        private readonly List<TimeSpan> timingsHTags = new List<TimeSpan>();
+
         public void InsertImage(IImage image)
         {
             if (image.HumanoidTags == null)
                 return;
 
-            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES ('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.Comments}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}'); SELECT LAST_INSERT_ID();";
-            var output = this.ExecuteCustomQuery(query);
-            var photoId = Convert.ToInt32(output.FirstOrDefault()?.FirstOrDefault());
+            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES ('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.Comments}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}')";
+            var (_, time) = this.ExecuteCustomQuery(query);
+            this.timingsImages.Add(time);
 
-            this.InsertRelations(image.HumanoidTags, photoId);
+            // ToDo Batch
+
+            this.InsertRelations(image);
         }
 
-        private void InsertRelations(IEnumerable<string> humanoidTags, int photoId)
+        private void InsertRelations(IImage image)
         {
             var values = "";
-            foreach (var humanoidTag in humanoidTags)
+            foreach (var humanoidTag in image.HumanoidTags)
             {
                 var id = this.GetHumanoidTagId(humanoidTag);
-                values += $"('{photoId}', '{id}'),";
+                values += $"('{image.Shortcode}', '{id}'),";
             }
             values = values.TrimEnd(',');
-            var query = $"INSERT INTO photo_itag_rel (`photoId`, `itagId`) VALUES {values};";
-            this.ExecuteCustomQuery(query);
+            var query = $"INSERT INTO photo_itag_rel (`shortcode`, `itagId`) VALUES {values};";
+            var (_, time) = this.ExecuteCustomQuery(query);
+            this.timingsRels.Add(time);
         }
 
         private int GetHumanoidTagId(string name)
         {
             var query  = $"SELECT `id` FROM itags WHERE `name`='{name}'";
-            var result = this.ExecuteCustomQuery(query);
+            // ToDo remove id and use name as key!
+            var (result, _) = this.ExecuteCustomQuery(query);
             var value  = result.FirstOrDefault()?.FirstOrDefault();
             if (value == null)
             {
@@ -65,8 +67,30 @@
             }
             values = values.TrimEnd(',');
             var query = $"REPLACE INTO itags (`Name`, `Posts`) VALUES {values};";
-            this.ExecuteCustomQuery(query);
+            var (_, time) = this.ExecuteCustomQuery(query);
+            this.timingsHTags.Add(time);
         }
 
+        public List<TimeSpan> GetTimings(string type)
+        {
+            List<TimeSpan> output;
+            switch (type)
+            {
+                case "images":
+                    output = this.timingsImages.ToList();
+                    this.timingsImages.Clear();
+                    return output;
+                case "rels":
+                    output = this.timingsRels.ToList();
+                    this.timingsRels.Clear();
+                    return output;
+                case "htags":
+                    output = this.timingsHTags.ToList();
+                    this.timingsHTags.Clear();
+                    return output;
+            }
+
+            return null;
+        }
     }
 }

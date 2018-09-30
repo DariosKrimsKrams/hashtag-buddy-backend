@@ -66,7 +66,7 @@
             }
         }
 
-        protected IEnumerable<IEnumerable<string>> ExecuteCustomQuery(string query)
+        protected (IEnumerable<IEnumerable<string>>, TimeSpan) ExecuteCustomQuery(string query)
         {
             List<string> Func(List<string> entry, string key, string value)
             {
@@ -76,7 +76,7 @@
             return this.ExecuteQuery<List<string>>(query, Func);
         }
 
-        protected IEnumerable<Photos> ExecutePhotosQuery(string query)
+        protected (IEnumerable<Photos>, TimeSpan) ExecutePhotosQuery(string query)
         {
             Photos Func(Photos entry, string key, string value)
             {
@@ -97,9 +97,6 @@
                     case "posts":
                         entry.Posts = Convert.ToInt32(value);
                         break;
-                    case "id":
-                        entry.Id = Convert.ToInt32(value);
-                        break;
                 }
 
                 return entry;
@@ -107,7 +104,7 @@
             return this.ExecuteQuery<Photos>(query, Func);
         }
 
-        protected IEnumerable<IHumanoidTag> ExecuteHTagsQuery(string query)
+        protected (IEnumerable<IHumanoidTag>, TimeSpan) ExecuteHTagsQuery(string query)
         {
             HumanoidTag Func(HumanoidTag entry, string key, string value)
             {
@@ -132,9 +129,10 @@
             return this.ExecuteQuery<HumanoidTag>(query, Func);
         }
 
-        private IEnumerable<T> ExecuteQuery<T>(string query, Func<T, string, string, T> func) where T : new()
+        private (IEnumerable<T>, TimeSpan) ExecuteQuery<T>(string query, Func<T, string, string, T> func) where T : new()
         {
             var result = new List<T>();
+            TimeSpan time;
             using (var command = this.db.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText    = query;
@@ -142,8 +140,11 @@
                 command.CommandTimeout = 600;
 
                 this.OpenConnection();
+                var startTime = DateTime.Now;
                 using (var reader = command.ExecuteReader())
                 {
+                    var endTime = DateTime.Now;
+                    time = endTime - startTime;
                     while (reader.Read())
                     {
                         var entry = new T();
@@ -158,7 +159,7 @@
                 }
                 this.db.Database.CloseConnection();
             }
-            return result;
+            return (result, time);
         }
 
     }

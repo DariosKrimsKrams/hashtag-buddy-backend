@@ -22,7 +22,7 @@
         {
             var instance     = Activator.CreateInstance<T>();
             var query        = instance.GetQuery(machineTags);
-            var humanoidTags = this.ExecuteHTagsQuery(query);
+            var (humanoidTags, time) = this.ExecuteHTagsQuery(query);
             return (query, humanoidTags);
         }
 
@@ -34,7 +34,7 @@
                       + "AND m.score > 5 "
                       + "GROUP BY m.name "
                       + "ORDER by MAX(m.score) DESC";
-            var mTags = this.ExecuteCustomQuery(query);
+            var (mTags, time)  = this.ExecuteCustomQuery(query);
             return mTags;
         }
     }

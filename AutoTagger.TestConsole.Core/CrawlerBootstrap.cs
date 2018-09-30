@@ -79,19 +79,49 @@ namespace AutoTagger.TestConsole
                 var timespan = DateTime.Now - startedDate;
                 var time = GetDateTimeFromTimespan(timespan);
 
+                var (timing1, timing2, timing3) = GetTimings();
+
                 Console.Write("____");
-                Console.Write($"PendingHtagsToSave: {UpsertHtags.Count} | ");
-                Console.Write($"PendingImagesToSave: {UpsertImages.Count} | ");
-                Console.Write($"SavedHtags: {savedHtagsCount} | ");
-                Console.Write($"SavedImages: {savedImagesCount} | ");
-                Console.Write($"Running since: {time} | ");
-                Console.Write($"Hashtag: {debugInfos["hashtagsQueueCount"]} | ");
-                Console.Write($"userQueue: {debugInfos["userQueueCount"]} | ");
-                Console.Write($"imageQueue: {debugInfos["imageQueueCount"]} | ");
-                Console.Write($"Requests: {requestCount} | ");
+                Console.Write($"HTags (Saved/Remaining): {savedHtagsCount} / {UpsertHtags.Count} | ");
+                Console.Write($"Images (Saved/Remaining): {savedImagesCount} / {UpsertImages.Count} | ");
+                Console.Write($"Running since: {time.Hour}:{time.Minute}:{time.Second} | ");
+                Console.Write($"Queues (Htag/User/Image): {debugInfos["hashtagsQueueCount"]} / {debugInfos["userQueueCount"]} / {debugInfos["imageQueueCount"]} | ");
+                Console.Write($"RequestCount: {requestCount} | ");
+                Console.Write($"Timings (Img/ Rels/Htags): {timing1} ms / {timing2} ms / {timing3} ms  | ");
                 Console.WriteLine("____");
                 Thread.Sleep(1000);
             }
+        }
+
+        private static (double, double, double) GetTimings()
+        {
+            double timing1 = 0;
+            double timing2 = 0;
+            double timing3 = 0;
+
+            var timingImages = Db.GetTimings("images");
+            var timingsRels = Db.GetTimings("rels");
+            var timingsHTags = Db.GetTimings("htags");
+
+            if (timingImages.Any())
+            {
+                timing1 = GetAverage(timingImages);
+            }
+            if (timingsRels.Any())
+            {
+                timing2 = GetAverage(timingsRels);
+            }
+            if (timingsHTags.Any())
+            {
+                timing3 = GetAverage(timingsHTags);
+            }
+
+            return (timing1, timing2, timing3);
+        }
+
+        private static double GetAverage(IEnumerable<TimeSpan> input)
+        {
+            return Math.Round(input.Select(x => x.TotalMilliseconds).Average(), 0);
         }
 
         public static DateTime GetDateTimeFromTimespan(TimeSpan unixTimeStamp)
@@ -134,7 +164,6 @@ namespace AutoTagger.TestConsole
                         Console.WriteLine("!!!!!!!!!!!");
                     }
                 }
-                //Db.Save();
                 Thread.Sleep(100);
             }
         }
