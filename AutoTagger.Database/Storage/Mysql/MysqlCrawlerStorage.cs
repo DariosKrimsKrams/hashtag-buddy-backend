@@ -20,10 +20,10 @@
                 {
                     continue;
                 }
-                values += $"('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.CommentCount}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Location}', '{image.Uploaded}'),";
+                values += $"('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.CommentCount}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Uploaded}'),";
             }
             values = values.TrimEnd(',');
-            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `location_id`, `uploaded`) VALUES {values};";
+            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `uploaded`) VALUES {values};";
 
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsImages.Add(time);
