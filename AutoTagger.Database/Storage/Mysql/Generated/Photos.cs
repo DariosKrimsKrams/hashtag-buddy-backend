@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using AutoTagger.Common;
-using AutoTagger.Contract;
 
-namespace AutoTagger.Database.Storage.Mysql.Generated
+namespace AutoTagger.Database
 {
-
     public partial class Photos
     {
         public Photos()
         {
             Mtags = new HashSet<Mtags>();
-            PhotoItagRel = new HashSet<PhotoItagRel>();
         }
 
-        public int Id { get; set; }
         public string LargeUrl { get; set; }
         public string ThumbUrl { get; set; }
         public string Shortcode { get; set; }
@@ -29,63 +23,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
         public DateTime? Uploaded { get; set; }
         public DateTime Created { get; set; }
 
-        public Locations Location { get; set; }
         public ICollection<Mtags> Mtags { get; set; }
-        public ICollection<PhotoItagRel> PhotoItagRel { get; set; }
-
-        public static Photos FromImage(IImage image)
-        {
-            var photo = new Photos
-            {
-                LargeUrl       = image.LargeUrl,
-                ThumbUrl       = image.ThumbUrl,
-                Shortcode = image.Shortcode,
-                Likes     = image.Likes,
-                Comments  = image.CommentCount,
-                User      = image.User.Username,
-                Follower = image.User.FollowerCount,
-                Following  = image.User.FollowingCount,
-                Posts  = image.User.PostCount,
-                Uploaded  = image.Uploaded
-            };
-
-            return photo;
-        }
-
-        public IEnumerable<Itags> Itags
-        {
-            get
-            {
-                foreach (var photoItagRel in PhotoItagRel)
-                {
-                    yield return photoItagRel.Itag;
-                }
-            }
-        }
-
-        public IImage ToImage()
-        {
-            var user = new User()
-            {
-                FollowerCount  = this.Follower,
-                FollowingCount = this.Following,
-                PostCount      = this.Posts,
-                Username       = this.User,
-            };
-            var image = new Image
-            {
-                Id           = this.Id,
-                LargeUrl     = this.LargeUrl,
-                ThumbUrl     = this.ThumbUrl,
-                Shortcode    = this.Shortcode,
-                Likes        = this.Likes,
-                CommentCount = this.Comments,
-                User         = user,
-                MachineTags =
-                    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),
-                HumanoidTags = this.Itags.Select(tag => tag.Name)
-            };
-            return image;
-        }
     }
 }

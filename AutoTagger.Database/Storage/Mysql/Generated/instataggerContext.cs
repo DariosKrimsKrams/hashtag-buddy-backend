@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace AutoTagger.Database.Storage.Mysql.Generated
+namespace AutoTagger.Database
 {
     public partial class InstataggerContext : DbContext
     {
@@ -213,8 +213,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnType("tinyint(1)");
 
                 entity.Property(e => e.PhotoId)
+                    .IsRequired()
                     .HasColumnName("photoId")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Score)
                     .HasColumnName("score")
@@ -227,10 +228,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
 
                 entity.HasOne(d => d.Photo)
                     .WithMany(p => p.Mtags)
-                    .HasPrincipalKey(p => p.Id)
                     .HasForeignKey(d => d.PhotoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("mtags_ibfk_1");
+                    .HasConstraintName("photoId");
             });
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
@@ -240,8 +240,8 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                 entity.HasIndex(e => e.ItagId)
                     .HasName("itagId");
 
-                entity.HasIndex(e => e.PhotoId)
-                    .HasName("photoId");
+                entity.HasIndex(e => e.Shortcode)
+                    .HasName("shortcode");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -251,34 +251,17 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasColumnName("itagId")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.PhotoId)
-                    .HasColumnName("photoId")
-                    .HasColumnType("int(11)");
-
-                entity.HasOne(d => d.Itag)
-                    .WithMany(p => p.PhotoItagRel)
-                    .HasPrincipalKey(p => p.Id)
-                    .HasForeignKey(d => d.ItagId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("photo_itag_rel_ibfk_2");
-
-                entity.HasOne(d => d.Photo)
-                    .WithMany(p => p.PhotoItagRel)
-                    .HasPrincipalKey(p => p.Id)
-                    .HasForeignKey(d => d.PhotoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("photo_itag_rel_ibfk_1");
+                entity.Property(e => e.Shortcode)
+                    .IsRequired()
+                    .HasColumnName("shortcode")
+                    .HasColumnType("varchar(100)");
             });
 
             modelBuilder.Entity<Photos>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.Shortcode });
+                entity.HasKey(e => e.Shortcode);
 
                 entity.ToTable("photos");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id")
-                    .IsUnique();
 
                 entity.HasIndex(e => e.LocationId)
                     .HasName("rel_photos_location");
@@ -287,14 +270,9 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .HasName("imgId")
                     .IsUnique();
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Shortcode)
                     .HasColumnName("shortcode")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Comments)
                     .HasColumnName("comments")
@@ -344,11 +322,6 @@ namespace AutoTagger.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("user")
                     .HasColumnType("varchar(50)");
-
-                entity.HasOne(d => d.Location)
-                    .WithMany(p => p.Photos)
-                    .HasForeignKey(d => d.LocationId)
-                    .HasConstraintName("rel_photos_location");
             });
         }
     }
