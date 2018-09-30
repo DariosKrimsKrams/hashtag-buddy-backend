@@ -41,10 +41,6 @@ namespace AutoTagger.TestConsole
             };
             crawler = new CrawlerV4(requestHandler, settings);
 
-            Console.WriteLine("GetExistingHumanoidTags start");
-            db.FullHumanoidTags();
-            Console.WriteLine("GetExistingHumanoidTags finished");
-
             crawler.OnImageFound += image =>
             {
                 Console.WriteLine(
@@ -108,21 +104,26 @@ namespace AutoTagger.TestConsole
         {
             while (true)
             {
-                var countHTags = UpsertHtags.Count;
+                var countHTags  = UpsertHtags.Count;
                 var countImages = UpsertImages.Count;
+
+                var htagToUpdate = new IHumanoidTag[countHTags];
                 for (var i = countHTags - 1; i >= 0; i--)
                 {
                     var htag = UpsertHtags[i];
-                    Db.UpsertHumanoidTag(htag);
+                    htagToUpdate[i] = htag;
                     UpsertHtags.RemoveAt(i);
-                    savedHtagsCount++;
                 }
+                Db.InsertHumanoidTags(htagToUpdate);
+                savedHtagsCount += countHTags;
+
+
                 for (var i = countImages - 1; i >= 0; i--)
                 {
                     var image = UpsertImages[i];
                     try
                     {
-                        Db.Upsert(image);
+                        Db.InsertImage(image);
                         UpsertImages.RemoveAt(i);
                         savedImagesCount++;
                     }
