@@ -19,5 +19,6 @@ CREATE TABLE `photos` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`shortcode`),
   UNIQUE KEY `imgId` (`shortcode`),
-  KEY `rel_photos_location` (`location_id`)
+  KEY `rel_photos_location` (`location_id`),
+  CONSTRAINT `rel_photos_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

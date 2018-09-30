@@ -10,5 +10,5 @@ CREATE TABLE `photo_itag_rel` (
   `itag` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `itagId` (`itag`),
-  KEY `shortcode` (`shortcode`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `shortcode` (`shortcode`)
+) ENGINE=InnoDB AUTO_INCREMENT=3583526 DEFAULT CHARSET=utf8;
