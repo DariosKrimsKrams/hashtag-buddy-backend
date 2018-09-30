@@ -5,11 +5,6 @@ namespace AutoTagger.Database
 {
     public partial class Photos
     {
-        public Photos()
-        {
-            Mtags = new HashSet<Mtags>();
-        }
-
         public string LargeUrl { get; set; }
         public string ThumbUrl { get; set; }
         public string Shortcode { get; set; }
@@ -23,6 +18,6 @@ namespace AutoTagger.Database
         public DateTime? Uploaded { get; set; }
         public DateTime Created { get; set; }
 
-        public ICollection<Mtags> Mtags { get; set; }
+        public Locations Location { get; set; }
     }
 }

@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AutoTagger.Database
 {
-    public partial class InstataggerContext : DbContext
+    public partial class instataggerContext : DbContext
     {
-        public InstataggerContext()
+        public instataggerContext()
         {
         }
 
-        public InstataggerContext(DbContextOptions<InstataggerContext> options)
+        public instataggerContext(DbContextOptions<instataggerContext> options)
             : base(options)
         {
         }
@@ -188,9 +188,6 @@ namespace AutoTagger.Database
                 entity.HasIndex(e => e.Name)
                     .HasName("name");
 
-                entity.HasIndex(e => e.PhotoId)
-                    .HasName("photoId");
-
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
@@ -204,25 +201,19 @@ namespace AutoTagger.Database
                     .HasColumnName("onBlacklist")
                     .HasColumnType("tinyint(1)");
 
-                entity.Property(e => e.PhotoId)
-                    .IsRequired()
-                    .HasColumnName("photoId")
-                    .HasColumnType("varchar(100)");
-
                 entity.Property(e => e.Score)
                     .HasColumnName("score")
                     .HasColumnType("float(11,9)");
+
+                entity.Property(e => e.Shortcode)
+                    .IsRequired()
+                    .HasColumnName("shortcode")
+                    .HasColumnType("varchar(100)");
 
                 entity.Property(e => e.Source)
                     .IsRequired()
                     .HasColumnName("source")
                     .HasColumnType("varchar(30)");
-
-                entity.HasOne(d => d.Photo)
-                    .WithMany(p => p.Mtags)
-                    .HasForeignKey(d => d.PhotoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("photoId");
             });
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
@@ -315,6 +306,11 @@ namespace AutoTagger.Database
                     .IsRequired()
                     .HasColumnName("user")
                     .HasColumnType("varchar(50)");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.Photos)
+                    .HasForeignKey(d => d.LocationId)
+                    .HasConstraintName("rel_photos_location");
             });
         }
     }
