@@ -6,28 +6,30 @@ namespace AutoTagger.Database.Storage.Mysql.Query
 
     public abstract class FindHumanoidTagsQueryBase : IFindHumanoidTagsQuery
     {
-        public abstract string GetQuery(IEnumerable<IMachineTag> machineTags);
+        public abstract string GetQuery(IMachineTag[] machineTags);
 
-        protected static (string, string) BuildWhereConditions(IEnumerable<IMachineTag> machineTags)
+        protected static (string, string) BuildWhereConditions(IMachineTag[]  machineTags)
         {
             var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
             var whereConditionWeb   = BuildWhereCondition(machineTags, "GCPVision_Web");
             return (whereConditionLabel, whereConditionWeb);
         }
 
-        private static string BuildWhereCondition(IEnumerable<IMachineTag> machineTags, string source)
+        private static string BuildWhereCondition(IMachineTag[] machineTags, string source)
         {
             var where = "";
-            foreach (var machineTag in machineTags)
+            for (var i = 0; i < machineTags.Length; i++)
             {
-                if (machineTag.Source != source)
+                var machineTag = machineTags[i];
+                if (machineTag.Source != source || string.IsNullOrEmpty(machineTag.Name))
+                {
                     continue;
-                if (string.IsNullOrEmpty(machineTag.Name))
-                    continue;
-                where += $"`m`.`name` = '{machineTag.Name.Replace("'", "\\'")}' OR ";
+                }
+                where += $"`m`.`name` = '{machineTag.Name.Replace("'", @"\'")}' OR ";
             }
+
             char[] charsToTrim = { ' ', 'O', 'R' };
-            return where.Trim(charsToTrim);
+            return where.TrimEnd(charsToTrim);
         }
     }
 }

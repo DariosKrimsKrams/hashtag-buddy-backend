@@ -4,6 +4,6 @@
 
     public interface IFindHumanoidTagsQuery
     {
-        string GetQuery(IEnumerable<IMachineTag> machineTags);
+        string GetQuery(IMachineTag[] machineTags);
     }
 }

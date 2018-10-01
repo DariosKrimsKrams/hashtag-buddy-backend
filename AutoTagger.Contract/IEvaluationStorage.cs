@@ -4,9 +4,9 @@
 
     public interface IEvaluationStorage
     {
-        (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IEnumerable<IMachineTag> mTags);
+        (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] mTags);
 
-        (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMachineTag> mTags);
+        (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IMachineTag[] mTags);
 
         IEnumerable<IEnumerable<string>> GetMtagsWithHighScore();
     }

@@ -28,12 +28,14 @@
                 {
                     Thread.Sleep(100);
                 }
+
                 var status = this.GetEntry(out T value);
                 if (!status)
                 {
                     Thread.Sleep(100);
                     continue;
                 }
+
                 if (this.limit > 0 && this.count >= this.limit)
                 {
                     break;

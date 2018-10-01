@@ -26,7 +26,7 @@
 
         public IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(
             IEvaluationStorage storage,
-            IEnumerable<IMachineTag> machineTags)
+            IMachineTag[] machineTags)
         {
             var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
 
@@ -44,10 +44,10 @@
 
         public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
             IEvaluationStorage storage,
-            IEnumerable<IMachineTag> mTags,
+            IMachineTag[] machineTags,
             IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
-            var (query, humanoidTags) = storage.FindTrendingHumanoidTags(mTags);
+            var (query, humanoidTags) = storage.FindTrendingHumanoidTags(machineTags);
             var hTagsTrendingList = humanoidTags.ToList();
 
             for (var i = hTagsTrendingList.Count - 1; i >= 0; i--)

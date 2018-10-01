@@ -8,11 +8,13 @@
 
         Dictionary<string, object> GetDebugInfos();
 
-        IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(IEvaluationStorage storage, IEnumerable<IMachineTag> mTags);
+        IEnumerable<IHumanoidTag> GetMostRelevantHumanoidTags(
+            IEvaluationStorage storage,
+            IMachineTag[] machineTags);
 
         IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
             IEvaluationStorage storage,
-            IEnumerable<IMachineTag> mTags,
+            IMachineTag[] mTags,
             IEnumerable<IHumanoidTag> mostRelevantHTags);
     }
 }

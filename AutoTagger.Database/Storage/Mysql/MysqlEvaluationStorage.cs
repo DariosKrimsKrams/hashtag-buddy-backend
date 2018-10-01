@@ -8,17 +8,17 @@
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage
     {
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IEnumerable<IMachineTag> machineTags)
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] machineTags)
         {
             return this.FindHumanoidTags<FindHumanoidTagsMostRelevantQuery>(machineTags);
         }
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IEnumerable<IMachineTag> machineTags)
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IMachineTag[] machineTags)
         {
             return this.FindHumanoidTags<FindHumanoidTagsTrendingQuery>(machineTags);
         }
 
-        private (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IEnumerable<IMachineTag> machineTags) where T : IFindHumanoidTagsQuery
+        private (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags) where T : IFindHumanoidTagsQuery
         {
             var instance     = Activator.CreateInstance<T>();
             var query        = instance.GetQuery(machineTags);

@@ -176,7 +176,7 @@
             return sb.ToString().Substring(0, 10).ToLower();
         }
 
-        private Dictionary<string, object> FindTags(IEvaluation evaluation, IEnumerable<IMachineTag> machineTags)
+        private Dictionary<string, object> FindTags(IEvaluation evaluation, IMachineTag[] machineTags)
         {
             var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
             var trendingHTags     = evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);

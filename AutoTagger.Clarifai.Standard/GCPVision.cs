@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
@@ -64,15 +65,12 @@
             }
         }
 
-        public IEnumerable<IMachineTag> GetTagsForImageBytes(byte[] bytes)
+        public IMachineTag[] GetTagsForImageBytes(byte[] bytes)
         {
             var image = Image.FromBytes(bytes);
 
             var mTags = this.Detect(image);
-            foreach (var mTag in mTags)
-            {
-                yield return mTag;
-            }
+            return mTags.ToArray();
         }
 
         public IEnumerable<IMachineTag> GetTagsForImageUrl(string imageUrl)

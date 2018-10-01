@@ -23,7 +23,7 @@
         public (int, IEnumerable<IImage>) Parse(string url)
         {
             var node = this.imagePageLogic.GetData(url);
-            var hashtagNode  = GetHashtagNodes(node);
+            var hashtagNode = GetHashtagNodes(node);
             var amountPosts = GetAmountOfPosts(hashtagNode);
             if (amountPosts < this.settings.MinPostsForHashtags)
             {
@@ -36,6 +36,7 @@
 
             return (amountPosts, images);
         }
+
         private static dynamic GetHashtagNodes(dynamic node)
         {
             return node?.entry_data?.TagPage?[0]?.graphql?.hashtag;

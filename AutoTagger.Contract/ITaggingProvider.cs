@@ -6,7 +6,7 @@
     {
         IEnumerable<IMachineTag> GetTagsForFile(string path);
 
-        IEnumerable<IMachineTag> GetTagsForImageBytes(byte[] bytes);
+        IMachineTag[] GetTagsForImageBytes(byte[] bytes);
 
         IEnumerable<IMachineTag> GetTagsForImageUrl(string imageUrl);
     }
