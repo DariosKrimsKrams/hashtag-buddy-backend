@@ -13,5 +13,6 @@ CREATE TABLE `mtags` (
   `onBlacklist` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
-  KEY `name` (`name`)
+  KEY `name` (`name`),
+  KEY `shortcode` (`shortcode`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1998102 DEFAULT CHARSET=utf8;

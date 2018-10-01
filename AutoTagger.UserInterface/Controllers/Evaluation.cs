@@ -137,7 +137,7 @@
                 //     new MachineTag("Food", 1.0f, "GCPVision_Web"),
                 //};
 
-                if (!machineTags.Any())
+                if (machineTags.Length == 0)
                 {
                     return this.BadRequest("No MachineTags found :'(");
                 }

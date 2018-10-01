@@ -22,7 +22,7 @@
         {
             var instance     = Activator.CreateInstance<T>();
             var query        = instance.GetQuery(machineTags);
-            var (humanoidTags, time) = this.ExecuteHTagsQuery(query);
+            var (humanoidTags, _) = this.ExecuteHTagsQuery(query);
             return (query, humanoidTags);
         }
 
