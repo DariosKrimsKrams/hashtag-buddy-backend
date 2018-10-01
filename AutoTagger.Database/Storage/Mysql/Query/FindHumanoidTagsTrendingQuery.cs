@@ -5,23 +5,21 @@
 
     public class FindHumanoidTagsTrendingQuery : FindHumanoidTagsQueryBase
     {
-        public override string GetQuery(IEnumerable<IMachineTag> machineTags)
+        public override string GetQuery(IMachineTag[] machineTags)
         {
-            const int limitTopPhotos    = 50;
-            const int countTagsToReturn = 30;
+            const int LimitTopPhotos    = 50;
+            const int CountTagsToReturn = 30;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
             var usageITagsLimit = 5 * 1000;
 
-            var query = $"SELECT i.name, i.posts, i.refCount "
-                      + $"FROM itags as i LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id "
-                      + $"LEFT JOIN (SELECT p.id, count(m.name) as matches FROM photos as p "
-                      + $"LEFT JOIN mtags as m ON m.photoId = p.id "
-                      + $"WHERE ((({whereConditionLabel}) AND m.source='GCPVision_Label') "
-                      + $"OR (({whereConditionWeb}) AND m.source='GCPVision_Web')) AND m.onBlacklist = '0' "
-                      + $" GROUP BY p.id ORDER BY matches DESC LIMIT {limitTopPhotos} "
-                      + $") as sub2 ON sub2.id = rel.photoId WHERE sub2.id IS NOT NULL "
-                      + $"AND i.refCount < {usageITagsLimit} AND i.onBlacklist = '0' "
-                      + $"GROUP BY i.name ORDER by sum(matches) DESC LIMIT {countTagsToReturn}";
+            var query = $"SELECT i.name, i.posts FROM itags as i JOIN photo_itag_rel as rel "
+                      + $"ON rel.itag = i.name JOIN ( SELECT p.shortcode, count(m.name) as matches "
+                      + $"FROM photos as p JOIN mtags as m ON m.shortcode = p.shortcode WHERE "
+                      + $"((({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
+                      + $"OR(({whereConditionWeb}) AND m.source = 'GCPVision_Web') ) AND m.onBlacklist = '0' "
+                      + $"GROUP BY p.shortcode ORDER BY matches DESC LIMIT {LimitTopPhotos} ) as sub2 ON "
+                      + $"sub2.shortcode = rel.shortcode WHERE i.refCount < {usageITagsLimit} AND "
+                      + $"i.onBlacklist = '0' GROUP BY i.name ORDER BY sum(matches) DESC LIMIT {CountTagsToReturn}";
 
             return query;
         }

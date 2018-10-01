@@ -7,27 +7,26 @@ SELECT
 i.name,
 i.posts
 FROM itags as i
-LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id
-LEFT JOIN
+JOIN photo_itag_rel as rel ON rel.itag = i.name
+JOIN
 (
-	SELECT p.id,
+	SELECT p.shortcode,
 	count(m.name) as matches
 	FROM photos as p
-	LEFT JOIN mtags as m ON m.photoId =  p.id
+	JOIN mtags as m ON m.shortcode = p.shortcode
 	WHERE (
 		((m.`name` = 'group' OR m.`name` = 'happy') AND m.source = 'GCPVision_Label') 
 		OR ((m.`name` = 'festival' OR m.`name` = 'deichbrand') AND m.source = 'GCPVision_Web')
 	)
 	AND m.onBlacklist = '0'
-	GROUP BY p.id
+	GROUP BY p.shortcode
 	ORDER BY matches DESC
 	LIMIT 50
-) as sub2 ON sub2.id = rel.photoId
-WHERE sub2.id IS NOT NULL
-AND i.refCount < 10000
+) as sub2 ON sub2.shortcode = rel.shortcode
+WHERE i.refCount < 10000
 AND i.onBlacklist = '0'
-GROUP by i.name
-ORDER by sum(matches) DESC
+GROUP BY i.name
+ORDER BY sum(matches) DESC
 LIMIT 30
 ```
 

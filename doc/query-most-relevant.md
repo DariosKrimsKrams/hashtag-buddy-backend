@@ -2,16 +2,15 @@
 
 ```
 SELECT
-i.id as itagId,
 i.name,
 #i.refCount,
 relationQuality,
 count(i.name) as imagesCount
 FROM itags as i
-LEFT JOIN photo_itag_rel as rel ON rel.itagId = i.id
-LEFT JOIN
+JOIN photo_itag_rel as rel ON rel.itag = i.name
+JOIN
 (
-    SELECT p.id,
+    SELECT p.shortcode,
     #popularity,
     #matches,
     #count(m.name)+3-matches as overall,
@@ -21,32 +20,30 @@ LEFT JOIN
     #[searchQuality]/[popularity]
     ((count(m.name)-2*matches+3) / (count(m.name)+3-matches)) * popularity as relationQuality
     FROM photos as p
-    LEFT JOIN mtags as m ON m.photoId = p.id
-    LEFT JOIN
+    JOIN mtags as m ON m.shortcode = p.shortcode
+    JOIN
     (
-        SELECT p.id, (p.likes+p.comments)/p.follower as popularity, count(m.name) as matches
+        SELECT p.shortcode, (p.likes+p.comments)/p.follower as popularity, count(m.name) as matches
         FROM photos as p
-        LEFT JOIN mtags as m ON m.photoId =  p.id
-		WHERE (
-			((m.`name` = 'group' OR m.`name` = 'happy') AND m.source = 'GCPVision_Label') 
-			OR ((m.`name` = 'festival' OR m.`name` = 'deichbrand') AND m.source = 'GCPVision_Web')
-		)
-		AND m.onBlacklist = '0'
-        GROUP by p.id
-		ORDER by matches DESC
-		LIMIT 200
-    ) as sub1 ON p.id = sub1.id 
-    WHERE sub1.id IS NOT NULL
-	AND m.onBlacklist = '0'
-    GROUP by p.id
-    ORDER by relationQuality DESC
+        JOIN mtags as m ON m.shortcode = p.shortcode
+				WHERE (
+					((m.`name` = 'group' OR m.`name` = 'happy') AND m.source = 'GCPVision_Label') 
+					OR ((m.`name` = 'festival' OR m.`name` = 'deichbrand') AND m.source = 'GCPVision_Web')
+				)
+				AND m.onBlacklist = '0'
+        GROUP BY p.shortcode
+				ORDER BY matches DESC
+				LIMIT 200
+    ) as sub1 ON p.shortcode = sub1.shortcode 
+    WHERE m.onBlacklist = '0'
+    GROUP BY p.shortcode
+    ORDER BY relationQuality DESC
     LIMIT 200
-) as sub2 ON sub2.id = rel.photoId
-WHERE sub2.id IS NOT NULL
-AND i.refCount < 10000
+) as sub2 ON sub2.shortcode = rel.shortcode
+WHERE i.refCount < 10000
 AND i.onBlacklist = 0
-GROUP by i.name
-ORDER by count(i.name) DESC, relationQuality DESC
+GROUP BY i.name
+ORDER BY count(i.name) DESC, relationQuality DESC
 LIMIT 30
 ```
 

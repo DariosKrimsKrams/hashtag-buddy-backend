@@ -6,29 +6,28 @@
 
     public class FindHumanoidTagsMostRelevantQuery : FindHumanoidTagsQueryBase
     {
-        public override string GetQuery(IEnumerable<IMachineTag> machineTags)
+        public override string GetQuery(IMachineTag[] machineTags)
         {
-            const int limitTopPhotos    = 200;
-            const int countTagsToReturn = 30;
-            var       countInsertTags   = machineTags.Count();
+            const int LimitTopPhotos    = 200;
+            const int CountTagsToReturn = 30;
+            var       countInsertTags   = machineTags.Length;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
             var usageITagsLimit = 5 * 1000;
 
-            string query = $"SELECT i.name, i.posts, i.refCount "
-                         + $"FROM itags AS i LEFT JOIN photo_itag_rel AS rel ON rel.itagId = i.id LEFT JOIN "
-                         + $"( SELECT p.id, ((count(m.name)-2 * matches + {countInsertTags}) / (count(m.name) "
-                         + $"+ {countInsertTags} - matches)) *popularity as relationQuality "
-                         + $"FROM photos AS p LEFT JOIN mtags AS m ON m.photoId = p.id LEFT JOIN "
-                         + $"( SELECT p.id, (p.likes+p.comments)/ p.follower AS popularity, count(m.name) AS matches "
-                         + $"FROM photos as p LEFT JOIN mtags AS m ON m.photoId = p.id "
-                         + $"WHERE ((({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
-                         + $"OR (({whereConditionWeb}) AND m.source = 'GCPVision_Web')) AND m.onBlacklist = '0' "
-                         + $"GROUP by p.id ORDER BY matches DESC LIMIT {limitTopPhotos}) AS sub1 ON p.id = sub1.id "
-                         + $"WHERE sub1.id IS NOT NULL AND m.onBlacklist = '0' "
-                         + $"GROUP by p.id ORDER BY relationQuality DESC LIMIT {limitTopPhotos} ) AS sub2 ON sub2.id = "
-                         + $"rel.photoId WHERE sub2.id IS NOT NULL AND i.refCount < {usageITagsLimit} "
-                         + $"AND i.onBlacklist = '0' GROUP by i.name "
-                         + $"ORDER by count(i.name) DESC, relationQuality DESC LIMIT {countTagsToReturn}";
+            var query = $"SELECT i.name, i.posts, i.refCount, relationQuality "
+                      + $"FROM itags as i JOIN photo_itag_rel as rel ON rel.itag = i.name "
+                      + $"JOIN ( SELECT p.shortcode, ((count(m.name) - 2 * matches + {countInsertTags}) / "
+                      + $"(count(m.name) + {countInsertTags} - matches)) * popularity as relationQuality "
+                      + $"FROM photos as p JOIN mtags as m ON m.shortcode = p.shortcode "
+                      + $"JOIN ( SELECT p.shortcode, (p.likes + p.comments) / p.follower as popularity, "
+                      + $"count(m.name) as matches FROM photos as p JOIN mtags as m ON "
+                      + $"m.shortcode = p.shortcode WHERE((({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
+                      + $"OR(({whereConditionWeb}) AND m.source = 'GCPVision_Web') ) AND m.onBlacklist = '0' "
+                      + $"GROUP BY p.shortcode ORDER by matches DESC LIMIT {LimitTopPhotos} ) as sub1 ON "
+                      + $"p.shortcode = sub1.shortcode WHERE m.onBlacklist = '0' GROUP BY p.shortcode "
+                      + $"ORDER BY relationQuality DESC LIMIT {LimitTopPhotos} ) as sub2 ON sub2.shortcode = rel.shortcode "
+                      + $"WHERE i.refCount < {usageITagsLimit} AND i.onBlacklist = 0 GROUP BY i.name "
+                      + $"ORDER BY count(i.name) DESC, relationQuality DESC LIMIT {CountTagsToReturn}";
 
             return query;
         }
