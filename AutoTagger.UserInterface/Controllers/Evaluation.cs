@@ -86,7 +86,7 @@
                 var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
 
                 // photo of Hamburg
-                //var machineTags = new List<IMachineTag>
+                //var machineTags = new IMachineTag[]
                 //{
                 //    new MachineTag("metropolitan area", 0.9740945f, "GCPVision_Label"),
                 //    new MachineTag("urban area", 0.973557353f, "GCPVision_Label"),
