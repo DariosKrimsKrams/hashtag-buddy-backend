@@ -42,7 +42,7 @@
                 }
             }
             values = values.TrimEnd(',');
-            var query = $"INSERT INTO photo_itag_rel (`shortcode`, `itag`) VALUES {values};";
+            var query = $"INSERT IGNORE INTO photo_itag_rel (`shortcode`, `itag`) VALUES {values};";
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsRels.Add(time);
         }
