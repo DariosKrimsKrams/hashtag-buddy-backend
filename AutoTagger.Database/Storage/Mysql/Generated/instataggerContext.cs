@@ -188,6 +188,9 @@ namespace AutoTagger.Database
                 entity.HasIndex(e => e.Name)
                     .HasName("name");
 
+                entity.HasIndex(e => e.Shortcode)
+                    .HasName("shortcode");
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
@@ -214,10 +217,18 @@ namespace AutoTagger.Database
                     .IsRequired()
                     .HasColumnName("source")
                     .HasColumnType("varchar(30)");
+
+                entity.HasOne(d => d.ShortcodeNavigation)
+                    .WithMany(p => p.Mtags)
+                    .HasForeignKey(d => d.Shortcode)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("photo");
             });
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
             {
+                entity.HasKey(e => new { e.Shortcode, e.Itag });
+
                 entity.ToTable("photo_itag_rel");
 
                 entity.HasIndex(e => e.Itag)
@@ -226,19 +237,13 @@ namespace AutoTagger.Database
                 entity.HasIndex(e => e.Shortcode)
                     .HasName("shortcode");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Itag)
-                    .IsRequired()
-                    .HasColumnName("itag")
-                    .HasColumnType("varchar(50)");
-
                 entity.Property(e => e.Shortcode)
-                    .IsRequired()
                     .HasColumnName("shortcode")
                     .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Itag)
+                    .HasColumnName("itag")
+                    .HasColumnType("varchar(50)");
             });
 
             modelBuilder.Entity<Photos>(entity =>
