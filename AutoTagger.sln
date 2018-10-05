@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.API", "AutoTagge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler", "AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Test", "AutoTagger.Test.Core\AutoTagger.Test.csproj", "{40034217-4CFC-4E99-9352-BE14DE48D9CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader", "AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
@@ -33,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler.Tests", "Instaq.Crawler.Tests\Instaq.Crawler.Tests.csproj", "{665ECC60-8652-46A3-BDF0-37E55F681BB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instaq.Logger", "Instaq.Logger\Instaq.Logger.csproj", "{821243B6-A6B4-46D7-AFEE-72C4A07516C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Logger", "Instaq.Logger\Instaq.Logger.csproj", "{821243B6-A6B4-46D7-AFEE-72C4A07516C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +59,6 @@ Global
 		{0DA86F10-EC95-433D-B634-722BECF35C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA86F10-EC95-433D-B634-722BECF35C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA86F10-EC95-433D-B634-722BECF35C39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40034217-4CFC-4E99-9352-BE14DE48D9CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
