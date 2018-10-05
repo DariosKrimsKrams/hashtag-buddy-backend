@@ -31,7 +31,7 @@ namespace AutoTagger.Database
                 var user = Environment.GetEnvironmentVariable("instatagger_mysql_user");
                 var pw   = Environment.GetEnvironmentVariable("instatagger_mysql_pw");
                 var db   = Environment.GetEnvironmentVariable("instatagger_mysql_db");
-                optionsBuilder.UseMySql($"Server={ip};User Id={user};Password={pw};Database={db};TreatTinyAsBoolean=false");
+                optionsBuilder.UseMySql($"Server={ip};User Id={user};Password={pw};Database={db};TreatTinyAsBoolean=false;Convert Zero Datetime=True");
             }
         }
 
