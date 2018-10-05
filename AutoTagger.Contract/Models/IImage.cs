@@ -10,15 +10,7 @@
 
         IEnumerable<string> Comments { get; set; }
 
-        //int Follower { get; set; }
-
-        //int Following { get; set; }
-
-        //int Posts { get; set; }
-
         IEnumerable<string> HumanoidTags { get; set; }
-
-        int Id { get; set; }
 
         string LargeUrl { get; set; }
 
@@ -35,6 +27,8 @@
         string ThumbUrl { get; set; }
 
         DateTime Uploaded { get; set; }
+
+        DateTime Created { get; set; }
 
         IUser User { get; set; }
     }

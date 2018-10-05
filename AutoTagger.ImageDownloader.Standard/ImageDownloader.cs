@@ -16,7 +16,7 @@
         private const int QueryImagesAtLessOrEqualImages = 20;
         private const int DbSelectImagesAmount = 500;
         private const int ParallelThreads = 100;
-        private static int lastId = 0;
+        private static DateTime lastDate;
         private static IFileHandler fileHandler;
         private static List<string> files;
 
@@ -29,7 +29,7 @@
         public void Start()
         {
             files = fileHandler.GetAllUnusedImages().ToList();
-            lastId = storage.GetLargestPhotoIdForPhotoWithMTag();
+            lastDate = storage.GetCreatedDateForLatestPhotoWithMTags();
             new Thread(ImageDownloader.GetImages).Start();
         }
 
@@ -41,16 +41,20 @@
                 if (downloaderRunning <= QueryImagesAtLessOrEqualImages)
                 {
                     delay = 500;
-                    Console.WriteLine("Check DB for ID=" + lastId);
-                    var images = storage.GetImagesWithoutMachineTags(lastId, DbSelectImagesAmount);
+                    Console.WriteLine("Check DB for Created=" + lastDate);
+                    var images = storage.GetImagesWithoutMachineTags(lastDate, DbSelectImagesAmount);
                     foreach (var image in images)
                     {
                         delay = 30;
-                        lastId = image.Id;
+                        lastDate = image.Created;
                         if (files.Contains(image.Shortcode))
+                        {
                             continue;
+                        }
                         if (downloaderRunning >= ParallelThreads)
+                        {
                             break;
+                        }
                         Interlocked.Increment(ref downloaderRunning);
                         new Thread(() => ImageDownloader.Download(image)).Start();
                     }
@@ -74,15 +78,15 @@
                 {
                     if (e.Message.Contains("403"))
                     {
-                        Console.WriteLine("Download failed with 403 at ID=" + image.Id);
+                        Console.WriteLine("Download failed with 403 at Created=" + image.Created);
                     }
                     else if (e.Message.Contains("404"))
                     {
-                        Console.WriteLine("Download failed with 404 at ID=" + image.Id);
+                        Console.WriteLine("Download failed with 404 at Created=" + image.Created);
                     }
                     else
                     {
-                        Console.WriteLine("Crashed at ID=" + image.Id);
+                        Console.WriteLine("Crashed at Created=" + image.Created);
                         Console.WriteLine(e.Message);
                     }
                     fileHandler.Delete(image.Shortcode);

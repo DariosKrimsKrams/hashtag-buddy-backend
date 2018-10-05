@@ -6,6 +6,7 @@ using AutoTagger.Contract;
 
 namespace AutoTagger.Database
 {
+    using System.Globalization;
 
     public partial class Photos
     {
@@ -41,6 +42,8 @@ namespace AutoTagger.Database
 
         public IImage ToImage()
         {
+            //var dateTime = Convert.ToDateTime(this.Created.ToString(CultureInfo.InvariantCulture));
+
             var user = new User()
             {
                 FollowerCount  = this.Follower,
@@ -55,6 +58,7 @@ namespace AutoTagger.Database
                 Shortcode    = this.Shortcode,
                 Likes        = this.Likes,
                 CommentCount = this.Comments,
+                Created      = this.Created,
                 User         = user,
                 //MachineTags =
                 //    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),

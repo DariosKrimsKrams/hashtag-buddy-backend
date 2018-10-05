@@ -15,8 +15,6 @@
 
         public IEnumerable<string> HumanoidTags { get; set; }
 
-        public int Id { get; set; }
-
         public string LargeUrl { get; set; }
 
         public int Likes { get; set; }
@@ -32,6 +30,8 @@
         public string ThumbUrl { get; set; }
 
         public DateTime Uploaded { get; set; }
+
+        public DateTime Created { get; set; }
 
         public IUser User { get; set; }
 

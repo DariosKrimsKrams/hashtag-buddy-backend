@@ -13,25 +13,27 @@
             base.Save();
         }
 
-        public IEnumerable<IImage> GetImagesWithoutMachineTags(int idLargerThan, int limit)
+        public IEnumerable<IImage> GetImagesWithoutMachineTags(DateTime created, int limit)
         {
-            //var query = (from p in this.db.Photos where p.Mtags.Count == 0 && p.Id > idLargerThan select p).Take(limit)
-            //    .OrderBy(x => x.Id);
-            //return query.ToList().Select(x => x.ToImage());
-            return null;
+            var query = (from p in this.db.Photos where p.Mtags.Count == 0 && p.Created > created select p).Take(limit)
+                .OrderBy(x => x.Created);
+            var list = query.ToList();
+            return list.Select(x => x.ToImage());
         }
 
         public IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes)
         {
-            //var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
-            //return query.ToList().Select(x => x.ToImage());
-            throw new NotImplementedException();
+            var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
+            return query.ToList().Select(x => x.ToImage());
         }
 
-        public int GetLargestPhotoIdForPhotoWithMTag()
+        public DateTime GetCreatedDateForLatestPhotoWithMTags()
         {
-            //return this.db.Mtags.Max(m => m.PhotoId);
-            return 0;
+            var query = "select created from photos where shortcode = ( "
+                     + "select shortcode from mtags order by id desc limit 1 )";
+            var (results, _) = this.ExecuteCustomQuery(query);
+            var date = results?.FirstOrDefault()?.FirstOrDefault();
+            return Convert.ToDateTime(date);
         }
 
         public void InsertMachineTagsWithoutSaving(IImage image)

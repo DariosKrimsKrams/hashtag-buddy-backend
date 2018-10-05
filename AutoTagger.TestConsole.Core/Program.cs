@@ -144,15 +144,15 @@
             var imageProcessor = new ImageProcessorApp(db, tagger);
             ImageProcessorApp.OnLookingForTags += image =>
             {
-                Console.WriteLine("Sending to GCP for " + image.Shortcode + "(" + image.Id + ")");
+                Console.WriteLine("Sending to GCP for " + image.Shortcode);
             };
             ImageProcessorApp.OnFoundTags += image =>
             {
-                Console.WriteLine("Tags found for " + image.Shortcode + "(" + image.Id + ")");
+                Console.WriteLine("Tags found for " + image.Shortcode);
             };
             ImageProcessorApp.OnDbInserted += image =>
             {
-                Console.WriteLine("DB Insert for " + image.Shortcode +"("+image.Id+")");
+                Console.WriteLine("DB Insert for " + image.Shortcode);
             };
             ImageProcessorApp.OnDbSaved += () =>
             {
