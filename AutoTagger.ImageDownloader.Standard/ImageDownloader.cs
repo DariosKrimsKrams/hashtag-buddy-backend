@@ -18,6 +18,7 @@
         private const int ParallelThreads = 100;
         private static IFileHandler fileHandler;
         private static List<string> files;
+        private List<string> downloadedFiles;
         private static int LogCount = 0;
         private readonly List<string> imagesToSetDownloadedStatus;
         private readonly List<string> imagesToSetFailedStatus;
@@ -39,6 +40,7 @@
             this.imagesToSetDownloadedStatus = new List<string>();
             this.imagesToSetFailedStatus = new List<string>();
             this.imagesToSet404Status = new List<string>();
+            this.downloadedFiles = new List<string>();
         }
 
         public void Start()
@@ -130,11 +132,16 @@
             }
             if (files.Contains(image.Shortcode))
             {
+                // if it was on disk before, but not flaged in storage
+                //  -> remove on disk
                 fileHandler.Delete(image.Shortcode);
-                // remove it or set status
-                //return;
             }
-            files.Add(image.Shortcode);
+            if (this.downloadedFiles.Contains(image.Shortcode))
+            {
+                return;
+            }
+
+            this.downloadedFiles.Add(image.Shortcode);
             Interlocked.Increment(ref downloaderRunning);
             new Thread(() => this.Download(image)).Start();
         }
