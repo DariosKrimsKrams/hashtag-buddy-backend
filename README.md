@@ -4,6 +4,7 @@ Find the most relevant Instagram Hashtags.
   * Started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
   * First friends test on 2018-05
   * First user test on 2018-07-31
+  * Crawler running 24/7 local 2018-10-07
   
 ## Improvement Proposals
   * [#1 Database Basics](/doc/ip1_better_database.md) ✔
@@ -25,7 +26,7 @@ Find the most relevant Instagram Hashtags.
   
   
 ## Knowledge
-  * Kontext is king: Dimension des Kontext verstehen: Grundregel NUMMER 1! Relevanz ergibt sich aus dem Zusammenhang zwischen Inhalt und Kontext des Bildes und Aussage der Hashtags.
+  * #kontextIsKing: Dimension des Kontext verstehen: Grundregel NUMMER 1! "Relevanz ergibt sich aus dem Zusammenhang zwischen Inhalt und Kontext des Bildes und Aussage der Hashtags."
 
 ## Technical
   * [Query for Most Relevant Hashtags](/doc/relational-query-for-most-relevant.md)
