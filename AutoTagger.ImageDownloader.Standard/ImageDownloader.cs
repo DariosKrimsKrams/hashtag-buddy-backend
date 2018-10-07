@@ -21,6 +21,7 @@
         private static int LogCount = 0;
         private readonly List<string> imagesToSetDownloadedStatus;
         private readonly List<string> imagesToSetFailedStatus;
+        private readonly List<string> imagesToSet404Status;
 
         private enum StorageUses
         {
@@ -37,6 +38,7 @@
             fileHandler = new DiskFileHander();
             this.imagesToSetDownloadedStatus = new List<string>();
             this.imagesToSetFailedStatus = new List<string>();
+            this.imagesToSet404Status = new List<string>();
         }
 
         public void Start()
@@ -53,6 +55,7 @@
             {
                 this.DbUpdaterLogic(this.imagesToSetDownloadedStatus, "downloaded");
                 this.DbUpdaterLogic(this.imagesToSetFailedStatus, "failed");
+                this.DbUpdaterLogic(this.imagesToSet404Status, "404");
                 Thread.Sleep(500);
             }
         }
@@ -65,7 +68,7 @@
                 return;
             }
             storage.SetImagesStatus(input.ToList(), status);
-            for (var i = count - 1; i > 0; i--)
+            for (var i = count - 1; i >= 0; i--)
             {
                 input.RemoveAt(i);
             }
@@ -127,7 +130,9 @@
             }
             if (files.Contains(image.Shortcode))
             {
-                return;
+                fileHandler.Delete(image.Shortcode);
+                // remove it or set status
+                //return;
             }
             files.Add(image.Shortcode);
             Interlocked.Increment(ref downloaderRunning);
@@ -157,6 +162,7 @@
                     else if (e.Message.Contains("404"))
                     {
                         Console.WriteLine("Download failed with 404 at Created=" + image.Created);
+                        this.imagesToSet404Status.Add(image.Shortcode);
                     }
                     else
                     {
