@@ -31,5 +31,7 @@
         DateTime Created { get; set; }
 
         IUser User { get; set; }
+
+        string Status { get; set; }
     }
 }

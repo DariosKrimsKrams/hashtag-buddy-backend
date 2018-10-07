@@ -32,7 +32,7 @@
 
         public string GetMachineTagsCount()
         {
-            var query = "SELECT count(distinct m.photoId) from mtags as m";
+            var query = "SELECT count(distinct m.shortcode) from mtags as m";
             var (results, time) = this.ExecuteCustomQuery(query);
             return results?.FirstOrDefault()?.FirstOrDefault();
         }

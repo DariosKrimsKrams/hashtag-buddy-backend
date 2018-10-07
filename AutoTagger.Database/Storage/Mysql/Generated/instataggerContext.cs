@@ -259,6 +259,9 @@ namespace AutoTagger.Database
                     .HasName("imgId")
                     .IsUnique();
 
+                entity.HasIndex(e => e.Status)
+                    .HasName("status");
+
                 entity.Property(e => e.Shortcode)
                     .HasColumnName("shortcode")
                     .HasColumnType("varchar(100)");
@@ -297,6 +300,11 @@ namespace AutoTagger.Database
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnName("status")
+                    .HasColumnType("varchar(20)");
 
                 entity.Property(e => e.ThumbUrl)
                     .IsRequired()

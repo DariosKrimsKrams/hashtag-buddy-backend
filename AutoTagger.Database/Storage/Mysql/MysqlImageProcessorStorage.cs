@@ -13,17 +13,32 @@
             base.Save();
         }
 
-        public IEnumerable<IImage> GetImagesWithoutMachineTags(DateTime created, int limit)
+        public IEnumerable<IImage> GetImagesForImageDownloader(int limit)
         {
-            var query = (from p in this.db.Photos where p.Mtags.Count == 0 && p.Created > created select p).Take(limit)
-                .OrderBy(x => x.Created);
+            var query = this.db.Photos
+                .Where(p => string.IsNullOrEmpty(p.Status))
+                .OrderBy(x => x.Created).Take(limit);
             var list = query.ToList();
             return list.Select(x => x.ToImage());
         }
 
-        public IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes)
+        public void SetImagesStatus(IEnumerable<string> shortcodes, string status)
         {
-            var query = this.db.Photos.Where(p => shortCodes.Contains(p.Shortcode) && p.Mtags.Count == 0);
+            var where = "";
+            foreach (var shortcode in shortcodes)
+            {
+                where += $"`shortcode` = '{shortcode}' OR ";
+            }
+            char[] charsToTrim = { ' ', 'O', 'R' };
+            where = where.TrimEnd(charsToTrim);
+            var query = $"update photos set status = '{status}' where {where}";
+            this.ExecuteCustomQuery(query);
+        }
+
+        public IEnumerable<IImage> GetImagesForCv()
+        {
+            var query = this.db.Photos
+                .Where(p => p.Status == "readyForCv");
             return query.ToList().Select(x => x.ToImage());
         }
 

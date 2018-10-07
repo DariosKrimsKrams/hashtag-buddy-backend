@@ -7,9 +7,11 @@
     {
         void Save();
 
-        IEnumerable<IImage> GetImagesWithoutMachineTags(DateTime created, int limit);
+        IEnumerable<IImage> GetImagesForImageDownloader(int limit);
 
-        IEnumerable<IImage> GetImagesWithoutMachineTags(IEnumerable<string> shortCodes);
+        void SetImagesStatus(IEnumerable<string> shortcodes, string status);
+
+        IEnumerable<IImage> GetImagesForCv();
 
         DateTime GetCreatedDateForLatestPhotoWithMTags();
 

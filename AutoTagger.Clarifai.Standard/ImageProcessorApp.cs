@@ -147,15 +147,15 @@
             new Thread(InsertDb).Start();
         }
 
-        private static IEnumerable<IImage> GetImagesWithoutMachineTags(IList<string> files)
-        {
-            return storage.GetImagesWithoutMachineTags(files);
-        }
+        //private static IEnumerable<IImage> GetImagesWithoutMachineTags(IList<string> files)
+        //{
+        //}
 
         private static void PrepareImages()
         {
-            var files  = fileHandler.GetAllUnusedImages();
-            var images = GetImagesWithoutMachineTags(files);
+            //var files  = fileHandler.GetAllUnusedImages();
+            var images = storage.GetImagesForCv();
+            //var images = GetImagesWithoutMachineTags(files);
             images.ForEach(
                 i =>
                 {
