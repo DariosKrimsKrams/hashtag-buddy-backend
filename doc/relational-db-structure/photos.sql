@@ -17,8 +17,10 @@ CREATE TABLE `photos` (
   `location_id` int(11) DEFAULT NULL,
   `uploaded` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` varchar(20) NOT NULL,
   PRIMARY KEY (`shortcode`),
   UNIQUE KEY `imgId` (`shortcode`),
   KEY `rel_photos_location` (`location_id`),
+  KEY `status` (`status`) USING BTREE,
   CONSTRAINT `rel_photos_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
