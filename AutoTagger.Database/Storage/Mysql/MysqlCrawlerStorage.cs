@@ -58,6 +58,10 @@
             for (var i = 0; i < hTags.Length; i++)
             {
                 var hTag = hTags[i];
+                if (hTag == null)
+                {
+                    continue;
+                }
                 values += $"('{hTag.Name}', '{hTag.Posts}'),";
             }
             values = values.TrimEnd(',');
