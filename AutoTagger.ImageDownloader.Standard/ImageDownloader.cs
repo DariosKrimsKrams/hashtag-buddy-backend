@@ -130,15 +130,15 @@
                 this.DownloaderHandling(image);
                 return;
             }
+            if (this.downloadedFiles.Contains(image.Shortcode))
+            {
+                return;
+            }
             if (files.Contains(image.Shortcode))
             {
                 // if it was on disk before, but not flaged in storage
                 //  -> remove on disk
                 fileHandler.Delete(image.Shortcode);
-            }
-            if (this.downloadedFiles.Contains(image.Shortcode))
-            {
-                return;
             }
 
             this.downloadedFiles.Add(image.Shortcode);
