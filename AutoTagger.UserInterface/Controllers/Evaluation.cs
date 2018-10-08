@@ -66,7 +66,7 @@
 
         [HttpPost("File")]
         [ProducesResponseType(typeof(void), 200)]
-        public async Task<IActionResult> File(IFormFile file)
+        public IActionResult File(IFormFile file)
         {
             if (!this.Request.ContentType.Contains("multipart/form-data; boundary"))
             {
@@ -80,7 +80,7 @@
 
             using (var stream = new MemoryStream())
             {
-                await file.CopyToAsync(stream);
+                file.CopyTo(stream);
                 var bytes = stream.ToArray();
 
                 var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
@@ -161,8 +161,7 @@
 
                 data.Add("img", fileName);
                 data.Add("logId", logId);
-                var output = this.Json(data);
-                return output;
+                return this.Ok(data);
             }
         }
 
