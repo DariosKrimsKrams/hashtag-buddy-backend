@@ -11,7 +11,5 @@ namespace AutoTagger.Database
         public float Score { get; set; }
         public string Source { get; set; }
         public sbyte OnBlacklist { get; set; }
-
-        public Photos ShortcodeNavigation { get; set; }
     }
 }

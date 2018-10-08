@@ -217,12 +217,6 @@ namespace AutoTagger.Database
                     .IsRequired()
                     .HasColumnName("source")
                     .HasColumnType("varchar(30)");
-
-                entity.HasOne(d => d.ShortcodeNavigation)
-                    .WithMany(p => p.Mtags)
-                    .HasForeignKey(d => d.Shortcode)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("photo");
             });
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
@@ -251,6 +245,9 @@ namespace AutoTagger.Database
                 entity.HasKey(e => e.Shortcode);
 
                 entity.ToTable("photos");
+
+                entity.HasIndex(e => e.Created)
+                    .HasName("created");
 
                 entity.HasIndex(e => e.LocationId)
                     .HasName("rel_photos_location");

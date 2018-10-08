@@ -22,5 +22,6 @@ CREATE TABLE `photos` (
   UNIQUE KEY `imgId` (`shortcode`),
   KEY `rel_photos_location` (`location_id`),
   KEY `status` (`status`) USING BTREE,
+  KEY `created` (`created`) USING BTREE,
   CONSTRAINT `rel_photos_location` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
