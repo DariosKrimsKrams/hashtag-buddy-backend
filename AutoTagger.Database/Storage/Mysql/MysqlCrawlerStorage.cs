@@ -41,6 +41,10 @@
                     values += $"('{image.Shortcode}', '{humanoidTag}'),";
                 }
             }
+            if (string.IsNullOrEmpty(values))
+            {
+                return;
+            }
             values = values.TrimEnd(',');
             var query = $"INSERT IGNORE INTO photo_itag_rel (`shortcode`, `itag`) VALUES {values};";
             var (_, time) = this.ExecuteCustomQuery(query);
@@ -63,6 +67,11 @@
                     continue;
                 }
                 values += $"('{hTag.Name}', '{hTag.Posts}'),";
+            }
+
+            if (string.IsNullOrEmpty(values))
+            {
+                return;
             }
             values = values.TrimEnd(',');
             var query = $"REPLACE INTO itags (`Name`, `Posts`) VALUES {values};";

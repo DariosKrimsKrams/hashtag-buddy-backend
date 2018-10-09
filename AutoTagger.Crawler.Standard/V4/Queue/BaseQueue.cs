@@ -53,7 +53,7 @@
                 {
                     this.Processed.Remove(value);
                     this.Enqueue(value);
-                    Thread.Sleep(100);
+                    Thread.Sleep(5000);
                 }
             }
         }
