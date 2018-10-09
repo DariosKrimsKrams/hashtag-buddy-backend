@@ -16,7 +16,7 @@
             var values = "";
             foreach (var image in images)
             {
-                if (image.HumanoidTags == null)
+                if (image?.HumanoidTags == null)
                 {
                     continue;
                 }
