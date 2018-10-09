@@ -20,7 +20,14 @@
                 {
                     continue;
                 }
-                values += $"('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.CommentCount}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{image.Uploaded}'),";
+
+                var date = image.Uploaded;
+                var uploaded = $"{date.Year}-{date.Month}-{date.Day} {date.Hour}:{date.Minute}:{date.Second}";
+                values += $"('{image.LargeUrl}', '{image.ThumbUrl}', '{image.Shortcode}', '{image.Likes}', '{image.CommentCount}', '{image.User.Username}', '{image.User.FollowerCount}', '{image.User.FollowingCount}', '{image.User.PostCount}', '{uploaded}'),";
+            }
+            if (string.IsNullOrEmpty(values))
+            {
+                return;
             }
             values = values.TrimEnd(',');
             var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `uploaded`) VALUES {values};";
