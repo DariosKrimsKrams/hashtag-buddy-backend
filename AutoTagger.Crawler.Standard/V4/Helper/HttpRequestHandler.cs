@@ -30,12 +30,16 @@
                 var status = result.StatusCode;
                 if (status != HttpStatusCode.OK)
                 {
-                    return null;
+                    throw new WrongHttpStatusException(status);
                 }
 
                 var document = new HtmlDocument();
                 document.Load(result.Content.ReadAsStreamAsync().Result);
                 return document.DocumentNode;
+            }
+            catch (WrongHttpStatusException)
+            {
+                throw;
             }
             catch (Exception)
             {

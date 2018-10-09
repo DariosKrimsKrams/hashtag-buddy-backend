@@ -4,7 +4,10 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Threading;
+
+    using AutoTagger.Crawler.Standard;
 
     public class BaseQueue<T> : ConcurrentQueue<T>
     {
@@ -41,7 +44,17 @@
                     break;
                 }
                 this.count++;
-                func(value);
+
+                try
+                {
+                    func(value);
+                }
+                catch (WrongHttpStatusException e)
+                {
+                    this.Processed.Remove(value);
+                    this.Enqueue(value);
+                    Thread.Sleep(100);
+                }
             }
         }
 

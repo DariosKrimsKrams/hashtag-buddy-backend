@@ -19,7 +19,7 @@
         private readonly BaseQueue<string> imageQueue;
 
         private readonly RandomTagsCrawler randomTagsCrawler;
-        private readonly ExploreTagsPageHandler exploreTagsPagePageHandler;
+        private readonly ExploreTagsPageHandler exploreTagsPageHandler;
         private readonly ImageDetailPageCrawler imageDetailPageCrawler;
         private readonly UserPageCrawler userPageCrawler;
 
@@ -36,7 +36,7 @@
             this.imageQueue     = new BaseQueue<string>();
 
             this.randomTagsCrawler           = new RandomTagsCrawler(requestHandler);
-            this.exploreTagsPagePageHandler  = new ExploreTagsPageHandler(this.settings, requestHandler);
+            this.exploreTagsPageHandler      = new ExploreTagsPageHandler(this.settings, requestHandler);
             this.userPageCrawler             = new UserPageCrawler(this.settings, requestHandler);
             this.imageDetailPageCrawler      = new ImageDetailPageCrawler(this.settings, requestHandler);
         }
@@ -55,7 +55,7 @@
 
         public void HashtagQueueThread()
         {
-            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, AllowedToRunExploreCrawler);
+            this.hashtagQueue.Process(this.ExploreTagsCrawlerFunc, this.AllowedToRunExploreCrawler);
             Console.WriteLine("End hashtagQueue :(");
         }
 
@@ -66,7 +66,7 @@
 
         public void ShortcodeQueueThread()
         {
-            this.imageQueue.Process(this.ImagePageCrawlerFunc, AllowedToRunImageCrawler);
+            this.imageQueue.Process(this.ImagePageCrawlerFunc, this.AllowedToRunImageCrawler);
             Console.WriteLine("End imageQueue :(");
         }
 
@@ -77,7 +77,7 @@
 
         public void UserQueueThread()
         {
-            this.userQueue.Process(this.UserCrawlerFunc, AllowedToRunUserCrawler);
+            this.userQueue.Process(this.UserCrawlerFunc, this.AllowedToRunUserCrawler);
             Console.WriteLine("End userQueue :(");
         }
 
@@ -95,7 +95,7 @@
         private void ExploreTagsCrawlerFunc(IHumanoidTag tag)
         {
             var url = $"https://www.instagram.com/explore/tags/{tag.Name}/";
-            var (amountOfPosts, images) = this.exploreTagsPagePageHandler.Parse(url);
+            var (amountOfPosts, images) = this.exploreTagsPageHandler.Parse(url);
             tag.Posts = amountOfPosts;
             this.OnHashtagFoundComplete?.Invoke(tag);
 
