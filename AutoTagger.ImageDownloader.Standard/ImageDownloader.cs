@@ -107,7 +107,7 @@
                     if (this.TrySetStatus(StorageUses.Get))
                     {
                         Console.WriteLine("Start Getting Photos");
-                        var images = storage.GetImagesForImageDownloader(DbGetLimit);
+                        var images = storage.GetImagesForImageDownloader(DbGetLimit + this.downloadedFiles.Count);
                         CurStorageUse = StorageUses.None;
                         var enumerable = images as IImage[] ?? images.ToArray();
                         Console.WriteLine("Get " + enumerable.Count() + " DB Entries");
