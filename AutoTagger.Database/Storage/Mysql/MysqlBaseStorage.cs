@@ -73,7 +73,7 @@
                 entry.Add(value);
                 return entry;
             }
-            return this.ExecuteQuery<List<string>>(query, Func);
+            return this.SaveQuery<List<string>>(query, Func);
         }
 
         protected (IEnumerable<Photos>, TimeSpan) ExecutePhotosQuery(string query)
@@ -101,7 +101,7 @@
 
                 return entry;
             }
-            return this.ExecuteQuery<Photos>(query, Func);
+            return this.SaveQuery<Photos>(query, Func);
         }
 
         protected (IEnumerable<IHumanoidTag>, TimeSpan) ExecuteHTagsQuery(string query)
@@ -126,7 +126,21 @@
 
                 return entry;
             }
-            return this.ExecuteQuery<HumanoidTag>(query, Func);
+            return this.SaveQuery<HumanoidTag>(query, Func);
+        }
+
+        private (IEnumerable<T>, TimeSpan) SaveQuery<T>(string query, Func<T, string, string, T> func) where T : new()
+        {
+            try
+            {
+                return this.ExecuteQuery(query, func);
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine("Error: " + e);
+                this.Reconnect();
+                return this.ExecuteQuery(query, func);
+            }
         }
 
         private (IEnumerable<T>, TimeSpan) ExecuteQuery<T>(string query, Func<T, string, string, T> func) where T : new()
