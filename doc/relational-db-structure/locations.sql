@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `locations`;
 CREATE TABLE `locations` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `insta_id` int(11) NOT NULL,
   `name` text NOT NULL,
   `slug` varchar(50) NOT NULL,

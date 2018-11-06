@@ -14,7 +14,7 @@ CREATE TABLE `photos` (
   `follower` int(11) NOT NULL,
   `following` int(11) NOT NULL,
   `posts` int(11) NOT NULL,
-  `location_id` int(11) DEFAULT NULL,
+  `location_id` bigint(20) DEFAULT NULL,
   `uploaded` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` varchar(20) NOT NULL,
