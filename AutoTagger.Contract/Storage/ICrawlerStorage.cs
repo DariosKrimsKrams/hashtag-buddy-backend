@@ -9,6 +9,6 @@
 
         void InsertHumanoidTags(IHumanoidTag[] hTags);
 
-        List<TimeSpan> GetTimings(string type);
+        IEnumerable<TimeSpan> GetTimings(string type);
     }
 }

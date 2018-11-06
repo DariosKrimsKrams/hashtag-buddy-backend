@@ -86,21 +86,21 @@
             this.timingsHTags.Add(time);
         }
 
-        public List<TimeSpan> GetTimings(string type)
+        public IEnumerable<TimeSpan> GetTimings(string type)
         {
-            List<TimeSpan> output;
+            IEnumerable<TimeSpan> output;
             switch (type)
             {
                 case "images":
-                    output = this.timingsImages.ToList();
+                    output = this.timingsImages.ToArray();
                     this.timingsImages.Clear();
                     return output;
                 case "rels":
-                    output = this.timingsRels.ToList();
+                    output = this.timingsRels.ToArray();
                     this.timingsRels.Clear();
                     return output;
                 case "htags":
-                    output = this.timingsHTags.ToList();
+                    output = this.timingsHTags.ToArray();
                     this.timingsHTags.Clear();
                     return output;
             }
