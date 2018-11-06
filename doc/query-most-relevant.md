@@ -41,7 +41,7 @@ JOIN
     LIMIT 200
 ) as sub2 ON sub2.shortcode = rel.shortcode
 WHERE i.refCount < 10000
-AND i.onBlacklist = 0
+AND i.onBlacklist = '0'
 GROUP BY i.name
 ORDER BY count(i.name) DESC, relationQuality DESC
 LIMIT 30
