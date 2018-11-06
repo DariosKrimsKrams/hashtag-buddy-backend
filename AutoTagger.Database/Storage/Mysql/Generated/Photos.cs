@@ -14,7 +14,7 @@ namespace AutoTagger.Database
         public int Follower { get; set; }
         public int Following { get; set; }
         public int Posts { get; set; }
-        public int? LocationId { get; set; }
+        public long? LocationId { get; set; }
         public DateTime? Uploaded { get; set; }
         public DateTime Created { get; set; }
         public string Status { get; set; }

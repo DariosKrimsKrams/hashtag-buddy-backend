@@ -6,7 +6,7 @@ namespace AutoTagger.Contract.Models
 {
     public interface ILocation
     {
-        int Id { get; set; }
+        Int64 Id { get; set; }
 
         int InstaId { get; set; }
 

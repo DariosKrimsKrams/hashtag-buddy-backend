@@ -32,7 +32,6 @@ namespace Instaq.Crawler.Tests.Logic
             var inputImages = new List<IImage>
             {
                 new Image {
-                    Id = 1337,
                     HumanoidTags = new List<string>
                     {
                         "test"
@@ -52,21 +51,18 @@ namespace Instaq.Crawler.Tests.Logic
             var inputImages = new List<IImage>
             {
                 new Image {
-                    Id = 1,
                     HumanoidTags = new List<string>
                     {
                         "test"
                     }
                 },
                 new Image {
-                    Id = 2,
                     HumanoidTags = new List<string>
                     {
                         "test2"
                     }
                 },
                 new Image {
-                    Id = 3,
                     HumanoidTags = new List<string>
                     {
                         "test3"
@@ -86,7 +82,6 @@ namespace Instaq.Crawler.Tests.Logic
             var inputImages = new List<IImage>
             {
                 new Image {
-                    Id = 42,
                     HumanoidTags = new List<string>
                     {
                         "bla",
@@ -94,7 +89,6 @@ namespace Instaq.Crawler.Tests.Logic
                     }
                 },
                 new Image {
-                    Id = 1337,
                     HumanoidTags = new List<string>
                     {
                         "bla",
@@ -115,7 +109,6 @@ namespace Instaq.Crawler.Tests.Logic
             var inputImages = new List<IImage>
             {
                 new Image {
-                    Id = 42,
                     HumanoidTags = new List<string>
                     {
                         "bla",
@@ -123,14 +116,12 @@ namespace Instaq.Crawler.Tests.Logic
                     }
                 },
                 new Image {
-                    Id = 99,
                     HumanoidTags = new List<string>
                     {
                         "moep"
                     }
                 },
                 new Image {
-                    Id = 1337,
                     HumanoidTags = new List<string>
                     {
                         "bla",
@@ -152,7 +143,6 @@ namespace Instaq.Crawler.Tests.Logic
             var inputImages = new List<IImage>
             {
                 new Image {
-                    Id = 42,
                     HumanoidTags = new List<string>
                     {
                         "bla",
@@ -167,7 +157,6 @@ namespace Instaq.Crawler.Tests.Logic
                     }
                 },
                 new Image {
-                    Id = 99,
                     HumanoidTags = new List<string>
                     {
                         "deichbrand",

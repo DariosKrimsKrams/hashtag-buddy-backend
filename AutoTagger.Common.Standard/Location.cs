@@ -5,7 +5,7 @@
 
     public class Location : ILocation
     {
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
 
         public int InstaId { get; set; }
 

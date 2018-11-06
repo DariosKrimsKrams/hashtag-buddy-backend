@@ -136,7 +136,7 @@ namespace AutoTagger.Database
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("bigint(20)");
 
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
@@ -292,7 +292,7 @@ namespace AutoTagger.Database
 
                 entity.Property(e => e.LocationId)
                     .HasColumnName("location_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("bigint(20)");
 
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")

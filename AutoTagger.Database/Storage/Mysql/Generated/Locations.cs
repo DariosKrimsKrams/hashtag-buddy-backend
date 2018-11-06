@@ -10,7 +10,7 @@ namespace AutoTagger.Database
             Photos = new HashSet<Photos>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int InstaId { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }

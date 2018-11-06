@@ -53,7 +53,7 @@
             };
             var expectedLocation = new Location
             {
-                Id            = 108433841,
+                Id            = 140875582606061,
                 HasPublicPage = true,
                 Name          = "Hurricane Festival",
                 Slug          = "hurricane-festival"
