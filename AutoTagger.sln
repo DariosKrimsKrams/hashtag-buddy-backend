@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler.Tests", "Ins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Logger", "Instaq.Logger\Instaq.Logger.csproj", "{821243B6-A6B4-46D7-AFEE-72C4A07516C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instaq.DebugAPI", "Instaq.DebugAPI\Instaq.DebugAPI.csproj", "{3D6AA128-7587-4D93-B770-1C8FFF057E24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{821243B6-A6B4-46D7-AFEE-72C4A07516C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{821243B6-A6B4-46D7-AFEE-72C4A07516C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{821243B6-A6B4-46D7-AFEE-72C4A07516C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
