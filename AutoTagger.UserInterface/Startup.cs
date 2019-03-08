@@ -51,8 +51,7 @@
             app.UseCors(options => options.WithOrigins(
                 "http://localhost:4200",
                 "http://localhost:80",
-                "http://instaq.innocliq.de",
-                "http://instaq-debug.innocliq.de"
+                "http://instaq.innocliq.de"
                 ).AllowAnyMethod());
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -75,12 +74,11 @@
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
             services.AddTransient<IEvaluation, Evaluation>();
-            services.AddTransient<IDebugStorage, MysqlDebugStorage>();
 
             services.AddSwaggerGen(
                 c =>
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "Auto Tagger", Version = "v1" });
+                    c.SwaggerDoc("v1", new Info { Title = "Instaq Extern", Version = "v1" });
                     c.OperationFilter<FileOperation>();
                 });
         }

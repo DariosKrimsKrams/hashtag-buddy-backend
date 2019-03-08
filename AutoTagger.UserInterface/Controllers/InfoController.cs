@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace AutoTagger.UserInterface.Controllers
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Mvc;
+    using AutoTagger.Common;
+
     [Route("[controller]")]
     public class InfoController : Controller
     {

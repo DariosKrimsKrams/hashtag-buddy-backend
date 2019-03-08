@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Instaq.DebugAPI
+namespace Instaq.API.Debug
 {
     public class Program
     {

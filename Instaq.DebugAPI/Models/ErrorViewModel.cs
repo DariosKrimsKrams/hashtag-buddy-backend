@@ -1,6 +1,6 @@
 using System;
 
-namespace Instaq.DebugAPI.Models
+namespace Instaq.API.Debug.Models
 {
     public class ErrorViewModel
     {
