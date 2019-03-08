@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+
+    using AutoTagger.Common;
     using AutoTagger.Contract;
     using Newtonsoft.Json;
 
