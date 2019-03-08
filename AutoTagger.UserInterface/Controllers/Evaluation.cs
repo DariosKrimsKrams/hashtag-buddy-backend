@@ -1,17 +1,11 @@
 ﻿namespace AutoTagger.UserInterface.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Threading.Tasks;
-
-    using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
-
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
@@ -38,31 +32,6 @@
             this.fileHandler     = fileHandler;
             this.evaluation      = evaluation;
         }
-
-        //[HttpPost("Link")]
-        //[ProducesResponseType(typeof(void), 200)]
-        //public IActionResult Link(ScanLinkModel model)
-        //{
-        //    var link = model.Link;
-        //    if (string.IsNullOrEmpty(link))
-        //    {
-        //        return this.BadRequest("No Link set");
-        //    }
-        //    var machineTags = this.taggingProvider.GetTagsForImageUrl(link).ToList();
-        //    if (!machineTags.Any())
-        //    {
-        //        return this.BadRequest("No MachineTags found :'(");
-        //    }
-
-        //    var content = this.FindTags(machineTags);
-        //    content.Add("link", link);
-        //    var json = this.Json(content);
-
-        //    var debugStr = JsonConvert.SerializeObject(content);
-        //    this.evaluationStorage.InsertLog("web_link", debugStr);
-
-        //    return json;
-        //}
 
         [HttpPost("File")]
         [ProducesResponseType(typeof(void), 200)]

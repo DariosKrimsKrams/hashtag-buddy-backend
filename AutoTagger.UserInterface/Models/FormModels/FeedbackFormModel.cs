@@ -2,8 +2,10 @@
 {
     public class FeedbackFormModel
     {
-        public int Id { get; set; }
+        public string UserId { get; set; }
 
+        public string PhotoId { get; set; }
+        
         public string Data { get; set; }
     }
 }
