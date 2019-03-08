@@ -7,6 +7,7 @@
     using System.Threading;
 
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.FileHandling.Standard;
 
     public class ImageDownloader

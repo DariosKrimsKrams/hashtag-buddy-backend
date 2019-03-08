@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.V4.Requests;
 
     public class ExploreTagsPageHandler

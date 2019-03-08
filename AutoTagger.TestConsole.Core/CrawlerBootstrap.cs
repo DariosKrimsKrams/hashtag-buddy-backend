@@ -7,6 +7,7 @@ namespace AutoTagger.TestConsole
     using System.Threading;
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4;
 

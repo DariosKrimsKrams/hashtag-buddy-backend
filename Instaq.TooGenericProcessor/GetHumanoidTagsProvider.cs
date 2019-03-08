@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     class GetHumanoidTagsProvider
     {

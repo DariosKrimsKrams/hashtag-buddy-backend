@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public class FindHumanoidTagsTrendingQuery : FindHumanoidTagsQueryBase
     {

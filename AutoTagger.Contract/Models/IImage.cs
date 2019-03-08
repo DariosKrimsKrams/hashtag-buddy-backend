@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract.Models
 {
     using System;
     using System.Collections.Generic;

@@ -49,7 +49,7 @@
                 {
                     func(value);
                 }
-                catch (WrongHttpStatusException e)
+                catch (WrongHttpStatusException)
                 {
                     this.Processed.Remove(value);
                     this.Enqueue(value);

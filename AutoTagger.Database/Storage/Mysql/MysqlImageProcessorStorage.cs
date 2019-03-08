@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Database;
 
     public class MysqlImageProcessorStorage : MysqlBaseStorage, IImageProcessorStorage

@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface IEvaluation
     {
         void AddDebugInfos(string key, object value);

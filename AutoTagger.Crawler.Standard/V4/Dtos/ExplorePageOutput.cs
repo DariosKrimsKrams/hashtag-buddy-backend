@@ -1,8 +1,7 @@
 ﻿namespace AutoTagger.Crawler.V4.Dtos
 {
     using System.Collections.Generic;
-
-    using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.V4.Contract;
 
     public class ExplorePageOutput : IOutput

@@ -15,7 +15,7 @@
     {
         private ImageDetailPageCrawler crawler;
         private ICrawlerSettings settings;
-        private dynamic node;
+        //private dynamic node;
 
         [SetUp]
         public void Setup()

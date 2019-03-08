@@ -8,6 +8,7 @@ namespace Instaq.Crawler.Tests.Logic
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.V4.PageAnalyzer;
 
     using NUnit.Framework;

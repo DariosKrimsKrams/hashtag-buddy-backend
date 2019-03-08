@@ -6,6 +6,8 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
+
     using Google.Apis.Auth.OAuth2;
     using Google.Cloud.Vision.V1;
     using Grpc.Auth;

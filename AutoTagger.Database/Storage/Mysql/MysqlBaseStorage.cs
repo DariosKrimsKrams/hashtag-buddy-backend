@@ -6,6 +6,7 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Database;
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;

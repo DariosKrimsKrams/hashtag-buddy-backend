@@ -4,6 +4,8 @@ using System.Text;
 
 namespace AutoTagger.Contract
 {
+    using AutoTagger.Contract.Models;
+
     public interface IUser
     {
         string Username { get; set; }

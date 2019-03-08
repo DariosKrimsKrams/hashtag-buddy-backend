@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using AutoTagger.Contract.Models;
+
     using global::AutoTagger.Contract;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage

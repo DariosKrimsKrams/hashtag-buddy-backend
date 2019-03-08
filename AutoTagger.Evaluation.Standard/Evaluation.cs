@@ -5,6 +5,8 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
+
     using Newtonsoft.Json;
 
     public class Evaluation : IEvaluation

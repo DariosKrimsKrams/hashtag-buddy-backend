@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract.Models
 {
     public interface IBlacklistEntry
     {

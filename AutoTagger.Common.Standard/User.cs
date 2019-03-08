@@ -5,6 +5,7 @@ using System.Text;
 namespace AutoTagger.Common
 {
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public class User : IUser
     {

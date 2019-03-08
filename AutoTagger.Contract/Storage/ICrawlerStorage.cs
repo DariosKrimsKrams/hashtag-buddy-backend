@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface ICrawlerStorage
     {
         void InsertImages(IImage[] image);

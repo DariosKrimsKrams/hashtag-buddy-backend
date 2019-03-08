@@ -2,6 +2,7 @@
 {
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public partial class Blacklist
     {

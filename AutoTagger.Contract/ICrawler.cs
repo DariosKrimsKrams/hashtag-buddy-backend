@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface ICrawler
     {
         event Action<IHumanoidTag> OnHashtagFoundComplete;

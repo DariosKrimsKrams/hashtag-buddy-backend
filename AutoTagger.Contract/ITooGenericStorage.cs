@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface ITooGenericStorage
     {
         IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0);

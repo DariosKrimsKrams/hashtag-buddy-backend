@@ -1,7 +1,5 @@
-﻿namespace AutoTagger.Contract
+﻿namespace AutoTagger.Contract.Models
 {
-    using AutoTagger.Contract.Models;
-
     public interface IHumanoidTag : IEntity
     {
         string Name { get; set; }

@@ -5,6 +5,7 @@
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.V4;
     using AutoTagger.Crawler.V4.Requests;
     using Newtonsoft.Json;

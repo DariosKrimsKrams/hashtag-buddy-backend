@@ -1,23 +1,11 @@
 ﻿namespace AutoTagger.Database
 {
     using System;
-    using System.Collections.Generic;
     using AutoTagger.Common;
-    using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public partial class Itags
     {
-        //public IEnumerable<Photos> Photos
-        //{
-        //    get
-        //    {
-        //        foreach (var photoItagRel in PhotoItagRel)
-        //        {
-        //            yield return photoItagRel.Photo;
-        //        }
-        //    }
-        //}
-
         public static Itags FromHumanoidTag(IHumanoidTag hTag)
         {
             return new Itags

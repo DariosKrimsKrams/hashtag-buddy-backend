@@ -8,6 +8,8 @@ namespace AutoTagger.Database
 {
     using System.Globalization;
 
+    using AutoTagger.Contract.Models;
+
     public partial class Photos
     {
         public static Photos FromImage(IImage image)

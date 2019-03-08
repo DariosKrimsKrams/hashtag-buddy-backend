@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     public class MysqlTooGenericStorage : MysqlBaseStorage, ITooGenericStorage
     {

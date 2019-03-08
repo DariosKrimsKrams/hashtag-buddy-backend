@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Database.Storage.Mysql.Query;
 
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage

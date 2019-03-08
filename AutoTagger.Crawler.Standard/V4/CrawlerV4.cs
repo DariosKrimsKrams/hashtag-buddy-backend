@@ -6,6 +6,7 @@
     using System.Threading;
 
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.V4.Crawler;
     using AutoTagger.Crawler.V4.Queue;
     using AutoTagger.Crawler.V4.Requests;

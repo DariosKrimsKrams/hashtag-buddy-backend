@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using AutoTagger.Contract.Models;
+
     public interface IEvaluationStorage
     {
         (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] mTags);

@@ -1,12 +1,13 @@
 ﻿namespace AutoTagger.Crawler.V4.Crawler
 {
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
     using AutoTagger.Crawler.Standard;
     using AutoTagger.Crawler.V4.Requests;
 
     public class ImageDetailPageCrawler
     {
-        private readonly ICrawlerSettings settings;
+        //private readonly ICrawlerSettings settings;
         private readonly IRequestHandler handler;
         private ImagePageLogic logic;
 

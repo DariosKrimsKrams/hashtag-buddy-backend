@@ -5,6 +5,7 @@
     using System.Linq;
 
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Models;
 
     class OrderByAmountOfPosts
     {
