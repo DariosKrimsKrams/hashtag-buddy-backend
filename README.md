@@ -36,9 +36,11 @@ Find the most relevant Instagram Hashtags.
 ![](/doc/architecture2.png)
 
 ## Links
-  * [Frontend](http://instaq.innocliq.de)
-  * [API Endpoints](http://instaq-api.innocliq.de/swagger/index.html)
-  
+  * [Frontend Extern](http://instaq.innocliq.de)
+  * [Frontend Debug](http://instaq.innocliq.de)
+  * [API Extern](http://instaq-api.innocliq.de)
+  * [API Debug](http://instaq-api-debug.innocliq.de)
+
 ## Credits
   * Build by Dario D. Müller
   * Original build together with Christian and Paul
