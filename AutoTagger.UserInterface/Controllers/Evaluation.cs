@@ -37,7 +37,7 @@
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult File(IFormFile file)
         {
-            if (!this.Request.ContentType.Contains("multipart/form-data; boundary"))
+            if (this.Request.ContentType == null || !this.Request.ContentType.Contains("multipart/form-data; boundary"))
             {
                 return this.BadRequest("Wrong ContentType :'(");
             }
