@@ -32,14 +32,15 @@
             try
             {
                 var customer = new Customer();
-                this.customerStorage.Create(customer);
+                customer.CustomerId = "";
+                customer.Id = this.customerStorage.Create(customer);
                 customer.GenerateHash();
                 this.customerStorage.Update(customer);
                 return this.Ok(customer.CustomerId);
             }
             catch (ArgumentException)
             {
-                return this.NotFound();
+                return this.BadRequest();
             }
         }
 

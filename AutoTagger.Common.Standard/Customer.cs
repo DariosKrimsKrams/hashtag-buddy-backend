@@ -21,8 +21,7 @@
             var sb = new StringBuilder();
             foreach (byte b in hash)
                 sb.Append(b.ToString("X2"));
-            var finalHash = sb.ToString().Substring(0, 100);
-            this.CustomerId = finalHash;
+            this.CustomerId = sb.ToString();
         }
     }
 }

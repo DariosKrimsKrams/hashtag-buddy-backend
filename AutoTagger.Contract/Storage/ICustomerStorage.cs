@@ -4,7 +4,7 @@
 
     public interface ICustomerStorage
     {
-        ICustomer Create(ICustomer customer);
+        int Create(ICustomer customer);
 
         void Update(ICustomer customer);
     }

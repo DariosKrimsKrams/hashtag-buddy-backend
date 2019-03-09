@@ -3,11 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
     using AutoTagger.Database;
+    using AutoTagger.Database.Storage.Mysql.Custom;
+
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;
 
@@ -175,6 +178,18 @@
                 this.db.Database.CloseConnection();
             }
             return (result, time);
+        }
+
+        protected void DetachLocal<T>(T t, int entryId) where T : class, IIdentifier
+        {
+            var local = this.db.Set<T>()
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(entryId));
+            if (local != null)
+            {
+                this.db.Entry(local).State = EntityState.Detached;
+            }
+            this.db.Entry(t).State = EntityState.Modified;
         }
 
     }
