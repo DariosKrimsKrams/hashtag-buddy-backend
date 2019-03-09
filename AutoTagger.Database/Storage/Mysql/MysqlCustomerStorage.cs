@@ -25,5 +25,10 @@ namespace AutoTagger.Database.Storage.Mysql
             this.db.Customer.Update(customer);
             this.db.SaveChanges();
         }
+
+        public bool Exists(string customerId)
+        {
+            return this.db.Customer.FirstOrDefault(x => x.CustomerId == customerId) != null;
+        }
     }
 }

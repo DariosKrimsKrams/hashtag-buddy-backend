@@ -8,9 +8,9 @@
 
     public class MysqlLogStorage : MysqlBaseStorage, ILogStorage
     {
-        public int InsertLog(string data)
+        public int InsertLog(string data, string customerId)
         {
-            var debug = new Debug { Data = data };
+            var debug = new Debug { Data = data, CustomerId = customerId };
             this.db.Debug.Add(debug);
             this.db.SaveChanges();
             return debug.Id;

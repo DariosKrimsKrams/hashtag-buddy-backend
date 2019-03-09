@@ -7,5 +7,7 @@
         int Create(ICustomer customer);
 
         void Update(ICustomer customer);
+
+        bool Exists(string customerId);
     }
 }

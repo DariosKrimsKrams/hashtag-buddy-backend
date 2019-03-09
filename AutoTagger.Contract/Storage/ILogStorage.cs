@@ -4,7 +4,7 @@
 
     public interface ILogStorage
     {
-        int InsertLog(string data);
+        int InsertLog(string data, string customerId);
 
         void UpdateLog(ILog log);
 

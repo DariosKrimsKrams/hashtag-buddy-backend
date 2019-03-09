@@ -18,12 +18,14 @@
         private readonly ITaggingProvider taggingProvider;
         private readonly IFileHandler fileHandler;
         private readonly IEvaluation evaluation;
+        private readonly ICustomerStorage customerStorage;
 
         public EvaluationController(IEvaluationStorage evaluationStorage,
                                ITaggingProvider taggingProvider,
                                IFileHandler fileHandler,
                                IEvaluation evaluation,
-                               ILogStorage logStorage
+                               ILogStorage logStorage,
+                               ICustomerStorage customerStorage
             )
         {
             this.evaluationStorage = evaluationStorage;
@@ -31,11 +33,12 @@
             this.taggingProvider = taggingProvider;
             this.fileHandler     = fileHandler;
             this.evaluation      = evaluation;
+            this.customerStorage = customerStorage;
         }
 
-        [HttpPost("File")]
+        [HttpPost("File/{customerId}")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult File(IFormFile file)
+        public IActionResult File(IFormFile file, string customerId)
         {
             if (this.Request.ContentType == null || !this.Request.ContentType.Contains("multipart/form-data; boundary"))
             {
@@ -45,6 +48,11 @@
             if (file == null || file.Length == 0)
             {
                 return this.BadRequest("No Files uploaded");
+            }
+
+            if (!this.IsCustomerValid(customerId))
+            {
+                return this.Unauthorized();
             }
 
             using (var stream = new MemoryStream())
@@ -114,8 +122,8 @@
                 this.evaluation.AddDebugInfos("ip", this.GetIpAddress());
                 var data = this.FindTags(evaluation, machineTags);
 
-                var debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                var logId = this.logStorage.InsertLog(debugdata);
+                var debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                var logId = this.logStorage.InsertLog(debugData, customerId);
 
                 var hash = GetHashString(logId.ToString());
                 var ext = Path.GetExtension(file.FileName);
@@ -124,8 +132,8 @@
 
                 this.evaluation.AddDebugInfos("image", fileName);
                 this.evaluation.AddDebugInfos("originalFilename", file.FileName);
-                debugdata = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
-                var log = new Log { Id = logId, Data = debugdata };
+                debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+                var log = new Log { Id = logId, Data = debugData };
                 this.logStorage.UpdateLog(log);
 
                 data.Add("img", fileName);
@@ -159,6 +167,22 @@
         private string GetIpAddress()
         {
             return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString();
+        }
+
+        private bool IsCustomerValid(string customerId)
+        {
+            if (customerId.Length != 64)
+            {
+                return false;
+            }
+
+            if (this.customerStorage.Exists(customerId))
+            {
+
+            }
+
+            return true;
+
         }
     }
 }

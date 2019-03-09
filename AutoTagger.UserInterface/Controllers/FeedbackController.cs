@@ -26,17 +26,40 @@
 
         [HttpPost("App")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult AppFeedback([FromForm] IFeedback feedback)
+        public IActionResult AppFeedback([FromForm] AppFeedbackFormModel feedback)
         {
             try
             {
-                this.feedbackStorage.InsertLog(feedback);
+                var data = "";
+                this.HandleFeedback("app", feedback.CustomerId, data);
                 return this.Ok();
             }
             catch (ArgumentException)
             {
-                return this.NotFound();
+                return this.BadRequest();
             }
+        }
+
+        [HttpPost("Results")]
+        [ProducesResponseType(typeof(void), 200)]
+        public IActionResult ResultsFeedback([FromForm] ResultsFeedbackFormModel feedback)
+        {
+            try
+            {
+                var data = "";
+                this.HandleFeedback("results", feedback.CustomerId, data);
+                return this.Ok();
+            }
+            catch (ArgumentException)
+            {
+                return this.BadRequest();
+            }
+        }
+
+        private void HandleFeedback(string type, string customerId, string data)
+        {
+
+            //this.feedbackStorage.InsertLog(appFeedback);
         }
 
     }
