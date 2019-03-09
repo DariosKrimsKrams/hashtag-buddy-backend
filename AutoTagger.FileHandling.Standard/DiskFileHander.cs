@@ -11,10 +11,10 @@
     {
         private readonly string Ext = ".jpg";
 
-        private readonly string PathDefect = @"C:\Instagger\Defect\";
-        private readonly string PathUnused = @"C:\Instagger\Unused\";
-        private readonly string PathUsed = @"C:\Instagger\Used\";
-        private readonly string PathUser = @"C:\Instagger\User\";
+        private readonly string PathDefect = @"C:\Instaq\Defect\";
+        private readonly string PathUnused = @"C:\Instaq\Unused\";
+        private readonly string PathUsed = @"C:\Instaq\Used\";
+        private readonly string PathUser = @"C:\Instaq\User\";
 
         public void Delete(string name)
         {
@@ -65,7 +65,9 @@
 
         public void Save(FileType fileType, byte[] bytes, string filename)
         {
-            var path = this.GetFolder(fileType) + filename;
+            var folderPath = this.GetFolder(fileType);
+            this.CreateFolderIfNotExists(folderPath);
+            var path = folderPath + filename;
             File.WriteAllBytes(path, bytes);
         }
 
@@ -89,6 +91,12 @@
                     return this.PathUser;
             }
             return "";
+        }
+
+        private void CreateFolderIfNotExists(string folderPath)
+        {
+            FileInfo file = new System.IO.FileInfo(folderPath);
+            file.Directory.Create();
         }
     }
 }
