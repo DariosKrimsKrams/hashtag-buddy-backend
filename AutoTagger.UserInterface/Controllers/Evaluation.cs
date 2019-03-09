@@ -134,11 +134,11 @@
             }
         }
 
-        public static string GetHashString(string inputString)
+        public static string GetHashString(string input)
         {
             var sb = new StringBuilder();
             var algorithm = MD5.Create();
-            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
             foreach (byte b in hash)
                 sb.Append(b.ToString("X2"));
             return sb.ToString().Substring(0, 10).ToLower();

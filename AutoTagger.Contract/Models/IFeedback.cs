@@ -8,8 +8,6 @@
 
         string UserId { get; set; }
 
-        string PhotoId { get; set; }
-
         string Data { get; set; }
     }
 }

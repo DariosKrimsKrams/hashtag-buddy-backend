@@ -13,11 +13,11 @@
     using Newtonsoft.Json;
 
     [Route("[controller]")]
-    public class UserController : Controller
+    public class FeedbackController : Controller
     {
         private readonly IFeedbackStorage feedbackStorage;
 
-        public UserController(
+        public FeedbackController(
             IFeedbackStorage feedbackStorage
             )
         {
