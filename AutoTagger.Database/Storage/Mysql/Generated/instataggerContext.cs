@@ -16,7 +16,9 @@ namespace AutoTagger.Database
         }
 
         public virtual DbSet<Blacklist> Blacklist { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Debug> Debug { get; set; }
+        public virtual DbSet<Feedback> Feedback { get; set; }
         public virtual DbSet<Itags> Itags { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
@@ -65,6 +67,31 @@ namespace AutoTagger.Database
                     .HasColumnType("varchar(10)");
             });
 
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.ToTable("customer");
+
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("customer_id");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.PhotosCount)
+                    .HasColumnName("photos_count")
+                    .HasColumnType("int(11)");
+            });
+
             modelBuilder.Entity<Debug>(entity =>
             {
                 entity.ToTable("debug");
@@ -83,6 +110,11 @@ namespace AutoTagger.Database
                     .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
                     .ValueGeneratedOnAddOrUpdate();
 
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(100)");
+
                 entity.Property(e => e.Data)
                     .IsRequired()
                     .HasColumnName("data")
@@ -91,6 +123,34 @@ namespace AutoTagger.Database
                 entity.Property(e => e.Deleted)
                     .HasColumnName("deleted")
                     .HasColumnType("tinyint(1)");
+            });
+
+            modelBuilder.Entity<Feedback>(entity =>
+            {
+                entity.ToTable("feedback");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasColumnType("text");
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasColumnName("type")
+                    .HasColumnType("varchar(30)");
             });
 
             modelBuilder.Entity<Itags>(entity =>
