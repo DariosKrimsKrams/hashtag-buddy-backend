@@ -6,7 +6,7 @@
 
         string Type { get; set; }
 
-        string UserId { get; set; }
+        string CustomerId { get; set; }
 
         string Data { get; set; }
     }

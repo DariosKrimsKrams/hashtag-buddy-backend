@@ -21,7 +21,7 @@
             var sb = new StringBuilder();
             foreach (byte b in hash)
                 sb.Append(b.ToString("X2"));
-            this.CustomerId = sb.ToString();
+            this.CustomerId = sb.ToString().ToLower();
         }
     }
 }

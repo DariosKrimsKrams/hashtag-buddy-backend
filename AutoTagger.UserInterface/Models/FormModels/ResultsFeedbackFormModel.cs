@@ -6,7 +6,7 @@
 
         public string PhotoId { get; set; }
         
-        public int Rating { get; set; }
+        public string Rating { get; set; }
 
         public string GoodHashtags { get; set; }
 

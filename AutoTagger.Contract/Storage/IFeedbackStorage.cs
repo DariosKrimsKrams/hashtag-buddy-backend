@@ -4,7 +4,7 @@
 
     public interface IFeedbackStorage
     {
-        int InsertLog(IFeedback feedback);
+        int Insert(IFeedback feedback);
 
         IFeedback GetLog(int id);
     }

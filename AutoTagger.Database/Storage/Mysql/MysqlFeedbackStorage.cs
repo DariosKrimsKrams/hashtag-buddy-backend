@@ -6,14 +6,20 @@ using System.Text;
 
 namespace AutoTagger.Database.Storage.Mysql
 {
+    using System.Linq;
+
     public class MysqlFeedbackStorage : MysqlBaseStorage, IFeedbackStorage
     {
-        public IFeedback GetLog(int id)
+
+        public int Insert(IFeedback commonFeedback)
         {
-            throw new NotImplementedException();
+            var feedback = Feedback.FromCommonFeedback(commonFeedback);
+            this.db.Feedback.Add(feedback);
+            this.db.SaveChanges();
+            return feedback.Id;
         }
 
-        public int InsertLog(IFeedback feedback)
+        public IFeedback GetLog(int id)
         {
             throw new NotImplementedException();
         }
