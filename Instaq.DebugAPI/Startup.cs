@@ -47,9 +47,8 @@
                 });
 
             app.UseCors(options => options.WithOrigins(
-                "http://localhost:4200",
-                "http://localhost:80",
-                "http://instaq.innocliq.de"
+                "http://localhost:4201",
+                "http://instaq-debug.innocliq.de"
             ).AllowAnyMethod());
 
             app.UseHttpsRedirection();

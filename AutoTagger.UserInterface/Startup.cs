@@ -50,7 +50,6 @@
 
             app.UseCors(options => options.WithOrigins(
                 "http://localhost:4200",
-                "http://localhost:80",
                 "http://instaq.innocliq.de"
                 ).AllowAnyMethod());
 
