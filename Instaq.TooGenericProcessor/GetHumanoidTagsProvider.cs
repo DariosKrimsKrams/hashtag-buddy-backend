@@ -33,7 +33,7 @@
             Console.WriteLine("GetHumanoidTags lastId=" + this.lastId);
 
             var count = 100;
-            var hTags = storage.GetHumanoidTags(count, this.lastId);
+            var hTags = this.storage.GetHumanoidTags(count, this.lastId);
             foreach (var hTag in hTags)
             {
                 this.queue.Enqueue(hTag);

@@ -10,11 +10,14 @@
     {
         public int CountHumanoidTagsForHumanoidTag(string name)
         {
-            var query = "SELECT count(*) FROM ( SELECT rel2.itagid "
-                      + "FROM photo_itag_rel as rel2 LEFT JOIN ( SELECT photoId as pId "
-                      + "FROM photo_itag_rel as rel WHERE rel.itagId = ( SELECT i.id FROM "
-                      + $"itags as i WHERE name = '{name}' LIMIT 1)) as sub ON sub.pId = "
-                      + "rel2.photoId WHERE sub.pId IS NOT NULL GROUP by rel2.itagId ) final";
+            var query = "SELECT count(*) FROM ("
+                      + "SELECT rel2.itag FROM photo_itag_rel as rel2 LEFT JOIN( "
+                      + "SELECT shortcode, itag as pId "
+                      + "FROM photo_itag_rel as rel WHERE rel.itag = ( "
+                      + "SELECT i.name FROM itags as i "
+                      + $"WHERE name = '{name}' LIMIT 1) "
+                      + ") as sub  ON sub.shortcode = rel2.shortcode "
+                      + "WHERE sub.pId IS NOT NULL GROUP by rel2.itag ) final ";
             var (results, time) = this.ExecuteCustomQuery(query);
             var result  = Convert.ToInt32(results.FirstOrDefault()?.FirstOrDefault());
             return result;
@@ -22,14 +25,14 @@
 
         public IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0)
         {
-            var query = $"SELECT id, name, posts FROM itags ORDER BY id ASC LIMIT {lastId}, {count}";
+            var query = $"SELECT name, posts FROM itags ORDER BY name ASC LIMIT {lastId}, {count}";
             return this.ExecuteHTagsQuery(query).Item1;
         }
 
         public void UpdateRefCount(IHumanoidTag humanoidTag)
         {
             var query = $"UPDATE itags SET `refCount`='{humanoidTag.RefCount}' "
-                      + $"WHERE `id`='{humanoidTag.Id}' LIMIT 1";
+                      + $"WHERE `name`='{humanoidTag.Name}' LIMIT 1";
             this.ExecuteCustomQuery(query);
         }
     }
