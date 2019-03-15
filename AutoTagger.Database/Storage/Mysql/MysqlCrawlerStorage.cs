@@ -33,7 +33,8 @@
                 return;
             }
             values = values.TrimEnd(',');
-            var query = $"REPLACE INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `uploaded`) VALUES {values};";
+            var query = $"INSERT INTO photos (`largeUrl`, `thumbUrl`, `shortcode`, `likes`, `comments`, `user`, `follower`, `following`, `posts`, `uploaded`) VALUES {values} "
+                      + $"ON DUPLICATE KEY UPDATE `follower`=VALUES(`follower`), `following`=VALUES(`following`), `posts`=VALUES(`posts`), `likes`=VALUES(`likes`), `comments`=VALUES(`comments`);";
 
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsImages.Add(time);
@@ -84,7 +85,7 @@
                 return;
             }
             values = values.TrimEnd(',');
-            var query = $"REPLACE INTO itags (`Name`, `Posts`) VALUES {values};";
+            var query = $"INSERT INTO itags (`name`, `posts`) VALUES {values} ON DUPLICATE KEY UPDATE `posts`=VALUES(`posts`);";
             var (_, time) = this.ExecuteCustomQuery(query);
             this.timingsHTags.Add(time);
         }
