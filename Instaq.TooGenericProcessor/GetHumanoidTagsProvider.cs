@@ -9,7 +9,7 @@
     {
         private readonly ITooGenericStorage storage;
         private readonly ConcurrentQueue<IHumanoidTag> queue;
-        private int lastId;
+        private int limitSkip;
 
         public GetHumanoidTagsProvider(ITooGenericStorage storage)
         {
@@ -30,14 +30,14 @@
 
         private void GetHumanoidTags()
         {
-            Console.WriteLine("GetHumanoidTags lastId=" + this.lastId);
+            Console.WriteLine("GetHumanoidTags limitSkip=" + this.limitSkip);
 
             var count = 100;
-            var hTags = this.storage.GetHumanoidTags(count, this.lastId);
+            var hTags = this.storage.GetHumanoidTags(count, this.limitSkip);
             foreach (var hTag in hTags)
             {
                 this.queue.Enqueue(hTag);
-                this.lastId = hTag.Id;
+                this.limitSkip++;
             }
         }
     }

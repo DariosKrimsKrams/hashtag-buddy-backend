@@ -23,9 +23,9 @@
             return result;
         }
 
-        public IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0)
+        public IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int limitSkip = 0)
         {
-            var query = $"SELECT name, posts FROM itags ORDER BY name ASC LIMIT {lastId}, {count}";
+            var query = $"SELECT name, posts FROM itags ORDER BY name ASC LIMIT {limitSkip}, {count}";
             return this.ExecuteHTagsQuery(query).Item1;
         }
 

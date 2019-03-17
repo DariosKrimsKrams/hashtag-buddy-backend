@@ -6,7 +6,7 @@
 
     public interface ITooGenericStorage
     {
-        IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int lastId = 0);
+        IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int limitSkip = 0);
 
         int CountHumanoidTagsForHumanoidTag(string name);
 
