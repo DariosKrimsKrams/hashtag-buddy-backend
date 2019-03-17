@@ -1,7 +1,10 @@
 ﻿namespace Instaq.API.Debug
 {
+    using AutoTagger.Contract;
     using AutoTagger.Contract.Storage;
     using AutoTagger.Database.Storage.Mysql;
+    using AutoTagger.FileHandling.Standard;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -76,6 +79,7 @@
             services.AddMvc().SetCompatibilityVersion( CompatibilityVersion.Version_2_1 );
 
             services.AddTransient<IDebugStorage, MysqlDebugStorage>();
+            services.AddTransient<IFileHandler, DiskFileHander>();
 
             services.AddSwaggerGen(
                 c =>

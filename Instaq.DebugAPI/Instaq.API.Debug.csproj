@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutoTagger.Common.Standard\AutoTagger.Common.csproj" />
     <ProjectReference Include="..\AutoTagger.Database\AutoTagger.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.csproj" />
   </ItemGroup>
 
 </Project>
