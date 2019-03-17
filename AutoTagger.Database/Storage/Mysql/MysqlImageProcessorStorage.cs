@@ -3,9 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
     using AutoTagger.Database;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using MySql.Data.MySqlClient;
 
     public class MysqlImageProcessorStorage : MysqlBaseStorage, IImageProcessorStorage
     {
@@ -14,16 +20,39 @@
             base.Save();
         }
 
-        public IEnumerable<IImage> GetImagesForImageDownloader(int limit)
+        public IEnumerable<IImage> GetImagesWithEmptyStatus(int limit)
+        {
+            try
+            {
+                return this.GetImagesWithEmptyStatusExecution(limit);
+            }
+            catch (MySqlException e)
+            {
+                if (e.Message.Contains("Cannot Open when State is Connecting"))
+                {
+                    Thread.Sleep(1000);
+                    return this.GetImagesWithEmptyStatusExecution(limit);
+                }
+                else
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+        }
+
+        private IEnumerable<IImage> GetImagesWithEmptyStatusExecution(int limit)
         {
             var query = this.db.Photos
                 .Where(p => string.IsNullOrEmpty(p.Status))
                 .OrderBy(x => x.Created).Take(limit);
             var list = query.ToList();
             return list.Select(x => x.ToImage());
-        }
 
-        public void SetImagesStatus(IEnumerable<string> shortcodes, string status)
+        }
+        
+
+            public void SetImagesStatus(IEnumerable<string> shortcodes, string status)
         {
             var where = "";
             foreach (var shortcode in shortcodes)

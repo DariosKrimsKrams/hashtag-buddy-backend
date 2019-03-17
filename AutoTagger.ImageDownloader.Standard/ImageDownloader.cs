@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Net;
     using System.Threading;
-
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
     using AutoTagger.FileHandling.Standard;
@@ -13,14 +12,14 @@
     public class ImageDownloader
     {
         private static IImageProcessorStorage storage;
-        private static int downloaderRunning;
+        private static int threadsRunning;
         private const int QueryImagesAtLessOrEqualImages = 30;
         private const int DbGetLimit = 300;
         private const int ParallelThreads = 100;
         private static IFileHandler fileHandler;
         private static List<string> files;
         private List<string> downloadedFiles;
-        private static int LogCount = 0;
+        private static int logCount = 0;
         private readonly List<string> imagesToSetDownloadedStatus;
         private readonly List<string> imagesToSetFailedStatus;
         private readonly List<string> imagesToSet404Status;
@@ -48,7 +47,7 @@
         {
             files = fileHandler.GetAllUnusedImages().ToList();
             new Thread(this.GetImages).Start();
-            new Thread(this.Logs).Start();
+            new Thread(Logs).Start();
             new Thread(this.DbUpdater).Start();
         }
 
@@ -90,11 +89,7 @@
                 return false;
             }
             CurStorageUse = newStatus;
-            if (CurStorageUse != newStatus)
-            {
-                return false;
-            }
-            return true;
+            return CurStorageUse == newStatus;
         }
 
         public void GetImages()
@@ -102,13 +97,13 @@
             var delay = 30;
             while (true)
             {
-                if (downloaderRunning <= QueryImagesAtLessOrEqualImages)
+                if (threadsRunning <= QueryImagesAtLessOrEqualImages)
                 {
                     delay = 500;
                     if (this.TrySetStatus(StorageUses.Get))
                     {
                         Console.WriteLine("Start Getting Photos");
-                        var images = storage.GetImagesForImageDownloader(DbGetLimit + this.downloadedFiles.Count);
+                        var images = storage.GetImagesWithEmptyStatus(DbGetLimit + this.downloadedFiles.Count);
                         CurStorageUse = StorageUses.None;
                         var enumerable = images as IImage[] ?? images.ToArray();
                         Console.WriteLine("Get " + enumerable.Count() + " DB Entries");
@@ -125,7 +120,7 @@
 
         private void DownloaderHandling(IImage image)
         {
-            if (downloaderRunning >= ParallelThreads)
+            if (threadsRunning >= ParallelThreads)
             {
                 Thread.Sleep(30);
                 this.DownloaderHandling(image);
@@ -143,7 +138,7 @@
             }
 
             this.downloadedFiles.Add(image.Shortcode);
-            Interlocked.Increment(ref downloaderRunning);
+            Interlocked.Increment(ref threadsRunning);
             new Thread(() => this.Download(image)).Start();
         }
 
@@ -158,7 +153,7 @@
                     client.DownloadFile(new Uri(url), fullPath);
                     Console.WriteLine("successful downloaded: " + image.Shortcode + " (" + image.Created + ")");
                     this.imagesToSetDownloadedStatus.Add(image.Shortcode);
-                    LogCount++;
+                    logCount++;
                 }
                 catch (WebException e)
                 {
@@ -181,19 +176,20 @@
                 }
                 finally
                 {
-                    Interlocked.Decrement(ref downloaderRunning);
+                    Interlocked.Decrement(ref threadsRunning);
                 }
             }
         }
-        private void Logs()
+
+        private static void Logs()
         {
             while (true)
             {
-                if (LogCount == 0)
+                if (logCount == 0)
                 {
                     continue;
                 }
-                Console.WriteLine("Downloaded since start: " + LogCount);
+                Console.WriteLine("Downloaded since start: " + logCount);
                 Thread.Sleep(5000);
             }
         }

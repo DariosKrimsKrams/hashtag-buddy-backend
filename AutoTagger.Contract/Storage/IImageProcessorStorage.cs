@@ -9,7 +9,7 @@
     {
         void Save();
 
-        IEnumerable<IImage> GetImagesForImageDownloader(int limit);
+        IEnumerable<IImage> GetImagesWithEmptyStatus(int limit);
 
         void SetImagesStatus(IEnumerable<string> shortcodes, string status);
 
