@@ -13,7 +13,6 @@
             const int CountTagsToReturn = 30;
             var       countInsertTags   = machineTags.Length;
             var (whereConditionLabel, whereConditionWeb) = BuildWhereConditions(machineTags);
-            var usageITagsLimit = 5 * 1000;
 
             var query = $"SELECT i.name, i.posts, i.refCount, relationQuality "
                       + $"FROM itags as i JOIN photo_itag_rel as rel ON rel.itag = i.name "
@@ -27,7 +26,7 @@
                       + $"GROUP BY p.shortcode ORDER by matches DESC LIMIT {LimitTopPhotos} ) as sub1 ON "
                       + $"p.shortcode = sub1.shortcode WHERE m.onBlacklist = '0' GROUP BY p.shortcode "
                       + $"ORDER BY relationQuality DESC LIMIT {LimitTopPhotos} ) as sub2 ON sub2.shortcode = rel.shortcode "
-                      + $"WHERE i.refCount < {usageITagsLimit} AND i.onBlacklist = 0 GROUP BY i.name "
+                      + $"WHERE i.refCount < {RefCountLimit} AND i.onBlacklist = 0 GROUP BY i.name "
                       + $"ORDER BY count(i.name) DESC, relationQuality DESC LIMIT {CountTagsToReturn}";
 
             return query;

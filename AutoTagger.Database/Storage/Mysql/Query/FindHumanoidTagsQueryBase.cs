@@ -8,6 +8,7 @@ namespace AutoTagger.Database.Storage.Mysql.Query
     public abstract class FindHumanoidTagsQueryBase : IFindHumanoidTagsQuery
     {
         public abstract string GetQuery(IMachineTag[] machineTags);
+        protected const int RefCountLimit = 30000;
 
         protected static (string, string) BuildWhereConditions(IMachineTag[]  machineTags)
         {
