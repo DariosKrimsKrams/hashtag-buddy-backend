@@ -15,11 +15,11 @@
             this.provider = new GetHumanoidTagsProvider(storage);
         }
 
-        public void Start()
+        public void CalcHumanoidTagsRefCount(bool onlyWithoutRefCountYet=false)
         {
             while (true)
             {
-                var hTag = this.provider.GetNextHumanoidTag();
+                var hTag = this.provider.GetNextHumanoidTag(onlyWithoutRefCountYet);
                 if (hTag == null)
                 {
                     Console.WriteLine("Exit");

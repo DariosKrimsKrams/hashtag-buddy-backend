@@ -30,7 +30,8 @@
             {
                 if (e.Message.Contains("Cannot Open when State is Connecting"))
                 {
-                    Thread.Sleep(1000);
+                    Console.WriteLine("Had problem with 'Cannot Open when State is Connecting' -> Retry...");
+                    Thread.Sleep(3000);
                     return this.GetImagesWithEmptyStatusExecution(limit);
                 }
                 else

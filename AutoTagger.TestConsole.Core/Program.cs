@@ -26,9 +26,10 @@
                              "2: Start Image Downloader\n" +
                              "3: Start ImageProcessor (GCP Vision)\n" +
                              "4: Crawl Mtags with HighScore\n" +
-                             "5: Run Too Generic Processor\n" +
-                             "6: Blacklist: Import csv\n" +
-                             "7: Blacklist -> Set onBlacklist Flag\n" +
+                             "5: Calc RefCount (for all Humanoid Tags)\n" +
+                             "6: Calc RefCount (for only Humanoid Tags with refCount=0)\n" +
+                             "7: Blacklist: Import csv\n" +
+                             "8: Blacklist -> Set onBlacklist Flag\n" +
                              ""
                              );
             while(true)
@@ -58,16 +59,21 @@
                         break;
 
                     case '5':
-                        Console.WriteLine("Run Too Generic Processor...");
-                        RunTooGenericProcessor();
+                        Console.WriteLine("Run Too Generic Processor... (all Humanoid Tags)");
+                        RunTooGenericProcessorAll();
                         break;
 
                     case '6':
+                        Console.WriteLine("Run Too Generic Processor... (Humanoid Tags with refCount=0)");
+                        RunTooGenericProcessorNew();
+                        break;
+
+                    case '7':
                         Console.WriteLine("Run BlacklistImport...");
                         RunBlacklistImport();
                         break;
 
-                    case '7':
+                    case '8':
                         Console.WriteLine("Run Blacklist -> Set onBlacklist Flag...");
                         RunBlacklistSetItagFlags();
                         break;
@@ -77,11 +83,18 @@
             
         }
 
-        private static void RunTooGenericProcessor()
+        private static void RunTooGenericProcessorAll()
         {
             var db = new MysqlTooGenericStorage();
             var processor = new TooGenericProcessor(db);
-            processor.Start();
+            processor.CalcHumanoidTagsRefCount();
+        }
+
+        private static void RunTooGenericProcessorNew()
+        {
+            var db        = new MysqlTooGenericStorage();
+            var processor = new TooGenericProcessor(db);
+            processor.CalcHumanoidTagsRefCount(true);
         }
 
         private static void CrawlMtagsWithHighScore()

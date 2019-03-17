@@ -8,6 +8,8 @@
     {
         IEnumerable<IHumanoidTag> GetHumanoidTags(int count, int limitSkip = 0);
 
+        IEnumerable<IHumanoidTag> GetHumanoidTagsWithNoRefCount(int count, int limitSkip = 0);
+
         int CountHumanoidTagsForHumanoidTag(string name);
 
         void UpdateRefCount(IHumanoidTag humanoidTag);

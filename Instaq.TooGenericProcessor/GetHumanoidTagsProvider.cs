@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Collections.Generic;
+
     using AutoTagger.Contract;
     using AutoTagger.Contract.Models;
 
@@ -10,6 +12,8 @@
         private readonly ITooGenericStorage storage;
         private readonly ConcurrentQueue<IHumanoidTag> queue;
         private int limitSkip;
+        private const int AmountToSelect = 200;
+        private const int LimitToGetMore = 50;
 
         public GetHumanoidTagsProvider(ITooGenericStorage storage)
         {
@@ -17,28 +21,36 @@
             this.queue = new ConcurrentQueue<IHumanoidTag>();
         }
 
-        public IHumanoidTag GetNextHumanoidTag()
+        public IHumanoidTag GetNextHumanoidTag(bool onlyWithoutRefCountYet)
         {
-            if (this.queue.Count < 10)
+            if (this.queue.Count < LimitToGetMore)
             {
-                this.GetHumanoidTags();
+                this.GetAllHumanoidTags(onlyWithoutRefCountYet);
             }
 
             this.queue.TryDequeue(out var hTag);
             return hTag;
         }
 
-        private void GetHumanoidTags()
+        private void GetAllHumanoidTags(bool onlyWithoutRefCountYet)
         {
             Console.WriteLine("GetHumanoidTags limitSkip=" + this.limitSkip);
 
-            var count = 100;
-            var hTags = this.storage.GetHumanoidTags(count, this.limitSkip);
+            IEnumerable<IHumanoidTag> hTags = null;
+            if (onlyWithoutRefCountYet)
+            {
+                hTags = this.storage.GetHumanoidTagsWithNoRefCount(AmountToSelect, this.limitSkip);
+            }
+            else
+            {
+                hTags = this.storage.GetHumanoidTags(AmountToSelect, this.limitSkip);
+            }
             foreach (var hTag in hTags)
             {
                 this.queue.Enqueue(hTag);
                 this.limitSkip++;
             }
         }
+
     }
 }
