@@ -21,7 +21,7 @@
             this.textBuilder = new TextBuilder();
         }
 
-        public void ReadCsv(string filename, string reason="days", string table = "iTags")
+        public void ReadCsv(string filename, string reason, string table)
         {
             this.db.Delete(reason, table);
             var rawEntries = this.importer.ReadFile(filename);
@@ -43,8 +43,8 @@
         public void SetItagOnBlacklistFlags()
         {
             var entries = this.db.GetAllBlacklistEntries();
-            var iTags = new List<IEntity>();
-            var mTags = new List<IEntity>();
+            var iTags = new List<string>();
+            var mTags = new List<string>();
             var countBlacklistEntries = 0;
             var pendingUpdates = 0;
             var rowsNothingHappened = 0;
@@ -57,24 +57,14 @@
                 IEnumerable<IEntity> tags;
                 if (entry.Table == "mtags")
                 {
-                    tags = this.db.GetMachineTagsThatContain(entry.Name);
-                    foreach (var tag in tags)
-                    {
-                        mTags.Add(tag);
-                        pendingUpdates++;
-                        hasUpdate = true;
-                    }
+                    mTags.Add(entry.Name);
                 }
                 else
                 {
-                    tags = this.db.GetHumanoidTagsThatContain(entry.Name);
-                    foreach (var tag in tags)
-                    {
-                        iTags.Add(tag);
-                        pendingUpdates++;
-                        hasUpdate = true;
-                    }
+                    iTags.Add(entry.Name);
                 }
+                pendingUpdates++;
+                hasUpdate = true;
 
                 if (!hasUpdate)
                 {
@@ -97,7 +87,7 @@
             this.Update(iTags, mTags, countBlacklistEntries, overallCount);
         }
 
-        private void Update(IEnumerable<IEntity> iTags, IEnumerable<IEntity> mTags, int countBlacklistEntries, int overallCount)
+        private void Update(IEnumerable<string> iTags, IEnumerable<string> mTags, int countBlacklistEntries, int overallCount)
         {
             this.db.UpdateTags(iTags, "itags");
             this.db.UpdateTags(mTags, "mtags");

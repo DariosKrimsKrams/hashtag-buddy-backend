@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Threading;
 
     using AutoTagger.Common;
     using AutoTagger.Contract;
@@ -142,6 +143,7 @@
             catch (MySqlException e)
             {
                 Console.WriteLine("Error: " + e);
+                Thread.Sleep(3000);
                 this.Reconnect();
                 return this.ExecuteQuery(query, func);
             }
@@ -174,8 +176,10 @@
                         }
                         result.Add(entry);
                     }
+                    //reader.Close();
                 }
                 this.db.Database.CloseConnection();
+                //command.Dispose();
             }
             return (result, time);
         }

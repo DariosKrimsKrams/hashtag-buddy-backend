@@ -51,20 +51,21 @@
                 .Select(x => x.ToMachineTag());
         }
 
-        public void UpdateTags(IEnumerable<IEntity> tags, string table)
+        public void UpdateTags(IEnumerable<string> tags, string table)
         {
-            if (!tags.Any())
+            var enumerable = tags as string[] ?? tags.ToArray();
+            if (!enumerable.Any())
             {
                 return;
             }
-            var ids = "";
-            foreach (var tag in tags)
+            var names = "";
+            foreach (var tag in enumerable)
             {
-                if (!string.IsNullOrEmpty(ids))
-                    ids += " OR ";
-                ids += "id=" + tag.Id;
+                if (!string.IsNullOrEmpty(names))
+                    names += " OR ";
+                names += "`name`='" + tag + "'";
             }
-            var query = $"UPDATE {table} SET `onBlacklist` = '1' WHERE {ids}";
+            var query = $"UPDATE {table} SET `onBlacklist` = '1' WHERE {names}";
             this.ExecuteCustomQuery(query);
         }
     }

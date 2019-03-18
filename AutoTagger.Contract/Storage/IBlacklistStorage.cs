@@ -16,6 +16,6 @@
 
         IEnumerable<IEntity> GetMachineTagsThatContain(string name);
 
-        void UpdateTags(IEnumerable<IEntity> hTags, string table);
+        void UpdateTags(IEnumerable<string> hTags, string table);
     }
 }
