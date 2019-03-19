@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Hetzner
+Source Server         : Instaq @ Alfahosting
 Source Server Version : 50560
-Source Host           : 78.46.178.185:3306
-Source Database       : instatagger
+Source Host           : 89.22.110.69:3306
+Source Database       : InstaqProd
 
 Target Server Type    : MYSQL
 Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-08-23 23:13:48
+Date: 2019-03-19 18:21:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,6 +24,7 @@ CREATE TABLE `blacklist` (
   `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `reason` varchar(20) NOT NULL,
   `table` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7036 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`,`name`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `name` (`name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8574 DEFAULT CHARSET=utf8;

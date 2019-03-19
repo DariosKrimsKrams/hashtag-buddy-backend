@@ -1,5 +1,6 @@
 ﻿namespace AutoTagger.Contract.Models
 {
+    using System;
     using System.Collections.Generic;
 
     using AutoTagger.Contract.Models;
@@ -10,12 +11,11 @@
 
         void Delete(string reason, string table);
 
-        IEnumerable<IBlacklistEntry> GetAllBlacklistEntries();
+        (IEnumerable<ITag> tags, TimeSpan time) GetTags(string tableName, int limit = 1000);
 
-        IEnumerable<IEntity> GetHumanoidTagsThatContain(string name);
+        //void UpdateTags(IEnumerable<string> tags, string table);
 
-        IEnumerable<IEntity> GetMachineTagsThatContain(string name);
+        void UpdateTags(ITag[] tags, string table);
 
-        void UpdateTags(IEnumerable<string> hTags, string table);
     }
 }

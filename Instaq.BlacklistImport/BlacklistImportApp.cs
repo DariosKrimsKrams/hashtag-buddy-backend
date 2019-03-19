@@ -40,58 +40,29 @@
             this.db.Insert(items);
         }
 
-        public void SetItagOnBlacklistFlags()
+        public void SetBlacklistFlags()
         {
-            var entries = this.db.GetAllBlacklistEntries();
-            var iTags = new List<string>();
-            var mTags = new List<string>();
-            var countBlacklistEntries = 0;
-            var pendingUpdates = 0;
-            var rowsNothingHappened = 0;
-            var overallCount = entries.Count();
-            foreach (var entry in entries)
-            {
-                countBlacklistEntries++;
-                var hasUpdate = false;
-
-                IEnumerable<IEntity> tags;
-                if (entry.Table == "mtags")
-                {
-                    mTags.Add(entry.Name);
-                }
-                else
-                {
-                    iTags.Add(entry.Name);
-                }
-                pendingUpdates++;
-                hasUpdate = true;
-
-                if (!hasUpdate)
-                {
-                    rowsNothingHappened++;
-                }
-                if (pendingUpdates >= 100)
-                {
-                    pendingUpdates = 0;
-                    this.Update(iTags, mTags, countBlacklistEntries, overallCount);
-                    iTags.Clear();
-                    mTags.Clear();
-                }
-                if (rowsNothingHappened >= 50)
-                {
-                    rowsNothingHappened = 0;
-                    Console.WriteLine("No Updates (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
-                }
-            }
-
-            this.Update(iTags, mTags, countBlacklistEntries, overallCount);
+            this.DoTag("itags");
+            this.DoTag("mtags");
         }
 
-        private void Update(IEnumerable<string> iTags, IEnumerable<string> mTags, int countBlacklistEntries, int overallCount)
+        private void DoTag(string tableName)
         {
-            this.db.UpdateTags(iTags, "itags");
-            this.db.UpdateTags(mTags, "mtags");
-            Console.WriteLine("Updated ITags: " + iTags.Count() + " updated mTags: " + mTags.Count() + " (BlacklistEntries: " + countBlacklistEntries + "/" + overallCount + ")");
+            var overallCount = 0;
+            var entriesCount = 0;
+            do
+            {
+                Console.WriteLine("Get Data");
+                var result = this.db.GetTags(tableName, 1000);
+                var enumerable = result.tags as ITag[] ?? result.tags.ToArray();
+                entriesCount = enumerable.Count();
+                Console.WriteLine($"Got Data: {entriesCount} entries (time: {result.time})");
+                overallCount += entriesCount;
+                this.db.UpdateTags(enumerable, tableName);
+                Console.WriteLine($"Updated tags: {enumerable.Count()} | Table: {tableName} | Count: {overallCount}" +
+                                  $" | Some Tags: {enumerable[0].Name}, {enumerable[1].Name}, {enumerable[2].Name}");
+
+            } while (entriesCount != 0);
         }
     }
 }

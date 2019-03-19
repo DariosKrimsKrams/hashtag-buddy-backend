@@ -1,5 +1,6 @@
 ﻿namespace AutoTagger.Database.Storage.Mysql
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -14,9 +15,10 @@
             foreach (var entry in entries)
             {
                 var item = Blacklist.FromBlacklistEntry(entry);
-                this.db.Blacklist.Add(item);
+                var query = "INSERT IGNORE INTO blacklist(`name`, `reason`, `table`)"
+                          + $" VALUES ('{entry.Name}', '{entry.Reason}', '{entry.Table}')";
+                this.ExecuteCustomQuery(query);
             }
-            this.db.SaveChanges();
         }
 
         public void Delete(string reason, string table)
@@ -29,41 +31,24 @@
             this.db.SaveChanges();
         }
 
-        public IEnumerable<IBlacklistEntry> GetAllBlacklistEntries()
+        public (IEnumerable<ITag> tags, TimeSpan time) GetTags(string tableName="itags", int limit=1000)
         {
-            foreach (var blacklist in this.db.Blacklist)
-            {
-                yield return blacklist.ToBlacklistEntry();
-            }
+            var query = $"select i.name from {tableName} as i join blacklist as b on i.name LIKE concat('%', b.name, '%') where i.onBlacklist = 0 and b.table = 'itags' LIMIT {limit}";
+            return this.ExecuteHTagsQuery(query);
         }
 
-        public IEnumerable<IEntity> GetHumanoidTagsThatContain(string name)
+        public void UpdateTags(ITag[] tags, string table)
         {
-            return this.db.Itags
-                .Where(i => i.Name.Contains(name) && i.OnBlacklist == 0)
-                .Select(x => x.ToHumanoidTag());
-        }
-
-        public IEnumerable<IEntity> GetMachineTagsThatContain(string name)
-        {
-            return this.db.Mtags
-                .Where(m => m.Name.Contains(name) && m.OnBlacklist == 0)
-                .Select(x => x.ToMachineTag());
-        }
-
-        public void UpdateTags(IEnumerable<string> tags, string table)
-        {
-            var enumerable = tags as string[] ?? tags.ToArray();
-            if (!enumerable.Any())
+            if (!tags.Any())
             {
                 return;
             }
             var names = "";
-            foreach (var tag in enumerable)
+            foreach (var tag in tags)
             {
                 if (!string.IsNullOrEmpty(names))
                     names += " OR ";
-                names += "`name`='" + tag + "'";
+                names += "`name`='" + tag.Name + "'";
             }
             var query = $"UPDATE {table} SET `onBlacklist` = '1' WHERE {names}";
             this.ExecuteCustomQuery(query);

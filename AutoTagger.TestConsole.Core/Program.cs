@@ -178,16 +178,17 @@
         {
             var db = new MysqlBlacklistStorage();
             var app = new BlacklistImportApp(db);
+            var folder = @"C:\Source\instaq-api\doc\blacklist";
 
-            var filename = @"C:\Source\instaq-api\doc\blacklist_cities.csv";
+            var filename = $@"{folder}\blacklist_cities.csv";
             app.ReadCsv(filename, "cities", "itags");
             Console.WriteLine("Finished Cities Import");
 
-            filename = @"C:\Source\instaq-api\doc\blacklist_days.csv";
+            filename = $@"{folder}\blacklist_days.csv";
             app.ReadCsv(filename, "days", "itags");
             Console.WriteLine("Finished Days Import");
 
-            filename = @"C:\Source\instaq-api\doc\blacklist_mtags.csv";
+            filename = $@"{folder}\blacklist_mtags.csv";
             app.ReadCsv(filename, "tooGeneric", "mtags");
             Console.WriteLine("Finished Too Generic Import");
         }
@@ -196,7 +197,7 @@
         {
             var db = new MysqlBlacklistStorage();
             var app = new BlacklistImportApp(db);
-            app.SetItagOnBlacklistFlags();
+            app.SetBlacklistFlags();
             Console.WriteLine("Finished");
         }
     }

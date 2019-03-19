@@ -1,6 +1,6 @@
 ﻿namespace AutoTagger.Contract.Models
 {
-    public interface IMachineTag : IEntity
+    public interface IMachineTag : ITag
     {
         string Name { get; set; }
 

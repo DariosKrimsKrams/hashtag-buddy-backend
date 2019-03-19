@@ -176,10 +176,8 @@
                         }
                         result.Add(entry);
                     }
-                    //reader.Close();
                 }
                 this.db.Database.CloseConnection();
-                //command.Dispose();
             }
             return (result, time);
         }
