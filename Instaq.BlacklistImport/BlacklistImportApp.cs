@@ -53,14 +53,14 @@
             do
             {
                 Console.WriteLine("Get Data");
-                var result = this.db.GetTags(tableName, 1000);
+                var result = this.db.GetTags(tableName, 1);
                 var enumerable = result.tags as ITag[] ?? result.tags.ToArray();
                 entriesCount = enumerable.Count();
                 Console.WriteLine($"Got Data: {entriesCount} entries (time: {result.time})");
                 overallCount += entriesCount;
                 this.db.UpdateTags(enumerable, tableName);
                 Console.WriteLine($"Updated tags: {enumerable.Count()} | Table: {tableName} | Count: {overallCount}" +
-                                  $" | Some Tags: {enumerable[0].Name}, {enumerable[1].Name}, {enumerable[2].Name}");
+                                  $" | Some Tags: {enumerable[0].Name}");
 
             } while (entriesCount != 0);
         }

@@ -36,7 +36,9 @@
                 customer.Id = this.customerStorage.Create(customer);
                 customer.GenerateHash();
                 this.customerStorage.Update(customer);
-                return this.Ok(customer.CustomerId);
+                var output = new Dictionary<string, string>();
+                output.Add("customerId", customer.CustomerId);
+                return this.Ok(output);
             }
             catch (ArgumentException)
             {
