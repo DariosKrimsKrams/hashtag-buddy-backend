@@ -58,6 +58,12 @@
                 .FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
         }
 
+        public bool IsIdAndCustomerIdMatching(int id, string customerId)
+        {
+            return this.db.Debug
+                .FirstOrDefault(x => x.Id == id && x.CustomerId == customerId && x.Deleted == 0) != null;
+
+        }
     }
 
 }

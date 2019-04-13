@@ -72,6 +72,7 @@
             services.AddTransient<ILogStorage, MysqlLogStorage>();
             services.AddTransient<IFeedbackStorage, MysqlFeedbackStorage>();
             services.AddTransient<ICustomerStorage, MysqlCustomerStorage>();
+            services.AddTransient<IDebugStorage, MysqlDebugStorage>();
 
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();

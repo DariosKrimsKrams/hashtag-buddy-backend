@@ -18,5 +18,7 @@
         IEnumerable<ILog> GetLogs(int skip, int take, string orderby);
 
         ILog GetLog(int id);
+
+        bool IsIdAndCustomerIdMatching(int id, string customerId);
     }
 }

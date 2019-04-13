@@ -5,6 +5,8 @@
     using AutoTagger.API.Models;
     using AutoTagger.Common;
     using AutoTagger.Contract;
+    using AutoTagger.Contract.Storage;
+
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
@@ -13,14 +15,17 @@
     {
         private readonly IFeedbackStorage feedbackStorage;
         private readonly ICustomerStorage customerStorage;
+        private readonly IDebugStorage debugStorage;
 
         public FeedbackController(
             IFeedbackStorage feedbackStorage,
-            ICustomerStorage customerStorage
+            ICustomerStorage customerStorage,
+            IDebugStorage debugStorage
             )
         {
             this.feedbackStorage = feedbackStorage;
             this.customerStorage = customerStorage;
+            this.debugStorage = debugStorage;
         }
 
         [HttpPost("App")]
@@ -50,6 +55,10 @@
             try
             {
                 if (!this.IsCustomerValid(feedback.CustomerId))
+                {
+                    return this.Unauthorized();
+                }
+                if (!this.debugStorage.IsIdAndCustomerIdMatching(feedback.PhotoId, feedback.CustomerId))
                 {
                     return this.Unauthorized();
                 }
