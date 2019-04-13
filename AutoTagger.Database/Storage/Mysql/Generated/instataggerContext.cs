@@ -41,18 +41,24 @@ namespace AutoTagger.Database
         {
             modelBuilder.Entity<Blacklist>(entity =>
             {
+                entity.HasKey(e => new { e.Id, e.Name });
+
                 entity.ToTable("blacklist");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
                     .IsUnique();
 
+                entity.HasIndex(e => e.Name)
+                    .HasName("name")
+                    .IsUnique();
+
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasColumnName("name")
                     .HasColumnType("varchar(40)");
 
@@ -69,6 +75,8 @@ namespace AutoTagger.Database
 
             modelBuilder.Entity<Customer>(entity =>
             {
+                entity.HasKey(e => new { e.Id, e.CustomerId });
+
                 entity.ToTable("customer");
 
                 entity.HasIndex(e => e.CustomerId)
@@ -80,12 +88,21 @@ namespace AutoTagger.Database
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CustomerId)
-                    .IsRequired()
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(64)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'");
+
+                entity.Property(e => e.FeedbackCount)
+                    .HasColumnName("feedback_count")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.PhotosCount)
                     .HasColumnName("photos_count")
@@ -95,6 +112,9 @@ namespace AutoTagger.Database
             modelBuilder.Entity<Debug>(entity =>
             {
                 entity.ToTable("debug");
+
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("customer_id");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
@@ -113,7 +133,7 @@ namespace AutoTagger.Database
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(64)");
 
                 entity.Property(e => e.Data)
                     .IsRequired()
@@ -129,6 +149,12 @@ namespace AutoTagger.Database
             {
                 entity.ToTable("feedback");
 
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("customerId");
+
+                entity.HasIndex(e => e.DebugId)
+                    .HasName("debugId");
+
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
                     .IsUnique();
@@ -137,20 +163,40 @@ namespace AutoTagger.Database
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .ValueGeneratedOnAddOrUpdate();
+
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(64)");
 
                 entity.Property(e => e.Data)
                     .IsRequired()
                     .HasColumnName("data")
                     .HasColumnType("text");
 
+                entity.Property(e => e.DebugId)
+                    .HasColumnName("debug_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Deleted)
+                    .HasColumnName("deleted")
+                    .HasColumnType("tinyint(1)");
+
                 entity.Property(e => e.Type)
                     .IsRequired()
                     .HasColumnName("type")
                     .HasColumnType("varchar(30)");
+
+                entity.HasOne(d => d.Debug)
+                    .WithMany(p => p.Feedback)
+                    .HasForeignKey(d => d.DebugId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("debugId");
             });
 
             modelBuilder.Entity<Itags>(entity =>

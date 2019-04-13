@@ -8,5 +8,7 @@ namespace AutoTagger.Database
         public int Id { get; set; }
         public string CustomerId { get; set; }
         public int PhotosCount { get; set; }
+        public int FeedbackCount { get; set; }
+        public DateTime Created { get; set; }
     }
 }
