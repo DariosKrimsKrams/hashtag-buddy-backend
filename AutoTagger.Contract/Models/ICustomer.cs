@@ -8,6 +8,8 @@
 
         int PhotosCount { get; set; }
 
+        int FeedbackCount { get; set; }
+
         void GenerateHash();
     }
 }

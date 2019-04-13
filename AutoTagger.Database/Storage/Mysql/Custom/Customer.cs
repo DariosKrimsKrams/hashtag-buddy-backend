@@ -14,7 +14,8 @@
             {
                 Id          = customer.Id,
                 CustomerId  = customer.CustomerId,
-                PhotosCount = customer.PhotosCount
+                PhotosCount = customer.PhotosCount,
+                FeedbackCount = customer.FeedbackCount
             };
         }
 
@@ -25,6 +26,7 @@
                 Id          = this.Id,
                 CustomerId  = this.CustomerId,
                 PhotosCount = this.PhotosCount,
+                FeedbackCount = this.FeedbackCount
             };
         }
     }

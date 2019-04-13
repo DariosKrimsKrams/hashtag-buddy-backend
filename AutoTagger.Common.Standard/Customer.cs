@@ -12,6 +12,8 @@
 
         public int PhotosCount { get; set; }
 
+        public int FeedbackCount { get; set; }
+
         public void GenerateHash()
         {
             var secret = "Instaq";

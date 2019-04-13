@@ -8,6 +8,10 @@
 
         void Update(ICustomer customer);
 
+        void UpdateCustomerId(int id, string customerId);
+
         bool Exists(string customerId);
+
+        ICustomer Get(int id);
     }
 }
