@@ -11,6 +11,7 @@
                 Id         = feedback.Id,
                 Type       = feedback.Type,
                 CustomerId = feedback.CustomerId,
+                DebugId    =  feedback.DebugId,
                 Data       = feedback.Data
             };
         }

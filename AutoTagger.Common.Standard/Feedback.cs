@@ -10,6 +10,8 @@
 
         public string CustomerId { get; set; }
 
+        public int DebugId { get; set; }
+
         public string Data { get; set; }
     }
 }

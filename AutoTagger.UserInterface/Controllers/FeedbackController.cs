@@ -34,11 +34,7 @@
                     return this.Unauthorized();
                 }
 
-                var data = new Dictionary<string, string>();
-                data.Add("email", feedback.Email);
-                data.Add("message", feedback.Message);
-
-                this.HandleFeedback("app", feedback.CustomerId, data);
+                //this.HandleFeedback("app", feedback.CustomerId, data);
                 return this.Ok();
             }
             catch (ArgumentException)
@@ -57,16 +53,7 @@
                 {
                     return this.Unauthorized();
                 }
-                
-                var data = new Dictionary<string, string>();
-                data.Add("photoId", feedback.PhotoId);
-                data.Add("rating", feedback.Rating);
-                data.Add("goodHashtags", feedback.GoodHashtags);
-                data.Add("badHashtags", feedback.BadHashtags);
-                data.Add("missingHashtags", feedback.MissingHashtags);
-                data.Add("comment", feedback.Comment);
-
-                this.HandleFeedback("results", feedback.CustomerId, data);
+                this.HandleFeedback("results", feedback.CustomerId, feedback.PhotoId, feedback);
                 return this.Ok();
             }
             catch (ArgumentException)
@@ -75,18 +62,16 @@
             }
         }
 
-        private void HandleFeedback(string type, string customerId, Dictionary<string, string> data)
+        private void HandleFeedback(string type, string customerId, int photoId, object data)
         {
             var json = JsonConvert.SerializeObject(data);
-
-
             var feedback = new Feedback
             {
                 Type       = type,
                 CustomerId = customerId,
+                DebugId    = photoId,
                 Data       = json
             };
-
             this.feedbackStorage.Insert(feedback);
         }
 

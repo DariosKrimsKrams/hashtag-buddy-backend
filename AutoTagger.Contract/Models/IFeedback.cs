@@ -8,6 +8,8 @@
 
         string CustomerId { get; set; }
 
+        int DebugId { get; set; }
+
         string Data { get; set; }
     }
 }
