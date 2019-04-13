@@ -15,7 +15,5 @@ CREATE TABLE `feedback` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `customerId` (`customer_id`),
-  KEY `debugId` (`debug_id`),
-  CONSTRAINT `debugId` FOREIGN KEY (`debug_id`) REFERENCES `debug` (`id`),
   CONSTRAINT `customerId` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;

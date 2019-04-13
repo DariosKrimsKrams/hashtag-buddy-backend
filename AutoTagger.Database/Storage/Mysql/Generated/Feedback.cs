@@ -12,7 +12,5 @@ namespace AutoTagger.Database
         public string Data { get; set; }
         public DateTime Created { get; set; }
         public sbyte Deleted { get; set; }
-
-        public Debug Debug { get; set; }
     }
 }

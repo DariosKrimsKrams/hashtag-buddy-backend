@@ -39,7 +39,7 @@
                     return this.Unauthorized();
                 }
 
-                //this.HandleFeedback("app", feedback.CustomerId, data);
+                this.HandleFeedback("app", feedback.CustomerId, 0, feedback);
                 return this.Ok();
             }
             catch (ArgumentException)

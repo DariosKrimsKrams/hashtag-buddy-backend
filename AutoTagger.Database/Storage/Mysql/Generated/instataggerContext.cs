@@ -152,9 +152,6 @@ namespace AutoTagger.Database
                 entity.HasIndex(e => e.CustomerId)
                     .HasName("customerId");
 
-                entity.HasIndex(e => e.DebugId)
-                    .HasName("debugId");
-
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
                     .IsUnique();
@@ -191,12 +188,6 @@ namespace AutoTagger.Database
                     .IsRequired()
                     .HasColumnName("type")
                     .HasColumnType("varchar(30)");
-
-                entity.HasOne(d => d.Debug)
-                    .WithMany(p => p.Feedback)
-                    .HasForeignKey(d => d.DebugId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("debugId");
             });
 
             modelBuilder.Entity<Itags>(entity =>
