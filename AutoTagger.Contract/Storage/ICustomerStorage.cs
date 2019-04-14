@@ -6,7 +6,9 @@
     {
         int Create(ICustomer customer);
 
-        void Update(ICustomer customer);
+        void IncreasePhotosCount(string customerId);
+
+        void IncreaseFeedbackCount(string customerId);
 
         void UpdateCustomerId(int id, string customerId);
 

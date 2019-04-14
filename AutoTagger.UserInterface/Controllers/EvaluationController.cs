@@ -139,6 +139,8 @@
                     var log = new Log { Id = logId, Data = debugData };
                     this.logStorage.UpdateLog(log);
 
+                    this.customerStorage.IncreasePhotosCount(customerId);
+
                     data.Add("img", fileName);
                     data.Add("logId", logId);
                     return this.Ok(data);

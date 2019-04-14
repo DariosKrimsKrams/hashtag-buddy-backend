@@ -18,12 +18,16 @@ namespace AutoTagger.Database.Storage.Mysql
             return customer.Id;
         }
 
-        public void Update(ICustomer commonCustomer)
+        public void IncreasePhotosCount(string customerId)
         {
-            var customer = Customer.FromCommonCustomer(commonCustomer);
-            this.DetachLocal<Customer>(customer, customer.Id);
-            this.db.Customer.Update(customer);
-            this.db.SaveChanges();
+            var query = $"UPDATE `customer` SET photos_count = photos_count+1 WHERE `customer_id`='{customerId}'";
+            this.ExecuteCustomQuery(query);
+        }
+
+        public void IncreaseFeedbackCount(string customerId)
+        {
+            var query = $"UPDATE `customer` SET feedback_count = feedback_count+1 WHERE `customer_id`='{customerId}'";
+            this.ExecuteCustomQuery(query);
         }
 
         public void UpdateCustomerId(int id, string customerId)

@@ -10,6 +10,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
+    using Customer = AutoTagger.Database.Customer;
+
     [Route("[controller]")]
     public class FeedbackController : Controller
     {
@@ -82,6 +84,8 @@
                 Data       = json
             };
             this.feedbackStorage.Insert(feedback);
+
+            this.customerStorage.IncreaseFeedbackCount(customerId);
         }
 
         private bool IsCustomerValid(string customerId)
