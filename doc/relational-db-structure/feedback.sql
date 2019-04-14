@@ -14,6 +14,6 @@ CREATE TABLE `feedback` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
-  KEY `customerId` (`customer_id`),
-  CONSTRAINT `customerId` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  KEY `feedbackCustomerId` (`customer_id`),
+  CONSTRAINT `feedbackCustomerId` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

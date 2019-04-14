@@ -28,12 +28,8 @@ namespace AutoTagger.Database.Storage.Mysql
 
         public void UpdateCustomerId(int id, string customerId)
         {
-            var result = this.db.Customer.FirstOrDefault(x => x.Id == id);
-            if (result != null)
-            {
-                result.CustomerId = customerId;
-                this.db.SaveChanges();
-            }
+            var query = $"UPDATE `customer` SET customer_id = '{customerId}' WHERE `id`='{id}'";
+            this.ExecuteCustomQuery(query);
         }
 
         public bool Exists(string customerId)
