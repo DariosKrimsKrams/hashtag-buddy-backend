@@ -75,6 +75,8 @@ namespace AutoTagger.Database
 
             modelBuilder.Entity<Customer>(entity =>
             {
+                entity.HasKey(e => new { e.Id, e.CustomerId });
+
                 entity.ToTable("customer");
 
                 entity.HasIndex(e => e.CustomerId)
@@ -86,21 +88,26 @@ namespace AutoTagger.Database
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.CustomerId)
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(64)");
 
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
                     .HasDefaultValueSql("'CURRENT_TIMESTAMP'");
 
-                entity.Property(e => e.CustomerId)
-                    .IsRequired()
-                    .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)");
-
                 entity.Property(e => e.FeedbackCount)
                     .HasColumnName("feedback_count")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.Infos)
+                    .IsRequired()
+                    .HasColumnName("infos")
+                    .HasColumnType("varchar(60)");
 
                 entity.Property(e => e.PhotosCount)
                     .HasColumnName("photos_count")
