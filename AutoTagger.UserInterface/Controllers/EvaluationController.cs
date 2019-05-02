@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.UserInterface.Controllers
+﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -63,7 +63,17 @@
                     file.CopyTo(stream);
                     var bytes = stream.ToArray();
 
-                    var machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
+                    IMachineTag[] machineTags;
+                    try
+                    {
+                        machineTags = this.taggingProvider.GetTagsForImageBytes(bytes);
+                    }
+                    catch (Exception e)
+                    {
+                        // ToDo write log with error into DB
+                        Console.WriteLine("Evaluation Error: " + e.Message);
+                        throw;
+                    }
 
                     // photo of Hamburg
                     //var machineTags = new IMachineTag[]
@@ -123,7 +133,7 @@
                     }
 
                     this.evaluation.AddDebugInfos("ip", this.GetIpAddress());
-                    var data = this.FindTags(evaluation, machineTags);
+                    var data = this.FindTags(this.evaluation, machineTags);
 
                     var debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
                     var logId = this.logStorage.InsertLog(debugData, customerId);
@@ -158,7 +168,9 @@
             var algorithm = MD5.Create();
             var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
             foreach (byte b in hash)
+            {
                 sb.Append(b.ToString("X2"));
+            }
             return sb.ToString().Substring(0, 10).ToLower();
         }
 
