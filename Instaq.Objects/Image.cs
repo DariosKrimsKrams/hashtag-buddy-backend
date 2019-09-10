@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Objects
+﻿namespace Instaq.Objects
 {
     using System;
     using System.Collections.Generic;

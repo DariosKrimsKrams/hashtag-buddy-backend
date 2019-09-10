@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Logger", "Instaq.Log
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Debug", "Instaq.API.Debug\Instaq.API.Debug.csproj", "{3D6AA128-7587-4D93-B770-1C8FFF057E24}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Objects", "Instaq.Objects\Instaq.Objects.csproj", "{97998110-3B05-4D28-8818-514742053BBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D6AA128-7587-4D93-B770-1C8FFF057E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97998110-3B05-4D28-8818-514742053BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97998110-3B05-4D28-8818-514742053BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97998110-3B05-4D28-8818-514742053BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97998110-3B05-4D28-8818-514742053BBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

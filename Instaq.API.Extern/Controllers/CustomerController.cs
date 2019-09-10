@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Instaq.Common;
-    using Instaq.Contract;
+    using Common;
+    using Contract;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]
