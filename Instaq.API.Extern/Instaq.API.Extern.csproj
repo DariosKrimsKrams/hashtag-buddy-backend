@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.HttpOverrides" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Instaq.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
     <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
     <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
     <ProjectReference Include="..\Instaq.Evaluation.Standard\Instaq.Evaluation.csproj" />

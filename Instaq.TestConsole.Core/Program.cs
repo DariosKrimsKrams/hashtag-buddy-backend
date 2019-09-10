@@ -1,19 +1,14 @@
 ﻿namespace Instaq.TestConsole.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
-
     using Instaq.Common;
-    using Instaq.Contract;
     using Instaq.Crawler.Standard;
     using Instaq.Crawler.V4;
     using Instaq.Database.Storage.Mysql;
     using Instaq.ImageDownloader;
-    using Instaq.ImageProcessor.Standard;
-
     using Instaq.BlacklistImport;
+    using Instaq.GcpVision;
     using Instaq.TooGenericProcessor;
 
     internal class Program
