@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Instaq.API.Debug</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\**" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="Views\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Views\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoTagger.Common.Standard\Instaq.Common.csproj" />
+    <ProjectReference Include="..\AutoTagger.Database\Instaq.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.FileHandling.Standard\Instaq.DiskFileHandling.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
+    <ProjectReference Include="..\AutoTagger.Crawler.Standard\Instaq.Crawler.csproj" />
+    <ProjectReference Include="..\AutoTagger.Database\Instaq.Database.csproj" />
+    <ProjectReference Include="..\AutoTagger.ImageDownloader.Standard\Instaq.ImageDownloader.csproj" />
+    <ProjectReference Include="..\Instaq.BlacklistImport\Instaq.BlacklistImport.csproj" />
+    <ProjectReference Include="..\Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj" />
+  </ItemGroup>
+
+</Project>

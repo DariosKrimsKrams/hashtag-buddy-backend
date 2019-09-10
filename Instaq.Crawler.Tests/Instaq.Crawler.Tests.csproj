@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Contract\AutoTagger.Contract.csproj" />
-    <ProjectReference Include="..\AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj" />
+    <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
+    <ProjectReference Include="..\AutoTagger.Crawler.Standard\Instaq.Crawler.csproj" />
   </ItemGroup>
 
 </Project>

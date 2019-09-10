@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
+    <ProjectReference Include="..\AutoTagger.FileHandling.Standard\Instaq.DiskFileHandling.csproj" />
   </ItemGroup>
 
 </Project>

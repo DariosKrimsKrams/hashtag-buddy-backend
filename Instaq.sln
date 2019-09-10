@@ -1,29 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Contract", "AutoTagger.Contract\AutoTagger.Contract.csproj", "{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Contract", "Instaq.Contract\Instaq.Contract.csproj", "{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageProcessor", "AutoTagger.Clarifai.Standard\AutoTagger.ImageProcessor.csproj", "{B4A4A168-DB3C-4172-A2C9-3F8ECC36DDCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.ImageProcessor", "Instaq.Clarifai.Standard\Instaq.ImageProcessor.csproj", "{B4A4A168-DB3C-4172-A2C9-3F8ECC36DDCE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.TestConsole", "AutoTagger.TestConsole.Core\AutoTagger.TestConsole.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TestConsole", "Instaq.TestConsole.Core\Instaq.TestConsole.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Extern", "AutoTagger.UserInterface\Instaq.API.Extern.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Extern", "Instaq.API.Extern\Instaq.API.Extern.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Crawler", "AutoTagger.Crawler.Standard\AutoTagger.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler", "Instaq.Crawler.Standard\Instaq.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.ImageDownloader", "AutoTagger.ImageDownloader.Standard\AutoTagger.ImageDownloader.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.ImageDownloader", "Instaq.ImageDownloader.Standard\Instaq.ImageDownloader.csproj", "{E64B6A95-B7AA-4331-94D2-3B3BA0F47B0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.DiskFileHandling", "AutoTagger.FileHandling.Standard\AutoTagger.DiskFileHandling.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.DiskFileHandling", "Instaq.FileHandling.Standard\Instaq.DiskFileHandling.csproj", "{89F3C03F-B0EB-417A-BF95-4A22929ECEEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Evaluation", "AutoTagger.Evaluation.Standard\AutoTagger.Evaluation.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Evaluation", "Instaq.Evaluation.Standard\Instaq.Evaluation.csproj", "{99136302-4952-4A65-A735-E9B7D6F7F973}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Common", "AutoTagger.Common.Standard\AutoTagger.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Common", "Instaq.Common.Standard\Instaq.Common.csproj", "{C49E6F1B-60D7-4083-A8ED-A9804F1CCF56}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TooGenericProcessor", "Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj", "{9487CE4D-EAA5-4FBD-BE18-F0ABCCE659E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoTagger.Database", "AutoTagger.Database\AutoTagger.Database.csproj", "{B2DFB5C1-7FF3-4920-BC52-C361E3909476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Database", "Instaq.Database\Instaq.Database.csproj", "{B2DFB5C1-7FF3-4920-BC52-C361E3909476}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.BlacklistImport", "Instaq.BlacklistImport\Instaq.BlacklistImport.csproj", "{BB36731E-B034-4AD4-96E8-FFEF1ECAB244}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler.Tests", "Ins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Logger", "Instaq.Logger\Instaq.Logger.csproj", "{821243B6-A6B4-46D7-AFEE-72C4A07516C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Debug", "Instaq.DebugAPI\Instaq.API.Debug.csproj", "{3D6AA128-7587-4D93-B770-1C8FFF057E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Debug", "Instaq.API.Debug\Instaq.API.Debug.csproj", "{3D6AA128-7587-4D93-B770-1C8FFF057E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Common.Standard\AutoTagger.Common.csproj" />
-    <ProjectReference Include="..\AutoTagger.Contract\AutoTagger.Contract.csproj" />
+    <ProjectReference Include="..\AutoTagger.Common.Standard\Instaq.Common.csproj" />
+    <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
   </ItemGroup>
   
   <ItemGroup>
