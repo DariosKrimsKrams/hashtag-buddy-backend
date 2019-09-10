@@ -1,13 +1,13 @@
-﻿namespace AutoTagger.ImageProcessor.Standard
+﻿namespace Instaq.ImageProcessor.Standard
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.FileHandling.Standard;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.FileHandling.Standard;
 
     public class ImageProcessorApp
     {

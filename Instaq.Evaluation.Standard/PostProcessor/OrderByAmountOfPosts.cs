@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Evaluation.Standard.PostProcessor
+﻿namespace Instaq.Evaluation.Standard.PostProcessor
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     class OrderByAmountOfPosts
     {

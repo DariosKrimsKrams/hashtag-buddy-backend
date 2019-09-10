@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.Database
+﻿namespace Instaq.Database
 {
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     public partial class Blacklist
     {

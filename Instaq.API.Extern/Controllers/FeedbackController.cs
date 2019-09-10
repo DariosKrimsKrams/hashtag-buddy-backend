@@ -1,16 +1,14 @@
-﻿namespace AutoTagger.API.Controllers
+﻿namespace Instaq.API.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using AutoTagger.API.Models;
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Storage;
-
+    using Instaq.API.Models.FormModels;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
-    using Customer = AutoTagger.Database.Customer;
+    using Customer = Instaq.Database.Customer;
 
     [Route("[controller]")]
     public class FeedbackController : Controller

@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.V4.Queue
+﻿namespace Instaq.Crawler.V4.Queue
 {
     using System;
     using System.Collections.Concurrent;
@@ -7,7 +7,7 @@
     using System.Net;
     using System.Threading;
 
-    using AutoTagger.Crawler.Standard;
+    using Instaq.Crawler.Standard;
 
     public class BaseQueue<T> : ConcurrentQueue<T>
     {

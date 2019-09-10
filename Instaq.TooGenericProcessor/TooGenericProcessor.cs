@@ -1,7 +1,7 @@
 ﻿namespace Instaq.TooGenericProcessor
 {
     using System;
-    using AutoTagger.Contract;
+    using Instaq.Contract;
 
     public class TooGenericProcessor
     {

@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Crawler.V4.Crawler
+﻿namespace Instaq.Crawler.V4.Crawler
 {
     using System;
     using System.Collections.Generic;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4.Requests;
 
     public class ExploreTagsPageHandler
     {

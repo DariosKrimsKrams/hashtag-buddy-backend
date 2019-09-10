@@ -1,12 +1,11 @@
-﻿namespace AutoTagger.UserInterface
+﻿namespace Instaq.UserInterface
 {
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Storage;
-    using AutoTagger.Database.Storage.Mysql;
-    using AutoTagger.Evaluation.Standard;
-    using AutoTagger.FileHandling.Standard;
-    using AutoTagger.ImageProcessor.Standard;
-    using AutoTagger.UserInterface.Controllers.FIlter;
+    using Instaq.Contract;
+    using Instaq.Contract.Storage;
+    using Instaq.Database.Storage.Mysql;
+    using Instaq.Evaluation.Standard;
+    using Instaq.FileHandling.Standard;
+    using Instaq.ImageProcessor.Standard;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
@@ -35,13 +34,7 @@
                 app.UseDeveloperExceptionPage();
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger(
-                c =>
-                {
-                });
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwagger();
             app.UseSwaggerUI(
                 c =>
                 {
@@ -62,7 +55,6 @@
             app.UseMvc();
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -82,7 +74,6 @@
                 c =>
                 {
                     c.SwaggerDoc("v1", new Info { Title = "Instaq Extern", Version = "v1" });
-                    c.OperationFilter<FileOperation>();
                 });
         }
     }

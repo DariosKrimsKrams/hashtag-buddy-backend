@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoTagger.Common
+namespace Instaq.Common
 {
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     public class User : IUser
     {

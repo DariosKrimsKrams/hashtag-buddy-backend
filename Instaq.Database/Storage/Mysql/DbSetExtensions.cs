@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;

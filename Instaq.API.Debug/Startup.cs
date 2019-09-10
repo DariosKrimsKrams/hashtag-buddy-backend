@@ -1,9 +1,9 @@
 ﻿namespace Instaq.API.Debug
 {
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Storage;
-    using AutoTagger.Database.Storage.Mysql;
-    using AutoTagger.FileHandling.Standard;
+    using Instaq.Contract;
+    using Instaq.Contract.Storage;
+    using Instaq.Database.Storage.Mysql;
+    using Instaq.FileHandling.Standard;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;

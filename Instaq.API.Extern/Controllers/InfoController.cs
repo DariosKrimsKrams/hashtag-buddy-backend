@@ -1,9 +1,8 @@
-﻿
-namespace AutoTagger.UserInterface.Controllers
+﻿namespace Instaq.UserInterface.Controllers
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-    using AutoTagger.Common;
+    using Instaq.Common;
 
     [Route("[controller]")]
     public class InfoController : Controller

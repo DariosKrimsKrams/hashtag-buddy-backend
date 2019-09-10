@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.Crawler.V4.Dtos
+﻿namespace Instaq.Crawler.V4.Dtos
 {
     using System.Collections.Generic;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4.Contract;
 
     public class ExplorePageOutput : IOutput
     {

@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4.Crawler;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4.Crawler;
+    using Instaq.Crawler.V4.Requests;
 
     using Newtonsoft.Json;
 

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoTagger.Contract
+namespace Instaq.Contract
 {
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface IUser
     {

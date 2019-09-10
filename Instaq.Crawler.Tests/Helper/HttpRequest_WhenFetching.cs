@@ -2,10 +2,10 @@
 {
     using System;
 
-    using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.V4;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Contract;
+    using Instaq.Crawler.Standard;
+    using Instaq.Crawler.V4;
+    using Instaq.Crawler.V4.Requests;
 
     using HtmlAgilityPack;
 

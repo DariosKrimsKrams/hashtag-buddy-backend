@@ -1,6 +1,6 @@
-﻿namespace AutoTagger.Common
+﻿namespace Instaq.Common
 {
-    using AutoTagger.Contract;
+    using Instaq.Contract;
 
     public class CrawlerSettings : ICrawlerSettings
     {

@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Linq;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Database;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Database;
 
     public class MysqlLogStorage : MysqlBaseStorage, ILogStorage
     {

@@ -4,8 +4,8 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
 
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     class GetHumanoidTagsProvider
     {

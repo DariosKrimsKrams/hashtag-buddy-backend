@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Database
+﻿namespace Instaq.Database
 {
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Database.Storage.Mysql;
-    using AutoTagger.Database.Storage.Mysql.Custom;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Database.Storage.Mysql;
+    using Instaq.Database.Storage.Mysql.Custom;
 
     public partial class Customer : IIdentifier
     {

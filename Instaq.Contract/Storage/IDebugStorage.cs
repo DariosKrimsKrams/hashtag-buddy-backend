@@ -1,7 +1,7 @@
-﻿namespace AutoTagger.Contract.Storage
+﻿namespace Instaq.Contract.Storage
 {
     using System.Collections.Generic;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface IDebugStorage
     {

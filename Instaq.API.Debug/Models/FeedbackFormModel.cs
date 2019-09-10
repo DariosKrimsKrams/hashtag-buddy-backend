@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.API.Debug.Models
+﻿namespace Instaq.API.Debug.Models
 {
     public class FeedbackFormModel
     {

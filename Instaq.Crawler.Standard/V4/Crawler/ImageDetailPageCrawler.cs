@@ -1,9 +1,9 @@
-﻿namespace AutoTagger.Crawler.V4.Crawler
+﻿namespace Instaq.Crawler.V4.Crawler
 {
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.Standard;
+    using Instaq.Crawler.V4.Requests;
 
     public class ImageDetailPageCrawler
     {

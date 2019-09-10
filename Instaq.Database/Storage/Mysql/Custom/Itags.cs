@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.Database
+﻿namespace Instaq.Database
 {
     using System;
-    using AutoTagger.Common;
-    using AutoTagger.Contract.Models;
+    using Instaq.Common;
+    using Instaq.Contract.Models;
 
     public partial class Itags
     {

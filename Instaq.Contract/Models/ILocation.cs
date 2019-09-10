@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoTagger.Contract.Models
+namespace Instaq.Contract.Models
 {
     public interface ILocation
     {

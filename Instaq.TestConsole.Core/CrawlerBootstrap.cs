@@ -1,15 +1,15 @@
 ﻿
-namespace AutoTagger.TestConsole
+namespace Instaq.TestConsole
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.V4;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.Standard;
+    using Instaq.Crawler.V4;
 
     class CrawlerBootstrap
     {

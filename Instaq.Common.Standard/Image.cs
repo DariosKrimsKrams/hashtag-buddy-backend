@@ -1,9 +1,9 @@
-﻿namespace AutoTagger.Common
+﻿namespace Instaq.Common
 {
     using System;
     using System.Collections.Generic;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     using Newtonsoft.Json;
 

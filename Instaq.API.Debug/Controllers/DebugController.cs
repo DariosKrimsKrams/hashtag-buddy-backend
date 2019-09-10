@@ -1,8 +1,8 @@
 ﻿namespace Instaq.API.Debug.Controllers
 {
     using System.Collections.Generic;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Contract.Storage;
+    using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 

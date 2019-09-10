@@ -1,12 +1,12 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
-    using global::AutoTagger.Contract;
+    using global::Instaq.Contract;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {

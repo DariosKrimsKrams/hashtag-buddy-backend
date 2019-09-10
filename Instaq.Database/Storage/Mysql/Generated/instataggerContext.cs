@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace AutoTagger.Database
+namespace Instaq.Database
 {
     public partial class InstataggerContext : DbContext
     {

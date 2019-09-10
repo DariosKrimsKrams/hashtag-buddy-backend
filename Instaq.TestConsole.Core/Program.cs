@@ -1,17 +1,17 @@
-﻿namespace AutoTagger.TestConsole.Core
+﻿namespace Instaq.TestConsole.Core
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Crawler.Standard;
-    using AutoTagger.Crawler.V4;
-    using AutoTagger.Database.Storage.Mysql;
-    using AutoTagger.ImageDownloader;
-    using AutoTagger.ImageProcessor.Standard;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Crawler.Standard;
+    using Instaq.Crawler.V4;
+    using Instaq.Database.Storage.Mysql;
+    using Instaq.ImageDownloader;
+    using Instaq.ImageProcessor.Standard;
 
     using Instaq.BlacklistImport;
     using Instaq.TooGenericProcessor;

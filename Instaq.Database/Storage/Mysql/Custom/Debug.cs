@@ -1,7 +1,7 @@
-﻿namespace AutoTagger.Database
+﻿namespace Instaq.Database
 {
     using System;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public partial class Debug
     {

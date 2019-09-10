@@ -1,8 +1,8 @@
 ﻿namespace Instaq.Crawler.Tests.Crawler
 {
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Crawler.V4.PageAnalyzer;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Crawler.V4.PageAnalyzer;
     using NUnit.Framework;
 
     class UserPageLogic_WhenCheckingEnoughFollower

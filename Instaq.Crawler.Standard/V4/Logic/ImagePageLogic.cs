@@ -1,14 +1,14 @@
-﻿namespace AutoTagger.Crawler.V4.Crawler
+﻿namespace Instaq.Crawler.V4.Crawler
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4.Requests;
 
     public class ImagePageLogic
     {

@@ -1,6 +1,6 @@
-﻿namespace AutoTagger.Database
+﻿namespace Instaq.Database
 {
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public partial class Feedback
     {

@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Crawler.V4.PageAnalyzer
+﻿namespace Instaq.Crawler.V4.PageAnalyzer
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     public class UserPageLogic
     {

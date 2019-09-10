@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Evaluation.Standard
+﻿namespace Instaq.Evaluation.Standard
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     using Newtonsoft.Json;
 

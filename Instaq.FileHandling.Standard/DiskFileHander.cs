@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.FileHandling.Standard
+﻿namespace Instaq.FileHandling.Standard
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
 
-    using AutoTagger.Contract;
+    using Instaq.Contract;
 
     public class DiskFileHander : IFileHandler
     {

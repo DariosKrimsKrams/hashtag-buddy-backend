@@ -1,13 +1,13 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
 
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Database;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Database;
 
     using Microsoft.EntityFrameworkCore;
 

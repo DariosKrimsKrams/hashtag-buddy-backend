@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
@@ -6,11 +6,11 @@
     using System.Linq;
     using System.Threading;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Database;
-    using AutoTagger.Database.Storage.Mysql.Custom;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Database;
+    using Instaq.Database.Storage.Mysql.Custom;
 
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;

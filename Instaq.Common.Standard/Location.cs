@@ -1,7 +1,7 @@
-﻿namespace AutoTagger.Common
+﻿namespace Instaq.Common
 {
     using System;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public class Location : ILocation
     {

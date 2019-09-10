@@ -1,15 +1,15 @@
-﻿namespace AutoTagger.Crawler.V4
+﻿namespace Instaq.Crawler.V4
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
 
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4.Crawler;
-    using AutoTagger.Crawler.V4.Queue;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4.Crawler;
+    using Instaq.Crawler.V4.Queue;
+    using Instaq.Crawler.V4.Requests;
 
     public class CrawlerV4 : ICrawler
     {

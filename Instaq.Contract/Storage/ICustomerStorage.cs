@@ -1,6 +1,6 @@
-﻿namespace AutoTagger.Contract
+﻿namespace Instaq.Contract
 {
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface ICustomerStorage
     {

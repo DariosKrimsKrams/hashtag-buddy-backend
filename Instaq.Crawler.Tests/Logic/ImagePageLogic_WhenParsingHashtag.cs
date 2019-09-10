@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Crawler.V4.Crawler;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Crawler.V4.Crawler;
+    using Instaq.Crawler.V4.Requests;
     using NSubstitute;
     using NUnit.Framework;
 

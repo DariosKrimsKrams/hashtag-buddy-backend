@@ -1,17 +1,10 @@
-﻿namespace AutoTagger.API.Controllers
+﻿namespace Instaq.API.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-
-    using AutoTagger.API.Models;
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-
+    using Instaq.Common;
+    using Instaq.Contract;
     using Microsoft.AspNetCore.Mvc;
-
-    using Newtonsoft.Json;
 
     [Route("[controller]")]
     public class CustomerController : Controller

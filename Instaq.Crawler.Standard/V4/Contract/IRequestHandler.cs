@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.V4.Requests
+﻿namespace Instaq.Crawler.V4.Requests
 {
     using HtmlAgilityPack;
 

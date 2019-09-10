@@ -1,7 +1,7 @@
 ﻿namespace Instaq.API.Debug.Controllers
 {
     using System.Collections.Generic;
-    using AutoTagger.Common;
+    using Instaq.Common;
     using Microsoft.AspNetCore.Mvc;
 
     [Route( "[controller]" )]

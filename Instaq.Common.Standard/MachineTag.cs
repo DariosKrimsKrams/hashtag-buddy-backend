@@ -1,6 +1,6 @@
-﻿namespace AutoTagger.Common
+﻿namespace Instaq.Common
 {
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public class MachineTag : IMachineTag
     {

@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Crawler.V4.Queue
+﻿namespace Instaq.Crawler.V4.Queue
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Common;
+    using Instaq.Common;
 
     public class HashtagQueue<T> : BaseQueue<T>
     {

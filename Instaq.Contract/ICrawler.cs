@@ -1,9 +1,9 @@
-﻿namespace AutoTagger.Contract
+﻿namespace Instaq.Contract
 {
     using System;
     using System.Collections.Generic;
 
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface ICrawler
     {

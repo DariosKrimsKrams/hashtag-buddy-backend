@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AutoTagger.Contract
+namespace Instaq.Contract
 {
     public interface IFileHandler
     {

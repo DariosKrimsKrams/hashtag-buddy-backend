@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.API.Controllers
+﻿namespace Instaq.API.Controllers
 {
     using System;
     using System.IO;
-    using AutoTagger.Contract;
+    using Instaq.Contract;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]

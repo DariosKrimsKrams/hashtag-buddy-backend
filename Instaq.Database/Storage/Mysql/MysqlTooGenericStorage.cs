@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
 
     public class MysqlTooGenericStorage : MysqlBaseStorage, ITooGenericStorage
     {

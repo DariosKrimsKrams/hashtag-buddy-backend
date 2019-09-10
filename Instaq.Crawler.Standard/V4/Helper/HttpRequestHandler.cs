@@ -1,11 +1,11 @@
-﻿namespace AutoTagger.Crawler.Standard
+﻿namespace Instaq.Crawler.Standard
 {
     using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text.RegularExpressions;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Crawler.V4.Requests;
     using HtmlAgilityPack;
     using Newtonsoft.Json;
 

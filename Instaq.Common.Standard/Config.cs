@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Common
+﻿namespace Instaq.Common
 {
     public static class Config
     {

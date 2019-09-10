@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.ImageProcessor.Standard
+﻿namespace Instaq.ImageProcessor.Standard
 {
     using System;
     using System.Collections.Generic;

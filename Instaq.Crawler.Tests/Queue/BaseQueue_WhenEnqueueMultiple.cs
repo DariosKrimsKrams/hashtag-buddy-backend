@@ -1,7 +1,7 @@
 ﻿namespace Instaq.Crawler.Tests.Queue
 {
     using System.Collections.Generic;
-    using AutoTagger.Crawler.V4.Queue;
+    using Instaq.Crawler.V4.Queue;
     using NUnit.Framework;
 
     class BaseQueue_WhenEnqueueMultiple

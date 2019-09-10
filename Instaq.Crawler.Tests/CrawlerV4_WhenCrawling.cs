@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using System.Threading;
 
-    using AutoTagger.Common;
-    using AutoTagger.Contract;
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Crawler.V4;
-    using AutoTagger.Crawler.V4.Requests;
+    using Instaq.Common;
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Crawler.V4;
+    using Instaq.Crawler.V4.Requests;
     using Newtonsoft.Json;
     using NSubstitute;
     using NUnit.Framework;

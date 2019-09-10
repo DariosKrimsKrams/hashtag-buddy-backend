@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Contract.Models
+﻿namespace Instaq.Contract.Models
 {
     public interface ITag
     {

@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Crawler.Standard
+﻿namespace Instaq.Crawler.Standard
 {
     using System;
     using System.Net;

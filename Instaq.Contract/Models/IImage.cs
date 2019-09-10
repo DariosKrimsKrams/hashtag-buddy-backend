@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.Contract.Models
+﻿namespace Instaq.Contract.Models
 {
     using System;
     using System.Collections.Generic;
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface IImage
     {

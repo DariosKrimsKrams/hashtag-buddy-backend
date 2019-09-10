@@ -1,10 +1,10 @@
-﻿namespace AutoTagger.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoTagger.Contract.Models;
-    using AutoTagger.Contract.Storage;
+    using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
 
     public class MysqlDebugStorage : MysqlBaseStorage, IDebugStorage
     {

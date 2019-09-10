@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.UserInterface
+﻿namespace Instaq.UserInterface
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

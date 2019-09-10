@@ -1,8 +1,8 @@
-﻿namespace AutoTagger.Contract
+﻿namespace Instaq.Contract
 {
     using System.Collections.Generic;
 
-    using AutoTagger.Contract.Models;
+    using Instaq.Contract.Models;
 
     public interface ITaggingProvider
     {

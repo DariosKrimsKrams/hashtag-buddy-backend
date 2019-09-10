@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.API.Models
+﻿namespace Instaq.API.Models.FormModels
 {
     public class AppFeedbackFormModel
     {

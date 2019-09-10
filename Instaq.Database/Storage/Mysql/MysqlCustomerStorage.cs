@@ -1,10 +1,10 @@
-﻿using AutoTagger.Contract;
-using AutoTagger.Contract.Models;
+﻿using Instaq.Contract;
+using Instaq.Contract.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AutoTagger.Database.Storage.Mysql
+namespace Instaq.Database.Storage.Mysql
 {
     using System.Linq;
 

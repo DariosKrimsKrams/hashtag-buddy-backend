@@ -1,4 +1,4 @@
-﻿namespace AutoTagger.Contract
+﻿namespace Instaq.Contract
 {
     public enum FileType
     {
