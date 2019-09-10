@@ -8,7 +8,8 @@
     using Instaq.Database.Storage.Mysql;
     using Instaq.ImageDownloader;
     using Instaq.BlacklistImport;
-    using Instaq.GcpVision;
+    using Instaq.ImageProcessor.Standard;
+    using Instaq.ImageProcessor.Standard.GcpVision;
     using Instaq.TooGenericProcessor;
 
     internal class Program

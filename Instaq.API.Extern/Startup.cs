@@ -5,7 +5,7 @@
     using Instaq.Database.Storage.Mysql;
     using Instaq.Evaluation.Standard;
     using Instaq.FileHandling.Standard;
-    using Instaq.GcpVision;
+    using Instaq.ImageProcessor.Standard.GcpVision;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
