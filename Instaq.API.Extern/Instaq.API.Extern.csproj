@@ -30,10 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
-    <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
-    <ProjectReference Include="..\AutoTagger.Database\Instaq.Database.csproj" />
-    <ProjectReference Include="..\AutoTagger.Evaluation.Standard\Instaq.Evaluation.csproj" />
+    <ProjectReference Include="..\Instaq.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
+    <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
+    <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
+    <ProjectReference Include="..\Instaq.Evaluation.Standard\Instaq.Evaluation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
-    <ProjectReference Include="..\AutoTagger.Crawler.Standard\Instaq.Crawler.csproj" />
-    <ProjectReference Include="..\AutoTagger.Database\Instaq.Database.csproj" />
-    <ProjectReference Include="..\AutoTagger.ImageDownloader.Standard\Instaq.ImageDownloader.csproj" />
+    <ProjectReference Include="..\Instaq.Clarifai.Standard\Instaq.ImageProcessor.csproj" />
+    <ProjectReference Include="..\Instaq.Crawler.Standard\Instaq.Crawler.csproj" />
+    <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
+    <ProjectReference Include="..\Instaq.ImageDownloader.Standard\Instaq.ImageDownloader.csproj" />
     <ProjectReference Include="..\Instaq.BlacklistImport\Instaq.BlacklistImport.csproj" />
     <ProjectReference Include="..\Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj" />
   </ItemGroup>

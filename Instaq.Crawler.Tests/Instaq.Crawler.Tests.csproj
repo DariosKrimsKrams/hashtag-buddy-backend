@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
-    <ProjectReference Include="..\AutoTagger.Crawler.Standard\Instaq.Crawler.csproj" />
+    <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
+    <ProjectReference Include="..\Instaq.Crawler.Standard\Instaq.Crawler.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoTagger.Common.Standard\Instaq.Common.csproj" />
-    <ProjectReference Include="..\AutoTagger.Contract\Instaq.Contract.csproj" />
+    <ProjectReference Include="..\Instaq.Common.Standard\Instaq.Common.csproj" />
+    <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
   </ItemGroup>
 
 </Project>
