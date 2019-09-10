@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
     <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
     <ProjectReference Include="..\Instaq.Evaluation.Standard\Instaq.Evaluation.csproj" />
+    <ProjectReference Include="..\Instaq.GcpVision.Standard\Instaq.GcpVision.csproj" />
   </ItemGroup>
 
 </Project>

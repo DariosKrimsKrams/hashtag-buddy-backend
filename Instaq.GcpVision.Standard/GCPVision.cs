@@ -1,4 +1,4 @@
-﻿namespace Instaq.ImageProcessor.Standard
+﻿namespace Instaq.GcpVision
 {
     using System;
     using System.Collections.Generic;
