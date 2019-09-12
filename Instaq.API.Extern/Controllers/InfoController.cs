@@ -1,6 +1,9 @@
 ﻿namespace Instaq.UserInterface.Controllers
 {
     using System.Collections.Generic;
+
+    using global::API.Utils;
+
     using Microsoft.AspNetCore.Mvc;
     using Instaq.Common;
 
@@ -15,7 +18,8 @@
             var date = Config.Date;
 
             var list = new Dictionary<string, string>();
-            list.Add("version", version.ToString());
+            list.Add("backendVersion", VersionInfo.Version);
+            list.Add("evaluationVersion", version.ToString());
             list.Add("date", date);
             return this.Json(list);
         }
