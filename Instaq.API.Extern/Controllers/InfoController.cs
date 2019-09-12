@@ -1,9 +1,7 @@
-﻿namespace Instaq.UserInterface.Controllers
+﻿namespace Instaq.API.Extern.Controllers
 {
     using System.Collections.Generic;
-
-    using global::API.Utils;
-
+    using Instaq.API.Extern.Utils;
     using Microsoft.AspNetCore.Mvc;
     using Instaq.Common;
 

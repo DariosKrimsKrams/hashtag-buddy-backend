@@ -1,4 +1,4 @@
-﻿namespace Instaq.UserInterface
+﻿namespace Instaq.API.Extern
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

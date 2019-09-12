@@ -1,6 +1,6 @@
-﻿namespace Instaq.API.Models.FormModels
+﻿namespace Instaq.API.Extern.Models.Requests
 {
-    public class AppFeedbackFormModel
+    public class AppFeedback
     {
         public string CustomerId { get; set; }
 

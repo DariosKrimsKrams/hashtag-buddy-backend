@@ -1,14 +1,12 @@
-﻿namespace Instaq.API.Controllers
+﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
-    using Instaq.API.Models.FormModels;
+    using Instaq.API.Extern.Models.Requests;
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
-
-    using Customer = Instaq.Database.Customer;
 
     [Route("[controller]")]
     public class FeedbackController : Controller
@@ -30,7 +28,7 @@
 
         [HttpPost("App")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult AppFeedback([FromBody] AppFeedbackFormModel feedback)
+        public IActionResult AppFeedback([FromBody] AppFeedback feedback)
         {
             try
             {
@@ -50,7 +48,7 @@
 
         [HttpPost("Results")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult ResultsFeedback([FromBody] ResultsFeedbackFormModel feedback)
+        public IActionResult ResultsFeedback([FromBody] ResultsFeedback feedback)
         {
             try
             {

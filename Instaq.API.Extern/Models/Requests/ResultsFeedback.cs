@@ -1,8 +1,8 @@
-﻿namespace Instaq.API.Models.FormModels
+﻿namespace Instaq.API.Extern.Models.Requests
 {
     using System.Collections.Generic;
 
-    public class ResultsFeedbackFormModel
+    public class ResultsFeedback
     {
         public string CustomerId { get; set; }
 

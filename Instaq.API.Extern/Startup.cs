@@ -1,4 +1,4 @@
-﻿namespace Instaq.UserInterface
+﻿namespace Instaq.API.Extern
 {
     using Instaq.Contract;
     using Instaq.Contract.Storage;

@@ -1,4 +1,4 @@
-﻿namespace Instaq.API.Controllers
+﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
     using System.Collections.Generic;
