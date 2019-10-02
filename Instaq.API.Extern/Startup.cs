@@ -14,8 +14,6 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
 
-    using Swashbuckle.AspNetCore.Swagger;
-
     public class Startup
     {
 
@@ -28,7 +26,6 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvc();
             services.AddControllers();
             services.AddCors();
 
@@ -49,11 +46,6 @@
                 });
         }
 
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -67,11 +59,6 @@
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1");
                 });
-
-            //app.UseCors(options => options.WithOrigins(
-            //    "http://localhost:4200",
-            //    "http://instaq.innocliq.de"
-            //).AllowAnyMethod());
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
