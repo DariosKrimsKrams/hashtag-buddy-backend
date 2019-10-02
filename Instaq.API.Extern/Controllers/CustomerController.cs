@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Route("[controller]")]
+    [Produces("application/json")]
     public class CustomerController : Controller
     {
         private readonly ICustomerStorage customerStorage;
