@@ -15,44 +15,12 @@
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            this.Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseSwagger();
-            app.UseSwaggerUI(
-                c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1");
-                });
-
-            app.UseCors(options => options.WithOrigins(
-                "http://localhost:4200",
-                "http://instaq.innocliq.de"
-                ).AllowAnyMethod());
-
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
-                                   ForwardedHeaders.XForwardedProto
-            });
-
-            app.UseMvc();
+            this.Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -75,6 +43,39 @@
                 {
                     c.SwaggerDoc("v1", new Info { Title = "Instaq Extern", Version = "v1" });
                 });
+        }
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(
+                c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1");
+                });
+
+            //app.UseCors(options => options.WithOrigins(
+            //    "http://localhost:4200",
+            //    "http://instaq.innocliq.de"
+            //).AllowAnyMethod());
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                                   ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseMvc();
         }
     }
 }
