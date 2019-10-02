@@ -11,6 +11,9 @@
     using Microsoft.AspNetCore.HttpOverrides;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.OpenApi.Models;
+
     using Swashbuckle.AspNetCore.Swagger;
 
     public class Startup
@@ -25,7 +28,8 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            //services.AddMvc();
+            services.AddControllers();
             services.AddCors();
 
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
@@ -41,7 +45,7 @@
             services.AddSwaggerGen(
                 c =>
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "Instaq Extern", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Extern", Version = "v1" });
                 });
         }
 
@@ -50,7 +54,7 @@
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -75,7 +79,12 @@
                                    ForwardedHeaders.XForwardedProto
             });
 
-            app.UseMvc();
+            app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
