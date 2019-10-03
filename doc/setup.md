@@ -1,8 +1,8 @@
 
 ## Setup
 ### Requirements
-  * Visual Studio 2017
-  * .Net Core 2.1 Framework installed
+  * Visual Studio 2019
+  * .Net Core 3.0 SDK
   * MySQL Database
   * Google Vision API
 
@@ -14,4 +14,4 @@
   * instatagger_gcpvision_key1
   * instatagger_gcpvision_key2
   
-(Split the content of the GCP Credentials key-file into two parts)
+(Split the content of the GCP Credentials key-file into two parts, because it's too long for a single entry)
