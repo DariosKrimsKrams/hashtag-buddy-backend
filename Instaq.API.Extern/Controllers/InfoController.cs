@@ -6,6 +6,7 @@
     using Instaq.Common;
 
     [Route("[controller]")]
+    [Produces("application/json")]
     public class InfoController : Controller
     {
         [HttpGet("Version")]

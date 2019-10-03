@@ -12,6 +12,7 @@
     using Newtonsoft.Json;
 
     [Route("[controller]")]
+    [Produces("application/json")]
     public class EvaluationController : Controller
     {
         private readonly IEvaluationStorage evaluationStorage;

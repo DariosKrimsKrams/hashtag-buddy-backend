@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
 
     [Route("[controller]")]
+    [Produces("application/json")]
     public class FeedbackController : Controller
     {
         private readonly IFeedbackStorage feedbackStorage;
