@@ -6,6 +6,19 @@ Find the most relevant Instagram Hashtags.
   * First user test on 2018-07-31
   * Crawler running 24/7 local 2018-10-07
   
+## Deployment
+Run docker from Solution directory:
+```
+
+docker build -f Instaq.API.Extern/Dockerfile -t instaqapi .
+docker run -d -p 8080:80 --name myapp instaqapi
+docker ps -a
+docker rm $(docker ps -a -q)
+docker login ; docker push instaqapi
+docker logs instaqapi
+```
+
+  
 ## Improvement Proposals
   * [#1 Database Basics](/doc/ip1_better_database.md) ✔
   * [#2 Crawler Basics](/doc/ip2_crawler.md) ✔

@@ -1,0 +1,13 @@
+﻿*/temp*
+*/*/temp*
+temp?
+*/bin
+*/obj
+.dockerignore
+.env
+.git
+.gitignore
+.vs
+.vscode
+**/.toolstarget
+.idea
