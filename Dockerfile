@@ -5,7 +5,7 @@ WORKDIR /app
 
 # Copy everything else and build
 COPY . .
-RUN dotnet publish Instaq.API.Extern -c Release -o out
+RUN dotnet publish Instaq.API.Extern -c Release -o Instaq.API.Extern/out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
