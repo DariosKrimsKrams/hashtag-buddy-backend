@@ -39,9 +39,9 @@
             this.debugInfos.Add("backend_date", Config.Date);
             this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
             this.debugInfos.Add("queryMostRelevant", query);
-            //this.SaveDebugInfos(storage);
 
-            //hTags = new OrderByAmountOfPosts().Do(hTags);
+            // Post Processor Example
+            //humanoidTags = new OrderByAmountOfPosts().Do(humanoidTags);
 
             return humanoidTags;
         }
@@ -67,11 +67,5 @@
 
             return hTagsTrendingList;
         }
-
-        //private void SaveDebugInfos(IEvaluationStorage storage)
-        //{
-        //    var json = JsonConvert.SerializeObject(this.debugInfos);
-        //    storage.InsertLog("web_image", json);
-        //}
     }
 }

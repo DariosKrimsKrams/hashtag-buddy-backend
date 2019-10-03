@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 
 namespace Instaq.API.Extern.Services.Interfaces
 {
+    using Instaq.API.Extern.Models.Responses;
+
     using Microsoft.AspNetCore.Http;
 
     public interface IEvaluationService
     {
         bool IsCustomerValid(string customerId);
 
-        Dictionary<string, object> EvaluateImageUpload(string customerId, IFormFile file, HttpRequest request);
+        EvaluateResponse EvaluateFile(string customerId, IFormFile file, HttpRequest request);
 
     }
 }

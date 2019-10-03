@@ -1,6 +1,8 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
+
+    using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@
         }
 
         [HttpPost("File/{customerId}")]
-        [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(EvaluateResponse), 200)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 401)]
         public IActionResult File(IFormFile file, string customerId)
@@ -41,7 +43,7 @@
                     return this.Unauthorized();
                 }
 
-                var data  = this.evaluationService.EvaluateImageUpload(customerId, file, this.Request);
+                var data  = this.evaluationService.EvaluateFile(customerId, file, this.Request);
                 return this.Ok(data);
             }
             catch (ArgumentException)

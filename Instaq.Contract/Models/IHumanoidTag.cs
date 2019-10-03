@@ -7,5 +7,7 @@
         int RefCount { get; set; }
 
         bool OnBlacklist { get; set; }
+
+        new string Name { get; set; }
     }
 }

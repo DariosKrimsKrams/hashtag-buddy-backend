@@ -3,10 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Security.Cryptography;
-    using System.Text;
+
+    using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
     using Instaq.API.Extern.Utils;
+    using Instaq.Common;
     using Instaq.Common.Utils;
     using Instaq.Contract;
     using Instaq.Contract.Models;
@@ -22,12 +23,14 @@
         private readonly IEvaluation evaluation;
         private readonly ICustomerStorage customerStorage;
 
-        public EvaluationService(IEvaluationStorage evaluationStorage,
-                                 ITaggingProvider taggingProvider,
-                                 IFileHandler fileHandler,
-                                 IEvaluation evaluation,
-                                 ILogStorage logStorage,
-                                 ICustomerStorage customerStorage)
+        public EvaluationService(
+            IEvaluationStorage evaluationStorage,
+            ITaggingProvider taggingProvider,
+            IFileHandler fileHandler,
+            IEvaluation evaluation,
+            ILogStorage logStorage,
+            ICustomerStorage customerStorage
+            )
         {
             this.evaluationStorage = evaluationStorage;
             this.logStorage        = logStorage;
@@ -43,7 +46,7 @@
             return customerId.Length == 64 && this.customerStorage.Exists(customerId);
         }
 
-        public Dictionary<string, object> EvaluateImageUpload(string customerId, IFormFile file, HttpRequest request)
+        public EvaluateResponse EvaluateFile(string customerId, IFormFile file, HttpRequest request)
         {
             using var stream = new MemoryStream();
             file.CopyTo(stream);
@@ -119,11 +122,10 @@
             }
 
             this.evaluation.AddDebugInfos("ip", UserInfos.GetIpAddress(request));
-            var data = this.FindTags(this.evaluation, machineTags);
+            var response = this.FindTags(machineTags);
 
             var debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
             var logId = this.logStorage.InsertLog(debugData, customerId);
-
             var hash = Hash.GetMd5(logId.ToString());
             var ext = Path.GetExtension(file.FileName);
             var fileName = hash + ext.ToLower();
@@ -137,22 +139,24 @@
             
             this.customerStorage.IncreasePhotosCount(customerId);
 
-            data.Add("img", fileName);
-            data.Add("logId", logId);
+            response.Img = fileName;
+            response.LogId = logId;
 
-            return data;
+            return response;
         }
 
-        private Dictionary<string, object> FindTags(IEvaluation evaluation, IMachineTag[] machineTags)
+        private EvaluateResponse FindTags(IMachineTag[] machineTags)
         {
-            var mostRelevantHTags = evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
-            var trendingHTags     = evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);
+            var mostRelevantHTags = this.evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
+            var trendingHTags     = this.evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);
 
-            return new Dictionary<string, object>
+            var response = new EvaluateResponse
             {
-                { "mostRelevantHTags", mostRelevantHTags },
-                { "trendingHTags", trendingHTags },
+                MostRelevantHTags = mostRelevantHTags,
+                TrendingHTags = trendingHTags
             };
+
+            return response;
         }
 
     }
