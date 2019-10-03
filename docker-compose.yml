@@ -4,6 +4,6 @@ services:
   instaqapi:
     build:
       context: .
-      dockerfile: Instaq.API.Extern/Dockerfile
+      dockerfile: Dockerfile
     ports:
      - "8080:80"

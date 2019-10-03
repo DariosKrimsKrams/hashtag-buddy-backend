@@ -9,7 +9,7 @@ Find the most relevant Instagram Hashtags.
 ## Deployment
 Run docker from Solution directory with command `docker-compose up` or use one of the other docker commands:
 ```
-docker build -f Instaq.API.Extern/Dockerfile -t darionotes/instaqapi .
+docker build -t darionotes/instaqapi .
 docker run -d -p 8080:80 --name myapp instaqapi
 docker ps -a
 docker rm $(docker ps -a -q)

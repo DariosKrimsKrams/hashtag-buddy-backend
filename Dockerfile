@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
 WORKDIR /app
 
 # Copy everything else and build
-COPY . ./
+COPY . .
 RUN dotnet publish Instaq.API.Extern -c Release -o out
 
 # Build runtime image
