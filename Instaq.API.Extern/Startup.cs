@@ -1,5 +1,7 @@
 ﻿namespace Instaq.API.Extern
 {
+    using Instaq.API.Extern.Services;
+    using Instaq.API.Extern.Services.Interfaces;
     using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql;
@@ -16,7 +18,6 @@
 
     public class Startup
     {
-
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -29,6 +30,8 @@
             services.AddControllers();
             services.AddCors();
 
+            services.AddTransient<IEvaluationService, EvaluationService>();
+
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
             services.AddTransient<ILogStorage, MysqlLogStorage>();
             services.AddTransient<IFeedbackStorage, MysqlFeedbackStorage>();
@@ -38,12 +41,8 @@
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
             services.AddTransient<IEvaluation, Evaluation>();
-
-            services.AddSwaggerGen(
-                c =>
-                {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Extern", Version = "v1" });
-                });
+            
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Extern", Version = "v1" }); });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,11 +53,7 @@
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(
-                c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1");
-                });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1"); });
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

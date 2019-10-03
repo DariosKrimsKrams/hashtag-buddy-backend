@@ -71,7 +71,7 @@
                 {
                     return this.Unauthorized();
                 }
-                if (!this.debugStorage.IsIdAndCustomerIdMatching(feedback.PhotoId, feedback.CustomerId))
+                if (!this.debugStorage.ArePhotoIdAndCustomerIdMatching(feedback.PhotoId, feedback.CustomerId))
                 {
                     return this.Unauthorized();
                 }

@@ -19,6 +19,6 @@
 
         ILog GetLog(int id);
 
-        bool IsIdAndCustomerIdMatching(int id, string customerId);
+        bool ArePhotoIdAndCustomerIdMatching(int photoId, string customerId);
     }
 }
