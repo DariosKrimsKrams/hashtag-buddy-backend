@@ -10,6 +10,8 @@
 
         int FeedbackCount { get; set; }
 
+        string Infos { get; set; }
+
         void GenerateHash();
     }
 }

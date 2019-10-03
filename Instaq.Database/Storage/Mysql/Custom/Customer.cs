@@ -12,9 +12,10 @@
         {
             return new Customer
             {
-                Id          = customer.Id,
-                CustomerId  = customer.CustomerId,
-                PhotosCount = customer.PhotosCount,
+                Id            = customer.Id,
+                CustomerId    = customer.CustomerId,
+                PhotosCount   = customer.PhotosCount,
+                Infos         = string.Empty,
                 FeedbackCount = customer.FeedbackCount
             };
         }
