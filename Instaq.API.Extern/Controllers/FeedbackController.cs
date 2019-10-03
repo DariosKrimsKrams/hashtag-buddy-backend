@@ -29,10 +29,17 @@
 
         [HttpPost("App")]
         [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 401)]
+        [ProducesResponseType(typeof(void), 404)]
         public IActionResult AppFeedback([FromBody] AppFeedback feedback)
         {
             try
             {
+                if (feedback.CustomerId is null)
+                {
+                    return this.NotFound();
+                }
                 if (!this.IsCustomerValid(feedback.CustomerId))
                 {
                     return this.Unauthorized();
@@ -49,10 +56,17 @@
 
         [HttpPost("Results")]
         [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 401)]
+        [ProducesResponseType(typeof(void), 404)]
         public IActionResult ResultsFeedback([FromBody] ResultsFeedback feedback)
         {
             try
             {
+                if(feedback.CustomerId is null)
+                {
+                    return this.NotFound();
+                }
                 if (!this.IsCustomerValid(feedback.CustomerId))
                 {
                     return this.Unauthorized();

@@ -1,15 +1,11 @@
-﻿using System.Reflection;
-
-namespace Instaq.API.Extern.Utils
+﻿namespace Instaq.API.Extern.Utils
 {
+    using System.Reflection;
+
     public class VersionInfo
     {
         public static string Version
-        {
-            get
-            {
-                return Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            }
-        }
+            => Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                   ?.InformationalVersion ?? "";
     }
 }

@@ -16,10 +16,12 @@
             var version = Config.Version;
             var date = Config.Date;
 
-            var list = new Dictionary<string, string>();
-            list.Add("backendVersion", VersionInfo.Version);
-            list.Add("evaluationVersion", version.ToString());
-            list.Add("date", date);
+            var list = new Dictionary<string, string>
+            {
+                { "backendVersion", VersionInfo.Version },
+                { "evaluationVersion", version.ToString() },
+                { "date", date }
+            };
             return this.Json(list);
         }
     }

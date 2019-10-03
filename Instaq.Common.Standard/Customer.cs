@@ -23,7 +23,7 @@
             var input = this.Id + secret;
             var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
             var sb = new StringBuilder();
-            foreach (byte b in hash)
+            foreach (var b in hash)
                 sb.Append(b.ToString("X2"));
             this.CustomerId = sb.ToString().ToLower();
         }

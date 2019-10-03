@@ -168,7 +168,7 @@
             var sb = new StringBuilder();
             var algorithm = MD5.Create();
             var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
-            foreach (byte b in hash)
+            foreach (var b in hash)
             {
                 sb.Append(b.ToString("X2"));
             }
@@ -189,7 +189,7 @@
 
         private string GetIpAddress()
         {
-            return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString();
+            return this.Request.HttpContext.Connection?.RemoteIpAddress?.ToString() ?? "";
         }
 
         private bool IsCustomerValid(string customerId)

@@ -25,13 +25,11 @@
         {
             try
             {
-                var customer = new Customer();
-                customer.CustomerId = "";
+                var customer = new Customer { CustomerId = "" };
                 customer.Id = this.customerStorage.Create(customer);
                 customer.GenerateHash();
                 this.customerStorage.UpdateCustomerId(customer.Id, customer.CustomerId);
-                var output = new Dictionary<string, string>();
-                output.Add("customerId", customer.CustomerId);
+                var output = new Dictionary<string, string> { { "customerId", customer.CustomerId } };
                 return this.Ok(output);
             }
             catch (ArgumentException)
