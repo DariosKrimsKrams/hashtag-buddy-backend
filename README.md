@@ -10,12 +10,12 @@ Find the most relevant Instagram Hashtags.
 Run docker from Solution directory:
 ```
 
-docker build -f Instaq.API.Extern/Dockerfile -t instaqapi .
+docker build -f Instaq.API.Extern/Dockerfile -t darionotes/instaqapi .
 docker run -d -p 8080:80 --name myapp instaqapi
 docker ps -a
 docker rm $(docker ps -a -q)
-docker login ; docker push instaqapi
-docker logs instaqapi
+docker login ; docker push darionotes/instaqapi
+docker logs darionotes/instaqapi
 ```
 
   
