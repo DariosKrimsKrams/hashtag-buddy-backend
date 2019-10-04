@@ -8,6 +8,7 @@
 
         bool OnBlacklist { get; set; }
 
+        // https: //github.com/aspnet/AspNetCore/issues/14724
         new string Name { get; set; }
     }
 }
