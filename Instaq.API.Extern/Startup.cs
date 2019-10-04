@@ -30,6 +30,8 @@
             services.AddControllers();
             services.AddCors();
 
+            services.AddHealthChecks().AddCheck<HealthService>("IsDbConnectionHealthy");
+
             services.AddTransient<IEvaluationService, EvaluationService>();
 
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
@@ -65,6 +67,7 @@
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("info/health");
                 endpoints.MapControllers();
             });
         }
