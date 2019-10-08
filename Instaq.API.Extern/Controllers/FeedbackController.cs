@@ -8,9 +8,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
+    [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class FeedbackController : Controller
+    public class FeedbackController : ControllerBase
     {
         private readonly IFeedbackStorage feedbackStorage;
         private readonly ICustomerStorage customerStorage;
@@ -32,7 +33,7 @@
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 401)]
         [ProducesResponseType(typeof(void), 404)]
-        public IActionResult AppFeedback([FromBody] AppFeedback feedback)
+        public IActionResult AppFeedback(AppFeedback feedback)
         {
             try
             {
@@ -57,9 +58,7 @@
         [HttpPost("Results")]
         [ProducesResponseType(typeof(void), 200)]
         [ProducesResponseType(typeof(void), 400)]
-        [ProducesResponseType(typeof(void), 401)]
-        [ProducesResponseType(typeof(void), 404)]
-        public IActionResult ResultsFeedback([FromBody] ResultsFeedback feedback)
+        public IActionResult ResultsFeedback(ResultsFeedback feedback)
         {
             try
             {

@@ -5,9 +5,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Instaq.Common;
 
+    [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class InfoController : Controller
+    public class InfoController : ControllerBase
     {
         [HttpGet("Version")]
         [ProducesResponseType(typeof(void), 200)]
@@ -16,13 +17,13 @@
             var version = Config.Version;
             var date = Config.Date;
 
-            var list = new Dictionary<string, string>
+            var result = new Dictionary<string, string>
             {
                 { "backendVersion", VersionInfo.Version },
                 { "evaluationVersion", version.ToString() },
                 { "date", date }
             };
-            return this.Json(list);
+            return this.Ok(result);
         }
     }
 }

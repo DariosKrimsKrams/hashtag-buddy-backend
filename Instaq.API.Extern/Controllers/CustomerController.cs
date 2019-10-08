@@ -6,9 +6,10 @@
     using Contract;
     using Microsoft.AspNetCore.Mvc;
 
+    [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class CustomerController : Controller
+    public class CustomerController : ControllerBase
     {
         private readonly ICustomerStorage customerStorage;
 
@@ -20,7 +21,8 @@
         }
 
         [HttpPost("Create")]
-        [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(Dictionary<string, string>), 200)]
+        [ProducesResponseType(typeof(void), 400)]
         public IActionResult CreateCustomer()
         {
             try
