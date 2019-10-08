@@ -6,8 +6,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
+    [ApiController]
     [Route( "[controller]" )]
-    public class DebugController : Controller
+    public class DebugController : ControllerBase
     {
         private IDebugStorage debugStorage;
 
@@ -16,24 +17,21 @@
             this.debugStorage = debugStorage;
         }
 
-        [Route( "Stats/HumanoidTagRelationsCount" )]
-        [HttpGet]
+        [HttpGet("Stats/HumanoidTagRelationsCount")]
         public IActionResult GetHumanoidTagRelationCount()
         {
             var count = this.debugStorage.GetHumanoidTagRelationCount();
             return this.Ok( count );
         }
 
-        [Route( "Stats/HumanoidTagsCount" )]
-        [HttpGet]
+        [HttpGet("Stats/HumanoidTagsCount")]
         public IActionResult GetHumanoidTagsCount()
         {
             var count = this.debugStorage.GetHumanoidTagsCount();
             return this.Ok( count );
         }
 
-        [Route( "Log/{id}" )]
-        [HttpGet]
+        [HttpGet("Log/{id}")]
         public IActionResult GetLog( int id )
         {
             var log = this.debugStorage.GetLog( id );
@@ -46,8 +44,7 @@
             return this.Ok( output );
         }
 
-        [Route( "Logs/{skip}/{take}/{orderby}" )]
-        [HttpGet]
+        [HttpGet("Logs/{skip}/{take}/{orderby}")]
         public IEnumerable<Dictionary<string, object>> GetLogs( int skip, int take, string orderby )
         {
             //var logsCount = this.debugStorage.GetLogCount();
@@ -64,24 +61,21 @@
             //return output;
         }
 
-        [Route( "LogsCount" )]
-        [HttpGet]
+        [HttpGet("LogsCount")]
         public string GetLogsCount()
         {
             var logsCount = this.debugStorage.GetLogCount();
             return logsCount;
         }
 
-        [Route( "Stats/MachineTagsCount" )]
-        [HttpGet]
+        [HttpGet("Stats/MachineTagsCount")]
         public IActionResult GetMachineTagsCount()
         {
             var count = this.debugStorage.GetMachineTagsCount();
             return this.Ok( count );
         }
 
-        [Route( "Stats/PhotosCount" )]
-        [HttpGet]
+        [HttpGet("Stats/PhotosCount")]
         public IActionResult GetPhotosCount()
         {
             var count = this.debugStorage.GetPhotosCount();

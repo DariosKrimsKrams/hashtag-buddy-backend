@@ -1,31 +1,30 @@
-﻿namespace Instaq.API.Controllers
+﻿namespace Instaq.API.Debug.Controllers
 {
     using System;
     using System.IO;
     using Instaq.Contract;
     using Microsoft.AspNetCore.Mvc;
 
+    [ApiController]
     [Route("[controller]")]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly IFileHandler fileHandler;
 
-        public UserController(
-            IFileHandler fileHandler
-            )
+        public UserController(IFileHandler fileHandler)
         {
-            //this.evaluationStorage = evaluationStorage;
-            //this.logStorage = logStorage;
             this.fileHandler = fileHandler;
         }
 
-        [Route("Img/{fileName}")]
-        [HttpGet]
+        [HttpGet("Img/{fileName}")]
+        [ProducesResponseType(typeof(FileContentResult), 200)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 404)]
         public IActionResult GetUserImage(string fileName)
         {
             if (fileName.Contains(".."))
             {
-                return this.StatusCode(500);
+                return this.BadRequest();
             }
             try
             {
@@ -38,7 +37,7 @@
             }
             catch (Exception)
             {
-                return this.StatusCode(500);
+                return this.BadRequest();
             }
         }
     }
