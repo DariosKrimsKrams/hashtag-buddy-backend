@@ -1,18 +1,15 @@
 ﻿namespace Instaq.API.Extern.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-
+    using System.Text.Json;
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
     using Instaq.API.Extern.Utils;
-    using Instaq.Common;
     using Instaq.Common.Utils;
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Microsoft.AspNetCore.Http;
-    using Newtonsoft.Json;
 
     public class EvaluationService : IEvaluationService
     {
@@ -124,7 +121,7 @@
             this.evaluation.AddDebugInfos("ip", UserInfos.GetIpAddress(request));
             var response = this.FindTags(machineTags);
 
-            var debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+            var debugData = JsonSerializer.Serialize(this.evaluation.GetDebugInfos());
             var logId = this.logStorage.InsertLog(debugData, customerId);
             var hash = Hash.GetMd5(logId.ToString());
             var ext = Path.GetExtension(file.FileName);
@@ -133,7 +130,7 @@
 
             this.evaluation.AddDebugInfos("image", fileName);
             this.evaluation.AddDebugInfos("originalFilename", file.FileName);
-            debugData = JsonConvert.SerializeObject(this.evaluation.GetDebugInfos());
+            debugData = JsonSerializer.Serialize(this.evaluation.GetDebugInfos());
             var log = new Log { Id = logId, Data = debugData };
             this.logStorage.UpdateLog(log);
             

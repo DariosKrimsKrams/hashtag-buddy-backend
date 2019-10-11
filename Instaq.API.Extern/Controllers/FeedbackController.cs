@@ -6,7 +6,9 @@
     using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json;
+    using System.Text.Json;
+
+    using JsonSerializer = System.Text.Json.JsonSerializer;
 
     [ApiController]
     [Route("[controller]")]
@@ -85,7 +87,7 @@
 
         private void HandleFeedback(string type, string customerId, int photoId, object data)
         {
-            var json = JsonConvert.SerializeObject(data);
+            var json = JsonSerializer.Serialize(data);
             var feedback = new Feedback
             {
                 Type       = type,

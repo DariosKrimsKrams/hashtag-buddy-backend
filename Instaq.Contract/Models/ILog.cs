@@ -1,7 +1,6 @@
 ﻿namespace Instaq.Contract.Models
 {
     using System;
-    using System.Collections.Generic;
 
     public interface ILog
     {
@@ -12,9 +11,5 @@
         DateTime Created { get; set; }
 
         bool Deleted { get; set; }
-
-        IDictionary<string, object> GetDataAsList();
-
-        void SetData(IDictionary<string, object> data);
     }
 }

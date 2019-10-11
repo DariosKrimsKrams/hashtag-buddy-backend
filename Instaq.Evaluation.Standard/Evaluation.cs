@@ -2,12 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
-
-    using Newtonsoft.Json;
 
     public class Evaluation : IEvaluation
     {

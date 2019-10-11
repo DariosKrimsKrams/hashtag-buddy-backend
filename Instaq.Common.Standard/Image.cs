@@ -5,8 +5,6 @@
     using Instaq.Contract;
     using Instaq.Contract.Models;
 
-    using Newtonsoft.Json;
-
     public class Image : IImage
     {
         public int CommentCount { get; set; }
@@ -37,9 +35,5 @@
 
         public string Status { get; set; }
 
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
     }
 }
