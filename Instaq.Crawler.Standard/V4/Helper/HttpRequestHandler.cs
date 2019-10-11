@@ -59,7 +59,7 @@
             var scriptNode = document?.SelectNodes("//script")
                 ?.FirstOrDefault(n => n.InnerText.Contains("window._sharedData = "));
 
-            if (scriptNode == null)
+            if (scriptNode is null)
             {
                 return null;
             }

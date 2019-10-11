@@ -37,7 +37,7 @@
         private dynamic GetContentNode(string url)
         {
             var node = this.handler.FetchNode(url);
-            if (node == null)
+            if (node is null)
             {
                 return null;
             }

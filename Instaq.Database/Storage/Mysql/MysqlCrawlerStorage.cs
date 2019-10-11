@@ -19,7 +19,7 @@
             var values = "";
             foreach (var image in images)
             {
-                if (image?.HumanoidTags == null)
+                if (image?.HumanoidTags is null)
                 {
                     continue;
                 }
@@ -73,7 +73,7 @@
             for (var i = 0; i < hTags.Length; i++)
             {
                 var hTag = hTags[i];
-                if (hTag == null)
+                if (hTag is null)
                 {
                     continue;
                 }

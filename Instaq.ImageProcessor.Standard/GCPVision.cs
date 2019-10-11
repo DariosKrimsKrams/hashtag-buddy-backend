@@ -110,7 +110,7 @@
                 throw;
             }
 
-            if (labels == null || webInfos == null)
+            if (labels is null || webInfos is null)
                 yield break;
 
             foreach (var mTag in ToMTags(labels, webInfos))

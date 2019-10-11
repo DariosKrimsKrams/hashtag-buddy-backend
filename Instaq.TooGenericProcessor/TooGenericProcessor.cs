@@ -20,7 +20,7 @@
             while (true)
             {
                 var hTag = this.provider.GetNextHumanoidTag(onlyWithoutRefCountYet);
-                if (hTag == null)
+                if (hTag is null)
                 {
                     Console.WriteLine("Exit");
                     break;

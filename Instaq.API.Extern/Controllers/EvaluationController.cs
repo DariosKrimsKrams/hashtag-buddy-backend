@@ -26,11 +26,11 @@
         {
             try
             {
-                if (this.Request.ContentType == null || !this.Request.ContentType.Contains("multipart/form-data; boundary"))
+                if (this.Request.ContentType is null || !this.Request.ContentType.Contains("multipart/form-data; boundary"))
                 {
                     return this.BadRequest("Wrong ContentType :'(");
                 }
-                if (file == null || file.Length == 0)
+                if (file is null || file.Length == 0)
                 {
                     return this.BadRequest("No Files uploaded");
                 }

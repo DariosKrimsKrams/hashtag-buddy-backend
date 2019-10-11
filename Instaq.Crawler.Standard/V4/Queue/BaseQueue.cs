@@ -60,7 +60,7 @@
 
         public new void Enqueue(T entry)
         {
-            if (entry == null || this.IsProcessed(entry) || this.Contains(entry))
+            if (entry is null || this.IsProcessed(entry) || this.Contains(entry))
             {
                 return;
             }

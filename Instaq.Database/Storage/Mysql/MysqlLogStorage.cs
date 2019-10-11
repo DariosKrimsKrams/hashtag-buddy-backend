@@ -26,7 +26,7 @@
         public ILog GetLog(int id)
         {
             var entry = this.db.Debug.FirstOrDefault(x => x.Id == id);
-            if (entry == null)
+            if (entry is null)
             {
                 throw new ArgumentException();
             }

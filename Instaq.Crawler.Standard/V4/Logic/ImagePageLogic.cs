@@ -41,7 +41,7 @@
 
         public IEnumerable<IImage> GetImages(dynamic nodes)
         {
-            if (nodes == null)
+            if (nodes is null)
             {
                 yield break;
             }
@@ -60,7 +60,7 @@
         public IImage GetImage(dynamic node)
         {
             var edges = node?.edge_media_to_caption?.edges;
-            if (edges == null || edges.ToString() == "[]")
+            if (edges is null || edges.ToString() == "[]")
             {
                 return null;
             }
@@ -108,7 +108,7 @@
         private IEnumerable<string> GetComments(dynamic node)
         {
             var commentsNode = node?.edge_media_to_comment?.edges;
-            if (commentsNode == null)
+            if (commentsNode is null)
             {
                 yield break;
             }

@@ -35,7 +35,7 @@
         public IActionResult GetLog( int id )
         {
             var log = this.debugStorage.GetLog( id );
-            if( log == null )
+            if( log is null )
             {
                 return this.NotFound( "Log doesn't exist or was deleted :'(" );
             }
