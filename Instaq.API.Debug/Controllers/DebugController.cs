@@ -4,7 +4,7 @@
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json;
+    using System.Text.Json;
 
     [ApiController]
     [Route( "[controller]" )]
@@ -47,18 +47,11 @@
         [HttpGet("Logs/{skip}/{take}/{orderby}")]
         public IEnumerable<Dictionary<string, object>> GetLogs( int skip, int take, string orderby )
         {
-            //var logsCount = this.debugStorage.GetLogCount();
             var logs = this.debugStorage.GetLogs( skip, take, orderby );
-            //var items = new List<Dictionary<string, object>>();
             foreach( var log in logs )
             {
                 yield return this.BuildLogOutput( log );
             }
-
-            //var output = new Dictionary<string, object>();
-            //output.Add("totalCount", logsCount);
-            //output.Add("items", items);
-            //return output;
         }
 
         [HttpGet("LogsCount")]
@@ -84,12 +77,12 @@
 
         private Dictionary<string, object> BuildLogOutput( ILog log )
         {
-            var entries = JsonConvert.DeserializeObject<Dictionary<string, object>>( log.Data );
-            foreach( var entry in entries )
+            var entries = JsonSerializer.Deserialize<Dictionary<string, object>>(log.Data);
+            foreach ( var entry in entries )
             {
                 if( entry.Value is string valueAsStr && valueAsStr.Substring( 0, 2 ) == "[{" )
                 {
-                    entries[ entry.Key ] = JsonConvert.DeserializeObject<Dictionary<string, object>>( valueAsStr );
+                    entries[entry.Key] = JsonSerializer.Deserialize<Dictionary<string, object>>(valueAsStr);
                 }
             }
 
