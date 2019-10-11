@@ -21,6 +21,10 @@
         private IList<IHumanoidTag> tags;
         private IList<IImage> images;
 
+        private int hashtagNamesFoundTriggered;
+        private int hashtagFoundCompleteTriggered;
+        private int imageFoundTriggered;
+
         [SetUp]
         public void Setup()
         {
@@ -40,6 +44,10 @@
             dynamic userPageObj = JsonConvert.DeserializeObject(userPageJson);
             var userPageUrl = "https://www.instagram.com/felixadergold/?hl=en";
             requestHandler.FetchNode(userPageUrl).Returns(userPageObj);
+
+            this.hashtagNamesFoundTriggered = 0;
+            this.hashtagFoundCompleteTriggered = 0;
+            this.imageFoundTriggered = 0;
 
             var settings = new CrawlerSettings
             {
@@ -66,16 +74,19 @@
             {
                 this.tagNames.Add(hTagName);
             }
+            this.hashtagNamesFoundTriggered++;
         }
 
         private void OnHashtagFoundComplete(IHumanoidTag humanoidTag)
         {
             this.tags.Add(humanoidTag);
+            this.hashtagFoundCompleteTriggered++;
         }
 
         private void OnImageFound(IImage image)
         {
             this.images.Add(image);
+            this.imageFoundTriggered++;
         }
 
         [Test]
@@ -83,14 +94,30 @@
         {
             this.crawler.DoCrawling("hamburg");
 
-            Assert.AreEqual(176, this.tagNames.Count);
-            Assert.AreEqual(1, this.tags.Count);
-            Assert.AreEqual(12, this.images.Count);
-            Assert.IsNotNull(this.images[0].User);
-            Assert.AreEqual("felixadergold", this.images[0].User.Username);
-            Assert.AreEqual(34942, this.images[0].User.FollowerCount);
-            Assert.AreEqual(2453, this.images[0].User.FollowingCount);
-            Assert.AreEqual(383, this.images[0].User.PostCount);
+            // Assertion has to wait until all Threads are finished
+            for (int i = 0; i < 10; i++)
+            {
+                if(hashtagNamesFoundTriggered == 0
+                    || hashtagFoundCompleteTriggered == 0
+                    || imageFoundTriggered == 0)
+                {
+                    Thread.Sleep(100);
+                }
+                else
+                {
+                    Assert.AreEqual(176, this.tagNames.Count);
+                    Assert.AreEqual(1, this.tags.Count);
+                    Assert.AreEqual(12, this.images.Count);
+                    Assert.IsNotNull(this.images[0].User);
+                    Assert.AreEqual("felixadergold", this.images[0].User.Username);
+                    Assert.AreEqual(34942, this.images[0].User.FollowerCount);
+                    Assert.AreEqual(2453, this.images[0].User.FollowingCount);
+                    Assert.AreEqual(383, this.images[0].User.PostCount);
+                    break;
+                }
+            }
+
+
         }
 
         [Test]
@@ -111,6 +138,10 @@
             var userPage2Url = "https://www.instagram.com/lamiayasmin/?hl=en";
             requestHandler.FetchNode(userPage2Url).Returns(userPage2Obj);
 
+            this.hashtagNamesFoundTriggered    = 0;
+            this.hashtagFoundCompleteTriggered = 0;
+            this.imageFoundTriggered           = 0;
+
             var settings = new CrawlerSettings
             {
                 LimitExplorePages = 2,
@@ -122,24 +153,39 @@
             this.crawler.UpdateSettings(settings);
             this.crawler.DoCrawling("hamburg");
 
-            Assert.AreEqual(218, this.tagNames.Count);
-            Assert.AreEqual(2, this.tags.Count);
-            Assert.AreEqual(23, this.images.Count);
-            Assert.IsNotNull(this.images[0].User);
-            for (int i = 0; i < 12; i++)
+            // Assertion has to wait until all Threads are finished
+            for (int j = 0; j < 10; j++)
             {
-                Assert.AreEqual("felixadergold", this.images[i].User.Username);
-                Assert.AreEqual(34942, this.images[i].User.FollowerCount);
-                Assert.AreEqual(2453, this.images[i].User.FollowingCount);
-                Assert.AreEqual(383, this.images[i].User.PostCount);
+                if (hashtagNamesFoundTriggered < 2
+                 || hashtagFoundCompleteTriggered < 2
+                 || imageFoundTriggered < 2)
+                {
+                    Thread.Sleep(200);
+                }
+                else
+                {
+                    Assert.AreEqual(218, this.tagNames.Count);
+                    Assert.AreEqual(2, this.tags.Count);
+                    Assert.AreEqual(23, this.images.Count);
+                    Assert.IsNotNull(this.images[0].User);
+                    for (int i = 0; i < 12; i++)
+                    {
+                        Assert.AreEqual("felixadergold", this.images[i].User.Username);
+                        Assert.AreEqual(34942, this.images[i].User.FollowerCount);
+                        Assert.AreEqual(2453, this.images[i].User.FollowingCount);
+                        Assert.AreEqual(383, this.images[i].User.PostCount);
+                    }
+                    for (int i = 12; i < 12 + 11; i++)
+                    {
+                        Assert.AreEqual("lamiayasmin", this.images[i].User.Username);
+                        Assert.AreEqual(9608, this.images[i].User.FollowerCount);
+                        Assert.AreEqual(384, this.images[i].User.FollowingCount);
+                        Assert.AreEqual(164, this.images[i].User.PostCount);
+                    }
+                    break;
+                }
             }
-            for (int i = 12; i < 12+11; i++)
-            {
-                Assert.AreEqual("lamiayasmin", this.images[i].User.Username);
-                Assert.AreEqual(9608, this.images[i].User.FollowerCount);
-                Assert.AreEqual(384, this.images[i].User.FollowingCount);
-                Assert.AreEqual(164, this.images[i].User.PostCount);
-            }
+
         }
     }
 }
