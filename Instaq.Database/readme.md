@@ -32,3 +32,15 @@ following file generates the database-first models:
 ```
 dotnet ef dbcontext scaffold "Server=89.22.110.69;User Id=instaq_prod;Password=PASSWORD;Database=InstaqProd" "Pomelo.EntityFrameworkCore.MySql" -f
 ```
+
+For .Net Core 3.0 install dotnet CLI:
+
+```
+dotnet tool install -g dotnet-ef
+```
+
+Next step is running in error mesage, which can be solved by adding desc. NuGet package.
+```
+Your startup project 'DFL.MeinLosTvModel' doesn't reference Microsoft.EntityFrameworkCore.Design.
+This package is required for the Entity Framework Core Tools to work. Ensure your startup project is correct, install the package, and try again.
+```
