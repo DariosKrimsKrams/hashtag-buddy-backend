@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
-    public partial class InstataggerContext : DbContext
+    public partial class InstaqProdContext : DbContext
     {
-        public InstataggerContext()
+        public InstaqProdContext()
         {
         }
 
-        public InstataggerContext(DbContextOptions<InstataggerContext> options)
+        public InstaqProdContext(DbContextOptions<InstaqProdContext> options)
             : base(options)
         {
         }
@@ -41,7 +41,8 @@ namespace Instaq.Database
         {
             modelBuilder.Entity<Blacklist>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.Name });
+                entity.HasKey(e => new { e.Id, e.Name })
+                    .HasName("PRIMARY");
 
                 entity.ToTable("blacklist");
 
@@ -75,7 +76,8 @@ namespace Instaq.Database
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.CustomerId });
+                entity.HasKey(e => new { e.Id, e.CustomerId })
+                    .HasName("PRIMARY");
 
                 entity.ToTable("customer");
 
@@ -197,7 +199,8 @@ namespace Instaq.Database
 
             modelBuilder.Entity<Itags>(entity =>
             {
-                entity.HasKey(e => e.Name);
+                entity.HasKey(e => e.Name)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("itags");
 
@@ -323,7 +326,8 @@ namespace Instaq.Database
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
             {
-                entity.HasKey(e => new { e.Shortcode, e.Itag });
+                entity.HasKey(e => new { e.Shortcode, e.Itag })
+                    .HasName("PRIMARY");
 
                 entity.ToTable("photo_itag_rel");
 
@@ -344,7 +348,8 @@ namespace Instaq.Database
 
             modelBuilder.Entity<Photos>(entity =>
             {
-                entity.HasKey(e => e.Shortcode);
+                entity.HasKey(e => e.Shortcode)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("photos");
 
@@ -424,6 +429,10 @@ namespace Instaq.Database
                     .HasForeignKey(d => d.LocationId)
                     .HasConstraintName("rel_photos_location");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

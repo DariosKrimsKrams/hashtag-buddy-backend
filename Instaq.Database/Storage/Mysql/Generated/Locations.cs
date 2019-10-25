@@ -20,6 +20,6 @@ namespace Instaq.Database
         public string ProfilePicUrl { get; set; }
         public DateTime Created { get; set; }
 
-        public ICollection<Photos> Photos { get; set; }
+        public virtual ICollection<Photos> Photos { get; set; }
     }
 }

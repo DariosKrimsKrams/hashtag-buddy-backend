@@ -30,7 +30,7 @@ dotnet restore
 
 following file generates the database-first models:
 ```
-dotnet ef dbcontext scaffold "Server=89.22.110.69;User Id=instaq_prod;Password=PASSWORD;Database=InstaqProd" "Pomelo.EntityFrameworkCore.MySql" -f
+dotnet ef dbcontext scaffold "Server=89.22.110.69;User Id=instaq_prod;Password=PASSWORD;Database=InstaqProd" "Pomelo.EntityFrameworkCore.MySql" -f -o Storage/Mysql/Generated
 ```
 
 For .Net Core 3.0 install dotnet CLI:

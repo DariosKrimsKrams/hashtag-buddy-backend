@@ -19,6 +19,6 @@ namespace Instaq.Database
         public DateTime Created { get; set; }
         public string Status { get; set; }
 
-        public Locations Location { get; set; }
+        public virtual Locations Location { get; set; }
     }
 }

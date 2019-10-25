@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Instaq.Database
+﻿namespace Instaq.Database
 {
     public partial class PhotoItagRel
     {

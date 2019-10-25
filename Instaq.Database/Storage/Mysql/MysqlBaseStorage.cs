@@ -5,23 +5,20 @@
     using System.Data;
     using System.Linq;
     using System.Threading;
-
     using Instaq.Common;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
-    using Instaq.Database;
     using Instaq.Database.Storage.Mysql.Custom;
-
+    using Instaq.Database.Storage.Mysql.Generated;
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;
 
     public abstract class MysqlBaseStorage
     {
-        protected InstataggerContext db;
+        protected InstaqProdContext db;
 
         protected MysqlBaseStorage()
         {
-            this.db = new InstataggerContext();
+            this.db = new InstaqProdContext();
         }
 
         private void Reconnect()

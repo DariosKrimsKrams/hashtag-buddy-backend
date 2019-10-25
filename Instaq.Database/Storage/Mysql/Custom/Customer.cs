@@ -1,9 +1,6 @@
 ﻿namespace Instaq.Database
 {
-    using Instaq.Common;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
-    using Instaq.Database.Storage.Mysql;
     using Instaq.Database.Storage.Mysql.Custom;
 
     public partial class Customer : IIdentifier

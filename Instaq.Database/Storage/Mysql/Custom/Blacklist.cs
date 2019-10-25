@@ -1,7 +1,6 @@
 ﻿namespace Instaq.Database
 {
     using Instaq.Common;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
 
     public partial class Blacklist
