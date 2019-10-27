@@ -1,15 +1,24 @@
-﻿using Instaq.Contract;
-using Instaq.Contract.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instaq.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
-    using System.Linq;
+    using System;
+
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using Instaq.Database.Storage.Mysql.Generated;
+
+    using Feedback = Instaq.Database.Feedback;
 
     public class MysqlFeedbackStorage : MysqlBaseStorage, IFeedbackStorage
     {
+        public MysqlFeedbackStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
+
+        public IFeedback GetLog(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         public int Insert(IFeedback commonFeedback)
         {
@@ -17,11 +26,6 @@ namespace Instaq.Database.Storage.Mysql
             this.db.Feedback.Add(feedback);
             this.db.SaveChanges();
             return feedback.Id;
-        }
-
-        public IFeedback GetLog(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -18,7 +18,21 @@ namespace Instaq.API.Debug
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost
+                .CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env          = hostingContext.HostingEnvironment;
+                    var sharedFolder = Path.Combine(env.ContentRootPath, "..", "Shared");
+                    var path         = Path.Combine(sharedFolder, "SharedSettings.json");
+                    var pathEnv      = Path.Combine(sharedFolder, $"SharedSettings.{env.EnvironmentName}.json");
+                    config
+                        .AddJsonFile(path, true)
+                        .AddJsonFile(pathEnv, true)
+                        .AddJsonFile("appsettings.json", true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
+                    config.AddEnvironmentVariables();
+                })
                 .UseStartup<Startup>();
     }
 }

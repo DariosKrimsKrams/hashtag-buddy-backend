@@ -1,3 +1,6 @@
+# Custom
+Shared/SharedSettings.*.json
+
 # Docker
 out/
 

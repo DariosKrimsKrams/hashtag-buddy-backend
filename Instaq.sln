@@ -35,6 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Debug", "Instaq.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.ImageProcessor.Standard", "Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.Standard.csproj", "{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2A31BD6D-C19E-44DE-8471-C2C691CE2E43}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\SharedSettings.Development.json = Shared\SharedSettings.Development.json
+		Shared\SharedSettings.json = Shared\SharedSettings.json
+		Shared\SharedSettings.Production.json = Shared\SharedSettings.Production.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -8,11 +8,18 @@
 
     using global::Instaq.Contract;
 
+    using Instaq.Database.Storage.Mysql.Generated;
+
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage
     {
         private readonly List<TimeSpan> timingsImages = new List<TimeSpan>();
         private readonly List<TimeSpan> timingsRels = new List<TimeSpan>();
         private readonly List<TimeSpan> timingsHTags = new List<TimeSpan>();
+
+        public MysqlCrawlerStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
 
         public void InsertImages(IImage[] images)
         {

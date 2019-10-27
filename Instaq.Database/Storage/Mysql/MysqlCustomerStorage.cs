@@ -8,8 +8,16 @@ namespace Instaq.Database.Storage.Mysql
 {
     using System.Linq;
 
+    using Instaq.Database.Storage.Mysql.Generated;
+
     public class MysqlCustomerStorage : MysqlBaseStorage, ICustomerStorage
     {
+
+        public MysqlCustomerStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
+
         public int Create(ICustomer commonCustomer)
         {
             var customer = Customer.FromCommonCustomer(commonCustomer);

@@ -4,17 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Database;
-
-    using Microsoft.EntityFrameworkCore;
-
+    using Instaq.Database.Storage.Mysql.Generated;
     using MySql.Data.MySqlClient;
 
     public class MysqlImageProcessorStorage : MysqlBaseStorage, IImageProcessorStorage
     {
+
+        public MysqlImageProcessorStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
+
         public new void Save()
         {
             base.Save();

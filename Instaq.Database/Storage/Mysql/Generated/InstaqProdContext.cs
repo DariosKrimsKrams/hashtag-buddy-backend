@@ -27,14 +27,6 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var ip   = Environment.GetEnvironmentVariable("instatagger_mysql_ip");
-                var user = Environment.GetEnvironmentVariable("instatagger_mysql_user");
-                var pw   = Environment.GetEnvironmentVariable("instatagger_mysql_pw");
-                var db   = Environment.GetEnvironmentVariable("instatagger_mysql_db");
-                optionsBuilder.UseMySql($"Server={ip};User Id={user};Password={pw};Database={db};TreatTinyAsBoolean=false;Convert Zero Datetime=True");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

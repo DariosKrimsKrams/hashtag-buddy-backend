@@ -5,12 +5,14 @@
     using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql;
+    using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.Evaluation.Standard;
     using Instaq.FileHandling.Standard;
     using Instaq.ImageProcessor.Standard.GcpVision;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -31,6 +33,9 @@
             services.AddCors();
 
             services.AddHealthChecks().AddCheck<HealthService>("IsDbConnectionHealthy");
+
+            var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
+            services.AddDbContext<InstaqProdContext>(options => options.UseMySql(dbConnection));
 
             services.AddTransient<IEvaluationService, EvaluationService>();
 

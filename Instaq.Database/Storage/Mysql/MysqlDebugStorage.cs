@@ -5,13 +5,24 @@
 
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
+    using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlDebugStorage : MysqlBaseStorage, IDebugStorage
     {
-
-        public string GetPhotosCount()
+        public MysqlDebugStorage(InstaqProdContext context)
+            : base(context)
         {
-            var query = "SELECT count(*) as count from photos";
+        }
+
+        public bool ArePhotoIdAndCustomerIdMatching(int photoId, string customerId)
+        {
+            return this.db.Debug.FirstOrDefault(x => x.Id == photoId && x.CustomerId == customerId && x.Deleted == 0)
+                != null;
+        }
+
+        public string GetHumanoidTagRelationCount()
+        {
+            var query = "SELECT count(*) from photo_itag_rel";
             var (results, time) = this.ExecuteCustomQuery(query);
             return results?.FirstOrDefault()?.FirstOrDefault();
         }
@@ -23,18 +34,9 @@
             return results?.FirstOrDefault()?.FirstOrDefault();
         }
 
-        public string GetHumanoidTagRelationCount()
+        public ILog GetLog(int id)
         {
-            var query = "SELECT count(*) from photo_itag_rel";
-            var (results, time) = this.ExecuteCustomQuery(query);
-            return results?.FirstOrDefault()?.FirstOrDefault();
-        }
-
-        public string GetMachineTagsCount()
-        {
-            var query = "SELECT count(distinct m.shortcode) from mtags as m";
-            var (results, time) = this.ExecuteCustomQuery(query);
-            return results?.FirstOrDefault()?.FirstOrDefault();
+            return this.db.Debug.FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
         }
 
         public string GetLogCount()
@@ -46,23 +48,22 @@
 
         public IEnumerable<ILog> GetLogs(int skip, int take, string orderby)
         {
-            return this.db.Debug
-                .Where(x => x.Deleted == 0)
-                .OrderByDescending(x => x.Id).Skip(skip).Take(take)
+            return this.db.Debug.Where(x => x.Deleted == 0).OrderByDescending(x => x.Id).Skip(skip).Take(take)
                 .Select(x => x.ToLog());
         }
 
-        public ILog GetLog(int id)
+        public string GetMachineTagsCount()
         {
-            return this.db.Debug
-                .FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
+            var query = "SELECT count(distinct m.shortcode) from mtags as m";
+            var (results, time) = this.ExecuteCustomQuery(query);
+            return results?.FirstOrDefault()?.FirstOrDefault();
         }
 
-        public bool ArePhotoIdAndCustomerIdMatching(int photoId, string customerId)
+        public string GetPhotosCount()
         {
-            return this.db.Debug
-                .FirstOrDefault(x => x.Id == photoId && x.CustomerId == customerId && x.Deleted == 0) != null;
+            var query = "SELECT count(*) as count from photos";
+            var (results, time) = this.ExecuteCustomQuery(query);
+            return results?.FirstOrDefault()?.FirstOrDefault();
         }
     }
-
 }

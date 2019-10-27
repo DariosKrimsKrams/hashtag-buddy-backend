@@ -3,20 +3,25 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
-    using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Database;
+    using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlBlacklistStorage : MysqlBaseStorage, IBlacklistStorage
     {
+
+        public MysqlBlacklistStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
+
         public void Insert(IList<IBlacklistEntry> entries)
         {
             foreach (var entry in entries)
             {
                 var item = Blacklist.FromBlacklistEntry(entry);
                 var query = "INSERT IGNORE INTO blacklist(`name`, `reason`, `table`)"
-                          + $" VALUES ('{entry.Name}', '{entry.Reason}', '{entry.Table}')";
+                          + $" VALUES ('{item.Name}', '{item.Reason}', '{item.Table}')";
                 this.ExecuteCustomQuery(query);
             }
         }

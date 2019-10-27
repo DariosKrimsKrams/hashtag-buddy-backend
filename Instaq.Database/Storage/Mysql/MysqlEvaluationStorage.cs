@@ -4,10 +4,16 @@
     using System.Collections.Generic;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.Database.Storage.Mysql.Query;
 
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage
     {
+
+        public MysqlEvaluationStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
 
         public (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] machineTags)
         {

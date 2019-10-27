@@ -16,9 +16,9 @@
     {
         protected InstaqProdContext db;
 
-        protected MysqlBaseStorage()
+        protected MysqlBaseStorage(InstaqProdContext context)
         {
-            this.db = new InstaqProdContext();
+            this.db = context;
         }
 
         private void Reconnect()

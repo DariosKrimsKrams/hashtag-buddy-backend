@@ -5,9 +5,16 @@
     using System.Linq;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlTooGenericStorage : MysqlBaseStorage, ITooGenericStorage
     {
+
+        public MysqlTooGenericStorage(InstaqProdContext context)
+            : base(context)
+        {
+        }
+
         public int CountHumanoidTagsForHumanoidTag(string name)
         {
             var query = "SELECT count(*) FROM ("
