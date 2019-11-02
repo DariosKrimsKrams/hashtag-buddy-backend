@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Instaq.TestConsole": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

@@ -28,6 +28,7 @@ namespace Instaq.API.Debug
                     var path     = "SharedSettings.json";
                     var pathEnv  = $"SharedSettings.{env.EnvironmentName}.json";
                     config
+                        .SetBasePath(basePath)
                         .AddJsonFile(path, true)
                         .AddJsonFile(pathEnv, true)
                         .AddJsonFile("appsettings.json", true)
