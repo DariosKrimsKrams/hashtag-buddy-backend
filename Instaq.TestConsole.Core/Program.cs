@@ -13,9 +13,8 @@
     using Instaq.ImageProcessor.Standard;
     using Instaq.ImageProcessor.Standard.GcpVision;
     using Instaq.TooGenericProcessor;
-
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.PlatformAbstractions;
 
     internal class Program
     {
@@ -24,10 +23,11 @@
 
         private static void Main(string[] args)
         {
+            var basePath = PlatformServices.Default.Application.ApplicationBasePath;
             var path = "SharedSettings.json";
             var pathEnv = $"SharedSettings.{ Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json";
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(basePath)
                 .AddJsonFile(path, optional: true, reloadOnChange: true)
                 .AddJsonFile(pathEnv, optional: true, reloadOnChange: true)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);

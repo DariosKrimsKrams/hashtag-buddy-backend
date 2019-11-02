@@ -1,10 +1,10 @@
 ﻿namespace Instaq.API.Extern
 {
     using System.IO;
-
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.PlatformAbstractions;
 
     public class Program
     {
@@ -15,10 +15,11 @@
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env          = hostingContext.HostingEnvironment;
-                    var sharedFolder = Path.Combine(env.ContentRootPath, "..", "Shared");
-                    var path         = Path.Combine(sharedFolder, "SharedSettings.json");
-                    var pathEnv      = Path.Combine(sharedFolder, $"SharedSettings.{env.EnvironmentName}.json");
+                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var path = "SharedSettings.json";
+                    var pathEnv = $"SharedSettings.{env.EnvironmentName}.json";
                     config
+                        .SetBasePath(basePath)
                         .AddJsonFile(path, true)
                         .AddJsonFile(pathEnv, true)
                         .AddJsonFile("appsettings.json", true)

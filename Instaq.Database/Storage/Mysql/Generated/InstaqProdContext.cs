@@ -10,11 +10,13 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         public InstaqProdContext()
         {
+            this.connectionString = "";
         }
 
         public InstaqProdContext(DbContextOptions<InstaqProdContext> options)
             : base(options)
         {
+            this.connectionString = "";
         }
 
         public InstaqProdContext(string connectionString)
@@ -34,7 +36,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            if (!optionsBuilder.IsConfigured && !String.IsNullOrEmpty(this.connectionString))
             {
                 optionsBuilder.UseMySql(this.connectionString);
             }
