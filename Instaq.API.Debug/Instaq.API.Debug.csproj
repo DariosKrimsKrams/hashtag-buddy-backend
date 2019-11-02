@@ -27,6 +27,19 @@
     <ProjectReference Include="..\Instaq.FileHandling.Standard\Instaq.DiskFileHandling.csproj" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ItemGroup>
+    <Content Include="..\Shared\SharedSettings.json">
+      <Link>SharedSettings.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Development.json">
+      <Link>SharedSettings.Development.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Production.json">
+      <Link>SharedSettings.Production.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>

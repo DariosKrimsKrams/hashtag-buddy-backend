@@ -4,6 +4,12 @@
 
     public class ResultsFeedback
     {
+        public ResultsFeedback()
+        {
+            this.BadHashtags = new List<string>();
+            this.GoodHashtags = new List<string>();
+        }
+
         public string? CustomerId { get; set; }
 
         public int PhotoId { get; set; }

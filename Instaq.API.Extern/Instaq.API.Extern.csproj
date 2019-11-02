@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-dev22</Version>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +32,21 @@
     <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
     <ProjectReference Include="..\Instaq.Evaluation.Standard\Instaq.Evaluation.csproj" />
     <ProjectReference Include="..\Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.Standard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Shared\SharedSettings.json">
+      <Link>SharedSettings.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Development.json">
+      <Link>SharedSettings.Development.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Production.json">
+      <Link>SharedSettings.Production.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

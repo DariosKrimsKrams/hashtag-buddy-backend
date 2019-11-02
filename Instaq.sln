@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29230.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Contract", "Instaq.Contract\Instaq.Contract.csproj", "{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TestConsole", "Instaq.TestConsole.Core\Instaq.TestConsole.csproj", "{2143633E-4EB3-4A24-AB13-41990006F5DE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Extern", "Instaq.API.Extern\Instaq.API.Extern.csproj", "{FE997A72-9301-4031-A16C-D23F03F5EE19}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Crawler", "Instaq.Crawler.Standard\Instaq.Crawler.csproj", "{0DA86F10-EC95-433D-B634-722BECF35C39}"
@@ -42,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2A31BD
 		Shared\SharedSettings.Production.json = Shared\SharedSettings.Production.json
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TestConsole", "Instaq.TestConsole.Core\Instaq.TestConsole.csproj", "{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +52,6 @@ Global
 		{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30CB818B-0CE3-4ED7-81E8-1D3747748AD8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2143633E-4EB3-4A24-AB13-41990006F5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2143633E-4EB3-4A24-AB13-41990006F5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2143633E-4EB3-4A24-AB13-41990006F5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2143633E-4EB3-4A24-AB13-41990006F5DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE997A72-9301-4031-A16C-D23F03F5EE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE997A72-9301-4031-A16C-D23F03F5EE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE997A72-9301-4031-A16C-D23F03F5EE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -112,6 +108,10 @@ Global
 		{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

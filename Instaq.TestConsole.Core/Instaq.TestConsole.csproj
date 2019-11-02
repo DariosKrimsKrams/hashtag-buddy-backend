@@ -6,12 +6,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Instaq.Crawler.Standard\Instaq.Crawler.csproj" />
     <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
     <ProjectReference Include="..\Instaq.ImageDownloader.Standard\Instaq.ImageDownloader.csproj" />
     <ProjectReference Include="..\Instaq.BlacklistImport\Instaq.BlacklistImport.csproj" />
     <ProjectReference Include="..\Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.Standard.csproj" />
     <ProjectReference Include="..\Instaq.TooGenericProcessor\Instaq.TooGenericProcessor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Shared\SharedSettings.json">
+      <Link>SharedSettings.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Development.json">
+      <Link>SharedSettings.Development.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\SharedSettings.Production.json">
+      <Link>SharedSettings.Production.json</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

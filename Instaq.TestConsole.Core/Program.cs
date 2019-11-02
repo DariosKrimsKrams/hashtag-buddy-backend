@@ -1,6 +1,7 @@
 ﻿namespace Instaq.TestConsole.Core
 {
     using System;
+    using System.IO;
     using System.Linq;
     using Instaq.Common;
     using Instaq.Crawler.Standard;
@@ -8,15 +9,35 @@
     using Instaq.Database.Storage.Mysql;
     using Instaq.ImageDownloader;
     using Instaq.BlacklistImport;
+    using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.ImageProcessor.Standard;
     using Instaq.ImageProcessor.Standard.GcpVision;
     using Instaq.TooGenericProcessor;
 
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+
     internal class Program
     {
 
+        private static InstaqProdContext context;
+
         private static void Main(string[] args)
         {
+            var path = "SharedSettings.json";
+            var pathEnv = $"SharedSettings.{ Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json";
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(path, optional: true, reloadOnChange: true)
+                .AddJsonFile(pathEnv, optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("HashtagDatabase");
+            Console.WriteLine("Using DB: " + connectionString);
+
+            context = new InstaqProdContext(connectionString);
+
             Console.WriteLine("" + 
                              "1: Start Crawler (CrawlerEngine V4)\n" +
                              "2: Start Image Downloader\n" +
@@ -81,25 +102,25 @@
 
         private static void RunTooGenericProcessorAll()
         {
-            var db = new MysqlTooGenericStorage();
+            var db = new MysqlTooGenericStorage(context);
             var processor = new TooGenericProcessor(db);
             processor.CalcHumanoidTagsRefCount();
         }
 
         private static void RunTooGenericProcessorNew()
         {
-            var db        = new MysqlTooGenericStorage();
+            var db        = new MysqlTooGenericStorage(context);
             var processor = new TooGenericProcessor(db);
             processor.CalcHumanoidTagsRefCount(true);
         }
 
         private static void CrawlMtagsWithHighScore()
         {
-            var uiDb = new MysqlEvaluationStorage();
+            var uiDb = new MysqlEvaluationStorage(context);
             var machineTags = uiDb.GetMtagsWithHighScore();
             var machineTagsArr = machineTags.Select(m => m.First().Replace(" ", "").ToLower()).ToArray();
 
-            var crawlerDb = new MysqlCrawlerStorage();
+            var crawlerDb = new MysqlCrawlerStorage(context);
             var requestHandler = new HttpRequestHandler();
             var settings = new CrawlerSettings
             {
@@ -134,20 +155,20 @@
 
         private static void StartCrawler()
         {
-            var db = new MysqlCrawlerStorage();
+            var db = new MysqlCrawlerStorage(context);
             new CrawlerBootstrap(db);
         }
 
         private static void StartImageDownloader()
         {
-            var db = new MysqlImageProcessorStorage();
+            var db = new MysqlImageProcessorStorage(context);
             var imageDownloader = new ImageDownloader(db);
             imageDownloader.Start();
         }
 
         private static void StartImageProcessor()
         {
-            var db = new MysqlImageProcessorStorage();
+            var db = new MysqlImageProcessorStorage(context);
             var tagger = new GcpVision();
 
             var imageProcessor = new ImageProcessorApp(db, tagger);
@@ -172,7 +193,7 @@
 
         private static void RunBlacklistImport()
         {
-            var db = new MysqlBlacklistStorage();
+            var db = new MysqlBlacklistStorage(context);
             var app = new BlacklistImportApp(db);
             var folder = @"C:\Source\instaq-api\doc\blacklist";
 
@@ -191,7 +212,7 @@
 
         private static void RunBlacklistSetItagFlags()
         {
-            var db = new MysqlBlacklistStorage();
+            var db = new MysqlBlacklistStorage(context);
             var app = new BlacklistImportApp(db);
             app.SetBlacklistFlags();
             Console.WriteLine("Finished");

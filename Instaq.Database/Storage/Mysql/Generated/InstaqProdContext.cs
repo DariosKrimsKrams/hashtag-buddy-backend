@@ -6,6 +6,8 @@ namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class InstaqProdContext : DbContext
     {
+        private string connectionString;
+
         public InstaqProdContext()
         {
         }
@@ -13,6 +15,11 @@ namespace Instaq.Database.Storage.Mysql.Generated
         public InstaqProdContext(DbContextOptions<InstaqProdContext> options)
             : base(options)
         {
+        }
+
+        public InstaqProdContext(string connectionString)
+        {
+            this.connectionString = connectionString;
         }
 
         public virtual DbSet<Blacklist> Blacklist { get; set; }
@@ -27,6 +34,10 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySql(this.connectionString);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
