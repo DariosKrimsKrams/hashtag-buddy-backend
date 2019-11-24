@@ -4,6 +4,8 @@
     using Instaq.API.Extern.Utils;
     using Microsoft.AspNetCore.Mvc;
     using Instaq.Common;
+    using Microsoft.Extensions.PlatformAbstractions;
+    using System;
 
     [ApiController]
     [Route("[controller]")]
@@ -24,6 +26,14 @@
                 { "date", date }
             };
             return this.Ok(result);
+        }
+
+        [HttpGet("Env")]
+        [ProducesResponseType(typeof(void), 200)]
+        public IActionResult Env()
+        {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            return this.Ok(env);
         }
     }
 }

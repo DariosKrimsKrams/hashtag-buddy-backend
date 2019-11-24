@@ -64,8 +64,10 @@
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor |
                                    ForwardedHeaders.XForwardedProto
             });
-
+            
+            // ToDo dont do on Env=Dev
             app.UseHttpsRedirection();
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

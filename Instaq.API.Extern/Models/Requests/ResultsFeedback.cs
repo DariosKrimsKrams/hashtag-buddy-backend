@@ -14,7 +14,7 @@
 
         public int PhotoId { get; set; }
         
-        public string? Rating { get; set; }
+        public int Rating { get; set; }
 
         public List<string> GoodHashtags { get; set; }
 
