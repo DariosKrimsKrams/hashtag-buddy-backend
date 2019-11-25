@@ -2,6 +2,7 @@
 {
     using global::API.Services;
 
+    using Instaq.API.Extern.Helpers;
     using Instaq.API.Extern.Middleware;
     using Instaq.API.Extern.Services;
     using Instaq.API.Extern.Services.Interfaces;
@@ -62,6 +63,7 @@
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1"); });
+            GlobalSettings.Environment = env.EnvironmentName;
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {

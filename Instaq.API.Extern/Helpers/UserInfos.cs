@@ -1,4 +1,4 @@
-﻿namespace Instaq.API.Extern.Utils
+﻿namespace Instaq.API.Extern.Helpers
 {
     using Microsoft.AspNetCore.Http;
 

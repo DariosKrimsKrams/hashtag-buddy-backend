@@ -3,9 +3,10 @@
     using System;
     using System.IO;
     using System.Text.Json;
+
+    using Instaq.API.Extern.Helpers;
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
-    using Instaq.API.Extern.Utils;
     using Instaq.Common.Utils;
     using Instaq.Contract;
     using Instaq.Contract.Models;
