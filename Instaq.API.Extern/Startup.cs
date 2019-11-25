@@ -1,5 +1,8 @@
 ﻿namespace Instaq.API.Extern
 {
+    using global::API.Services;
+
+    using Instaq.API.Extern.Middleware;
     using Instaq.API.Extern.Services;
     using Instaq.API.Extern.Services.Interfaces;
     using Instaq.Contract;
@@ -38,6 +41,7 @@
             services.AddDbContext<InstaqProdContext>(options => options.UseMySql(dbConnection));
 
             services.AddTransient<IEvaluationService, EvaluationService>();
+            services.AddTransient<ILoggingService, LoggingService>();
 
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
             services.AddTransient<ILogStorage, MysqlLogStorage>();
@@ -69,6 +73,7 @@
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("info/health");
