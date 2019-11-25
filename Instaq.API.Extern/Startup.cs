@@ -68,9 +68,11 @@
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor |
                                    ForwardedHeaders.XForwardedProto
             });
-            
-            // ToDo dont do on Env=Dev
-            app.UseHttpsRedirection();
+
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseRouting();
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
