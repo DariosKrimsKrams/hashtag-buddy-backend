@@ -27,41 +27,34 @@ namespace Instaq.API.Extern.Middleware
 
         public async Task Invoke(HttpContext httpContext)
         {
-            try
+            var request = httpContext.Request;
+            if (request.Path.StartsWithSegments(new PathString("/api")))
             {
-                var request = httpContext.Request;
-                if (request.Path.StartsWithSegments(new PathString("/api")))
+                var stopWatch = Stopwatch.StartNew();
+                var requestTime = DateTime.UtcNow;
+                var requestBodyContent = await ReadRequestBody(request);
+                var originalBodyStream = httpContext.Response.Body;
+                using (var responseBody = new MemoryStream())
                 {
-                    var stopWatch = Stopwatch.StartNew();
-                    var requestTime = DateTime.UtcNow;
-                    var requestBodyContent = await ReadRequestBody(request);
-                    var originalBodyStream = httpContext.Response.Body;
-                    using (var responseBody = new MemoryStream())
-                    {
-                        var response = httpContext.Response;
-                        response.Body = responseBody;
-                        await next(httpContext);
-                        stopWatch.Stop();
-
-                        var responseBodyContent = await ReadResponseBody(response);
-                        await responseBody.CopyToAsync(originalBodyStream);
-
-                        SafeLog(requestTime,
-                            stopWatch.ElapsedMilliseconds,
-                            response.StatusCode,
-                            request.Method,
-                            request.Path,
-                            request.QueryString.ToString(),
-                            requestBodyContent,
-                            responseBodyContent);
-                    }
-                }
-                else
-                {
+                    var response = httpContext.Response;
+                    response.Body = responseBody;
                     await next(httpContext);
+                    stopWatch.Stop();
+
+                    var responseBodyContent = await ReadResponseBody(response);
+                    await responseBody.CopyToAsync(originalBodyStream);
+
+                    SafeLog(requestTime,
+                        stopWatch.ElapsedMilliseconds,
+                        response.StatusCode,
+                        request.Method,
+                        request.Path,
+                        request.QueryString.ToString(),
+                        requestBodyContent,
+                        responseBodyContent);
                 }
             }
-            catch (Exception ex)
+            else
             {
                 await next(httpContext);
             }
