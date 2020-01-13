@@ -22,6 +22,11 @@
 
         public ApiLogItem()
         {
+            Method = "";
+            Path = "";
+            QueryString = "";
+            RequestBody = "";
+            ResponseBody = "";
         }
 
         public ApiLogItem(DateTime requestTime, long responseMillis, int statusCode, string method, string path, string queryString, string requestBody, string responseBody)

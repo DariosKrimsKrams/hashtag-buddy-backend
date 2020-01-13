@@ -18,26 +18,13 @@
         [ProducesResponseType(typeof(void), 200)]
         public IActionResult Index()
         {
-            var version = Config.Version;
-            var date = Config.Date;
-
             var result = new Dictionary<string, string>
             {
                 { "backendVersion", VersionInfo.Version },
-                { "evaluationVersion", version.ToString() },
-                { "date", date }
-            };
-            return this.Ok(result);
-        }
-
-        [HttpGet("Env")]
-        [ProducesResponseType(typeof(void), 200)]
-        public IActionResult Env()
-        {
-            var result = new Dictionary<string, string>
-            {
+                { "evaluationVersion", Config.Version.ToString() },
+                { "date", Config.Date },
                 { "ASPNETCORE_ENVIRONMENT", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "" },
-                { "evaluationVersion", GlobalSettings.Environment }
+                { "globalSettingEnv", GlobalSettings.Environment }
             };
             return this.Ok(result);
         }
