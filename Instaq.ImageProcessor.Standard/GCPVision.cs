@@ -18,7 +18,6 @@
     public class GcpVision : ITaggingProvider
     {
         private const string KeyLabel = "GCPVision_Label";
-        private const string KeyWeb = "GCPVision_Web";
         private readonly ImageAnnotatorClient client;
 
         public GcpVision()
@@ -89,12 +88,12 @@
         private IEnumerable<IMachineTag> Detect(Image image)
         {
             IReadOnlyList<EntityAnnotation> labels = null;
-            WebDetection webInfos = null;
+            //WebDetection webInfos = null;
 
             try
             {
                 labels   = this.client.DetectLabels(image);
-                webInfos = this.client.DetectWebInformation(image);
+                //webInfos = this.client.DetectWebInformation(image);
             }
             catch (Exception e)
             {
@@ -110,30 +109,22 @@
                 throw;
             }
 
-            if (labels is null || webInfos is null)
+            if (labels is null)
                 yield break;
 
-            foreach (var mTag in ToMTags(labels, webInfos))
+            foreach (var mTag in ToMTags(labels))
             {
                 yield return mTag;
             }
         }
 
-        private static IEnumerable<IMachineTag> ToMTags(IReadOnlyList<EntityAnnotation> labels, WebDetection webInfos)
+        private static IEnumerable<IMachineTag> ToMTags(IReadOnlyList<EntityAnnotation> labels)
         {
             foreach (var x in labels)
             {
                 if (String.IsNullOrEmpty(x.Description))
                     continue;
                 var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = KeyLabel };
-                yield return mtag;
-            }
-
-            foreach (var x in webInfos.WebEntities)
-            {
-                if (String.IsNullOrEmpty(x.Description))
-                    continue;
-                var mtag = new MachineTag { Name = x.Description, Score = x.Score, Source = KeyWeb };
                 yield return mtag;
             }
         }
