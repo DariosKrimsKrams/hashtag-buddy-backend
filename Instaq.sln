@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.Logger", "Instaq.Log
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.API.Debug", "Instaq.API.Debug\Instaq.API.Debug.csproj", "{3D6AA128-7587-4D93-B770-1C8FFF057E24}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.ImageProcessor.Standard", "Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.Standard.csproj", "{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.ImageProcessor", "Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.csproj", "{ECB6991A-EBA6-4AE3-8A09-66B47C0EAA66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2A31BD6D-C19E-44DE-8471-C2C691CE2E43}"
 	ProjectSection(SolutionItems) = preProject

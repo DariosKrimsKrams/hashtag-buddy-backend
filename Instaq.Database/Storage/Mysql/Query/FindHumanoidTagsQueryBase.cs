@@ -10,11 +10,10 @@ namespace Instaq.Database.Storage.Mysql.Query
         public abstract string GetQuery(IMachineTag[] machineTags);
         protected const int RefCountLimit = 30000;
 
-        protected static (string, string) BuildWhereConditions(IMachineTag[]  machineTags)
+        protected static string BuildWhereConditions(IMachineTag[]  machineTags)
         {
             var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
-            var whereConditionWeb   = BuildWhereCondition(machineTags, "GCPVision_Web");
-            return (whereConditionLabel, whereConditionWeb);
+            return whereConditionLabel;
         }
 
         private static string BuildWhereCondition(IMachineTag[] machineTags, string source)

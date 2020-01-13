@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
     <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
     <ProjectReference Include="..\Instaq.Database\Instaq.Database.csproj" />
     <ProjectReference Include="..\Instaq.Evaluation.Standard\Instaq.Evaluation.csproj" />
-    <ProjectReference Include="..\Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.Standard.csproj" />
+    <ProjectReference Include="..\Instaq.ImageProcessor.Standard\Instaq.ImageProcessor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
