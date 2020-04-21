@@ -12,6 +12,8 @@
 
         void UpdateCustomerId(int id, string customerId);
 
+        void UpdateInfos(string customerId, string data);
+
         bool Exists(string customerId);
 
         ICustomer Get(int id);

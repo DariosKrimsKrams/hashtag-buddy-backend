@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using Common;
     using Contract;
+
+    using Instaq.API.Extern.Models.Requests;
+
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
@@ -33,6 +36,28 @@
                 this.customerStorage.UpdateCustomerId(customer.Id, customer.CustomerId);
                 var output = new Dictionary<string, string> { { "customerId", customer.CustomerId } };
                 return this.Ok(output);
+            }
+            catch (ArgumentException)
+            {
+                return this.BadRequest();
+            }
+        }
+
+        [HttpPost("Infos")]
+        [ProducesResponseType(typeof(void), 200)]
+        [ProducesResponseType(typeof(void), 404)]
+        [ProducesResponseType(typeof(void), 400)]
+        public IActionResult AddInfos(AddInfosRequest dto)
+        {
+            try
+            {
+                var customerExist = this.customerStorage.Exists(dto.CustomerId);
+                if (!customerExist)
+                {
+                    return this.NotFound();
+                }
+                this.customerStorage.UpdateInfos(dto.CustomerId, dto.Infos);
+                return this.Ok();
             }
             catch (ArgumentException)
             {

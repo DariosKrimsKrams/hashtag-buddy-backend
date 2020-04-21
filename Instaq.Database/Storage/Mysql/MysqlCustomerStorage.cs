@@ -1,13 +1,10 @@
-﻿using Instaq.Contract;
-using Instaq.Contract.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instaq.Database.Storage.Mysql
+﻿namespace Instaq.Database.Storage.Mysql
 {
-    using System.Linq;
+    using System;
 
+    using Instaq.Contract;
+    using Instaq.Contract.Models;
+    using System.Linq;
     using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlCustomerStorage : MysqlBaseStorage, ICustomerStorage
@@ -42,6 +39,18 @@ namespace Instaq.Database.Storage.Mysql
         {
             var query = $"UPDATE `customer` SET customer_id = '{customerId}' WHERE `id`='{id}'";
             this.ExecuteCustomQuery(query);
+        }
+
+        public void UpdateInfos(string customerId, string data)
+        {
+            var customer = this.db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
+            if (customer == null)
+            {
+                throw new ArgumentException();
+            }
+            customer.Infos = data;
+            this.db.Customer.Update(customer);
+            this.db.SaveChanges();
         }
 
         public bool Exists(string customerId)
