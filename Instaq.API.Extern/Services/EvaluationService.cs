@@ -150,7 +150,6 @@
 
         private EvaluateResponse FindTags(IMachineTag[] machineTags)
         {
-            var mostRelevantHTags = this.evaluation.FindHumanoidTags< FindHumanoidTagsMostRelevantQuery>(this.evaluationStorage, machineTags);
             var mostRelevantHTags = this.evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
             var trendingHTags     = this.evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);
 
@@ -165,11 +164,21 @@
 
         public IEnumerable<IHumanoidTag> GetSimilarHashtags(string keyword)
         {
-            var machineTags = new List<MachineTag> {
-                new MachineTag { Name = keyword, Source = "GCPVision_Label" },
-                new MachineTag { Name = keyword, Source = "GCPVision_Web" }
+            var machineTags = new IMachineTag[]
+            {
+                new MachineTag { Name = keyword.Trim().ToLower() }
             };
-            var (query, humanoidTags) = this.evaluationStorage.FindMostRelevantHumanoidTags(machineTags);
+            var (query, humanoidTags1) = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
+            var (query2, humanoidTags2) = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
+            // ToDo log results and time to DB
+            var humanoidTags = humanoidTags1.ToList();
+            foreach (var htag in humanoidTags2)
+            {
+                if (!humanoidTags.Contains(htag))
+                {
+                    humanoidTags.Add(htag);
+                }
+            }
             return humanoidTags;
         }
 

@@ -5,19 +5,20 @@
 
     public class EvaluateResponse
     {
-        public EvaluateResponse()
-        {
-            this.Img = "";
-            this.MostRelevantHTags = null;
-            this.TrendingHTags = null;
-        }
-
-        public string? Img { get; set; }
+        public string Img { get; set; }
 
         public int LogId { get; set; }
 
-        public IEnumerable<IHumanoidTag>? MostRelevantHTags { get; set; }
+        public IEnumerable<IHumanoidTag> MostRelevantHTags { get; set; }
 
-        public IEnumerable<IHumanoidTag>? TrendingHTags { get; set; }
+        public IEnumerable<IHumanoidTag> TrendingHTags { get; set; }
+
+        public EvaluateResponse()
+        {
+            this.Img = "";
+            this.MostRelevantHTags = new List<IHumanoidTag>();
+            this.TrendingHTags = new List<IHumanoidTag>();
+        }
+
     }
 }

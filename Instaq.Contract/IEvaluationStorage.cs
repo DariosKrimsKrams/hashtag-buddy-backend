@@ -9,6 +9,9 @@
 
         (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IMachineTag[] mTags);
 
+        (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags)
+            where T : IFindHumanoidTagsQuery;
+
         IEnumerable<IEnumerable<string>> GetMtagsWithHighScore();
     }
 }

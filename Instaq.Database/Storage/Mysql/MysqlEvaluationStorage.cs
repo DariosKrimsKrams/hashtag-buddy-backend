@@ -25,7 +25,7 @@
             return this.FindHumanoidTags<FindHumanoidTagsTrendingQuery>(machineTags);
         }
 
-        private (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags) where T : IFindHumanoidTagsQuery
+        public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags) where T : IFindHumanoidTagsQuery
         {
             var instance     = Activator.CreateInstance<T>();
             var query        = instance.GetQuery(machineTags);

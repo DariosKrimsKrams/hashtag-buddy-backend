@@ -6,6 +6,8 @@
     {
         public MachineTag()
         {
+            this.Name = "";
+            this.Source = "";
         }
 
         public MachineTag(string name, float score, string source)

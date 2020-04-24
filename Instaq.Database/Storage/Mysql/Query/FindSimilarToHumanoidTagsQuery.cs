@@ -2,14 +2,14 @@
 {
     using Instaq.Contract.Models;
 
-    public class FindHumanoidTagsMostRelevantQuery : FindHumanoidTagsQueryBase
+    public class FindSimilarToHumanoidTagsQuery : FindHumanoidTagsQueryBase
     {
         public override string GetQuery(IMachineTag[] machineTags)
         {
             const int LimitTopPhotos    = 200;
             const int CountTagsToReturn = 30;
             var countInsertTags   = machineTags.Length;
-            var conditions = BuildWhereConditions(machineTags, "GCPVision_Label", "`m`.`name`");
+            var conditions = BuildWhereConditions(machineTags, "", "`m`.`name`");
 
             var query = $"SELECT i.name, i.posts, i.refCount, relationQuality "
                       + $"FROM itags as i JOIN photo_itag_rel as rel ON rel.itag = i.name "
@@ -18,8 +18,10 @@
                       + $"FROM photos as p JOIN mtags as m ON m.shortcode = p.shortcode "
                       + $"JOIN ( SELECT p.shortcode, (p.likes + p.comments) / p.follower as popularity, "
                       + $"count(m.name) as matches FROM photos as p JOIN mtags as m ON "
-                      + $"m.shortcode = p.shortcode WHERE(({conditions}) AND m.source = 'GCPVision_Label') "
-                      + $"AND m.onBlacklist = '0' "
+                      + $"m.shortcode = p.shortcode WHERE (  "
+                      + $"   (({conditions}) AND m.source = 'GCPVision_Label') "
+                      + $"OR (({conditions}) AND m.source = 'GCPVision_Web') "
+                      + $") AND m.onBlacklist = '0' "
                       + $"GROUP BY p.shortcode ORDER by matches DESC LIMIT {LimitTopPhotos} ) as sub1 ON "
                       + $"p.shortcode = sub1.shortcode WHERE m.onBlacklist = '0' GROUP BY p.shortcode "
                       + $"ORDER BY relationQuality DESC LIMIT {LimitTopPhotos} ) as sub2 ON sub2.shortcode = rel.shortcode "

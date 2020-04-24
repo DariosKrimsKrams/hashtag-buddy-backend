@@ -8,12 +8,12 @@
         {
             const int LimitTopPhotos    = 50;
             const int CountTagsToReturn = 30;
-            var whereConditionLabel = BuildWhereConditions(machineTags);
+            var conditions = BuildWhereConditions(machineTags, "GCPVision_Label", "`m`.`name`");
 
             var query = $"SELECT i.name, i.posts FROM itags as i JOIN photo_itag_rel as rel "
                       + $"ON rel.itag = i.name JOIN ( SELECT p.shortcode, count(m.name) as matches "
                       + $"FROM photos as p JOIN mtags as m ON m.shortcode = p.shortcode WHERE "
-                      + $"(({whereConditionLabel}) AND m.source = 'GCPVision_Label') "
+                      + $"(({conditions}) AND m.source = 'GCPVision_Label') "
                       + $"AND m.onBlacklist = '0' "
                       + $"GROUP BY p.shortcode ORDER BY matches DESC LIMIT {LimitTopPhotos} ) as sub2 ON "
                       + $"sub2.shortcode = rel.shortcode WHERE i.refCount < {RefCountLimit} AND "
