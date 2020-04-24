@@ -5,6 +5,8 @@
 
     public class SearchResponse
     {
+        public int LogId { get; set; }
+
         public IEnumerable<IHumanoidTag> Hashtags { get; set; }
 
         public SearchResponse()

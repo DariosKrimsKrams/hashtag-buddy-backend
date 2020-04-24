@@ -12,7 +12,7 @@
 
         EvaluateResponse EvaluateFile(string customerId, IFormFile file, HttpRequest request);
 
-        IEnumerable<IHumanoidTag> GetSimilarHashtags(string keyword);
+        SearchResponse GetSimilarHashtags(string keyword);
         
     }
 }

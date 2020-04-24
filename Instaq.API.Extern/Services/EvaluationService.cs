@@ -160,7 +160,7 @@
             return response;
         }
 
-        public IEnumerable<IHumanoidTag> GetSimilarHashtags(string keyword)
+        public SearchResponse GetSimilarHashtags(string keyword)
         {
             var machineTags = new IMachineTag[]
             {
@@ -178,7 +178,13 @@
                     humanoidTags.Add(htag);
                 }
             }
-            return humanoidTags;
+            var response = new SearchResponse
+            {
+                LogId = 0,
+                Hashtags = humanoidTags
+            };
+
+            return response;
         }
 
     }
