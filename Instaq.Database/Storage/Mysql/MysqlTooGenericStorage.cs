@@ -23,7 +23,7 @@
                       + $"FROM photo_itag_rel as rel WHERE rel.itag = '{name}' "
                       + ") as sub  ON sub.shortcode = rel2.shortcode "
                       + "WHERE sub.pId IS NOT NULL GROUP by rel2.itag ) final ";
-            var (results, time) = this.ExecuteCustomQuery(query);
+            var (results, _) = this.ExecuteCustomQuery(query);
             var result  = Convert.ToInt32(results.FirstOrDefault()?.FirstOrDefault());
             return result;
         }

@@ -6,5 +6,11 @@
 
         public string Infos { get; set; }
 
+        public AddInfosRequest()
+        {
+            this.CustomerId = "";
+            this.Infos = "";
+        }
+
     }
 }

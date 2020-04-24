@@ -1,15 +1,17 @@
 ﻿namespace Instaq.Contract
 {
     using System.Collections.Generic;
+
+    using Instaq.Contract.Dto;
     using Instaq.Contract.Models;
 
     public interface IEvaluationStorage
     {
-        (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] mTags);
+        IEvaluationDto FindMostRelevantHumanoidTags(IMachineTag[] mTags);
 
-        (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IMachineTag[] mTags);
+        IEvaluationDto FindTrendingHumanoidTags(IMachineTag[] mTags);
 
-        (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags)
+        IEvaluationDto FindHumanoidTags<T>(IMachineTag[] machineTags)
             where T : IFindHumanoidTagsQuery;
 
         IEnumerable<IEnumerable<string>> GetMtagsWithHighScore();

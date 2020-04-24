@@ -47,7 +47,7 @@
 
         private IEnumerable<IImage> GetImagesWithEmptyStatusExecution(int limit)
         {
-            var query = this.db.Photos
+            var query = this.Db.Photos
                 .Where(p => string.IsNullOrEmpty(p.Status))
                 .OrderBy(x => x.Created).Take(limit);
             var list = query.ToList();
@@ -71,7 +71,7 @@
 
         public IEnumerable<IImage> GetImagesForCv()
         {
-            var query = this.db.Photos
+            var query = this.Db.Photos
                 .Where(p => p.Status == "readyForCv");
             return query.ToList().Select(x => x.ToImage());
         }
@@ -95,7 +95,7 @@
                     Source = mTag.Source,
                     Shortcode = image.Shortcode
                 };
-                this.db.Mtags.Add(mTagDb);
+                this.Db.Mtags.Add(mTagDb);
             }
         }
     }

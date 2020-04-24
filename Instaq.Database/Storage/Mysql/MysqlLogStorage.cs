@@ -16,7 +16,7 @@
 
         public ILog GetLog(int id)
         {
-            var entry = this.db.Debug.FirstOrDefault(x => x.Id == id);
+            var entry = this.Db.Debug.FirstOrDefault(x => x.Id == id);
             if (entry is null)
             {
                 throw new ArgumentException();
@@ -28,16 +28,16 @@
         public int InsertLog(string data, string customerId)
         {
             var debug = new Debug { Data = data, CustomerId = customerId };
-            this.db.Debug.Add(debug);
-            this.db.SaveChanges();
+            this.Db.Debug.Add(debug);
+            this.Db.SaveChanges();
             return debug.Id;
         }
 
         public void UpdateLog(ILog log)
         {
-            var existingEntry = this.db.Debug.First(x => x.Id == log.Id);
+            var existingEntry = this.Db.Debug.First(x => x.Id == log.Id);
             existingEntry.Data = log.Data;
-            this.db.SaveChanges();
+            this.Db.SaveChanges();
         }
     }
 }

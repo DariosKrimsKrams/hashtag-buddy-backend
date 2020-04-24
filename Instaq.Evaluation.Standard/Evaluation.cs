@@ -29,18 +29,19 @@
             IEvaluationStorage storage,
             IMachineTag[] machineTags)
         {
-            var (query, humanoidTags) = storage.FindMostRelevantHumanoidTags(machineTags);
+            var reponse = storage.FindMostRelevantHumanoidTags(machineTags);
 
             this.debugInfos.Add("machineTags", machineTags);
             this.debugInfos.Add("backend_version", Config.Version);
             this.debugInfos.Add("backend_date", Config.Date);
-            this.debugInfos.Add("humanoidTagsMostRelevant", humanoidTags);
-            this.debugInfos.Add("queryMostRelevant", query);
+            this.debugInfos.Add("humanoidTagsMostRelevant", reponse.HumanoidTags);
+            this.debugInfos.Add("queryMostRelevant", reponse.Query);
+            this.debugInfos.Add("timeNeeded", reponse.TimeNeeded);
 
             // Post Processor Example
             //humanoidTags = new OrderByAmountOfPosts().Do(humanoidTags);
 
-            return humanoidTags;
+            return reponse.HumanoidTags;
         }
 
         public IEnumerable<IHumanoidTag> GetTrendingHumanoidTags(
@@ -48,8 +49,8 @@
             IMachineTag[] machineTags,
             IEnumerable<IHumanoidTag> mostRelevantHTags)
         {
-            var (query, humanoidTags) = storage.FindTrendingHumanoidTags(machineTags);
-            var hTagsTrendingList = humanoidTags.ToList();
+            var reponse = storage.FindTrendingHumanoidTags(machineTags);
+            var hTagsTrendingList = reponse.HumanoidTags.ToList();
 
             for (var i = hTagsTrendingList.Count - 1; i >= 0; i--)
             {
@@ -60,7 +61,7 @@
             }
 
             this.debugInfos.Add("humanoidTagsTrending", hTagsTrendingList);
-            this.debugInfos.Add("queryTrending", query);
+            this.debugInfos.Add("queryTrending", reponse.Query);
 
             return hTagsTrendingList;
         }

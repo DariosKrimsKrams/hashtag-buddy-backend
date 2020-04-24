@@ -18,8 +18,8 @@
         public int Create(ICustomer commonCustomer)
         {
             var customer = Customer.FromCommonCustomer(commonCustomer);
-            this.db.Customer.Add(customer);
-            this.db.SaveChanges();
+            this.Db.Customer.Add(customer);
+            this.Db.SaveChanges();
             return customer.Id;
         }
 
@@ -43,24 +43,24 @@
 
         public void UpdateInfos(string customerId, string data)
         {
-            var customer = this.db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
+            var customer = this.Db.Customer.FirstOrDefault(x => x.CustomerId == customerId);
             if (customer == null)
             {
                 throw new ArgumentException();
             }
             customer.Infos = data;
-            this.db.Customer.Update(customer);
-            this.db.SaveChanges();
+            this.Db.Customer.Update(customer);
+            this.Db.SaveChanges();
         }
 
         public bool Exists(string customerId)
         {
-            return this.db.Customer.FirstOrDefault(x => x.CustomerId == customerId) != null;
+            return this.Db.Customer.FirstOrDefault(x => x.CustomerId == customerId) != null;
         }
 
         public ICustomer Get(int id)
         {
-            return this.db.Customer.FirstOrDefault(x => x.Id == id)?.ToCommonCustomer();
+            return this.Db.Customer.FirstOrDefault(x => x.Id == id)?.ToCommonCustomer();
         }
     }
 }

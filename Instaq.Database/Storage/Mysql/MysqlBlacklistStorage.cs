@@ -28,12 +28,12 @@
 
         public void Delete(string reason, string table)
         {
-            var entries = this.db.Blacklist.Where(x => x.Reason == reason && x.Table == table);
+            var entries = this.Db.Blacklist.Where(x => x.Reason == reason && x.Table == table);
             foreach (var entry in entries)
             {
-                this.db.Blacklist.Remove(entry);
+                this.Db.Blacklist.Remove(entry);
             }
-            this.db.SaveChanges();
+            this.Db.SaveChanges();
         }
 
         public (IEnumerable<ITag> tags, TimeSpan time) GetTags(string tableName="itags", int limit=1000)

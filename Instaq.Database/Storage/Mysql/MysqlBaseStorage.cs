@@ -14,31 +14,31 @@
 
     public abstract class MysqlBaseStorage
     {
-        protected InstaqProdContext db;
+        protected InstaqProdContext Db;
 
         protected MysqlBaseStorage(InstaqProdContext context)
         {
-            this.db = context;
+            this.Db = context;
         }
 
         private void Reconnect()
         {
-            this.db.Database.CloseConnection();
-            this.db.Database.OpenConnection();
+            this.Db.Database.CloseConnection();
+            this.Db.Database.OpenConnection();
         }
 
         protected void Save()
         {
             try
             {
-                this.db.SaveChanges();
+                this.Db.SaveChanges();
             }
             catch (MySqlException e)
             {
                 if (e.Message.Contains("Timeout"))
                 {
                     this.Reconnect();
-                    this.db.SaveChanges();
+                    this.Db.SaveChanges();
                 }
                 else
                 {
@@ -52,13 +52,13 @@
         {
             try
             {
-                this.db.Database.OpenConnection();
+                this.Db.Database.OpenConnection();
             }
             catch (MySqlException e)
             {
                 if (e.Message.Contains("Timeout"))
                 {
-                    this.db.Database.OpenConnection();
+                    this.Db.Database.OpenConnection();
                 }
                 else
                 {
@@ -70,7 +70,7 @@
 
         protected (IEnumerable<IEnumerable<string>>, TimeSpan) ExecuteCustomQuery(string query)
         {
-            List<string> Func(List<string> entry, string key, string value)
+            static List<string> Func(List<string> entry, string key, string value)
             {
                 entry.Add(value);
                 return entry;
@@ -80,7 +80,7 @@
 
         protected (IEnumerable<Photos>, TimeSpan) ExecutePhotosQuery(string query)
         {
-            Photos Func(Photos entry, string key, string value)
+            static Photos Func(Photos entry, string key, string value)
             {
                 switch (key)
                 {
@@ -108,7 +108,7 @@
 
         protected (IEnumerable<IHumanoidTag>, TimeSpan) ExecuteHTagsQuery(string query)
         {
-            HumanoidTag Func(HumanoidTag entry, string key, string value)
+            static HumanoidTag Func(HumanoidTag entry, string key, string value)
             {
                 switch (key)
                 {
@@ -139,10 +139,14 @@
             }
             catch (MySqlException e)
             {
-                Console.WriteLine("Error: " + e);
-                Thread.Sleep(3000);
-                this.Reconnect();
-                return this.ExecuteQuery(query, func);
+                if (e.Message.ToLower().Contains("connection"))
+                {
+                    Console.WriteLine("Error: " + e.Message);
+                    Thread.Sleep(3000);
+                    this.Reconnect();
+                    return this.ExecuteQuery(query, func);
+                }
+                throw;
             }
         }
 
@@ -150,7 +154,7 @@
         {
             var result = new List<T>();
             TimeSpan time;
-            using (var command = this.db.Database.GetDbConnection().CreateCommand())
+            using (var command = this.Db.Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText    = query;
                 command.CommandType    = CommandType.Text;
@@ -174,21 +178,21 @@
                         result.Add(entry);
                     }
                 }
-                this.db.Database.CloseConnection();
+                this.Db.Database.CloseConnection();
             }
             return (result, time);
         }
 
         protected void DetachLocal<T>(T t, int entryId) where T : class, IIdentifier
         {
-            var local = this.db.Set<T>()
+            var local = this.Db.Set<T>()
                 .Local
                 .FirstOrDefault(entry => entry.Id.Equals(entryId));
             if (local != null)
             {
-                this.db.Entry(local).State = EntityState.Detached;
+                this.Db.Entry(local).State = EntityState.Detached;
             }
-            this.db.Entry(t).State = EntityState.Modified;
+            this.Db.Entry(t).State = EntityState.Modified;
         }
 
     }

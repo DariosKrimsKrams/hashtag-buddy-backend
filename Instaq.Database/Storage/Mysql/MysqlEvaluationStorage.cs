@@ -2,10 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq.Expressions;
+
+    using Instaq.Common.Dto;
     using Instaq.Contract;
+    using Instaq.Contract.Dto;
     using Instaq.Contract.Models;
     using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.Database.Storage.Mysql.Query;
+
+    using MySql.Data.MySqlClient;
 
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage
     {
@@ -15,22 +21,27 @@
         {
         }
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindMostRelevantHumanoidTags(IMachineTag[] machineTags)
+        public IEvaluationDto FindMostRelevantHumanoidTags(IMachineTag[] machineTags)
         {
             return this.FindHumanoidTags<FindHumanoidTagsMostRelevantQuery>(machineTags);
         }
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindTrendingHumanoidTags(IMachineTag[] machineTags)
+        public IEvaluationDto FindTrendingHumanoidTags(IMachineTag[] machineTags)
         {
             return this.FindHumanoidTags<FindHumanoidTagsTrendingQuery>(machineTags);
         }
 
-        public (string debug, IEnumerable<IHumanoidTag> htags) FindHumanoidTags<T>(IMachineTag[] machineTags) where T : IFindHumanoidTagsQuery
+        public IEvaluationDto FindHumanoidTags<T>(IMachineTag[] machineTags) where T : IFindHumanoidTagsQuery
         {
             var instance     = Activator.CreateInstance<T>();
             var query        = instance.GetQuery(machineTags);
-            var (humanoidTags, _) = this.ExecuteHTagsQuery(query);
-            return (query, humanoidTags);
+            var (humanoidTags, time) = this.ExecuteHTagsQuery(query);
+            return new EvaluationDto
+            {
+                Query = query,
+                HumanoidTags = humanoidTags,
+                TimeNeeded = time
+            };
         }
 
         public IEnumerable<IEnumerable<string>> GetMtagsWithHighScore()
@@ -41,7 +52,7 @@
                       + "AND m.score > 5 "
                       + "GROUP BY m.name "
                       + "ORDER by MAX(m.score) DESC";
-            var (mTags, time)  = this.ExecuteCustomQuery(query);
+            var (mTags, _)  = this.ExecuteCustomQuery(query);
             return mTags;
         }
     }

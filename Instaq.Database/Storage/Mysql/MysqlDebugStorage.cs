@@ -16,7 +16,7 @@
 
         public bool ArePhotoIdAndCustomerIdMatching(int photoId, string customerId)
         {
-            return this.db.Debug.FirstOrDefault(x => x.Id == photoId && x.CustomerId == customerId && x.Deleted == 0)
+            return this.Db.Debug.FirstOrDefault(x => x.Id == photoId && x.CustomerId == customerId && x.Deleted == 0)
                 != null;
         }
 
@@ -36,7 +36,7 @@
 
         public ILog GetLog(int id)
         {
-            return this.db.Debug.FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
+            return this.Db.Debug.FirstOrDefault(x => x.Id == id && x.Deleted == 0)?.ToLog();
         }
 
         public string GetLogCount()
@@ -48,7 +48,7 @@
 
         public IEnumerable<ILog> GetLogs(int skip, int take, string orderby)
         {
-            return this.db.Debug.Where(x => x.Deleted == 0).OrderByDescending(x => x.Id).Skip(skip).Take(take)
+            return this.Db.Debug.Where(x => x.Deleted == 0).OrderByDescending(x => x.Id).Skip(skip).Take(take)
                 .Select(x => x.ToLog());
         }
 

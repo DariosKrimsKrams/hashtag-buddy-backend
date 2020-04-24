@@ -1,8 +1,6 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
-    using System.Collections.Generic;
-
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
     using Microsoft.AspNetCore.Http;
@@ -44,9 +42,13 @@
                 var data  = this.evaluationService.EvaluateFile(customerId, file, this.Request);
                 return this.Ok(data);
             }
-            catch (ArgumentException)
+            catch (ArgumentException e)
             {
-                return this.BadRequest();
+                return this.BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(e.Message);
             }
         }
 

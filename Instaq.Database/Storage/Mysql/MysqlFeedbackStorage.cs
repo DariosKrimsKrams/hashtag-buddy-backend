@@ -23,8 +23,8 @@
         public int Insert(IFeedback commonFeedback)
         {
             var feedback = Feedback.FromCommonFeedback(commonFeedback);
-            this.db.Feedback.Add(feedback);
-            this.db.SaveChanges();
+            this.Db.Feedback.Add(feedback);
+            this.Db.SaveChanges();
             return feedback.Id;
         }
     }

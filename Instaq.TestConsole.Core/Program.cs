@@ -21,7 +21,7 @@
 
         private static InstaqProdContext context;
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             var basePath = PlatformServices.Default.Application.ApplicationBasePath;
             var path = "SharedSettings.json";

@@ -13,9 +13,7 @@
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Database.Storage.Mysql.Query;
-
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Server.IIS.Core;
 
     public class EvaluationService : IEvaluationService
     {
@@ -168,11 +166,12 @@
             {
                 new MachineTag { Name = keyword.Trim().ToLower() }
             };
-            var (query, humanoidTags1) = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
-            var (query2, humanoidTags2) = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
+            var response1 = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
+            var response2 = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
             // ToDo log results and time to DB
-            var humanoidTags = humanoidTags1.ToList();
-            foreach (var htag in humanoidTags2)
+
+            var humanoidTags = response1.HumanoidTags.ToList();
+            foreach (var htag in response2.HumanoidTags)
             {
                 if (!humanoidTags.Contains(htag))
                 {
