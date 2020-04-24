@@ -1,7 +1,5 @@
-﻿
-namespace Instaq.Database.Storage.Mysql.Query
+﻿namespace Instaq.Database.Storage.Mysql.Query
 {
-    using System.Collections.Generic;
     using Instaq.Contract;
     using Instaq.Contract.Models;
 
@@ -12,8 +10,7 @@ namespace Instaq.Database.Storage.Mysql.Query
 
         protected static string BuildWhereConditions(IMachineTag[]  machineTags)
         {
-            var whereConditionLabel = BuildWhereCondition(machineTags, "GCPVision_Label");
-            return whereConditionLabel;
+            return BuildWhereCondition(machineTags, "GCPVision_Label");
         }
 
         private static string BuildWhereCondition(IMachineTag[] machineTags, string source)

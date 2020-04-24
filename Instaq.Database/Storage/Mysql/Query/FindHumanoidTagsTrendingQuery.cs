@@ -1,7 +1,5 @@
 ﻿namespace Instaq.Database.Storage.Mysql.Query
 {
-    using System.Collections.Generic;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
 
     public class FindHumanoidTagsTrendingQuery : FindHumanoidTagsQueryBase

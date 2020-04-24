@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Instaq.API.Extern.Services.Interfaces
+﻿namespace Instaq.API.Extern.Services.Interfaces
 {
+    using System.Collections.Generic;
     using Instaq.API.Extern.Models.Responses;
+    using Instaq.Contract.Models;
 
     using Microsoft.AspNetCore.Http;
 

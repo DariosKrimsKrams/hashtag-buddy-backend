@@ -1,16 +1,21 @@
 ﻿namespace Instaq.API.Extern.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text.Json;
-
     using Instaq.API.Extern.Helpers;
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
+    using Instaq.Common;
     using Instaq.Common.Utils;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Database.Storage.Mysql.Query;
+
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Server.IIS.Core;
 
     public class EvaluationService : IEvaluationService
     {
@@ -145,6 +150,7 @@
 
         private EvaluateResponse FindTags(IMachineTag[] machineTags)
         {
+            var mostRelevantHTags = this.evaluation.FindHumanoidTags< FindHumanoidTagsMostRelevantQuery>(this.evaluationStorage, machineTags);
             var mostRelevantHTags = this.evaluation.GetMostRelevantHumanoidTags(this.evaluationStorage, machineTags);
             var trendingHTags     = this.evaluation.GetTrendingHumanoidTags(this.evaluationStorage, machineTags, mostRelevantHTags);
 
@@ -155,6 +161,16 @@
             };
 
             return response;
+        }
+
+        public IEnumerable<IHumanoidTag> GetSimilarHashtags(string keyword)
+        {
+            var machineTags = new List<MachineTag> {
+                new MachineTag { Name = keyword, Source = "GCPVision_Label" },
+                new MachineTag { Name = keyword, Source = "GCPVision_Web" }
+            };
+            var (query, humanoidTags) = this.evaluationStorage.FindMostRelevantHumanoidTags(machineTags);
+            return humanoidTags;
         }
 
     }

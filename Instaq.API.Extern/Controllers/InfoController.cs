@@ -1,12 +1,9 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System.Collections.Generic;
-
     using Microsoft.AspNetCore.Mvc;
     using Instaq.Common;
-    using Microsoft.Extensions.PlatformAbstractions;
     using System;
-
     using Instaq.API.Extern.Helpers;
 
     [ApiController]

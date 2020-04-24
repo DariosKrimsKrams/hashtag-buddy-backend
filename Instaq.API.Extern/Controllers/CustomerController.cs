@@ -4,9 +4,7 @@
     using System.Collections.Generic;
     using Common;
     using Contract;
-
     using Instaq.API.Extern.Models.Requests;
-
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
