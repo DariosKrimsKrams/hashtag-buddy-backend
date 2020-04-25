@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Debug
     {
@@ -9,6 +9,6 @@ namespace Instaq.Database
         public string Data { get; set; }
         public string CustomerId { get; set; }
         public DateTime Created { get; set; }
-        public sbyte Deleted { get; set; }
+        public bool Deleted { get; set; }
     }
 }

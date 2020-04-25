@@ -28,6 +28,16 @@ to restore dependencies:
 dotnet restore
 ```
 
+Setup: Install dependencies
+  * 1. Net Core 3.x (or latest) SDK required
+  * Install ef core via:
+
+EF Core is a separate package since .Net core 3.0
+To run powershel "dotnet ef" command, install it via:
+	dotnet tool install --global dotnet-ef
+    dotnet tool update --global dotnet-ef
+
+    
 following file generates the database-first models:
 ```
 dotnet ef dbcontext scaffold "Server=89.22.110.69;User Id=instaq_prod;Password=PASSWORD;Database=InstaqProd" "Pomelo.EntityFrameworkCore.MySql" -f -o Storage/Mysql/Generated

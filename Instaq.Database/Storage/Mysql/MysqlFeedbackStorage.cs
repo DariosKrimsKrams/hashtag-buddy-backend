@@ -1,12 +1,9 @@
 ﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
-
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Database.Storage.Mysql.Generated;
-
-    using Feedback = Instaq.Database.Feedback;
 
     public class MysqlFeedbackStorage : MysqlBaseStorage, IFeedbackStorage
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Photos
     {

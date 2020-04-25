@@ -1,4 +1,4 @@
-﻿namespace Instaq.Database.Storage.Mysql.Custom
+﻿namespace Instaq.Database.Storage.Mysql.Generated
 {
     public interface IIdentifier
     {

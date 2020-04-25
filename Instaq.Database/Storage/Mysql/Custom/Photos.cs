@@ -1,6 +1,6 @@
 ﻿using Instaq.Common;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     using Instaq.Contract.Models;
 
@@ -25,22 +25,9 @@ namespace Instaq.Database
             return photo;
         }
 
-        //private IEnumerable<Itags> Itags
-        //{
-        //    get
-        //    {
-        //        foreach (var photoItagRel in PhotoItagRel)
-        //        {
-        //            yield return photoItagRel.Itag;
-        //        }
-        //    }
-        //}
-
         public IImage ToImage()
         {
-            //var dateTime = Convert.ToDateTime(this.Created.ToString(CultureInfo.InvariantCulture));
-
-            var user = new User()
+            var user = new User
             {
                 FollowerCount  = this.Follower,
                 FollowingCount = this.Following,
@@ -55,10 +42,7 @@ namespace Instaq.Database
                 Likes        = this.Likes,
                 CommentCount = this.Comments,
                 Created      = this.Created,
-                User         = user,
-                //MachineTags =
-                //    this.Mtags.Select(tag => new MachineTag { Name = tag.Name, Score = tag.Score, Source = tag.Source }),
-                //HumanoidTags = this.Itags.Select(tag => tag.Name)
+                User         = user
             };
             return image;
         }

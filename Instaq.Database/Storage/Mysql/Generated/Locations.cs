@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Locations
     {
@@ -16,7 +16,7 @@ namespace Instaq.Database
         public string Slug { get; set; }
         public int Lat { get; set; }
         public string Lng { get; set; }
-        public sbyte HasPublicPage { get; set; }
+        public bool HasPublicPage { get; set; }
         public string ProfilePicUrl { get; set; }
         public DateTime Created { get; set; }
 

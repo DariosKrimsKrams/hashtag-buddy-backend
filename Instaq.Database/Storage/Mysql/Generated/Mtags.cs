@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Mtags
     {
@@ -10,6 +10,6 @@ namespace Instaq.Database
         public string Name { get; set; }
         public float Score { get; set; }
         public string Source { get; set; }
-        public sbyte OnBlacklist { get; set; }
+        public bool OnBlacklist { get; set; }
     }
 }

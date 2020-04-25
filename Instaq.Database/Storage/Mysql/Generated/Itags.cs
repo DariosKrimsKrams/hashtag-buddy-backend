@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Itags
     {
@@ -9,6 +9,6 @@ namespace Instaq.Database
         public int Posts { get; set; }
         public DateTime Updated { get; set; }
         public int RefCount { get; set; }
-        public sbyte OnBlacklist { get; set; }
+        public bool OnBlacklist { get; set; }
     }
 }

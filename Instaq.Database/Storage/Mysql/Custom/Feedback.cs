@@ -1,4 +1,4 @@
-﻿namespace Instaq.Database
+﻿namespace Instaq.Database.Storage.Mysql.Generated
 {
     using Instaq.Contract.Models;
 

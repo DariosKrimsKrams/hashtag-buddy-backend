@@ -7,7 +7,6 @@
     using System.Threading;
     using Instaq.Common;
     using Instaq.Contract.Models;
-    using Instaq.Database.Storage.Mysql.Custom;
     using Instaq.Database.Storage.Mysql.Generated;
     using Microsoft.EntityFrameworkCore;
     using MySql.Data.MySqlClient;

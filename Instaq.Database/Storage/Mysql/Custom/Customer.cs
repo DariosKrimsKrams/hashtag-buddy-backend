@@ -1,7 +1,6 @@
-﻿namespace Instaq.Database
+﻿namespace Instaq.Database.Storage.Mysql.Generated
 {
     using Instaq.Contract.Models;
-    using Instaq.Database.Storage.Mysql.Custom;
 
     public partial class Customer : IIdentifier
     {

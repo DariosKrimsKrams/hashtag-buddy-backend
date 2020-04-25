@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Instaq.Database.Storage.Mysql.Generated
 {
@@ -66,17 +65,23 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasColumnType("varchar(40)");
+                    .HasColumnType("varchar(40)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_bin");
 
                 entity.Property(e => e.Reason)
                     .IsRequired()
                     .HasColumnName("reason")
-                    .HasColumnType("varchar(20)");
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Table)
                     .IsRequired()
                     .HasColumnName("table")
-                    .HasColumnType("varchar(10)");
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -100,12 +105,14 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.CustomerId)
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)");
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.FeedbackCount)
                     .HasColumnName("feedback_count")
@@ -114,7 +121,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Infos)
                     .IsRequired()
                     .HasColumnName("infos")
-                    .HasColumnType("varchar(60)");
+                    .HasColumnType("varchar(60)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PhotosCount)
                     .HasColumnName("photos_count")
@@ -139,22 +148,24 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)");
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Data)
                     .IsRequired()
                     .HasColumnName("data")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.Deleted)
-                    .HasColumnName("deleted")
-                    .HasColumnType("tinyint(1)");
+                entity.Property(e => e.Deleted).HasColumnName("deleted");
             });
 
             modelBuilder.Entity<Feedback>(entity =>
@@ -175,31 +186,35 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.CustomerId)
                     .IsRequired()
                     .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)");
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Data)
                     .IsRequired()
                     .HasColumnName("data")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.DebugId)
                     .HasColumnName("debug_id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Deleted)
-                    .HasColumnName("deleted")
-                    .HasColumnType("tinyint(1)");
+                entity.Property(e => e.Deleted).HasColumnName("deleted");
 
                 entity.Property(e => e.Type)
                     .IsRequired()
                     .HasColumnName("type")
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Itags>(entity =>
@@ -215,11 +230,11 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_bin");
 
-                entity.Property(e => e.OnBlacklist)
-                    .HasColumnName("onBlacklist")
-                    .HasColumnType("tinyint(1)");
+                entity.Property(e => e.OnBlacklist).HasColumnName("onBlacklist");
 
                 entity.Property(e => e.Posts)
                     .HasColumnName("posts")
@@ -232,7 +247,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Updated)
                     .HasColumnName("updated")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
             });
 
@@ -251,12 +266,10 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
 
-                entity.Property(e => e.HasPublicPage)
-                    .HasColumnName("has_public_page")
-                    .HasColumnType("tinyint(1)");
+                entity.Property(e => e.HasPublicPage).HasColumnName("has_public_page");
 
                 entity.Property(e => e.InstaId)
                     .HasColumnName("insta_id")
@@ -269,22 +282,30 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Lng)
                     .IsRequired()
                     .HasColumnName("lng")
-                    .HasColumnType("varchar(11)");
+                    .HasColumnType("varchar(11)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.ProfilePicUrl)
                     .IsRequired()
                     .HasColumnName("profile_pic_url")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Slug)
                     .IsRequired()
                     .HasColumnName("slug")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Mtags>(entity =>
@@ -308,11 +329,11 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.OnBlacklist)
-                    .HasColumnName("onBlacklist")
-                    .HasColumnType("tinyint(1)");
+                entity.Property(e => e.OnBlacklist).HasColumnName("onBlacklist");
 
                 entity.Property(e => e.Score)
                     .HasColumnName("score")
@@ -321,12 +342,16 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Shortcode)
                     .IsRequired()
                     .HasColumnName("shortcode")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Source)
                     .IsRequired()
                     .HasColumnName("source")
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<PhotoItagRel>(entity =>
@@ -344,11 +369,15 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Shortcode)
                     .HasColumnName("shortcode")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Itag)
                     .HasColumnName("itag")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_bin");
             });
 
             modelBuilder.Entity<Photos>(entity =>
@@ -373,7 +402,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
                 entity.Property(e => e.Shortcode)
                     .HasColumnName("shortcode")
-                    .HasColumnType("varchar(100)");
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Comments)
                     .HasColumnName("comments")
@@ -382,7 +413,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Created)
                     .HasColumnName("created")
                     .HasColumnType("timestamp")
-                    .HasDefaultValueSql("'CURRENT_TIMESTAMP'")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
                     .ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Follower)
@@ -396,7 +427,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.LargeUrl)
                     .IsRequired()
                     .HasColumnName("largeUrl")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Likes)
                     .HasColumnName("likes")
@@ -413,12 +446,16 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasColumnName("status")
-                    .HasColumnType("varchar(20)");
+                    .HasColumnType("varchar(20)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.ThumbUrl)
                     .IsRequired()
                     .HasColumnName("thumbUrl")
-                    .HasColumnType("text");
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Uploaded)
                     .HasColumnName("uploaded")
@@ -427,7 +464,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.User)
                     .IsRequired()
                     .HasColumnName("user")
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Location)
                     .WithMany(p => p.Photos)

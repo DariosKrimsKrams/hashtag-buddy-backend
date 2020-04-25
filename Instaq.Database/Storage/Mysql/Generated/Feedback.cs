@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Instaq.Database
+namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class Feedback
     {
@@ -11,6 +11,6 @@ namespace Instaq.Database
         public int DebugId { get; set; }
         public string Data { get; set; }
         public DateTime Created { get; set; }
-        public sbyte Deleted { get; set; }
+        public bool Deleted { get; set; }
     }
 }

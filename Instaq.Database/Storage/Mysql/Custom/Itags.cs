@@ -1,6 +1,5 @@
-﻿namespace Instaq.Database
+﻿namespace Instaq.Database.Storage.Mysql.Generated
 {
-    using System;
     using Instaq.Common;
     using Instaq.Contract.Models;
 
@@ -13,7 +12,7 @@
                 Name        = hTag.Name,
                 Posts       = hTag.Posts,
                 RefCount    = hTag.RefCount,
-                OnBlacklist = Convert.ToSByte(hTag.OnBlacklist)
+                OnBlacklist = hTag.OnBlacklist
             };
         }
 
@@ -24,7 +23,7 @@
                 Name        = this.Name,
                 Posts       = this.Posts,
                 RefCount    = this.RefCount,
-                OnBlacklist = Convert.ToBoolean(this.OnBlacklist)
+                OnBlacklist = this.OnBlacklist
             };
         }
     }
