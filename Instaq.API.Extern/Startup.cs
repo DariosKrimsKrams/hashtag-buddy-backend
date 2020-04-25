@@ -66,6 +66,15 @@
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1"); });
             GlobalSettings.Environment = env.EnvironmentName;
 
+            app.UseCors(options => options.WithOrigins(
+                    "http://instaq-api.innocliq.de",
+                    "https://instaq-api.innocliq.de",
+                    "http://instaq-api-dev.innocliq.de",
+                    "https://instaq-api-dev.innocliq.de"
+                )
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor |
