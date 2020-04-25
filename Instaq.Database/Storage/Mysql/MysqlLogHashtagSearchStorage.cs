@@ -1,6 +1,7 @@
 ﻿namespace Instaq.Database.Storage.Mysql
 {
     using Instaq.Contract;
+    using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlLogHashtagSearchStorage : MysqlBaseStorage, ILogHashtagSearchStorage

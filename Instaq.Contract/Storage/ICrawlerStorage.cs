@@ -1,8 +1,7 @@
-﻿namespace Instaq.Contract
+﻿namespace Instaq.Contract.Storage
 {
     using System;
     using System.Collections.Generic;
-
     using Instaq.Contract.Models;
 
     public interface ICrawlerStorage

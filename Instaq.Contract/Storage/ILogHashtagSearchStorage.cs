@@ -1,4 +1,4 @@
-﻿namespace Instaq.Contract
+﻿namespace Instaq.Contract.Storage
 {
     public interface ILogHashtagSearchStorage
     {

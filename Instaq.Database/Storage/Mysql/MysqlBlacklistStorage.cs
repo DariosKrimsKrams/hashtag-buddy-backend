@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Instaq.Database;
     using Instaq.Database.Storage.Mysql.Generated;
 

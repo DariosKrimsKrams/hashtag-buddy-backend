@@ -1,6 +1,5 @@
 ﻿namespace Instaq.Common.Dto
 {
-    using System;
     using System.Collections.Generic;
     using Instaq.Contract.Dto;
     using Instaq.Contract.Models;

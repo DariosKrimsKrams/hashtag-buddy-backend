@@ -5,6 +5,8 @@
     using Common;
     using Contract;
     using Instaq.API.Extern.Models.Requests;
+    using Instaq.Contract.Storage;
+
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]

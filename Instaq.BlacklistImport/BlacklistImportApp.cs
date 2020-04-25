@@ -7,6 +7,7 @@
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
 
     public class BlacklistImportApp
     {

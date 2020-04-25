@@ -3,6 +3,7 @@
     using System;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlFeedbackStorage : MysqlBaseStorage, IFeedbackStorage

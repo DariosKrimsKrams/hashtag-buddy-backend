@@ -1,4 +1,4 @@
-﻿namespace Instaq.Contract
+﻿namespace Instaq.Contract.Storage
 {
     using Instaq.Contract.Models;
 

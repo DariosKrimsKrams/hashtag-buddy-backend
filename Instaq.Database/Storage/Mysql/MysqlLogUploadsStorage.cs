@@ -4,6 +4,7 @@
     using System.Linq;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlLogUploadsStorage : MysqlBaseStorage, ILogUploadsStorage

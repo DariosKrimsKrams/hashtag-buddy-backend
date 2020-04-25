@@ -7,6 +7,7 @@
     using System.Threading;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Instaq.FileHandling.Standard;
 
     public class ImageDownloader

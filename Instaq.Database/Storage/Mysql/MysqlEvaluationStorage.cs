@@ -2,16 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
-
     using Instaq.Common.Dto;
     using Instaq.Contract;
     using Instaq.Contract.Dto;
     using Instaq.Contract.Models;
     using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.Database.Storage.Mysql.Query;
-
-    using MySql.Data.MySqlClient;
 
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage
     {
@@ -40,7 +36,7 @@
             {
                 Query = query,
                 HumanoidTags = humanoidTags,
-                TimeNeeded = time
+                TimeNeeded = time.TotalSeconds
             };
         }
 

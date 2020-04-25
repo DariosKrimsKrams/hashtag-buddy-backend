@@ -8,6 +8,7 @@ namespace Instaq.TestConsole
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
+    using Instaq.Contract.Storage;
     using Instaq.Crawler.Standard;
     using Instaq.Crawler.V4;
 

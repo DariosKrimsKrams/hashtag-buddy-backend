@@ -1,4 +1,4 @@
-﻿namespace Instaq.Contract
+﻿namespace Instaq.Contract.Storage
 {
     using Instaq.Contract.Models;
 
@@ -17,5 +17,7 @@
         bool Exists(string customerId);
 
         ICustomer Get(int id);
+
+        void IncreaseAmountOfHashtagSearchUsed(string customerId);
     }
 }
