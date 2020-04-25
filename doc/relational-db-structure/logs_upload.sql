@@ -1,10 +1,10 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for debug
+-- Table structure for logs_upload
 -- ----------------------------
-DROP TABLE IF EXISTS `debug`;
-CREATE TABLE `debug` (
+DROP TABLE IF EXISTS `logs_upload`;
+CREATE TABLE `logs_upload` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data` text NOT NULL,
   `customer_id` varchar(64) NOT NULL,

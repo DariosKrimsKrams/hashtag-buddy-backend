@@ -1,10 +1,10 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for feedback
+-- Table structure for logs_feedback
 -- ----------------------------
-DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE `feedback` (
+DROP TABLE IF EXISTS `logs_feedback`;
+CREATE TABLE `logs_feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(30) NOT NULL,
   `customer_id` varchar(64) NOT NULL,

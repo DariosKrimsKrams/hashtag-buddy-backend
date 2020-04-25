@@ -25,11 +25,11 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         public virtual DbSet<Blacklist> Blacklist { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Itags> Itags { get; set; }
+        public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<LogsFeedback> LogsFeedback { get; set; }
         public virtual DbSet<LogsHashtagSearch> LogsHashtagSearch { get; set; }
         public virtual DbSet<LogsUpload> LogsUpload { get; set; }
-        public virtual DbSet<Itags> Itags { get; set; }
-        public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
         public virtual DbSet<Photos> Photos { get; set; }
@@ -135,93 +135,6 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<LogsUpload>(entity =>
-            {
-                entity.ToTable("logs_upload");
-
-                entity.HasIndex(e => e.CustomerId)
-                    .HasName("debugCustomerId");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id")
-                    .IsUnique();
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Created)
-                    .HasColumnName("created")
-                    .HasColumnType("timestamp")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                    .ValueGeneratedOnAddOrUpdate();
-
-                entity.Property(e => e.CustomerId)
-                    .IsRequired()
-                    .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.Data)
-                    .IsRequired()
-                    .HasColumnName("data")
-                    .HasColumnType("text")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.Deleted).HasColumnName("deleted");
-            });
-
-            modelBuilder.Entity<LogsFeedback>(entity =>
-            {
-                entity.ToTable("logs_feedback");
-
-                entity.HasIndex(e => e.CustomerId)
-                    .HasName("feedbackCustomerId");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id")
-                    .IsUnique();
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Created)
-                    .HasColumnName("created")
-                    .HasColumnType("timestamp")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                    .ValueGeneratedOnAddOrUpdate();
-
-                entity.Property(e => e.CustomerId)
-                    .IsRequired()
-                    .HasColumnName("customer_id")
-                    .HasColumnType("varchar(64)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.Data)
-                    .IsRequired()
-                    .HasColumnName("data")
-                    .HasColumnType("text")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.DebugId)
-                    .HasColumnName("debug_id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Deleted).HasColumnName("deleted");
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasColumnName("type")
-                    .HasColumnType("varchar(30)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-            });
-
             modelBuilder.Entity<Itags>(entity =>
             {
                 entity.HasKey(e => e.Name)
@@ -313,6 +226,55 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .HasCollation("utf8_general_ci");
             });
 
+            modelBuilder.Entity<LogsFeedback>(entity =>
+            {
+                entity.ToTable("logs_feedback");
+
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("feedbackCustomerId");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.DebugId)
+                    .HasColumnName("debug_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Deleted).HasColumnName("deleted");
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasColumnName("type")
+                    .HasColumnType("varchar(30)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+            });
+
             modelBuilder.Entity<LogsHashtagSearch>(entity =>
             {
                 entity.ToTable("logs_hashtag_search");
@@ -354,6 +316,44 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .HasColumnType("varchar(30)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<LogsUpload>(entity =>
+            {
+                entity.ToTable("logs_upload");
+
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("debugCustomerId");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Deleted).HasColumnName("deleted");
             });
 
             modelBuilder.Entity<Mtags>(entity =>

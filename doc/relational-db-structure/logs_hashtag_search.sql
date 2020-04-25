@@ -1,10 +1,10 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for logs-hashtag-search
+-- Table structure for logs_hashtag_search
 -- ----------------------------
-DROP TABLE IF EXISTS `logs-hashtag-search`;
-CREATE TABLE `logs-hashtag-search` (
+DROP TABLE IF EXISTS `logs_hashtag_search`;
+CREATE TABLE `logs_hashtag_search` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(30) NOT NULL,
   `customer_id` varchar(64) NOT NULL,
