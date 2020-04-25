@@ -1,30 +1,10 @@
-﻿using Instaq.Common;
-
-namespace Instaq.Database.Storage.Mysql.Generated
+﻿namespace Instaq.Database.Storage.Mysql.Generated
 {
+    using Instaq.Common;
     using Instaq.Contract.Models;
 
     public partial class Photos
     {
-        public static Photos FromImage(IImage image)
-        {
-            var photo = new Photos
-            {
-                LargeUrl       = image.LargeUrl,
-                ThumbUrl       = image.ThumbUrl,
-                Shortcode = image.Shortcode,
-                Likes     = image.Likes,
-                Comments  = image.CommentCount,
-                User      = image.User.Username,
-                Follower = image.User.FollowerCount,
-                Following  = image.User.FollowingCount,
-                Posts  = image.User.PostCount,
-                Uploaded  = image.Uploaded
-            };
-
-            return photo;
-        }
-
         public IImage ToImage()
         {
             var user = new User

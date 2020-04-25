@@ -2,12 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
     using Instaq.Contract.Models;
-
     using global::Instaq.Contract;
-
     using Instaq.Database.Storage.Mysql.Generated;
 
     public class MysqlCrawlerStorage : MysqlBaseStorage, ICrawlerStorage

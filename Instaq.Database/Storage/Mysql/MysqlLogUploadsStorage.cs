@@ -2,14 +2,13 @@
 {
     using System;
     using System.Linq;
-
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Database.Storage.Mysql.Generated;
 
-    public class MysqlLogStorage : MysqlBaseStorage, ILogStorage
+    public class MysqlLogUploadsStorage : MysqlBaseStorage, ILogUploadsStorage
     {
-        public MysqlLogStorage(InstaqProdContext context)
+        public MysqlLogUploadsStorage(InstaqProdContext context)
             : base(context)
         {
         }
@@ -21,7 +20,6 @@
             {
                 throw new ArgumentException();
             }
-
             return entry.ToLog();
         }
 

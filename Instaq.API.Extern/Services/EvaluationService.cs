@@ -18,7 +18,7 @@
     public class EvaluationService : IEvaluationService
     {
         private readonly IEvaluationStorage evaluationStorage;
-        private readonly ILogStorage logStorage;
+        private readonly ILogUploadsStorage logUploadsStorage;
         private readonly ITaggingProvider taggingProvider;
         private readonly IFileHandler fileHandler;
         private readonly IEvaluation evaluation;
@@ -29,12 +29,12 @@
             ITaggingProvider taggingProvider,
             IFileHandler fileHandler,
             IEvaluation evaluation,
-            ILogStorage logStorage,
+            ILogUploadsStorage logUploadsStorage,
             ICustomerStorage customerStorage
             )
         {
             this.evaluationStorage = evaluationStorage;
-            this.logStorage        = logStorage;
+            this.logUploadsStorage        = logUploadsStorage;
             this.taggingProvider   = taggingProvider;
             this.fileHandler       = fileHandler;
             this.evaluation        = evaluation;
@@ -126,7 +126,7 @@
             var response = this.FindTags(machineTags);
 
             var debugData = JsonSerializer.Serialize(this.evaluation.GetDebugInfos());
-            var logId = this.logStorage.InsertLog(debugData, customerId);
+            var logId = this.logUploadsStorage.InsertLog(debugData, customerId);
             var hash = Hash.GetMd5(logId.ToString());
             var ext = Path.GetExtension(file.FileName);
             var fileName = hash + ext.ToLower();
@@ -136,7 +136,7 @@
             this.evaluation.AddDebugInfos("originalFilename", file.FileName);
             debugData = JsonSerializer.Serialize(this.evaluation.GetDebugInfos());
             var log = new Log { Id = logId, Data = debugData };
-            this.logStorage.UpdateLog(log);
+            this.logUploadsStorage.UpdateLog(log);
             
             this.customerStorage.IncreasePhotosCount(customerId);
 

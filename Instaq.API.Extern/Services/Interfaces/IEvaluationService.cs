@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
     using Instaq.API.Extern.Models.Responses;
-    using Instaq.Contract.Models;
-
     using Microsoft.AspNetCore.Http;
 
     public interface IEvaluationService

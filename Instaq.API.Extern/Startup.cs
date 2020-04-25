@@ -45,7 +45,7 @@
             services.AddTransient<ILoggingService, LoggingService>();
 
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
-            services.AddTransient<ILogStorage, MysqlLogStorage>();
+            services.AddTransient<ILogUploadsStorage, MysqlLogUploadsStorage>();
             services.AddTransient<IFeedbackStorage, MysqlFeedbackStorage>();
             services.AddTransient<ICustomerStorage, MysqlCustomerStorage>();
             services.AddTransient<IDebugStorage, MysqlDebugStorage>();

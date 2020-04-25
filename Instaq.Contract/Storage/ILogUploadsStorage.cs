@@ -2,7 +2,7 @@
 {
     using Instaq.Contract.Models;
 
-    public interface ILogStorage
+    public interface ILogUploadsStorage
     {
         int InsertLog(string data, string customerId);
 

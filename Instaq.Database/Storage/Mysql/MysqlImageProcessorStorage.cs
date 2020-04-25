@@ -6,7 +6,6 @@
     using System.Threading;
     using Instaq.Contract;
     using Instaq.Contract.Models;
-    using Instaq.Database;
     using Instaq.Database.Storage.Mysql.Generated;
     using MySql.Data.MySqlClient;
 
