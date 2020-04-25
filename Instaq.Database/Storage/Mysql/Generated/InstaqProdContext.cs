@@ -28,6 +28,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
         public virtual DbSet<Debug> Debug { get; set; }
         public virtual DbSet<Feedback> Feedback { get; set; }
         public virtual DbSet<Itags> Itags { get; set; }
+        public virtual DbSet<LogsHashtagSearch> LogsHashtagSearch { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
@@ -304,6 +305,49 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .IsRequired()
                     .HasColumnName("slug")
                     .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+            });
+
+            modelBuilder.Entity<LogsHashtagSearch>(entity =>
+            {
+                entity.ToTable("logs-hashtag-search");
+
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("hashtagSearchCustomerId");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasColumnName("customer_id")
+                    .HasColumnType("varchar(64)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasColumnName("type")
+                    .HasColumnType("varchar(30)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
             });
