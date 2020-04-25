@@ -171,7 +171,7 @@
                 new MachineTag { Name = keyword }
             };
             var data =this.GetSimilarHashtags(customerId, machineTags, new List<string> { keyword }, "hashtag-search");
-            //this.customerStorage.IncreaseAmountOfHashtagSearchUsed(customerId);
+            this.customerStorage.IncreaseAmountOfHashtagSearchUsed(customerId);
             return data;
         }
 

@@ -129,6 +129,10 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.PhotosCount)
                     .HasColumnName("photos_count")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.SearchCount)
+                    .HasColumnName("search_count")
+                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Debug>(entity =>
