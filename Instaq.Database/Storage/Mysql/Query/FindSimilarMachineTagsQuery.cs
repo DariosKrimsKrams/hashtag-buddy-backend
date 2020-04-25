@@ -6,7 +6,7 @@
     {
         public override string GetQuery(IMachineTag[] machineTags)
         {
-            const int LimitTopPhotos    = 200;
+            const int LimitTopPhotos    = 1000;
             const int CountTagsToReturn = 30;
             var countInsertTags   = machineTags.Length;
             var conditions = BuildWhereConditions(machineTags, "", "`rel`.`itag`");

@@ -7,7 +7,7 @@
     {
         public int LogId { get; set; }
 
-        public IEnumerable<IHumanoidTag> Hashtags { get; set; }
+        public IList<IHumanoidTag> Hashtags { get; set; }
 
         public SearchResponse()
         {

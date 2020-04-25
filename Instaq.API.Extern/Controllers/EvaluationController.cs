@@ -1,6 +1,9 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
+    using System.Collections.Generic;
+
+    using Instaq.API.Extern.Models.Requests;
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;
     using Microsoft.AspNetCore.Http;
@@ -52,7 +55,7 @@
             }
         }
 
-        [HttpPost("Search/{customerId}/{keyword}")]
+        [HttpPost("Search")]
         [ProducesResponseType(typeof(SearchResponse), 200)]
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 401)]
@@ -66,6 +69,32 @@
                     return this.Unauthorized();
                 }
                 var data = this.evaluationService.GetSimilarHashtags(keyword);
+                return this.Ok(data);
+            }
+            catch (ArgumentException e)
+            {
+                return this.NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("MultipleSearch")]
+        [ProducesResponseType(typeof(SearchResponse), 200)]
+        [ProducesResponseType(typeof(void), 400)]
+        [ProducesResponseType(typeof(void), 401)]
+        [ProducesResponseType(typeof(void), 404)]
+        public IActionResult SearchMultiple(SearchMultipleRequest request)
+        {
+            try
+            {
+                if (!this.evaluationService.IsCustomerValid(request.CustomerId))
+                {
+                    return this.Unauthorized();
+                }
+                var data = this.evaluationService.GetSimilarHashtags(request.Keywords, request.ExcludeHashtags);
                 return this.Ok(data);
             }
             catch (ArgumentException e)

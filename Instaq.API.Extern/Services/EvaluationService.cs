@@ -162,12 +162,33 @@
 
         public SearchResponse GetSimilarHashtags(string keyword)
         {
+            keyword = keyword.Trim().ToLower();
             var machineTags = new IMachineTag[]
             {
-                new MachineTag { Name = keyword.Trim().ToLower() }
+                new MachineTag { Name = keyword }
             };
+            return this.GetSimilarHashtags(machineTags, new List<string> { keyword }, "hashtag-search");
+        }
+
+        public SearchResponse GetSimilarHashtags(IEnumerable<string> keywords, IEnumerable<string> excludeHashtags)
+        {
+            var machineTags = new List<IMachineTag>();
+            var excludeHashtags2 = excludeHashtags.ToList();
+            foreach (var keyword in keywords)
+            {
+                var keyword2 = keyword.Trim().ToLower();
+                machineTags.Add(new MachineTag { Name = keyword2 });
+                excludeHashtags2.Add(keyword2);
+            }
+            var machineTagsAsArray = machineTags.ToArray();
+            return this.GetSimilarHashtags(machineTagsAsArray, excludeHashtags2, "image-suggestions");
+        }
+
+        public SearchResponse GetSimilarHashtags(IMachineTag[] machineTags, IEnumerable<string> excludeHashtags, string dbKey)
+        {
             var response1 = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
             var response2 = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
+
             // ToDo log results and time to DB
 
             var humanoidTags = response1.HumanoidTags.ToList();
@@ -178,9 +199,19 @@
                     humanoidTags.Add(htag);
                 }
             }
+
+            for (var i = humanoidTags.Count - 1; i >= 0; i--)
+            {
+                var hashtag = humanoidTags[i];
+                if (excludeHashtags.Contains(hashtag.Name))
+                {
+                    humanoidTags.RemoveAt(i);
+                }
+            }
+
             var response = new SearchResponse
             {
-                LogId = 0,
+                LogId    = 0,
                 Hashtags = humanoidTags
             };
 
