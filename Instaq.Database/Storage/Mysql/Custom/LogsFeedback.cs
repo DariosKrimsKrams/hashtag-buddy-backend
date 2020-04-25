@@ -2,11 +2,11 @@
 {
     using Instaq.Contract.Models;
 
-    public partial class Feedback
+    public partial class LogsFeedback
     {
-        public static Feedback FromCommonFeedback(IFeedback feedback)
+        public static LogsFeedback FromCommonFeedback(IFeedback feedback)
         {
-            return new Feedback
+            return new LogsFeedback
             {
                 Id         = feedback.Id,
                 Type       = feedback.Type,

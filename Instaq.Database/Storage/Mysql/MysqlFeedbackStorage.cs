@@ -20,8 +20,8 @@
 
         public int Insert(IFeedback commonFeedback)
         {
-            var feedback = Feedback.FromCommonFeedback(commonFeedback);
-            this.Db.Feedback.Add(feedback);
+            var feedback = LogsFeedback.FromCommonFeedback(commonFeedback);
+            this.Db.LogsFeedback.Add(feedback);
             this.Db.SaveChanges();
             return feedback.Id;
         }

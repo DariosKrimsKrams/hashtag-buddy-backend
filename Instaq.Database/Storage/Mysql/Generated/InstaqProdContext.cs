@@ -25,10 +25,10 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
         public virtual DbSet<Blacklist> Blacklist { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Debug> Debug { get; set; }
-        public virtual DbSet<Feedback> Feedback { get; set; }
-        public virtual DbSet<Itags> Itags { get; set; }
+        public virtual DbSet<LogsFeedback> LogsFeedback { get; set; }
         public virtual DbSet<LogsHashtagSearch> LogsHashtagSearch { get; set; }
+        public virtual DbSet<LogsUpload> LogsUpload { get; set; }
+        public virtual DbSet<Itags> Itags { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
@@ -135,9 +135,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<Debug>(entity =>
+            modelBuilder.Entity<LogsUpload>(entity =>
             {
-                entity.ToTable("debug");
+                entity.ToTable("logs_upload");
 
                 entity.HasIndex(e => e.CustomerId)
                     .HasName("debugCustomerId");
@@ -173,9 +173,9 @@ namespace Instaq.Database.Storage.Mysql.Generated
                 entity.Property(e => e.Deleted).HasColumnName("deleted");
             });
 
-            modelBuilder.Entity<Feedback>(entity =>
+            modelBuilder.Entity<LogsFeedback>(entity =>
             {
-                entity.ToTable("feedback");
+                entity.ToTable("logs_feedback");
 
                 entity.HasIndex(e => e.CustomerId)
                     .HasName("feedbackCustomerId");
@@ -315,7 +315,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
             modelBuilder.Entity<LogsHashtagSearch>(entity =>
             {
-                entity.ToTable("logs-hashtag-search");
+                entity.ToTable("logs_hashtag_search");
 
                 entity.HasIndex(e => e.CustomerId)
                     .HasName("hashtagSearchCustomerId");

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;
@@ -16,7 +15,7 @@
 
         public ILog GetLog(int id)
         {
-            var entry = this.Db.Debug.FirstOrDefault(x => x.Id == id);
+            var entry = this.Db.LogsUpload.FirstOrDefault(x => x.Id == id);
             if (entry is null)
             {
                 throw new ArgumentException();
@@ -26,15 +25,15 @@
 
         public int InsertLog(string data, string customerId)
         {
-            var debug = new Debug { Data = data, CustomerId = customerId };
-            this.Db.Debug.Add(debug);
+            var debug = new LogsUpload { Data = data, CustomerId = customerId };
+            this.Db.LogsUpload.Add(debug);
             this.Db.SaveChanges();
             return debug.Id;
         }
 
         public void UpdateLog(ILog log)
         {
-            var existingEntry = this.Db.Debug.First(x => x.Id == log.Id);
+            var existingEntry = this.Db.LogsUpload.First(x => x.Id == log.Id);
             existingEntry.Data = log.Data;
             this.Db.SaveChanges();
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Instaq.Database.Storage.Mysql.Generated
 {
-    public partial class Debug
+    public partial class LogsUpload
     {
         public int Id { get; set; }
         public string Data { get; set; }

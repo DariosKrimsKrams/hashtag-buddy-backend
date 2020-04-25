@@ -3,7 +3,7 @@
     using System;
     using Instaq.Contract.Models;
 
-    public partial class Debug
+    public partial class LogsUpload
     {
         public ILog ToLog()
         {
