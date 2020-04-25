@@ -10,9 +10,9 @@
 
         EvaluateResponse EvaluateFile(string customerId, IFormFile file, HttpRequest request);
 
-        SearchResponse GetSimilarHashtags(string keyword);
+        SearchResponse GetSimilarHashtags(string customerId, string keyword);
 
-        SearchResponse GetSimilarHashtags(IEnumerable<string> keywords, IEnumerable<string> excludeHashtags);
+        SearchResponse GetSimilarHashtags(string customerId, IEnumerable<string> keywords, IEnumerable<string> excludeHashtags);
         
     }
 }

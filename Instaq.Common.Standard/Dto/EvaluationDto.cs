@@ -11,6 +11,6 @@
 
         public IEnumerable<IHumanoidTag> HumanoidTags { get; set; }
 
-        public TimeSpan TimeNeeded { get; set; }
+        public double TimeNeeded { get; set; }
     }
 }

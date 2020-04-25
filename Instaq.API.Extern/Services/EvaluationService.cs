@@ -23,6 +23,7 @@
         private readonly IFileHandler fileHandler;
         private readonly IEvaluation evaluation;
         private readonly ICustomerStorage customerStorage;
+        private readonly ILogHashtagSearchStorage hashtagSearchStorage;
 
         public EvaluationService(
             IEvaluationStorage evaluationStorage,
@@ -30,8 +31,9 @@
             IFileHandler fileHandler,
             IEvaluation evaluation,
             ILogUploadsStorage logUploadsStorage,
-            ICustomerStorage customerStorage
-            )
+            ICustomerStorage customerStorage,
+            ILogHashtagSearchStorage hashtagSearchStorage
+        )
         {
             this.evaluationStorage = evaluationStorage;
             this.logUploadsStorage        = logUploadsStorage;
@@ -39,6 +41,7 @@
             this.fileHandler       = fileHandler;
             this.evaluation        = evaluation;
             this.customerStorage   = customerStorage;
+            this.hashtagSearchStorage = hashtagSearchStorage;
         }
 
 
@@ -160,17 +163,19 @@
             return response;
         }
 
-        public SearchResponse GetSimilarHashtags(string keyword)
+        public SearchResponse GetSimilarHashtags(string customerId, string keyword)
         {
             keyword = keyword.Trim().ToLower();
             var machineTags = new IMachineTag[]
             {
                 new MachineTag { Name = keyword }
             };
-            return this.GetSimilarHashtags(machineTags, new List<string> { keyword }, "hashtag-search");
+            var data =this.GetSimilarHashtags(customerId, machineTags, new List<string> { keyword }, "hashtag-search");
+            //this.customerStorage.IncreaseAmountOfHashtagSearchUsed(customerId);
+            return data;
         }
 
-        public SearchResponse GetSimilarHashtags(IEnumerable<string> keywords, IEnumerable<string> excludeHashtags)
+        public SearchResponse GetSimilarHashtags(string customerId, IEnumerable<string> keywords, IEnumerable<string> excludeHashtags)
         {
             var machineTags = new List<IMachineTag>();
             var excludeHashtags2 = excludeHashtags.ToList();
@@ -181,15 +186,13 @@
                 excludeHashtags2.Add(keyword2);
             }
             var machineTagsAsArray = machineTags.ToArray();
-            return this.GetSimilarHashtags(machineTagsAsArray, excludeHashtags2, "image-suggestions");
+            return this.GetSimilarHashtags(customerId, machineTagsAsArray, excludeHashtags2, "image-suggestions");
         }
 
-        public SearchResponse GetSimilarHashtags(IMachineTag[] machineTags, IEnumerable<string> excludeHashtags, string dbKey)
+        private SearchResponse GetSimilarHashtags(string customerId, IMachineTag[] machineTags, IEnumerable<string> excludeHashtags, string type)
         {
             var response1 = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
             var response2 = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
-
-            // ToDo log results and time to DB
 
             var humanoidTags = response1.HumanoidTags.ToList();
             foreach (var htag in response2.HumanoidTags)
@@ -208,6 +211,13 @@
                     humanoidTags.RemoveAt(i);
                 }
             }
+
+            var data = new Dictionary<string, object>();
+            data.Add("input", JsonSerializer.Serialize(machineTags));
+            data.Add("result1 FindSimilarMachineTagsQuery", response1);
+            data.Add("result2 FindSimilarToHumanoidTagsQuery", response2);
+            var dataAsJson = JsonSerializer.Serialize(data);
+            this.hashtagSearchStorage.InsertLog(type, dataAsJson, customerId);
 
             var response = new SearchResponse
             {

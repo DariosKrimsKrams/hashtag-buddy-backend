@@ -68,7 +68,7 @@
                 {
                     return this.Unauthorized();
                 }
-                var data = this.evaluationService.GetSimilarHashtags(keyword);
+                var data = this.evaluationService.GetSimilarHashtags(customerId, keyword);
                 return this.Ok(data);
             }
             catch (ArgumentException e)
@@ -94,7 +94,7 @@
                 {
                     return this.Unauthorized();
                 }
-                var data = this.evaluationService.GetSimilarHashtags(request.Keywords, request.ExcludeHashtags);
+                var data = this.evaluationService.GetSimilarHashtags(request.CustomerId, request.Keywords, request.ExcludeHashtags);
                 return this.Ok(data);
             }
             catch (ArgumentException e)

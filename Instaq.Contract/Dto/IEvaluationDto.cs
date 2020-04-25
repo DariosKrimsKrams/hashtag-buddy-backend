@@ -1,6 +1,5 @@
 ﻿namespace Instaq.Contract.Dto
 {
-    using System;
     using System.Collections.Generic;
     using Instaq.Contract.Models;
 
@@ -10,7 +9,7 @@
 
         IEnumerable<IHumanoidTag> HumanoidTags { get; set; }
 
-        TimeSpan TimeNeeded { get; set; }
+        double TimeNeeded { get; set; }
 
     }
 }

@@ -36,7 +36,7 @@
             this.debugInfos.Add("backend_date", Config.Date);
             this.debugInfos.Add("humanoidTagsMostRelevant", reponse.HumanoidTags);
             this.debugInfos.Add("queryMostRelevant", reponse.Query);
-            this.debugInfos.Add("timeNeeded", reponse.TimeNeeded.TotalSeconds);
+            this.debugInfos.Add("timeNeeded", reponse.TimeNeeded);
 
             // Post Processor Example
             //humanoidTags = new OrderByAmountOfPosts().Do(humanoidTags);
