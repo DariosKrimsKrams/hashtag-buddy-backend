@@ -341,7 +341,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
 
             modelBuilder.Entity<LogsSystem>(entity =>
             {
-                entity.ToTable("logs_upload");
+                entity.ToTable("logs_system");
 
                 entity.HasIndex(e => e.Id)
                     .HasName("id")
