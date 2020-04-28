@@ -19,7 +19,7 @@
     internal class Program
     {
 
-        private static InstaqProdContext context;
+        private static InstaqContext context;
 
         private static void Main()
         {
@@ -36,7 +36,7 @@
             var connectionString = configuration.GetConnectionString("HashtagDatabase");
             Console.WriteLine("Using DB: " + connectionString);
 
-            context = new InstaqProdContext(connectionString);
+            context = new InstaqContext(connectionString);
 
             Console.WriteLine("" + 
                              "1: Start Crawler (CrawlerEngine V4)\n" +

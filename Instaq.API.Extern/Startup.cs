@@ -39,8 +39,8 @@
             services.AddHealthChecks().AddCheck<HealthService>("IsDbConnectionHealthy");
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
-            services.AddDbContext<InstaqProdContext>(options => options.UseMySql(dbConnection));
-            //services.AddDbContext<InstaqProdContext>(options =>
+            services.AddDbContext<InstaqContext>(options => options.UseMySql(dbConnection));
+            //services.AddDbContext<InstaqContext>(options =>
             //{
             //    options.UseMySql(dbConnection);
             //    options.UseLoggerFactory(loggerFactory);

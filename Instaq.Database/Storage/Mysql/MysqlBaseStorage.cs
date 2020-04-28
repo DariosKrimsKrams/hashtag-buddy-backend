@@ -13,9 +13,9 @@
 
     public abstract class MysqlBaseStorage
     {
-        protected InstaqProdContext Db;
+        protected InstaqContext Db;
 
-        protected MysqlBaseStorage(InstaqProdContext context)
+        protected MysqlBaseStorage(InstaqContext context)
         {
             this.Db = context;
         }

@@ -8,7 +8,7 @@
 
     public class MysqlLogUploadsStorage : MysqlBaseStorage, ILogUploadsStorage
     {
-        public MysqlLogUploadsStorage(InstaqProdContext context)
+        public MysqlLogUploadsStorage(InstaqContext context)
             : base(context)
         {
         }

@@ -2,13 +2,13 @@
 
 namespace Instaq.Database.Storage.Mysql.Generated
 {
-    public partial class InstaqProdContext : DbContext
+    public partial class InstaqContext : DbContext
     {
-        public InstaqProdContext()
+        public InstaqContext()
         {
         }
 
-        public InstaqProdContext(DbContextOptions<InstaqProdContext> options)
+        public InstaqContext(DbContextOptions<InstaqContext> options)
             : base(options)
         {
         }

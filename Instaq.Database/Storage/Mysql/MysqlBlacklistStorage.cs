@@ -11,7 +11,7 @@
     public class MysqlBlacklistStorage : MysqlBaseStorage, IBlacklistStorage
     {
 
-        public MysqlBlacklistStorage(InstaqProdContext context)
+        public MysqlBlacklistStorage(InstaqContext context)
             : base(context)
         {
         }

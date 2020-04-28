@@ -6,7 +6,7 @@
 
     public class MysqlLogHashtagSearchStorage : MysqlBaseStorage, ILogHashtagSearchStorage
     {
-        public MysqlLogHashtagSearchStorage(InstaqProdContext context)
+        public MysqlLogHashtagSearchStorage(InstaqContext context)
             : base(context)
         {
         }

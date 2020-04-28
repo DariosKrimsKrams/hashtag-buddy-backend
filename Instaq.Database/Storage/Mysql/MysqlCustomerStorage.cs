@@ -9,7 +9,7 @@
     public class MysqlCustomerStorage : MysqlBaseStorage, ICustomerStorage
     {
 
-        public MysqlCustomerStorage(InstaqProdContext context)
+        public MysqlCustomerStorage(InstaqContext context)
             : base(context)
         {
         }

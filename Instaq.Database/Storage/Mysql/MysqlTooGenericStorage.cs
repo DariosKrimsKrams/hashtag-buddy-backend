@@ -10,7 +10,7 @@
     public class MysqlTooGenericStorage : MysqlBaseStorage, ITooGenericStorage
     {
 
-        public MysqlTooGenericStorage(InstaqProdContext context)
+        public MysqlTooGenericStorage(InstaqContext context)
             : base(context)
         {
         }

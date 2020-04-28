@@ -38,7 +38,7 @@
             services.AddCors();
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
-            services.AddDbContext<InstaqProdContext>(options => options.UseMySql(dbConnection));
+            services.AddDbContext<InstaqContext>(options => options.UseMySql(dbConnection));
 
             services.AddTransient<IDebugStorage, MysqlDebugStorage>();
             services.AddTransient<IFileHandler, DiskFileHander>();

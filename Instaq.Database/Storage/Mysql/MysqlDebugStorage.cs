@@ -9,7 +9,7 @@
 
     public class MysqlDebugStorage : MysqlBaseStorage, IDebugStorage
     {
-        public MysqlDebugStorage(InstaqProdContext context)
+        public MysqlDebugStorage(InstaqContext context)
             : base(context)
         {
         }

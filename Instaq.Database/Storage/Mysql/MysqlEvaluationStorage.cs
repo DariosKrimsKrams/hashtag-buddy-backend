@@ -12,7 +12,7 @@
     public class MysqlEvaluationStorage : MysqlBaseStorage, IEvaluationStorage
     {
 
-        public MysqlEvaluationStorage(InstaqProdContext context)
+        public MysqlEvaluationStorage(InstaqContext context)
             : base(context)
         {
         }

@@ -14,7 +14,7 @@
         private readonly List<TimeSpan> timingsRels = new List<TimeSpan>();
         private readonly List<TimeSpan> timingsHTags = new List<TimeSpan>();
 
-        public MysqlCrawlerStorage(InstaqProdContext context)
+        public MysqlCrawlerStorage(InstaqContext context)
             : base(context)
         {
         }

@@ -8,7 +8,7 @@
 
     public class MysqlFeedbackStorage : MysqlBaseStorage, IFeedbackStorage
     {
-        public MysqlFeedbackStorage(InstaqProdContext context)
+        public MysqlFeedbackStorage(InstaqContext context)
             : base(context)
         {
         }

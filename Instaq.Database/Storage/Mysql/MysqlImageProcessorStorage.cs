@@ -13,7 +13,7 @@
     public class MysqlImageProcessorStorage : MysqlBaseStorage, IImageProcessorStorage
     {
 
-        public MysqlImageProcessorStorage(InstaqProdContext context)
+        public MysqlImageProcessorStorage(InstaqContext context)
             : base(context)
         {
         }
