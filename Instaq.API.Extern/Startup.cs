@@ -40,6 +40,11 @@
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
             services.AddDbContext<InstaqProdContext>(options => options.UseMySql(dbConnection));
+            //services.AddDbContext<InstaqProdContext>(options =>
+            //{
+            //    options.UseMySql(dbConnection);
+            //    options.UseLoggerFactory(loggerFactory);
+            //});
 
             services.AddTransient<IEvaluationService, EvaluationService>();
             services.AddTransient<ILoggingService, LoggingService>();

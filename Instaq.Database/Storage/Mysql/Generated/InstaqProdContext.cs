@@ -1,26 +1,16 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Instaq.Database.Storage.Mysql.Generated
 {
     public partial class InstaqProdContext : DbContext
     {
-        private string connectionString;
-
         public InstaqProdContext()
         {
-            this.connectionString = "";
         }
 
         public InstaqProdContext(DbContextOptions<InstaqProdContext> options)
             : base(options)
         {
-            this.connectionString = "";
-        }
-
-        public InstaqProdContext(string connectionString)
-        {
-            this.connectionString = connectionString;
         }
 
         public virtual DbSet<Blacklist> Blacklist { get; set; }
@@ -33,14 +23,6 @@ namespace Instaq.Database.Storage.Mysql.Generated
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
         public virtual DbSet<Photos> Photos { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured && !String.IsNullOrEmpty(this.connectionString))
-            {
-                optionsBuilder.UseMySql(this.connectionString);
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
