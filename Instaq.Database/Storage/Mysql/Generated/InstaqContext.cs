@@ -19,6 +19,7 @@ namespace Instaq.Database.Storage.Mysql.Generated
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<LogsFeedback> LogsFeedback { get; set; }
         public virtual DbSet<LogsHashtagSearch> LogsHashtagSearch { get; set; }
+        public virtual DbSet<LogsSystem> LogsSystem { get; set; }
         public virtual DbSet<LogsUpload> LogsUpload { get; set; }
         public virtual DbSet<Mtags> Mtags { get; set; }
         public virtual DbSet<PhotoItagRel> PhotoItagRel { get; set; }
@@ -336,6 +337,39 @@ namespace Instaq.Database.Storage.Mysql.Generated
                     .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.Deleted).HasColumnName("deleted");
+            });
+
+            modelBuilder.Entity<LogsSystem>(entity =>
+            {
+                entity.ToTable("logs_upload");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Created)
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                    .ValueGeneratedOnAddOrUpdate();
+
+                entity.Property(e => e.LogLevel)
+                    .IsRequired()
+                    .HasColumnName("log_level")
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Data)
+                    .IsRequired()
+                    .HasColumnName("data")
+                    .HasColumnType("text")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Mtags>(entity =>
