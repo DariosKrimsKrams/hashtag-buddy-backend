@@ -1,6 +1,5 @@
 ﻿namespace Instaq.API.Extern
 {
-    using System.IO;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -27,6 +26,8 @@
                     config.AddEnvironmentVariables();
                 })
                 .UseStartup<Startup>()
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false)
                 .Build();
         }
 

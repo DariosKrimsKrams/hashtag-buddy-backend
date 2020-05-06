@@ -1,35 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-//using API.Controllers;
-//using API.Models.Dtos;
-//using API.Services.Interfaces;
-//using Log4NetLogger;
-//using log4net.ElasticSearch;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-//using logger = Log4NetLogger.Log4NetLogger;
-
-namespace API.Services
+﻿namespace Instaq.API.Extern.Services
 {
+    using System.Text.Json;
     using Instaq.API.Extern.Models.Dtos;
     using Instaq.API.Extern.Services.Interfaces;
+    using Instaq.Contract.Storage;
 
     public class LoggingService : ILoggingService
     {
-        //private readonly ILogger<LoggingService> logger;
+        private readonly ILogSystem logSystem;
 
-        public LoggingService(IConfiguration configuration)
+        public LoggingService(ILogSystem logSystem)
         {
-            //var path = configuration.GetValue<string>("LogFile:Path");
-            //logger = Log4NetLogger.CreateLogger<LoggingService>(path);
+            this.logSystem = logSystem;
         }
 
-        public void Log(ApiLogItem logItem)
+        public void LogRequest(ApiLogItem logItem)
         {
-            //var data = logItem.ToJson();
-            //logger.LogInformation(data);
+            var data = JsonSerializer.Serialize(logItem);
+            this.logSystem.InsertLog("request", data);
         }
+
     }
 }

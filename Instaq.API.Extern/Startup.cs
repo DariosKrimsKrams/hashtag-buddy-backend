@@ -1,7 +1,5 @@
 ﻿namespace Instaq.API.Extern
 {
-    using global::API.Services;
-
     using Instaq.API.Extern.Helpers;
     using Instaq.API.Extern.Middleware;
     using Instaq.API.Extern.Services;
@@ -39,15 +37,13 @@
             services.AddHealthChecks().AddCheck<HealthService>("IsDbConnectionHealthy");
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
-            services.AddDbContext<InstaqContext>(options => options.UseMySql(dbConnection));
-            //services.AddDbContext<InstaqContext>(options =>
-            //{
-            //    options.UseMySql(dbConnection);
-            //    options.UseLoggerFactory(loggerFactory);
-            //});
+            services.AddDbContext<InstaqContext>(options =>
+            {
+                options.UseMySql(dbConnection);
+                //options.UseLoggerFactory(loggerFactory);
+            });
 
             services.AddTransient<IEvaluationService, EvaluationService>();
-            services.AddTransient<ILoggingService, LoggingService>();
 
             services.AddTransient<IEvaluationStorage, MysqlEvaluationStorage>();
             services.AddTransient<ILogUploadsStorage, MysqlLogUploadsStorage>();
@@ -59,7 +55,12 @@
             services.AddTransient<ITaggingProvider, GcpVision>();
             services.AddTransient<IFileHandler, DiskFileHander>();
             services.AddTransient<IEvaluation, Evaluation>();
-            
+
+            // https://stackoverflow.com/questions/48590579/cannot-resolve-scoped-service-from-root-provider-net-core-2
+            services.AddSingleton<RequestResponseLoggingMiddleware>();
+            services.AddSingleton<ILoggingService, LoggingService>();
+            services.AddScoped<ILogSystem, MysqlLogSystem>();
+
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Extern", Version = "v1" }); });
         }
 

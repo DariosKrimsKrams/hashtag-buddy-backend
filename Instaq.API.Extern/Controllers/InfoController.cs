@@ -17,7 +17,6 @@
         {
             var result = new Dictionary<string, string>
             {
-                { "backendVersion", VersionInfo.Version },
                 { "evaluationVersion", Config.Version.ToString() },
                 { "date", Config.Date },
                 { "ASPNETCORE_ENVIRONMENT", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "" },

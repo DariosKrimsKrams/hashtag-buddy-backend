@@ -1,8 +1,6 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
-    using System.Collections.Generic;
-
     using Instaq.API.Extern.Models.Requests;
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services.Interfaces;

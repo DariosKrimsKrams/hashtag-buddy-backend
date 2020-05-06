@@ -4,6 +4,6 @@
 
     public interface ILoggingService
     {
-        void Log(ApiLogItem logItem);
+        void LogRequest(ApiLogItem logItem);
     }
 }

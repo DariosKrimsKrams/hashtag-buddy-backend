@@ -1,14 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Instaq.API.Extern.Models.Dtos;
-using Instaq.API.Extern.Services.Interfaces;
-
-namespace Instaq.API.Extern.Middleware
+﻿namespace Instaq.API.Extern.Middleware
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Instaq.API.Extern.Models.Dtos;
+    using Instaq.API.Extern.Services.Interfaces;
 
     // from
     // https://exceptionnotfound.net/using-middleware-to-log-requests-and-responses-in-asp-net-core/
@@ -25,38 +24,36 @@ namespace Instaq.API.Extern.Middleware
             this.loggingService = loggingService;
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
             var request = httpContext.Request;
-            if (request.Path.StartsWithSegments(new PathString("/api")))
+            //if (!request.Path.StartsWithSegments(new PathString("/api")))
+            //{
+            //    await next.Invoke(httpContext);
+            //    return;
+            //}
+            var stopWatch = Stopwatch.StartNew();
+            var requestTime = DateTime.UtcNow;
+            var requestBodyContent = await ReadRequestBody(request);
+            var originalBodyStream = httpContext.Response.Body;
+            using (var responseBody = new MemoryStream())
             {
-                var stopWatch = Stopwatch.StartNew();
-                var requestTime = DateTime.UtcNow;
-                var requestBodyContent = await ReadRequestBody(request);
-                var originalBodyStream = httpContext.Response.Body;
-                using (var responseBody = new MemoryStream())
-                {
-                    var response = httpContext.Response;
-                    response.Body = responseBody;
-                    await next(httpContext);
-                    stopWatch.Stop();
+                var response = httpContext.Response;
+                response.Body = responseBody;
+                await next.Invoke(httpContext);
+                stopWatch.Stop();
 
-                    var responseBodyContent = await ReadResponseBody(response);
-                    await responseBody.CopyToAsync(originalBodyStream);
+                var responseBodyContent = await ReadResponseBody(response);
+                await responseBody.CopyToAsync(originalBodyStream);
 
-                    SafeLog(requestTime,
-                        stopWatch.ElapsedMilliseconds,
-                        response.StatusCode,
-                        request.Method,
-                        request.Path,
-                        request.QueryString.ToString(),
-                        requestBodyContent,
-                        responseBodyContent);
-                }
-            }
-            else
-            {
-                await next(httpContext);
+                SafeLog(requestTime,
+                    stopWatch.ElapsedMilliseconds,
+                    response.StatusCode,
+                    request.Method,
+                    request.Path,
+                    request.QueryString.ToString(),
+                    requestBodyContent,
+                    responseBodyContent);
             }
         }
 
@@ -101,7 +98,7 @@ namespace Instaq.API.Extern.Middleware
                 responseBody = $"(Truncated to 300 chars) {responseBody.Substring(0, 300)}";
             }
 
-            loggingService.Log(new ApiLogItem
+            loggingService.LogRequest(new ApiLogItem
             {
                 RequestTime = requestTime,
                 ResponseMillis = responseMillis,

@@ -3,11 +3,8 @@
     using System;
     using Instaq.API.Extern.Models.Requests;
     using Instaq.Common;
-    using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
-    using System.Text.Json;
-
     using JsonSerializer = System.Text.Json.JsonSerializer;
 
     [ApiController]
