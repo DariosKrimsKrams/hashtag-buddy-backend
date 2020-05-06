@@ -1,11 +1,11 @@
 ﻿namespace Instaq.API.Extern.Controllers
 {
     using System;
+    using System.Text.Json;
     using Instaq.API.Extern.Models.Requests;
     using Instaq.Common;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
-    using JsonSerializer = System.Text.Json.JsonSerializer;
 
     [ApiController]
     [Route("[controller]")]

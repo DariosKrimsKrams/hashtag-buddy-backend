@@ -58,15 +58,15 @@
         [ProducesResponseType(typeof(void), 400)]
         [ProducesResponseType(typeof(void), 401)]
         [ProducesResponseType(typeof(void), 404)]
-        public IActionResult Search(string customerId, string keyword)
+        public IActionResult Search(SearchRequest request)
         {
             try
             {
-                if (!this.evaluationService.IsCustomerValid(customerId))
+                if (!this.evaluationService.IsCustomerValid(request.CustomerId))
                 {
                     return this.Unauthorized();
                 }
-                var data = this.evaluationService.GetSimilarHashtags(customerId, keyword);
+                var data = this.evaluationService.GetSimilarHashtags(request.CustomerId, request.Keyword);
                 return this.Ok(data);
             }
             catch (ArgumentException e)
