@@ -3,19 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Crawler.V4.Crawler;
     using Instaq.Crawler.V4.Requests;
-
     using Newtonsoft.Json;
-
     using NSubstitute;
-
     using NUnit.Framework;
 
+    [TestFixture]
     class ImagePageLogic_WhenGettingImages
     {
         private ImagePageLogic logic;

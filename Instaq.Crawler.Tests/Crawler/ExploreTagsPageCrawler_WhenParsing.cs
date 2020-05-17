@@ -14,6 +14,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class ExploreTagsPageCrawler_WhenParsing
     {
         private ExploreTagsPageHandler handler;

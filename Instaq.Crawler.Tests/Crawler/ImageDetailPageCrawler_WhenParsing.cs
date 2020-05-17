@@ -11,6 +11,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class ImageDetailPageCrawler_WhenParsing
     {
         private ImageDetailPageCrawler crawler;

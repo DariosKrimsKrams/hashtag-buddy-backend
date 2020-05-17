@@ -5,6 +5,7 @@
     using Instaq.Crawler.V4.PageAnalyzer;
     using NUnit.Framework;
 
+    [TestFixture]
     class UserPageLogic_WhenCheckingEnoughFollower
     {
         private UserPageLogic logic;

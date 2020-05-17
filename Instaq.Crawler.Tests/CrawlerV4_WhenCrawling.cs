@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Threading;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
@@ -12,6 +11,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class CrawlerV4_WhenCrawling
     {
         private ICrawler crawler;

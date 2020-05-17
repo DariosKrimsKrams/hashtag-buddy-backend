@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Instaq.Crawler.Tests.Logic
 {
+    using System.Collections.Generic;
     using System.Linq;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Crawler.V4.PageAnalyzer;
-
     using NUnit.Framework;
 
+    [TestFixture]
     class UserPageLogicWhenRemovingImagesWithDuplicateHashtags
     {
         private UserPageLogic logic;

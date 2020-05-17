@@ -1,9 +1,9 @@
 ﻿namespace Instaq.Crawler.Tests.Queue
 {
-    using System.Collections.Generic;
     using Instaq.Crawler.V4.Queue;
     using NUnit.Framework;
 
+    [TestFixture]
     class BaseQueue_WhenEnqueue
     {
         private BaseQueue<string> queue;

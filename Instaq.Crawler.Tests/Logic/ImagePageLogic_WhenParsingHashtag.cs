@@ -1,7 +1,6 @@
 ﻿namespace Instaq.Crawler.Tests.Logic
 {
     using System.Collections.Generic;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Crawler.V4.Crawler;
@@ -9,6 +8,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class ImagePageLogic_WhenParsingHashtag
     {
         private ImagePageLogic logic;

@@ -7,6 +7,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class ImagePageLogic_WhenCheckingHashtagIsAllowed
     {
         private ImagePageLogic logic;

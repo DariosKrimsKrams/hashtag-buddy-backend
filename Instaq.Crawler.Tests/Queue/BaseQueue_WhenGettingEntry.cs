@@ -3,6 +3,7 @@
     using Instaq.Crawler.V4.Queue;
     using NUnit.Framework;
 
+    [TestFixture]
     class BaseQueue_WhenGettingEntry
     {
         private BaseQueue<string> queue;

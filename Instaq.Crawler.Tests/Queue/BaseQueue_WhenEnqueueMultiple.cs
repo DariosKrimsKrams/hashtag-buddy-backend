@@ -4,6 +4,7 @@
     using Instaq.Crawler.V4.Queue;
     using NUnit.Framework;
 
+    [TestFixture]
     class BaseQueue_WhenEnqueueMultiple
     {
         private BaseQueue<string> queue;

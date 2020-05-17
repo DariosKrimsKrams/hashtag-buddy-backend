@@ -1,6 +1,5 @@
 ﻿namespace Instaq.Crawler.Tests.Crawler
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Instaq.Common;
     using Instaq.Contract;
@@ -10,6 +9,7 @@
     using NSubstitute;
     using NUnit.Framework;
 
+    [TestFixture]
     class UserPageCrawler_WhenParsing
     {
         private UserPageCrawler crawler;
