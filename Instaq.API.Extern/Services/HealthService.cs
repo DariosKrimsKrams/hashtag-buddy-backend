@@ -7,7 +7,7 @@
 
     public class HealthService : IHealthCheck
     {
-        private IDebugStorage debugStorage;
+        private readonly IDebugStorage debugStorage;
 
         public HealthService(IDebugStorage debugStorage)
         {
@@ -28,7 +28,6 @@
             {
                 return Task.FromResult(HealthCheckResult.Unhealthy("Something went wrong :'('"));
             }
-
         }
 
     }

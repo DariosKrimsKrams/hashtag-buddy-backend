@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Instaq.Common
+﻿namespace Instaq.Common
 {
+    using System.Collections.Generic;
     using Instaq.Contract;
     using Instaq.Contract.Models;
 

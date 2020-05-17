@@ -1,6 +1,5 @@
 ﻿namespace Instaq.Common
 {
-    using Instaq.Contract;
     using Instaq.Contract.Models;
 
     public class BlacklistEntry : IBlacklistEntry

@@ -16,6 +16,8 @@
     using Instaq.Database.Storage.Mysql.Query;
     using Microsoft.AspNetCore.Http;
 
+    using static System.String;
+
     public class EvaluationService : IEvaluationService
     {
         private readonly IEvaluationStorage evaluationStorage;
@@ -24,7 +26,7 @@
         private readonly IFileHandler fileHandler;
         private readonly IEvaluation evaluation;
         private readonly ICustomerStorage customerStorage;
-        private readonly ILogHashtagSearchStorage hashtagSearchStorage;
+        private readonly ILogHashtagSearchStorage logHashtagSearchStorage;
 
         public EvaluationService(
             IEvaluationStorage evaluationStorage,
@@ -33,7 +35,7 @@
             IEvaluation evaluation,
             ILogUploadsStorage logUploadsStorage,
             ICustomerStorage customerStorage,
-            ILogHashtagSearchStorage hashtagSearchStorage
+            ILogHashtagSearchStorage logHashtagSearchStorage
         )
         {
             this.evaluationStorage = evaluationStorage;
@@ -42,7 +44,7 @@
             this.fileHandler       = fileHandler;
             this.evaluation        = evaluation;
             this.customerStorage   = customerStorage;
-            this.hashtagSearchStorage = hashtagSearchStorage;
+            this.logHashtagSearchStorage = logHashtagSearchStorage;
         }
 
 
@@ -167,11 +169,15 @@
         public SearchResponse GetSimilarHashtags(string customerId, string keyword)
         {
             keyword = keyword.Trim().ToLower();
+            if (IsNullOrEmpty(keyword))
+            {
+                throw new ArgumentException();
+            }
             var machineTags = new IMachineTag[]
             {
                 new MachineTag { Name = keyword }
             };
-            var data =this.GetSimilarHashtags(customerId, machineTags, new List<string> { keyword }, "hashtag-search");
+            var data = this.GetSimilarHashtags(customerId, machineTags, new List<string> { keyword }, "hashtag-search");
             this.customerStorage.IncreaseAmountOfHashtagSearchUsed(customerId);
             return data;
         }
@@ -218,7 +224,7 @@
             data.Add("result1 FindSimilarMachineTagsQuery", response1);
             data.Add("result2 FindSimilarToHumanoidTagsQuery", response2);
             var dataAsJson = JsonSerializer.Serialize(data);
-            this.hashtagSearchStorage.InsertLog(type, dataAsJson, customerId);
+            this.logHashtagSearchStorage.InsertLog(type, dataAsJson, customerId);
 
             var response = new SearchResponse
             {

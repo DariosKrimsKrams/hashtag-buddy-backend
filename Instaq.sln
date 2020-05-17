@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{2A31BD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instaq.TestConsole", "Instaq.TestConsole.Core\Instaq.TestConsole.csproj", "{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instaq.API.Extern.Tests", "Instaq.API.Extern.Tests\Instaq.API.Extern.Tests.csproj", "{4C92E1AA-5860-47A1-94AE-B639076E672A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,10 @@ Global
 		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B64106-9396-41ED-99A3-6ACE0F4E2B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C92E1AA-5860-47A1-94AE-B639076E672A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C92E1AA-5860-47A1-94AE-B639076E672A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C92E1AA-5860-47A1-94AE-B639076E672A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C92E1AA-5860-47A1-94AE-B639076E672A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
