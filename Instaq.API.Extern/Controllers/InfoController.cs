@@ -5,6 +5,7 @@
     using Instaq.Common;
     using System;
     using Instaq.API.Extern.Helpers;
+    using Serilog;
 
     [ApiController]
     [Route("[controller]")]
@@ -13,7 +14,7 @@
     {
         [HttpGet("Version")]
         [ProducesResponseType(typeof(void), 200)]
-        public IActionResult Index()
+        public IActionResult GetVersionInfos()
         {
             var result = new Dictionary<string, string>
             {
@@ -22,6 +23,7 @@
                 { "ASPNETCORE_ENVIRONMENT", Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "" },
                 { "globalSettingEnv", GlobalSettings.Environment }
             };
+            Log.Logger.Information("Info/Version {VersionInfos}", result);
             return this.Ok(result);
         }
     }

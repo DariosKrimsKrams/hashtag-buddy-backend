@@ -6,6 +6,7 @@
     using Instaq.API.Extern.Models.Requests;
     using Instaq.Contract.Storage;
     using Microsoft.AspNetCore.Mvc;
+    using Serilog;
 
     [ApiController]
     [Route("[controller]")]
@@ -33,6 +34,7 @@
                 customer.GenerateHash();
                 this.customerStorage.UpdateCustomerId(customer.Id, customer.CustomerId);
                 var output = new Dictionary<string, string> { { "customerId", customer.CustomerId } };
+                Log.Logger.Information("CreateCustomer {@Customer}", customer);
                 return this.Ok(output);
             }
             catch (ArgumentException)
