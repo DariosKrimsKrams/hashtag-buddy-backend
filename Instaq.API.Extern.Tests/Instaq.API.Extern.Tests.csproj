@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Instaq.API.Extern\Instaq.API.Extern.csproj" />
-    <ProjectReference Include="..\Instaq.Common.Standard\Instaq.Common.csproj" />
     <ProjectReference Include="..\Instaq.Contract\Instaq.Contract.csproj" />
   </ItemGroup>
 
