@@ -19,6 +19,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
+    using Serilog;
 
     public class Startup
     {
@@ -27,6 +28,12 @@
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
+
+            var logger = new LoggerConfiguration()
+                .WriteTo.RollingFile("api-extern.txt")
+                .CreateLogger();
+            Log.Logger = logger;
+            Log.Logger.Information("App started");
         }
 
         public void ConfigureServices(IServiceCollection services)
