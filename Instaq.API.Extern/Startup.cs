@@ -20,6 +20,7 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
     using Serilog;
+    //using Serilog.Sinks.Elasticsearch;
 
     public class Startup
     {
@@ -29,11 +30,18 @@
         {
             this.Configuration = configuration;
 
+            //var elasticSearchUrl = "https://3qd1u82e1h:wwftudwd72@hashtag-buddy-5071048008.eu-central-1.bonsaisearch.net:443";
+            var logFilePath = Configuration.GetValue<string>("LogFilePath");
             var logger = new LoggerConfiguration()
-                .WriteTo.RollingFile("api-extern.txt")
+                .WriteTo.RollingFile(logFilePath + "/api-extern.txt")
+                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
+                //{
+                //    //AutoRegisterTemplate        = true,
+                //    //AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6
+                //})
                 .CreateLogger();
             Log.Logger = logger;
-            Log.Logger.Information("App started");
+            Log.Logger.Information("Backend started :) -> welcome back ^.^");
         }
 
         public void ConfigureServices(IServiceCollection services)

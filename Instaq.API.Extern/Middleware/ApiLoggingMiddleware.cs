@@ -98,7 +98,7 @@
                 responseBody = $"(Truncated to 300 chars) {responseBody.Substring(0, 300)}";
             }
 
-            loggingService.LogRequest(new ApiLogItem
+            loggingService.LogInformation(new ApiLogItem
             {
                 RequestTime = requestTime,
                 ResponseMillis = responseMillis,
