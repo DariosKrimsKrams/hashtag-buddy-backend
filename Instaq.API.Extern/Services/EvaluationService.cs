@@ -11,6 +11,7 @@
     using Instaq.Common;
     using Instaq.Common.Utils;
     using Instaq.Contract;
+    using Instaq.Contract.Dto;
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Query;
@@ -201,6 +202,20 @@
             var response1 = this.evaluationStorage.FindHumanoidTags<FindSimilarMachineTagsQuery>(machineTags);
             var response2 = this.evaluationStorage.FindHumanoidTags<FindSimilarToHumanoidTagsQuery>(machineTags);
 
+            var humanoidTags = MergeHashtags(response1, response2);
+            ExcludeHashtags(excludeHashtags, humanoidTags);
+            humanoidTags = SortHashtags(humanoidTags);
+            this.LogSearch(customerId, machineTags, type, response1, response2);
+
+            return new SearchResponse
+            {
+                LogId    = 0,
+                Hashtags = humanoidTags
+            };
+        }
+
+        private static List<IHumanoidTag> MergeHashtags(IEvaluationDto response1, IEvaluationDto response2)
+        {
             var humanoidTags = response1.HumanoidTags.ToList();
             foreach (var htag in response2.HumanoidTags)
             {
@@ -211,6 +226,11 @@
                 }
             }
 
+            return humanoidTags;
+        }
+
+        private static void ExcludeHashtags(IEnumerable<string> excludeHashtags, List<IHumanoidTag> humanoidTags)
+        {
             for (var i = humanoidTags.Count - 1; i >= 0; i--)
             {
                 var hashtag = humanoidTags[i];
@@ -219,21 +239,41 @@
                     humanoidTags.RemoveAt(i);
                 }
             }
+        }
 
+        private List<IHumanoidTag> SortHashtags(List<IHumanoidTag> humanoidTags)
+        {
+            var results = new List<IHumanoidTag>();
+            var results2 = new List<IHumanoidTag>();
+
+            foreach (var humanoidTag in humanoidTags)
+            {
+                if (humanoidTag.Name.Length >= 10)
+                {
+                    results.Add(humanoidTag);
+                }
+                else
+                {
+                    results2.Add(humanoidTag);
+                }
+            }
+
+            return results.Concat(results2).ToList();
+        }
+
+        private void LogSearch(
+            string customerId,
+            IMachineTag[] machineTags,
+            string type,
+            IEvaluationDto response1,
+            IEvaluationDto response2)
+        {
             var data = new Dictionary<string, object>();
             data.Add("input", JsonSerializer.Serialize(machineTags));
             data.Add("result1 FindSimilarMachineTagsQuery", response1);
             data.Add("result2 FindSimilarToHumanoidTagsQuery", response2);
             var dataAsJson = JsonSerializer.Serialize(data);
             this.logHashtagSearchStorage.InsertLog(type, dataAsJson, customerId);
-
-            var response = new SearchResponse
-            {
-                LogId    = 0,
-                Hashtags = humanoidTags
-            };
-
-            return response;
         }
 
     }
