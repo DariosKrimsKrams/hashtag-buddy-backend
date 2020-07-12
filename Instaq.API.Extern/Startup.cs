@@ -18,18 +18,20 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Serilog;
+    using IApplicationLifetime = Microsoft.AspNetCore.Hosting.IApplicationLifetime;
     //using Serilog.Sinks.Elasticsearch;
 
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        private readonly ILoggerFactory loggerFactory;
 
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-
             //var elasticSearchUrl = "https://3qd1u82e1h:wwftudwd72@hashtag-buddy-5071048008.eu-central-1.bonsaisearch.net:443";
             var logFilePath = Configuration.GetValue<string>("LogFilePath");
             var logger = new LoggerConfiguration()
@@ -55,7 +57,7 @@
             services.AddDbContext<InstaqContext>(options =>
             {
                 options.UseMySql(dbConnection);
-                //options.UseLoggerFactory(loggerFactory);
+                options.UseLoggerFactory(loggerFactory);
             });
 
             services.AddTransient<IEvaluationService, EvaluationService>();
@@ -79,9 +81,15 @@
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Extern", Version = "v1" }); });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+                              IWebHostEnvironment env,
+                              ILoggerFactory loggerfactory,
+                              IApplicationLifetime appLifetime)
         {
             app.UseDeveloperExceptionPage();
+
+            loggerfactory.AddSerilog();
+            appLifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq API v1"); });
