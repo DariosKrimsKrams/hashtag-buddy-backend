@@ -204,7 +204,8 @@
             var humanoidTags = response1.HumanoidTags.ToList();
             foreach (var htag in response2.HumanoidTags)
             {
-                if (!humanoidTags.Contains(htag))
+                var exist = humanoidTags.FirstOrDefault(x => x.Name == htag.Name);
+                if (exist == null)
                 {
                     humanoidTags.Add(htag);
                 }
