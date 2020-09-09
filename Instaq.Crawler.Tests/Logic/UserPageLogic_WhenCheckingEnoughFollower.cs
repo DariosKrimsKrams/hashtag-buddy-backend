@@ -1,4 +1,4 @@
-﻿namespace Instaq.Crawler.Tests.Crawler
+﻿namespace Instaq.Crawler.Tests.Logic
 {
     using Instaq.Common;
     using Instaq.Contract;
@@ -16,8 +16,8 @@
         public void Setup()
         {
             this.settings = new CrawlerSettings();
-            this.logic = new UserPageLogic(settings);
-            this.user = new User { FollowerCount = 1337 };
+            this.logic    = new UserPageLogic(this.settings);
+            this.user     = new User { FollowerCount = 1337 };
         }
 
         [Test]

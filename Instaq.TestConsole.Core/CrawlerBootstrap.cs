@@ -9,8 +9,8 @@ namespace Instaq.TestConsole
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
-    using Instaq.Crawler.Standard;
     using Instaq.Crawler.V4;
+    using Instaq.Crawler.V4.Helper;
 
     class CrawlerBootstrap
     {

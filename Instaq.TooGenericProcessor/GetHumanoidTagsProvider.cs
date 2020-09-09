@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
-
     using Instaq.Contract;
     using Instaq.Contract.Models;
 

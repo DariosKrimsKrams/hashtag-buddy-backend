@@ -1,4 +1,4 @@
-﻿namespace Instaq.Crawler.Tests.Handler
+﻿namespace Instaq.Crawler.Tests.Logic
 {
     using Instaq.Common;
     using Instaq.Contract;

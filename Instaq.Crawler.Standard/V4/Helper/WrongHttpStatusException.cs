@@ -1,4 +1,4 @@
-﻿namespace Instaq.Crawler.Standard
+﻿namespace Instaq.Crawler.V4.Helper
 {
     using System;
     using System.Net;
@@ -8,7 +8,6 @@
         public HttpStatusCode StatusCode
         {
             get;
-            private set;
         }
 
         public WrongHttpStatusException(string message) : base(message)

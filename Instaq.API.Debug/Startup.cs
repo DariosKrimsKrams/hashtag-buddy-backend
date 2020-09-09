@@ -4,7 +4,8 @@
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql;
     using Instaq.Database.Storage.Mysql.Generated;
-    using Instaq.FileHandling.Standard;
+    using Instaq.DiskFileHandling;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;

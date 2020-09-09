@@ -1,9 +1,7 @@
 ﻿namespace Instaq.Crawler.V4.Crawler
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-
     using Instaq.Common;
     using Instaq.Contract;
     using Instaq.Contract.Models;

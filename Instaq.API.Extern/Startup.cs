@@ -8,8 +8,8 @@
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql;
     using Instaq.Database.Storage.Mysql.Generated;
-    using Instaq.Evaluation.Standard;
-    using Instaq.FileHandling.Standard;
+    using Instaq.DiskFileHandling;
+    using Instaq.Evaluation;
     using Instaq.ImageProcessor.Standard.GcpVision;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;

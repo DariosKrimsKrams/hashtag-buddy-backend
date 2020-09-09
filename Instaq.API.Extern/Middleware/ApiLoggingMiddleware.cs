@@ -27,11 +27,6 @@
         public async Task InvokeAsync(HttpContext httpContext)
         {
             var request = httpContext.Request;
-            //if (!request.Path.StartsWithSegments(new PathString("/api")))
-            //{
-            //    await next.Invoke(httpContext);
-            //    return;
-            //}
             var stopWatch = Stopwatch.StartNew();
             var requestTime = DateTime.UtcNow;
             var requestBodyContent = await ReadRequestBody(request);

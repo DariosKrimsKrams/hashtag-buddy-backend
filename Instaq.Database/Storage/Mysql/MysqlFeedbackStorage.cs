@@ -1,7 +1,6 @@
 ﻿namespace Instaq.Database.Storage.Mysql
 {
     using System;
-    using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;

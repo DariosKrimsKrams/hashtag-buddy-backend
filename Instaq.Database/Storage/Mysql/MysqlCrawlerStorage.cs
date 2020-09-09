@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Instaq.Contract.Models;
-    using global::Instaq.Contract;
-
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql.Generated;
 

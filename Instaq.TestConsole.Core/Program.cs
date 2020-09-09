@@ -4,11 +4,11 @@
     using System.IO;
     using System.Linq;
     using Instaq.Common;
-    using Instaq.Crawler.Standard;
     using Instaq.Crawler.V4;
     using Instaq.Database.Storage.Mysql;
     using Instaq.ImageDownloader;
     using Instaq.BlacklistImport;
+    using Instaq.Crawler.V4.Helper;
     using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.ImageProcessor.Standard;
     using Instaq.ImageProcessor.Standard.GcpVision;

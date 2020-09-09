@@ -2,7 +2,6 @@
 {
     using Instaq.Contract;
     using Instaq.Contract.Models;
-    using Instaq.Crawler.Standard;
     using Instaq.Crawler.V4.Requests;
 
     public class ImageDetailPageCrawler

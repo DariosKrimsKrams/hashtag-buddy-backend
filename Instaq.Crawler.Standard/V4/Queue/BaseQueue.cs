@@ -7,7 +7,7 @@
     using System.Net;
     using System.Threading;
 
-    using Instaq.Crawler.Standard;
+    using Instaq.Crawler.V4.Helper;
 
     public class BaseQueue<T> : ConcurrentQueue<T>
     {

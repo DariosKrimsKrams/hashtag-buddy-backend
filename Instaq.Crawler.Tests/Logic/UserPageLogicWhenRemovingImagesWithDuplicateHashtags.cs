@@ -1,5 +1,4 @@
-﻿
-namespace Instaq.Crawler.Tests.Logic
+﻿namespace Instaq.Crawler.Tests.Logic
 {
     using System.Collections.Generic;
     using System.Linq;

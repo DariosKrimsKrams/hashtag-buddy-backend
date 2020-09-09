@@ -1,11 +1,8 @@
 namespace Instaq.API.Extern.Tests.Services
 {
     using System;
-    using System.Runtime.CompilerServices;
-
     using FluentAssertions;
     using FluentAssertions.Execution;
-
     using Instaq.API.Extern.Models.Responses;
     using Instaq.API.Extern.Services;
     using Instaq.API.Extern.Services.Interfaces;

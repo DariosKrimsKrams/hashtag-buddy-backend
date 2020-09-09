@@ -8,7 +8,7 @@
     using Instaq.Contract;
     using Instaq.Contract.Models;
     using Instaq.Contract.Storage;
-    using Instaq.FileHandling.Standard;
+    using Instaq.DiskFileHandling;
 
     public class ImageDownloader
     {

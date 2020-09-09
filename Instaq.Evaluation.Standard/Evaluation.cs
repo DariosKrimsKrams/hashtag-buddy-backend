@@ -1,4 +1,4 @@
-﻿namespace Instaq.Evaluation.Standard
+﻿namespace Instaq.Evaluation
 {
     using System.Collections.Generic;
     using System.Linq;

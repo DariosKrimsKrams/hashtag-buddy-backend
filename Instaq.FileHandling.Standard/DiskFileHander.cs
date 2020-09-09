@@ -1,6 +1,5 @@
-﻿namespace Instaq.FileHandling.Standard
+﻿namespace Instaq.DiskFileHandling
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -10,7 +9,6 @@
     public class DiskFileHander : IFileHandler
     {
         private readonly string Ext = ".jpg";
-
         private readonly string PathDefect = @"C:\Instaq\Defect\";
         private readonly string PathUnused = @"C:\Instaq\Unused\";
         private readonly string PathUsed = @"C:\Instaq\Used\";
@@ -95,8 +93,8 @@
 
         private void CreateFolderIfNotExists(string folderPath)
         {
-            FileInfo file = new System.IO.FileInfo(folderPath);
-            file.Directory.Create();
+            var file = new FileInfo(folderPath);
+            file.Directory?.Create();
         }
     }
 }

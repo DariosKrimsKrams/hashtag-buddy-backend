@@ -1,12 +1,12 @@
-﻿namespace Instaq.Crawler.Standard
+﻿namespace Instaq.Crawler.V4.Helper
 {
     using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text.RegularExpressions;
-    using Instaq.Crawler.V4.Requests;
     using HtmlAgilityPack;
+    using Instaq.Crawler.V4.Requests;
     using Newtonsoft.Json;
 
     public class HttpRequestHandler : IRequestHandler
