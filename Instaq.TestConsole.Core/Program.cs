@@ -1,7 +1,6 @@
 ﻿namespace Instaq.TestConsole.Core
 {
     using System;
-    using System.IO;
     using System.Linq;
     using Instaq.Common;
     using Instaq.Crawler.V4;
@@ -33,10 +32,14 @@
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
-            var connectionString = configuration.GetConnectionString("HashtagDatabase");
-            Console.WriteLine("Using DB: " + connectionString);
+            var dbConnection  = configuration.GetConnectionString("HashtagDatabase");
+            dbConnection = dbConnection.Replace("[server]", Environment.GetEnvironmentVariable("instatagger_mysql_ip"));
+            dbConnection = dbConnection.Replace("[user]", Environment.GetEnvironmentVariable("instatagger_mysql_user"));
+            dbConnection = dbConnection.Replace("[pw]", Environment.GetEnvironmentVariable("instatagger_mysql_pw"));
+            dbConnection = dbConnection.Replace("[db]", Environment.GetEnvironmentVariable("instatagger_mysql_db"));
+            Console.WriteLine("Using DB: " + dbConnection);
 
-            context = new InstaqContext(connectionString);
+            context = new InstaqContext(dbConnection);
 
             Console.WriteLine("" + 
                              "1: Start Crawler (CrawlerEngine V4)\n" +

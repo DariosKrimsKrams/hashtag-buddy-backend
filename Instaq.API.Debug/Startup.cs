@@ -1,11 +1,11 @@
 ﻿namespace Instaq.API.Debug
 {
+    using System;
     using Instaq.Contract;
     using Instaq.Contract.Storage;
     using Instaq.Database.Storage.Mysql;
     using Instaq.Database.Storage.Mysql.Generated;
     using Instaq.DiskFileHandling;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -24,13 +24,11 @@
             this.Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(
                 options =>
                 {
-                    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                     options.CheckConsentNeeded    = context => true;
                     options.MinimumSameSitePolicy = SameSiteMode.None;
                 });
@@ -39,6 +37,10 @@
             services.AddCors();
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
+            dbConnection = dbConnection.Replace("[server]", Environment.GetEnvironmentVariable("instatagger_mysql_ip"));
+            dbConnection = dbConnection.Replace("[user]", Environment.GetEnvironmentVariable("instatagger_mysql_user"));
+            dbConnection = dbConnection.Replace("[pw]", Environment.GetEnvironmentVariable("instatagger_mysql_pw"));
+            dbConnection = dbConnection.Replace("[db]", Environment.GetEnvironmentVariable("instatagger_mysql_db"));
             services.AddDbContext<InstaqContext>(options => options.UseMySql(dbConnection));
 
             services.AddTransient<IDebugStorage, MysqlDebugStorage>();
@@ -47,7 +49,6 @@
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Instaq Debug", Version = "v1" }); });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if( env.IsDevelopment() )
@@ -60,7 +61,6 @@
                 app.UseHsts();
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Instaq Debug API v1"); });
 

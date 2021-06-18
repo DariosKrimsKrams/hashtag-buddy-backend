@@ -1,5 +1,6 @@
 ﻿namespace Instaq.API.Extern
 {
+    using System;
     using Instaq.API.Extern.Helpers;
     using Instaq.API.Extern.Middleware;
     using Instaq.API.Extern.Services;
@@ -22,7 +23,6 @@
     using Microsoft.OpenApi.Models;
     using Serilog;
     using IApplicationLifetime = Microsoft.AspNetCore.Hosting.IApplicationLifetime;
-    //using Serilog.Sinks.Elasticsearch;
 
     public class Startup
     {
@@ -32,15 +32,9 @@
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            //var elasticSearchUrl = "https://3qd1u82e1h:wwftudwd72@hashtag-buddy-5071048008.eu-central-1.bonsaisearch.net:443";
             var logFilePath = Configuration.GetValue<string>("LogFilePath");
             var logger = new LoggerConfiguration()
                 .WriteTo.RollingFile(logFilePath + "/api-extern.txt")
-                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticSearchUrl))
-                //{
-                //    //AutoRegisterTemplate        = true,
-                //    //AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6
-                //})
                 .CreateLogger();
             Log.Logger = logger;
             Log.Logger.Information("Backend started :) -> welcome back ^.^");
@@ -54,6 +48,10 @@
             services.AddHealthChecks().AddCheck<HealthService>("IsDbConnectionHealthy");
 
             var dbConnection = Configuration.GetConnectionString("HashtagDatabase");
+            dbConnection = dbConnection.Replace("[server]", Environment.GetEnvironmentVariable("instatagger_mysql_ip"));
+            dbConnection = dbConnection.Replace("[user]", Environment.GetEnvironmentVariable("instatagger_mysql_user"));
+            dbConnection = dbConnection.Replace("[pw]", Environment.GetEnvironmentVariable("instatagger_mysql_pw"));
+            dbConnection = dbConnection.Replace("[db]", Environment.GetEnvironmentVariable("instatagger_mysql_db"));
             services.AddDbContext<InstaqContext>(options =>
             {
                 options.UseMySql(dbConnection);
