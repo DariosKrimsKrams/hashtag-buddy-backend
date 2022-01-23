@@ -1,10 +1,5 @@
 # Instaq
-Find the most relevant Instagram Hashtags.
-
-  * Started developing at Cloud Solution Hackathon Hamburg 24.03. + 25.03.2018
-  * First friends test on 2018-05
-  * First user test on 2018-07-31
-  * Crawler running 24/7 local 2018-10-07
+Hashtag Buddy help you to find the most relevant Instagram Hashtags! :)
   
 ## Deployment
 Run docker from Solution directory with command `docker-compose up` or use one of the other docker commands:
@@ -48,10 +43,7 @@ docker logs darionotes/instaqapi
 ![](/doc/architecture2.png)
 
 ## Links
-  * [Frontend Extern](http://instaq.innocliq.de)
-  * [Frontend Debug](http://instaq.innocliq.de)
   * [API Extern](http://instaq-api.innocliq.de)
-  * [API Debug](http://instaq-api-debug.innocliq.de)
 
 ## Credits
   * Build by Dario D. Müller
